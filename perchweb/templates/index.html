@@ -35,12 +35,14 @@
     </div>
     <div class="col-sm-6 col-md-8 col-lg-9 sm-pull-right">
         <div class="blend">
-            <div class="cont">
-                <p>Lorem ipsum dolor sit amet, consectetur <i>adipiscing</i> elit. Nam scelerisque interdum dui eu consequat. Etiam lacus justo, mollis varius eros id, fringilla blandit est. Nam sit amet quam neque. Etiam feugiat, mi ac tincidunt vehicula, tortor felis dictum urna, eget posuere diam mi nec augue. Phasellus sodales ut velit non varius. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Phasellus eget nunc sit amet sapien scelerisque bibendum quis et ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec varius risus pretium nulla porta laoreet ut id quam. Nullam hendrerit in velit vehicula molestie. Quisque sit amet tortor orci.</p>
-                <p>Curabitur <b>imperdiet tempor</b> velit vel posuere. Morbi eget ultricies turpis, vel iaculis lacus. Fusce consequat velit suscipit diam venenatis, id luctus enim adipiscing. Aenean lobortis imperdiet lobortis. In venenatis dui ac purus tempor gravida et eget risus. Maecenas sollicitudin semper euismod. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec consequat, odio et fringilla imperdiet, odio risus dictum massa, iaculis porttitor mauris lacus eu diam. Morbi accumsan tincidunt nulla quis varius. Integer dui risus, molestie eget mauris aliquam, malesuada iaculis dui. Nulla facilisi. In facilisis nulla sem, a laoreet eros dapibus sed. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Cras tincidunt fringilla adipiscing. Etiam lectus diam, consequat eget purus bibendum, commodo venenatis magna. Vivamus dui libero, dictum eget nunc eu, dictum elementum turpis.</p>
-                <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Curabitur eget enim id tortor semper facilisis. Quisque vel leo nec leo rutrum commodo vitae nec magna. Mauris feugiat ante sit amet lobortis mollis. Pellentesque egestas ac arcu sit amet posuere. Suspendisse mollis arcu vitae condimentum rhoncus. Cras suscipit tincidunt sapien nec lobortis.</p>
-                <p>Etiam vitae orci vehicula, sodales ligula quis, hendrerit enim. Nam placerat sem sit amet congue interdum. Etiam sollicitudin mattis urna, vitae fermentum metus. Nulla facilisis sapien in magna viverra malesuada. Nunc quis mi pellentesque, sollicitudin lorem vitae, porta dui. Interdum et malesuada fames ac ante ipsum primis in faucibus. In posuere accumsan eros, quis iaculis massa congue at. Suspendisse aliquam faucibus dignissim. Maecenas porttitor non lacus et accumsan. Curabitur scelerisque rutrum sollicitudin. Nunc congue cursus sapien. Proin aliquam, nisl tincidunt mattis consectetur, odio sapien rutrum nunc, vitae fermentum elit quam ac sapien.</p>
-            </div>
+            {% for replay in replays %}
+                <div class="replay card">
+                    <h3>{{ replay.title }}</h3>
+                    <div>{% for player in replay.players %}
+                        {{ player.name }}
+                    {% endfor %}</div>
+                </div>
+            {% endfor %}
         </div>
     </div>
 </div>

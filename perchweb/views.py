@@ -10,6 +10,8 @@ from flask import url_for, request, redirect, flash
 from werkzeug.utils import secure_filename
 from perchweb import app
 from perchweb.handler import standard_page
+from perchweb.models.player import Player
+from perchweb.models.replay import Replay
 
 class ReplayParsingException(Exception):
     """Known parsing error with user readable message"""
@@ -17,7 +19,14 @@ class ReplayParsingException(Exception):
 @app.route('/')
 def index():
     """Index"""
-    return standard_page('index.html', 'Replays', nav='index')
+
+    replays = [ 
+        Replay("Quick 1v1", [Player("bimàldo goodmanners"), Player("iggy")]), 
+        Replay("fours", [Player("mata"), Player("grubby"), Player("tillerman"), Player("th000")]), 
+        Replay("comedy \"third\" game", [Player("timg4strok"), Player("AI (Easy)")])
+    ]
+
+    return standard_page('index.html', 'Replays', nav='index', replays=replays)
 
 @app.route('/upload', methods=['POST'])
 def upload_replay():
