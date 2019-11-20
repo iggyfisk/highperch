@@ -1,0 +1,26 @@
+BEGIN TRANSACTION;
+CREATE TABLE IF NOT EXISTS "Replays" (
+	"ID"	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	"BNetGameID"	TEXT NOT NULL,
+	"Name"	TEXT NOT NULL,
+	"TimeStamp"	INTEGER NOT NULL,
+	"GameType"	TEXT NOT NULL,
+	"Version"	TEXT NOT NULL,
+	"Length"	INTEGER NOT NULL,
+	"Map"	TEXT NOT NULL,
+	"TowerCount"	INTEGER NOT NULL,
+	"ChatMessageCount"	INTEGER NOT NULL,
+	"Views"	INTEGER NOT NULL DEFAULT 0,
+	"Players"	TEXT NOT NULL,
+	"Chat"	TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS "IX_ReplayMessages" ON "Replays" (
+	"ChatMessageCount"
+);
+CREATE INDEX IF NOT EXISTS "IX_ReplayTowers" ON "Replays" (
+	"TowerCount"
+);
+CREATE INDEX IF NOT EXISTS "IX_ReplayLength" ON "Replays" (
+	"Length"
+);
+COMMIT;

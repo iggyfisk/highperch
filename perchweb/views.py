@@ -6,15 +6,42 @@ import random
 import os
 import subprocess
 import json
-from flask import url_for, request, redirect, flash
+import sqlite3
+from datetime import datetime
+from flask import url_for, request, redirect, flash, g
 from werkzeug.utils import secure_filename
 from perchweb import app
 from perchweb.handler import standard_page
 from perchweb.models.player import Player
 from perchweb.models.replay import Replay
 
+
 class ReplayParsingException(Exception):
     """Known parsing error with user readable message"""
+
+
+def get_wig_db():
+    db = getattr(g, '_wig_database', None)
+    if db is None:
+        db = g._wig_database = sqlite3.connect('wig.db')
+        db.row_factory = sqlite3.Row
+    return db
+
+
+def query_wig_db(query, args=(), one=False):
+    cursor = get_wig_db().execute(query, args)
+    results = cursor.fetchall()
+    cursor.close()
+    return (results[0] if results else None) if one else results
+
+
+@app.teardown_appcontext
+def close_connection(exception):
+    wig_db = getattr(g, '_wig_database', None)
+    if wig_db is not None:
+        wig_db.commit()
+        wig_db.close()
+
 
 @app.route('/')
 def index():
@@ -28,21 +55,24 @@ def index():
 
     return standard_page('index.html', 'Replays', nav='index', replays=replays)
 
+
 @app.route('/upload', methods=['POST'])
 def upload_replay():
     """User replay uploads"""
     # Todo: Validation here, replay name, geoblocking etc
+    replay_name = request.form['name']
 
     replay = request.files['replay'] if 'replay' in request.files else None
-    replay_filename = secure_filename(replay.filename) if replay is not None else None
+    replay_filename = secure_filename(
+        replay.filename) if replay is not None else None
     if not replay_filename:
         flash('No replay file selected')
-        return redirect(url_for('index'))    
-    
+        return redirect(url_for('index'))
+
     replay_filename_parts = os.path.splitext(replay_filename)
-    if len (replay_filename_parts) < 2 or replay_filename_parts[1] != '.w3g':
+    if len(replay_filename_parts) < 2 or replay_filename_parts[1] != '.w3g':
         flash('Not a .w3g replay')
-        return redirect(url_for('index'))  
+        return redirect(url_for('index'))
 
     # Todo: Validation here, filesize etc
 
@@ -53,21 +83,46 @@ def upload_replay():
 
     # From here on out we need to clean up if anything goes wrong
     try:
-        parse_result = subprocess.run(["node", "parsereplay.js", temp_replay_path, temp_data_path])
+        parse_result = subprocess.run(
+            ["node", "parsereplay.js", temp_replay_path, temp_data_path])
         if parse_result.returncode > 0:
             raise ReplayParsingException("Replay parsing failed")
 
         with open(temp_data_path) as replay_json:
             replay_data = json.load(replay_json)
 
-        flash(replay_data['version'])
-        flash(len(replay_data['chat']))
+        # Todo: more validation, like gametype and version
+        bnet_id = replay_data['id']
+        timestamp = int(datetime.now().timestamp())
+        gametype = replay_data['type']
+        version = replay_data['version']
+        length = replay_data['duration']
+        map_name = replay_data['map']['file']
+        map_name = os.path.splitext(os.path.basename(map_name))[0]
+        players = [{
+            'name': p['name'],
+            'teamid': p['teamid'],
+            'race': p['race'],
+            'apm': p['apm'],
+            'heroCount': p['heroCount']
+        } for p in replay_data['players']]
+        chat = [c['message'] for c in replay_data['chat']]
+        # Todo: iterate over replay_data['players'][i]['buildings']['summary'] and add all the tower counts
+        tower_count = 1
+        chat_message_count = len(chat)
 
-        # Todo: get a unique replay id from storage, put some of replay_data in there
-        replay_id = random.randint(1, 1000)
+        # Todo: json() function when sqlite supports it everywhere
+        query_wig_db('''
+            INSERT INTO Replays(BNetGameID, Name, TimeStamp, GameType, Version, Length, Map, TowerCount, ChatMessageCount, Players, Chat)
+            VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ''', (bnet_id, replay_name, timestamp, gametype, version, length, map_name, tower_count, chat_message_count,
+                  json.dumps(players), json.dumps(chat)))
+
+        replay_id = query_wig_db('SELECT last_insert_rowid()', one=True)[0]
 
         # Todo: solid configurable data directories
-        replay_path = os.path.join('perchweb', 'static', 'replays', f"{replay_id}.w3g")
+        replay_path = os.path.join(
+            'perchweb', 'static', 'replays', f"{replay_id}.w3g")
         data_path = os.path.join('replaydata', f"{replay_id}.json")
         os.rename(temp_replay_path, replay_path)
         os.rename(temp_data_path, data_path)
@@ -85,6 +140,7 @@ def upload_replay():
         if os.path.isfile(temp_data_path):
             os.remove(temp_data_path)
     return redirect(url_for('index'))
+
 
 @app.route('/highperching')
 def guide():
