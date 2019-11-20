@@ -27,7 +27,7 @@ pic_max = 89
 @app.route('/peep/<int:pic_id>')
 def peep(pic_id):
     """Sometimes random pictures"""
-    pic_id = random.randint(1,  pic_max) if pic_id is None else pic_id
+    pic_id = random.randint(1, pic_max) if pic_id is None else pic_id
     return standard_page('peep.html', 'Peep a pic', nav='peep',
                          pic_url=f'/static/images/peep/{pic_id}.jpg',
                          perma=url_for('peep', pic_id=pic_id))

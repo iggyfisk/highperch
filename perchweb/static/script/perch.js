@@ -10,7 +10,6 @@
 			nav.classList.toggle('expanded');              
 		});
 	});
-
 })();
 /* Nav submenu END */
 
