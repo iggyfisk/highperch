@@ -12,6 +12,7 @@ The `-p` option default should be your Python3 interpreter, else specify it. If 
 * `pip install -r Requirements.txt`
 * `python runserver.py`
 * `http://localhost:5555/` Go!
+* `deactivate` to reclaim your terminal when you're done
 
 ### Reasonable editors
 * Windows: VSCode, enter your virtual environment above and `pip install pylint` `pip install autopep8` then Ctrl+Shift+P in VSCode and `Python: Select interpreter`, find your virtualenv in the list
