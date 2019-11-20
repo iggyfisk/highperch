@@ -8,3 +8,12 @@ __pycache__/
 # Editors
 .vscode
 .idea
+
+# JS dependencies
+node_modules/
+
+# Content
+replaydata/*.json
+perchweb/static/replays/*.w3g
+temp/*
+!temp/README.md

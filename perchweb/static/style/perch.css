@@ -59,15 +59,15 @@ a, a:visited {
     font-weight: bold;
 }
 
-a:hover, a:focus, a.active, span.action:hover, span.action.active {
+a:hover, a:focus, a.active, span.action:hover, span.action.active, input.action:hover {
     color: #fff;
 }
 
-span.action:hover, nav a:hover {
+span.action:hover, nav a:hover, input.action:hover {
     text-shadow: 1px 1px 3px #000;
 }
 
-img.action:hover, img.action.active {
+img.action:hover, img.action.active, input.action:hover {
     border-color: #fff;
 }
 
@@ -131,6 +131,31 @@ div.blend>h2 span.expand i {
     padding: 0 4px;
     position: absolute;
     transition: opacity 500ms;
+}
+
+form.upload input {
+    width: 100%;
+    background: #444;
+    border: 1px solid #000F;
+    border-radius: 2px;
+    padding: 2px 4px;
+}
+form.upload input[type=file] {
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
+
+form.upload input[type=text] {
+    width: 100%;
+    background: #444;
+    border: 1px solid #000F;
+    border-radius: 2px;
+    padding: 2px 4px;
+}
+
+form.upload input[type=submit] {
+    width: auto;
+    padding: 2px 8px;
 }
 
 @media (min-width:768px) {

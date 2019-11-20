@@ -2,6 +2,29 @@
 
 {% block content %}
 <div class="row">
+    <div class="col-sm-12">
+        <div class="blend">
+            <h2>Contribute replay</h2>
+            <div class="cont">
+                <p>Add a valid Reforged .w3g to the librarium</p>                
+                <form class="upload" action="/upload" method="POST" enctype="multipart/form-data" autocomplete="off">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <input type="file" name="replay" accept=".w3g" required />
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="text" name="name" minlength="6" maxlength="50" placeholder="Type a name" required />
+                        </div>
+                        <div class="col-sm-2 text-center">
+                            <input type="Submit" class="action" value="Upload" />
+                        </div>                      
+                    </div>
+                </form>              
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
     <div class="col-sm-6 col-md-4 col-lg-3 sm-pull-right">
         <div class="blend">
             <h2 class="closed">Filter<span class="expand"><i class="fa fa-arrow-circle-down"></i><i class="fa fa-arrow-circle-up"></i></span></h2>

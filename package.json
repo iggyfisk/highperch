@@ -1,0 +1,13 @@
+{
+  "name": "highper.ch",
+  "version": "0.1.0",
+  "description": "Wigweb for highper.ch",
+  "main": "parsereplay.js",
+  "repository": "https://github.com/iggyfisk/highperch.git",
+  "author": "clan TOWA",
+  "license": "Excessively proprietary",
+  "private": true,
+  "dependencies": {
+    "w3gjs": "https://github.com/iggyfisk/w3gjs#36858c3"
+  }
+}

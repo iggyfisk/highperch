@@ -5,11 +5,13 @@ Replay database extraordinarie
 * `python --version` or `python3 --version` >= 3.5.0
 * `virtualenv -h`
 The `-p` option default should be your Python3 interpreter, else specify it. If virtualenv is not installed, `pip install virtualenv` or `pip3 install virtualenv`
-
+* For replay parsing, `node --version` >= 10.0.0 (`brew install node`)
+* For replay parsing, `yarn --version` >= 1.3.0 (`brew install yarn`)
 * Clone this repository, cwd to repo root.
 * `virtualenv env` to initialize your virtual environment
 * `source env/bin/activate` or `env\Scripts\Activate` (Windows) to enter your virtual environment
 * `pip install -r Requirements.txt`
+* For replay parsing, `yarn install`
 * `python runserver.py`
 * `http://localhost:5555/` Go!
 * `deactivate` to reclaim your terminal when you're done
