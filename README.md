@@ -16,7 +16,7 @@ The `-p` option default should be your Python3 interpreter, else specify it. If 
 
 ### Reasonable editors
 * Windows: VSCode, enter your virtual environment above and `pip install pylint` `pip install autopep8` then Ctrl+Shift+P in VSCode and `Python: Select interpreter`, find your virtualenv in the list
-* MacOS: Pycharm CE, picks up virtualenv automatically
+* MacOS: Atom, doesn't pick up the external libraries. Pycharm CE, picks up virtualenv automatically
 
 ## Production deployment
 Coming soon, something with nginx and uwsgi. No crazy build procedures, just a repo pull and some gitignored config files, probably hash the JS and CSS, MAYBE minify them.
