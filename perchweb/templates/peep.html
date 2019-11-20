@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-9">
+        <div class="blend">
+            <h2>Peep this pic</h2>
+            <div class="cont text-center">
+                <a href="{{ url_for('peep') }}">
+                    <img class="peep" src="{{pic_url}}" />
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="blend">
+            <div class="cont">
+                <p>This picature was forged in the heat of battle and can forever be accessed using the <a href="{{perma}}">permalink</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

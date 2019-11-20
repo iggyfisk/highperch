@@ -1,0 +1,375 @@
+/* Stylish styling - Please have opinions and change START */
+
+body>.container {
+    padding-top: 20px;
+}
+
+h1, h2 {
+    font-family: Friz, Georgia, serif;
+    text-shadow: 2px 2px 1px #000;
+}
+
+h1 {
+    font-size: 34px;
+    margin: 10px 0 20px 0;
+}
+
+h2 {
+    font-size: 24px;
+    color: #FFDFC6;
+}
+
+h3 {
+    font-size: 20px;
+    color: #FA6;
+}
+
+header {
+    background: #085754;
+    background: rgba(213, 122, 48, 0.7);
+    text-align: center;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.6);
+    padding: 8px 0;
+}
+
+header h1 {
+    font-size: 40px;
+    margin: 0;
+    color: #ccac8f;
+    cursor: default;
+}
+
+h1 span {
+    color: #e6d9cf;
+}
+
+a, span.action {
+    transition: text-shadow 300ms, color 500ms;
+}
+
+img.action {
+    transition: border-color 300ms;
+    border: 1px solid #fff0;
+    box-sizing: border-box;
+}
+
+a, a:visited {
+    color: #FFCCA3;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+a:hover, a:focus, a.active, span.action:hover, span.action.active {
+    color: #fff;
+}
+
+span.action:hover, nav a:hover {
+    text-shadow: 1px 1px 3px #000;
+}
+
+img.action:hover, img.action.active {
+    border-color: #fff;
+}
+
+nav a {
+    text-decoration: none;
+    font-family: 'Courgette', 'Friz', Palatino, serif;
+    margin: 0;
+}
+
+b {
+    color: #FA6;
+}
+
+div.blend {
+    border-top: 1px solid rgba(0, 0, 0, 0.8);
+    border-radius: 20px 20px 0 0;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+
+div.blend.derail {
+    color: #EEE;
+}
+
+div.blend div.cont {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 0 0 20px 20px;
+}
+
+div.blend.derail div.cont {
+    background: rgba(204, 153, 0, 0.8);
+}
+
+div.blend>h2 {
+    margin: 0;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px 10px 5px 10px;
+    border-bottom: 1px solid #597AC0;
+}
+
+div.blend.derail>h2 {
+    background: rgba(204, 153, 0, 0.8);
+}
+
+div.blend>h2 span.expand {
+    text-shadow: none;
+    float: right;
+    position: relative;
+    color: #597AC0;
+    transition: color 500ms;
+    right: 25px;
+}
+
+div.blend>h2 span.expand:hover {
+    color: #8DA8E2;
+}
+
+div.blend>h2 span.expand i {
+    cursor: pointer;
+    padding: 0 4px;
+    position: absolute;
+    transition: opacity 500ms;
+}
+
+@media (min-width:768px) {
+    div.blend div.cont {
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.5) 75%, rgba(0, 0, 0, 0) 100%);
+        padding-bottom: 30px;
+        border-radius: 0;
+    }
+    div.blend.derail div.cont {
+        background: linear-gradient(to bottom, rgba(204, 153, 0, 0.8) 0%, rgba(204, 153, 0, 0.8) 75%, rgba(204, 153, 0, 0) 100%);
+    }
+}
+
+@media (min-width:992px) {
+    div.blend {
+        margin-bottom: 10px;
+    }
+}
+
+/* Stylish styling - Please have opinions and change END */
+
+/* Top navigation START */
+
+nav {
+    width: 100%;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    padding: 4px 6px;
+    background: rgba(94, 219, 88, 0.5);
+    text-shadow: 1px 1px 1px #000;
+    font-size: 16px;
+    z-index: 1;
+}
+
+nav a, span.action {
+    padding: 0 6px;
+    cursor: pointer;
+    margin: 0 2px;
+}
+
+img.action {
+    cursor: pointer;
+}
+
+span.action {
+    padding-top: 1px;
+    padding-bottom: 2px;
+}
+
+nav span.submenu {
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: 21px;
+}
+
+nav ul {
+    text-align: center;
+    display: none;
+    padding: 0;
+    margin: 5px 0 0 0;
+    font-size: 22px;
+}
+
+nav.expanded ul {
+    display: block;
+}
+
+nav li {
+    list-style: none;
+    display: inline-block;
+}
+
+nav .views {
+    display: inline-block;
+    margin: 0;
+}
+
+@media (min-width:576px) {
+    nav {
+        font-size: 18px;
+        text-align: center;
+    }
+    nav .views {
+        margin-right: 16px;
+    }
+    nav a {
+        margin: 0 3px;
+    }
+    nav span.submenu {
+        right: 2%;
+        top: 1px;
+    }
+}
+
+@media (min-width:768px) {
+    h1 {
+        font-size: 48px;
+        margin-bottom: 25px;
+    }
+    h2 {
+        font-size: 26px;
+    }
+    header {
+        text-align: left;
+        padding: 14px 25px;
+    }
+    nav {
+        text-align: left;
+        padding: 5px 17px;
+    }
+    nav span.submenu {
+        display: none;
+    }
+    nav ul {
+        float: right;
+        display: block !important;
+        margin: 0;
+        font-size: 18px;
+    }
+}
+
+/* Top Navigation END */
+
+/* Background switching START */
+
+html {
+    height: 100%;
+}
+
+html.lordaeron {
+    background: #25921F;
+}
+
+html.barrens {
+    background: #7d512c;
+}
+
+html.icecrown {
+    background: #95cbe7;
+}
+
+html.lwinter {
+    background: #444638;
+}
+
+body {
+    min-height: 100%;
+    font-family: 'Scada', Tahoma, sans-serif;
+    color: #FFCCA3;
+}
+
+body.lordaeron {
+    background: url('/static/images/lordaeronlarge.jpg'), url('/static/images/lordaeronlarge.jpg');
+    background-position: -5% top, 25% top;
+    background-repeat: repeat-x, repeat;
+}
+
+body.barrens {
+    background: url('/static/images/barrenslarge.jpg'), url('/static/images/barrenslarge.jpg');
+    background-position: 5% top, -20% top;
+    background-repeat: repeat-x, repeat;
+}
+
+body.icecrown {
+    background: url('/static/images/icecrownlarge.jpg'), url('/static/images/icecrownlarge.jpg');
+    background-position: 5% top, -50% top;
+    background-repeat: repeat-x, repeat;
+}
+
+body.lwinter {
+    background: url('/static/images/lwinterlarge.jpg'), url('/static/images/lwinterlarge.jpg');
+    background-position: 5% top, -50% top;
+    background-repeat: repeat-x, repeat;
+}
+
+@media (max-width:767px) {
+    body {
+        background-position: initial;
+    }
+    body.lordaeron {
+        background: url('/static/images/lordaeronmed.jpg');
+    }
+    body.barrens {
+        background: url('/static/images/barrensmed.jpg');
+    }
+    body.icecrown {
+        background: url('/static/images/icecrownmed.jpg');
+    }
+    body.lwinter {
+        background: url('/static/images/lwintermed.jpg');
+    }
+}
+
+@media (max-width:575px) {
+    body.lordaeron {
+        background: url('/static/images/lordaeronsmall.jpg');
+    }
+    body.barrens {
+        background: url('/static/images/barrenssmall.jpg');
+    }
+    body.icecrown {
+        background: url('/static/images/icecrownsmall.jpg');
+    }
+}
+
+/* Background switching END */
+
+/* Footer START */
+
+footer {
+    text-align: center;
+}
+
+footer>div {
+    text-align: left;
+    display: inline-block;
+    margin: 15px;
+    background: rgba(141, 168, 226, 0.4);
+    border: 1px dotted #fff;
+    border-radius: 6px;
+    padding: 5px 15px;
+    color: #ddd;
+    font-style: italic;
+    font-size: 12px;
+    text-shadow: 1px 1px 0 #333;
+}
+
+footer p {
+    margin: 0;
+}
+
+/* Footer END */
+
+/* Peep START */
+
+img.peep {
+    max-width: 100%;
+}
+
+/* Peep END */

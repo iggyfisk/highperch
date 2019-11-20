@@ -1,0 +1,10 @@
+# Python virtual environment
+env/
+
+# Python compiled/cache
+__pycache__/
+*.pyc
+
+# Editors
+.vscode
+.idea

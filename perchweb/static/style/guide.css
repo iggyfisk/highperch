@@ -1,0 +1,169 @@
+.bigtower {
+    background: #536452;
+    border-radius: 100%;
+    text-align: center;
+    overflow: hidden;
+    border: 2px solid #000;
+    margin: 0 25% 20px;
+    padding: 10% 0;
+}
+
+.bigtower img {
+    max-width: 40%;
+}
+
+img.inright, img.inleft {
+    display: block;
+    margin: 0 auto 10px;
+    max-width: 75%;
+}
+
+img.out {
+    max-width: 75%;
+    margin-bottom: 10px;
+}
+
+table.stats {
+    margin: 5px 0 20px 0;
+    color: #000;
+    font: 9px Verdana, sans-serif;
+}
+
+.stats td, .stats th {
+    border: 1px solid #fff;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 2px 1px;
+}
+
+.stats tr:first-child th {
+    background: rgba(89, 122, 192, 0.8);
+    color: #fff;
+    font-size: 12px;
+    padding: 4px 2px
+}
+
+.stats tr:first-child th:first-child {
+    border: 1px solid #fff;
+    border-left: 1px solid #fff;
+}
+
+.lightborder {
+    border: 1px solid #FFDFC6;
+    border-radius: 4px;
+}
+
+.pink, .red, .blue, .green, .yellow, .teal, .gray, .purple {
+    text-shadow: 1px 1px 1px #000;
+}
+
+.pink {
+    color: #e55bb0;
+}
+
+.red {
+    color: #ff0303;
+}
+
+.blue {
+    color: #0042ff;
+}
+
+.green {
+    color: #20c000;
+}
+
+.yellow {
+    color: #fffc01;
+}
+
+.teal {
+    color: #1ce6b9;
+}
+
+.gray {
+    color: #959697;
+}
+
+.purple {
+    color: #540081;
+}
+
+ul.team {
+    padding-left: 35px;
+}
+
+ul.team img {
+    position: absolute;
+    left: 0;
+}
+
+ul.team li {
+    list-style: none;
+    padding: 2px 0 2px 28px;
+    position: relative;
+    font-size: 12px;
+}
+
+ul.team li:first-child {
+    padding-top: 4px;
+}
+
+ul.team li:last-child {
+    padding-bottom: 0;
+}
+
+time {
+    text-decoration: underline;
+    color: #fff;
+}
+
+img.pair-top {
+    margin: 0 auto;
+    border-bottom: none;
+    border-radius: 4px 4px 0 0;
+    display: block;
+}
+
+img.pair-bot {
+    border-radius: 0 0 4px 4px;
+}
+
+@media (min-width:576px) {
+    img.inright, img.inleft {
+        max-width: 55%;
+    }
+    img.inright {
+        float: right;
+        margin-left: 10px;
+    }
+    img.inleft {
+        float: left;
+        margin-right: 10px;
+    }
+    .stats td, .stats th {
+        font-size: 10px;
+        padding: 2px 4px;
+    }
+}
+
+@media (min-width:768px) {
+    .bigtower {
+        margin: 0 35% 20px;
+        padding: 7% 0;
+    }
+    .inright, .inleft {
+        max-width: none;
+    }
+    .stats td, .stats th {
+        font-size: 11px;
+    }
+    .stats tr:first-child th {
+        border-left: none;
+    }
+    .stats tr:first-child th:first-child {
+        border-right: none;
+    }
+    img.out {
+        max-width: 100%
+    }
+}
