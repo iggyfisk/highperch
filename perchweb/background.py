@@ -6,7 +6,6 @@ as well as the listing in layout.html
 from flask import request
 
 cookie_name = 'HP_bg'
-# Todo: Icons probably
 styles = [
     {'style': 'lordaeron', 'name': 'Lordaeron', 'icon': 'lordico.png'},
     {'style': 'barrens', 'name': 'Barrens', 'icon': 'barrensico.png'},
