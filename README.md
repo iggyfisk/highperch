@@ -10,7 +10,7 @@ The `-p` option default should be your Python3 interpreter, else specify it. If 
 * Clone this repository, cwd to repo root.
 * `virtualenv env` to initialize your virtual environment
 * `source env/bin/activate` or `env\Scripts\Activate` (Windows) to enter your virtual environment
-* `pip install -r Requirements.txt`
+* `pip install -r requirements.txt`
 * For replay parsing, `yarn install`
 * `python runserver.py`
 * `http://localhost:5555/` Go!
