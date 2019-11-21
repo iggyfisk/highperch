@@ -38,6 +38,8 @@ def upload_replay():
 
     # Todo: Validation here, replay name, geoblocking etc
     replay_name = request.form['name']
+    # Proxy compatible?
+    uploader_ip = request.remote_addr
 
     replay = request.files['replay'] if 'replay' in request.files else None
     replay_filename = secure_filename(
@@ -53,7 +55,7 @@ def upload_replay():
 
     # Todo: Validation here, filesize etc
 
-    save_replay(replay, replay_filename, replay_filename_parts, replay_name)
+    save_replay(replay, replay_filename, replay_filename_parts, replay_name, uploader_ip)
     return redirect(url_for('index'))
 
 

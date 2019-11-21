@@ -4,6 +4,7 @@ CREATE TABLE IF NOT EXISTS "Replays" (
 	"BNetGameID"	TEXT NOT NULL,
 	"Name"	TEXT NOT NULL,
 	"TimeStamp"	INTEGER NOT NULL,
+	"Official"	INTEGER NOT NULL,
 	"GameType"	TEXT NOT NULL,
 	"Version"	TEXT NOT NULL,
 	"Length"	INTEGER NOT NULL,
@@ -12,7 +13,8 @@ CREATE TABLE IF NOT EXISTS "Replays" (
 	"ChatMessageCount"	INTEGER NOT NULL,
 	"Views"	INTEGER NOT NULL DEFAULT 0,
 	"Players"	TEXT NOT NULL,
-	"Chat"	TEXT NOT NULL
+	"Chat"	TEXT NOT NULL,
+	"UploaderIP"	TEXT NOT NULL
 );
 CREATE INDEX IF NOT EXISTS "IX_ReplayMessages" ON "Replays" (
 	"ChatMessageCount"

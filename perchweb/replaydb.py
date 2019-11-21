@@ -39,7 +39,7 @@ def close_connection(exception):
 
 def list_replays(filter):
     rows = query_wig_db('''
-    SELECT ID, Name, TimeStamp, GameType, Version, Length, Map, TowerCount, ChatMessageCount, Players, Views
+    SELECT ID, Name, TimeStamp, Official, GameType, Version, Length, Map, TowerCount, ChatMessageCount, Players, Views
     FROM Replays
     ORDER BY ID DESC
     ''')
@@ -75,7 +75,7 @@ def get_replay(replay_id):
     return replay_data
 
 
-def save_replay(replay, replay_filename, replay_filename_parts, replay_name):
+def save_replay(replay, replay_filename, replay_filename_parts, replay_name, uploader_ip):
     """ Parse and save replay file """
     # Todo: solid configurable temp directory
     temp_replay_path = os.path.join('temp', replay_filename)
@@ -108,16 +108,18 @@ def save_replay(replay, replay_filename, replay_filename_parts, replay_name):
             'apm': p['apm'],
             'heroCount': p['heroCount']
         } for p in replay_data['players']]
+        # Todo: create a hashset with our battle.net tags in here and match with that
+        official = 1 if len(players) > 6 else 0
         chat = [c['message'] for c in replay_data['chat']]
         tower_count = replay_data.tower_count()
         chat_message_count = len(chat)
 
         # Todo: json() function when sqlite supports it everywhere
         query_wig_db('''
-            INSERT INTO Replays(BNetGameID, Name, TimeStamp, GameType, Version, Length, Map, TowerCount, ChatMessageCount, Players, Chat)
-            VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-            ''', (bnet_id, replay_name, timestamp, gametype, version, length, map_name, tower_count, chat_message_count,
-                  json.dumps(players), json.dumps(chat)))
+            INSERT INTO Replays(BNetGameID, Name, TimeStamp, Official, GameType, Version, Length, Map, TowerCount, ChatMessageCount, Players, Chat, UploaderIP)
+            VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ''', (bnet_id, replay_name, timestamp, official, gametype, version, length, map_name, tower_count, chat_message_count,
+                  json.dumps(players), json.dumps(chat), uploader_ip))
 
         replay_id = query_wig_db('SELECT last_insert_rowid()', one=True)[0]
 
