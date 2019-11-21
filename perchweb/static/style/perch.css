@@ -370,8 +370,9 @@ footer {
     text-align: center;
 }
 
-footer>div {
+footer .chatlog {
     text-align: left;
+    white-space: pre-wrap;
     display: inline-block;
     margin: 15px;
     background: rgba(141, 168, 226, 0.4);
