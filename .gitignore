@@ -5,6 +5,9 @@ env/
 __pycache__/
 *.pyc
 
+# Gunicorn Unix socket 
+highperch.sock
+
 # Editors
 .vscode
 .idea
