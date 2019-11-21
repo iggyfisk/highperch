@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-sm-12">
+        <h2>{{ listinfo['Name'] }}</h2>
+        <div class="blend">
+            <p>{{ listinfo.upload_date() }}</p>
+            <p>{{ listinfo['Views'] }}</p>
+            <p>{{ replay.map_name() }}</p>
+            {% for (teamid, players) in replay.teams().items() %}
+            <div>
+                {% for player in players %}{{ player['name'] }}{% endfor %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

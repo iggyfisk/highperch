@@ -12,6 +12,7 @@ The `-p` option default should be your Python3 interpreter, else specify it. If 
 * `source env/bin/activate` or `env\Scripts\Activate` (Windows) to enter your virtual environment
 * `pip install -r requirements.txt`
 * For replay parsing, `yarn install`
+* `python initcontent.py` (yes/yes)
 * `python runserver.py`
 * `http://localhost:5555/` Go!
 * `deactivate` to reclaim your terminal when you're done
