@@ -4,34 +4,41 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ title }} - Highper.ch frontend test</title>
-    <link rel="stylesheet" type="text/css" href="/static/style/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="/static/style/perch.css" />
     {% block styles %}{% endblock %}
 </head>
 <body class="{{background_style}}">
-    <header>
-        <h1>high<span>per.ch</span></h1>
-    </header>
-    <div></div>
-    <nav>
-        <div class="views">
-            <a href="{{ url_for('index') }}" class="{% if nav == 'index' %}active{% endif %}">Replays</a>
-            <a href="{{ url_for('peep') }}" class="{% if nav == 'peep' %}active{% endif %}">Pictures</a>
-            <a href="{{ url_for('guide') }}" class="{% if nav == 'guide' %}active{% endif %}">Documentation</a>
+
+    <header> 
+        <div class="container">
+            <div class="row">
+                <img src="/static/images/headermain.png" />
+            </div>
         </div>
-        <span class="action submenu">▼</span>
-        <ul>
-            {% for bg in backgrounds %}
-            <li>
-                <img
-                    class="action"
-                    data-bg="{{ bg['style'] }}"
-                    src="/static/images/{{ bg['icon'] }}"
-                    title="{{ bg['name'] }}"
-                />
-            </li>
-            {% endfor %}
-        </ul>
+    </header>
+    <nav>
+        <div class="container">
+            <div class="row">
+                <div class="views">
+                    <a href="{{ url_for('index') }}" class="{% if nav == 'index' %}active{% endif %}">Replays</a>
+                    <a href="{{ url_for('peep') }}" class="{% if nav == 'peep' %}active{% endif %}">Pictures</a>
+                    <a href="{{ url_for('guide') }}" class="{% if nav == 'guide' %}active{% endif %}">Documentation</a>
+                </div>
+                <span class="action submenu">▼</span>
+                <ul>
+                    {% for bg in backgrounds %}
+                    <li>
+                        <img
+                            class="action"
+                            data-bg="{{ bg['style'] }}"
+                            src="/static/images/{{ bg['icon'] }}"
+                            title="{{ bg['name'] }}"
+                        />
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
     </nav>
     {% with messages = get_flashed_messages() %}
     {% if messages %}
@@ -53,6 +60,7 @@
         </div>
         <p>Copyright &copy; {{ year }} <a href="mailto:admin@highper.ch">the Broliance</a></p>
     </footer>
+
     <script src="/static/script/perch.js"></script>
     {% block scripts %}{% endblock %}
 </body>

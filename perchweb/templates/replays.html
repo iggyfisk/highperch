@@ -1,0 +1,14 @@
+{% macro card(replay) %}
+<div class="replay card">
+    <h3>{{ replay.title }}</h3>
+    <div>{% for player in replay.players %}
+        {{ player.name }}
+    {% endfor %}</div>
+</div>
+{% endmacro %}
+
+{% macro replay(replay) %}
+<div class="replay">
+    Big replay page here.
+</div>
+{% endmacro %}

@@ -1,0 +1,230 @@
+/* Stylish styling - Please have opinions and change START */
+
+body>.container {
+    padding-top: 20px;
+}
+
+a, span.action {
+    transition: text-shadow 300ms, color 500ms;
+}
+
+img.action {
+    transition: border-color 300ms;
+    border: 1px solid #fff0;
+    box-sizing: border-box;
+}
+
+a, a:visited {
+    color: #FFCCA3;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+a:hover, a:focus, a.active, span.action:hover, span.action.active, input.action:hover {
+    color: #fff;
+}
+
+span.action:hover, nav a:hover, input.action:hover {
+    text-shadow: 1px 1px 3px #000;
+}
+
+img.action:hover, img.action.active, input.action:hover {
+    border-color: #fff;
+}
+
+nav a {
+    text-decoration: none;
+    font-family: 'Courgette', 'Friz', Palatino, serif;
+    margin: 0;
+}
+
+b {
+    color: #FA6;
+}
+
+div.blend {
+    border-top: 1px solid rgba(0, 0, 0, 0.8);
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+
+div.blend.derail {
+    color: #EEE;
+}
+
+div.blend div.cont {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 0 0 20px 20px;
+}
+
+div.blend.derail div.cont {
+    background: rgba(204, 153, 0, 0.8);
+}
+
+div.blend>h2 {
+    margin: 0;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px 10px 5px 10px;
+    border-bottom: 1px solid #597AC0;
+}
+
+div.blend.derail>h2 {
+    background: rgba(204, 153, 0, 0.8);
+}
+
+div.blend>h2 span.expand {
+    text-shadow: none;
+    float: right;
+    position: relative;
+    color: #597AC0;
+    transition: color 500ms;
+    right: 25px;
+}
+
+div.blend>h2 span.expand:hover {
+    color: #8DA8E2;
+}
+
+div.blend>h2 span.expand i {
+    cursor: pointer;
+    padding: 0 4px;
+    position: absolute;
+    transition: opacity 500ms;
+}
+
+form.upload input {
+    width: 100%;
+    background: #444;
+    border: 1px solid #000F;
+    border-radius: 2px;
+    padding: 2px 4px;
+}
+form.upload input[type=file] {
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
+
+form.upload input[type=text] {
+    width: 100%;
+    background: #444;
+    border: 1px solid #000F;
+    border-radius: 2px;
+    padding: 2px 4px;
+}
+
+form.upload input[type=submit] {
+    width: auto;
+    padding: 2px 8px;
+}
+
+@media (min-width:768px) {
+    div.blend div.cont {
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.5) 75%, rgba(0, 0, 0, 0) 100%);
+        padding-bottom: 30px;
+        border-radius: 0;
+    }
+    div.blend.derail div.cont {
+        background: linear-gradient(to bottom, rgba(204, 153, 0, 0.8) 0%, rgba(204, 153, 0, 0.8) 75%, rgba(204, 153, 0, 0) 100%);
+    }
+}
+
+@media (min-width:992px) {
+    div.blend {
+        margin-bottom: 10px;
+    }
+}
+
+/* Stylish styling - Please have opinions and change END */
+
+/* Background switching START */
+
+html {
+    height: 100%;
+}
+
+html.lordaeron {
+    background: #25921F;
+}
+
+html.barrens {
+    background: #7d512c;
+}
+
+html.icecrown {
+    background: #95cbe7;
+}
+
+html.lwinter {
+    background: #444638;
+}
+
+body {
+    min-height: 100%;
+    font-family: 'Scada', Tahoma, sans-serif;
+    color: #FFCCA3;
+}
+
+body.lordaeron {
+    background: url('/static/images/lordaeronlarge.jpg'), url('/static/images/lordaeronlarge.jpg');
+    background-position: -5% top, 25% top;
+    background-repeat: repeat-x, repeat;
+}
+
+body.barrens {
+    background: url('/static/images/barrenslarge.jpg'), url('/static/images/barrenslarge.jpg');
+    background-position: 5% top, -20% top;
+    background-repeat: repeat-x, repeat;
+}
+
+body.icecrown {
+    background: url('/static/images/icecrownlarge.jpg'), url('/static/images/icecrownlarge.jpg');
+    background-position: 5% top, -50% top;
+    background-repeat: repeat-x, repeat;
+}
+
+body.lwinter {
+    background: url('/static/images/lwinterlarge.jpg'), url('/static/images/lwinterlarge.jpg');
+    background-position: 5% top, -50% top;
+    background-repeat: repeat-x, repeat;
+}
+
+@media (max-width:767px) {
+    body {
+        background-position: initial;
+    }
+    body.lordaeron {
+        background: url('/static/images/lordaeronmed.jpg');
+    }
+    body.barrens {
+        background: url('/static/images/barrensmed.jpg');
+    }
+    body.icecrown {
+        background: url('/static/images/icecrownmed.jpg');
+    }
+    body.lwinter {
+        background: url('/static/images/lwintermed.jpg');
+    }
+}
+
+@media (max-width:575px) {
+    body.lordaeron {
+        background: url('/static/images/lordaeronsmall.jpg');
+    }
+    body.barrens {
+        background: url('/static/images/barrenssmall.jpg');
+    }
+    body.icecrown {
+        background: url('/static/images/icecrownsmall.jpg');
+    }
+}
+
+/* Background switching END */
+
+/* Peep START */
+
+img.peep {
+    max-width: 100%;
+}
+
+/* Peep END */
