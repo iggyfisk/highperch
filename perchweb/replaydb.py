@@ -108,8 +108,7 @@ def save_replay(replay, replay_filename, replay_filename_parts, replay_name, upl
             'apm': p['apm'],
             'heroCount': p['heroCount']
         } for p in replay_data['players']]
-        # Todo: create a hashset with our battle.net tags in here and match with that
-        official = 1 if len(players) > 6 else 0
+        official = 1 if replay_data.official() else 0
         chat = [c['message'] for c in replay_data['chat']]
         tower_count = replay_data.tower_count()
         chat_message_count = len(chat)
