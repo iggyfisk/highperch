@@ -13,8 +13,8 @@ The `-p` option default should be your Python3 interpreter, else specify it. If 
 * `pip install -r requirements.txt`
 * For replay parsing, `yarn install`
 * `python initcontent.py` (yes/yes)
-* `python runserver.py`
-* `http://localhost:5555/` Go!
+* `python perchweb/app.py`
+* `http://localhost:5000/` Go!
 * `deactivate` to reclaim your terminal when you're done
 
 ### Reasonable editors

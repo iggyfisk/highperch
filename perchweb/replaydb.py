@@ -6,39 +6,42 @@ import json
 import sqlite3
 from datetime import datetime
 from flask import flash, g
-from perchweb import app
-from perchweb.models.replay import Replay, ReplayListInfo
-
+from models.replay import Replay, ReplayListInfo
+import filepaths
 
 class ReplayParsingException(Exception):
     """Known parsing error with user readable message"""
 
 
-def get_wig_db():
-    db = getattr(g, '_wig_database', None)
-    if db is None:
-        db = g._wig_database = sqlite3.connect('wig.db')
-        db.row_factory = sqlite3.Row
-    return db
+context_db_key = '_wig_db'
 
 
-def query_wig_db(query, args=(), one=False):
-    cursor = get_wig_db().execute(query, args)
+def get_connection():
+    wig_db = getattr(g, context_db_key, None)
+    if wig_db is None:        
+        wig_db = sqlite3.connect(filepaths.get_db('wig.db'))
+        wig_db.row_factory = sqlite3.Row
+        setattr(g, context_db_key, wig_db)
+    return wig_db
+
+
+def query(query, args=(), one=False):
+    cursor = get_connection().execute(query, args)
     results = cursor.fetchall()
     cursor.close()
     return (results[0] if results else None) if one else results
 
 
-@app.teardown_appcontext
-def close_connection(exception):
-    wig_db = getattr(g, '_wig_database', None)
+def close_connection():
+    wig_db = getattr(g, context_db_key, None)
     if wig_db is not None:
         wig_db.commit()
         wig_db.close()
+        setattr(g, context_db_key, None)
 
 
 def list_replays(filter):
-    rows = query_wig_db('''
+    rows = query('''
     SELECT ID, Name, TimeStamp, Official, GameType, Version, Length, Map, TowerCount, ChatMessageCount, Players, Views
     FROM Replays
     ORDER BY ID DESC
@@ -50,10 +53,10 @@ def list_replays(filter):
 def get_replay_listinfo(replay_id, inc_views=False):
     """ Load the web-specific replay info from DB """
     if inc_views:
-        query_wig_db(
+        query(
             'UPDATE Replays SET Views = Views + 1 WHERE ID = ?', (replay_id,))
 
-    row = query_wig_db('''
+    row = query('''
         SELECT Name, TimeStamp, Views
         FROM Replays
         WHERE ID = ?
@@ -64,8 +67,7 @@ def get_replay_listinfo(replay_id, inc_views=False):
 
 def get_replay(replay_id):
     """ Load full replay data from JSON """
-    # Todo: solid configurable data directories
-    data_path = os.path.join('replaydata', f"{replay_id}.json")
+    data_path = filepaths.get_replay_data(f"{replay_id}.json")
 
     if not os.path.isfile(data_path):
         return None
@@ -77,15 +79,14 @@ def get_replay(replay_id):
 
 def save_replay(replay, replay_filename, replay_filename_parts, replay_name, uploader_ip):
     """ Parse and save replay file """
-    # Todo: solid configurable temp directory
-    temp_replay_path = os.path.join('temp', replay_filename)
-    temp_data_path = os.path.join('temp', f'{replay_filename_parts[0]}.json')
+    temp_replay_path = filepaths.get_temp(replay_filename)
+    temp_data_path = filepaths.get_temp(f'{replay_filename_parts[0]}.json')
     replay.save(temp_replay_path)
 
     # From here on out we need to clean up if anything goes wrong
     try:
         parse_result = subprocess.run(
-            ["node", "parsereplay.js", temp_replay_path, temp_data_path])
+            ["node", filepaths.get_path("../parsereplay.js"), temp_replay_path, temp_data_path])
         if parse_result.returncode > 0:
             raise ReplayParsingException("Replay parsing failed")
 
@@ -114,18 +115,17 @@ def save_replay(replay, replay_filename, replay_filename_parts, replay_name, upl
         chat_message_count = len(chat)
 
         # Todo: json() function when sqlite supports it everywhere
-        query_wig_db('''
+        query('''
             INSERT INTO Replays(BNetGameID, Name, TimeStamp, Official, GameType, Version, Length, Map, TowerCount, ChatMessageCount, Players, Chat, UploaderIP)
             VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             ''', (bnet_id, replay_name, timestamp, official, gametype, version, length, map_name, tower_count, chat_message_count,
                   json.dumps(players), json.dumps(chat), uploader_ip))
 
-        replay_id = query_wig_db('SELECT last_insert_rowid()', one=True)[0]
+        replay_id = query(
+            'SELECT last_insert_rowid()', one=True)[0]
 
-        # Todo: solid configurable data directories
-        replay_path = os.path.join(
-            'perchweb', 'static', 'replays', f"{replay_id}.w3g")
-        data_path = os.path.join('replaydata', f"{replay_id}.json")
+        replay_path = filepaths.get_replay(f"{replay_id}.w3g")
+        data_path = filepaths.get_replay_data(f"{replay_id}.json")
         os.rename(temp_replay_path, replay_path)
         os.rename(temp_data_path, data_path)
 
