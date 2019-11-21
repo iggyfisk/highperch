@@ -380,7 +380,7 @@ p {
 
 @media (min-width: 400px) {
   .container {
-    width: 85%;
+    width: 90%;
     padding: 0;
   }
 }
@@ -822,7 +822,6 @@ img.action {
 
 a, a:visited {
   color: #FFCCA3;
-  text-decoration: underline;
   font-weight: bold;
 }
 
@@ -846,57 +845,6 @@ nav a {
 
 b {
   color: #FA6;
-}
-
-div.blend {
-  border-top: 1px solid rgba(0, 0, 0, 0.8);
-  overflow: hidden;
-  margin-bottom: 15px;
-}
-
-div.blend.derail {
-  color: #EEE;
-}
-
-div.blend div.cont {
-  background: rgba(0, 0, 0, 0.5);
-  padding: 10px;
-  border-radius: 0 0 20px 20px;
-}
-
-div.blend.derail div.cont {
-  background: rgba(204, 153, 0, 0.8);
-}
-
-div.blend > h2 {
-  margin: 0;
-  background: rgba(0, 0, 0, 0.5);
-  padding: 10px 10px 5px 10px;
-  border-bottom: 1px solid #597AC0;
-}
-
-div.blend.derail > h2 {
-  background: rgba(204, 153, 0, 0.8);
-}
-
-div.blend > h2 span.expand {
-  text-shadow: none;
-  float: right;
-  position: relative;
-  color: #597AC0;
-  transition: color 500ms;
-  right: 25px;
-}
-
-div.blend > h2 span.expand:hover {
-  color: #8DA8E2;
-}
-
-div.blend > h2 span.expand i {
-  cursor: pointer;
-  padding: 0 4px;
-  position: absolute;
-  transition: opacity 500ms;
 }
 
 form.upload input {
@@ -941,6 +889,21 @@ form.upload input[type=submit] {
     margin-bottom: 10px;
   }
 }
+.top-controls {
+  display: flex;
+  margin-bottom: 16px;
+}
+.top-controls .top-control {
+  padding: 8px;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.top-controls form {
+  display: flex;
+}
+.top-controls form input {
+  margin: 8px;
+}
+
 /* Stylish styling - Please have opinions and change END */
 /* Background switching START */
 html {
@@ -1168,9 +1131,37 @@ footer p {
 }
 
 .replay {
+  border: 1px solid black;
   background: rgba(0, 0, 0, 0.5);
   margin-bottom: 16px;
   padding: 8px;
+  display: flex;
+  text-decoration: none;
+}
+.replay .minimap {
+  display: none;
+  width: 100px;
+  height: 100px;
+  margin-right: 8px;
+  border: 1px solid black;
+  flex: none;
+}
+.replay .teams {
+  font-size: -1px;
+}
+.replay .details {
+  width: 100%;
+}
+.replay .details .header {
+  display: flex;
+}
+.replay .details .header a.title {
+  flex: auto;
+  margin-bottom: 0;
+}
+.replay .details .download {
+  flex-basis: 100px;
+  border: 1px solid black;
 }
 
 /*# sourceMappingURL=perch.css.map */

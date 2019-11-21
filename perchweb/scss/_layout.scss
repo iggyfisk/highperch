@@ -16,7 +16,6 @@ img.action {
 
 a, a:visited {
     color: #FFCCA3;
-    text-decoration: underline;
     font-weight: bold;
 }
 
@@ -40,57 +39,6 @@ nav a {
 
 b {
     color: #FA6;
-}
-
-div.blend {
-    border-top: 1px solid rgba(0, 0, 0, 0.8);
-    overflow: hidden;
-    margin-bottom: 15px;
-}
-
-div.blend.derail {
-    color: #EEE;
-}
-
-div.blend div.cont {
-    background: rgba(0, 0, 0, 0.5);
-    padding: 10px;
-    border-radius: 0 0 20px 20px;
-}
-
-div.blend.derail div.cont {
-    background: rgba(204, 153, 0, 0.8);
-}
-
-div.blend>h2 {
-    margin: 0;
-    background: rgba(0, 0, 0, 0.5);
-    padding: 10px 10px 5px 10px;
-    border-bottom: 1px solid #597AC0;
-}
-
-div.blend.derail>h2 {
-    background: rgba(204, 153, 0, 0.8);
-}
-
-div.blend>h2 span.expand {
-    text-shadow: none;
-    float: right;
-    position: relative;
-    color: #597AC0;
-    transition: color 500ms;
-    right: 25px;
-}
-
-div.blend>h2 span.expand:hover {
-    color: #8DA8E2;
-}
-
-div.blend>h2 span.expand i {
-    cursor: pointer;
-    padding: 0 4px;
-    position: absolute;
-    transition: opacity 500ms;
 }
 
 form.upload input {
@@ -133,6 +81,21 @@ form.upload input[type=submit] {
     div.blend {
         margin-bottom: 10px;
     }
+}
+
+.top-controls {
+    display:flex;
+    .top-control {
+        padding: $padding;
+        background-color: $card-background-color;
+    }
+    form {
+        display: flex;
+        input {
+            margin: $margin / 2;
+        }
+    }
+    margin-bottom: $margin;
 }
 
 /* Stylish styling - Please have opinions and change END */
