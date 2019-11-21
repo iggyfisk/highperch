@@ -1,0 +1,22 @@
+footer {
+    text-align: center;
+
+    p {
+        margin: 0;
+    }
+
+    .chatlog {
+        text-align: left;
+        white-space: pre-wrap;
+        display: inline-block;
+        margin: 15px;
+        background: rgba(141, 168, 226, 0.4);
+        border: 1px dotted #fff;
+        border-radius: 6px;
+        padding: 5px 15px;
+        color: #ddd;
+        font-style: italic;
+        font-size: 12px;
+        text-shadow: 1px 1px 0 #333;
+    }
+}

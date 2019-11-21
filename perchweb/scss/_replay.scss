@@ -1,0 +1,38 @@
+.replay {
+
+    border:1px solid black;
+    background: $card-background-color;
+    margin-bottom: $margin;
+    padding: $padding;
+    display:flex;
+    text-decoration: none;
+
+    .minimap {
+        display:none;  
+        width: 100px;
+        height: 100px;
+        margin-right: $padding;
+        border:1px solid black;
+        flex: none;
+    }
+
+    .teams {
+        font-size:-1px;
+    }
+
+    .details {
+        width: 100%;
+        .header {
+            display:flex;
+            a.title {
+                flex: auto;
+                margin-bottom:0;
+            }
+        }
+
+        .download {
+            flex-basis: 100px;
+            border: 1px solid black;
+        }
+    }
+}

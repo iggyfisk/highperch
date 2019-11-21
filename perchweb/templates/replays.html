@@ -1,0 +1,31 @@
+{% macro card(replay) %}
+<div class="replay card">
+    <div class="minimap">Minimap here</div>
+    <div class="details">
+        <div class="header">
+            <a class="title" href="{{ url_for('views.giview_replay', replay_id=replay['ID']) }}">
+                {{ replay['Name'] }} {{ replay['Map'] }}
+            </a>
+            <a class="download" href="/download/replay">
+                Download
+            </a>
+        </div>
+        <div class="teams">
+            {% for (teamid, players) in replay.teams().items() %}
+
+                {% for player in players %}
+                    <a href="/player/id/">{{ player['name'] }}</a> 
+                {% endfor %}
+
+            {% if not loop.last %} vs {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endmacro %}
+
+{% macro replay(replay) %}
+<div class="replay">
+    Big replay page here.
+</div>
+{% endmacro %}

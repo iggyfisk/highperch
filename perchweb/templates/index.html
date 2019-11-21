@@ -1,80 +1,26 @@
 {% extends "layout.html" %}
+{% import "replays.html" as replaymacros %}
 
 {% block content %}
-<div class="row">
-    <div class="col-sm-12">
-        <div class="blend">
-            <h2>Contribute replay</h2>
-            <div class="cont">
-                <p>Add a valid Reforged .w3g to the librarium</p>                
-                <form class="upload" action="/upload" method="POST" enctype="multipart/form-data" autocomplete="off">
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <input type="file" name="replay" accept=".w3g" required />
-                        </div>
-                        <div class="col-sm-6">
-                            <input type="text" name="name" minlength="6" maxlength="50" placeholder="Type a name" required />
-                        </div>
-                        <div class="col-sm-2 text-center">
-                            <input type="Submit" class="action" value="Upload" />
-                        </div>                      
-                    </div>
-                </form>              
-            </div>
-        </div>
+<div class="row top-controls">
+    <div class="eight columns top-control">
+        <h2>Contribute replay</h2>      
+        <form class="upload" action="/upload" method="POST" enctype="multipart/form-data" autocomplete="off">
+            <input type="file" name="replay" accept=".w3g" required />
+            <input type="text" name="name" minlength="6" maxlength="50" placeholder="Name your replay" required />
+            <input type="Submit" class="action" value="Upload" />        
+        </form>        
+    </div>
+    <div class="four columns top-control">
+        <h2 class="closed">Filter<span class="expand"><i class="fa fa-arrow-circle-down"></i><i class="fa fa-arrow-circle-up"></i></span></h2>
+        <p>[x] Official replays only </p>
+        <p>[ ] Show noob vs noob</p>
     </div>
 </div>
-<div class="row">
-    <div class="col-sm-6 col-md-4 col-lg-3 sm-pull-right">
-        <div class="blend">
-            <h2 class="closed">Filter<span class="expand"><i class="fa fa-arrow-circle-down"></i><i class="fa fa-arrow-circle-up"></i></span></h2>
-            <div class="cont">
-                <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Curabitur eget enim id tortor semper facilisis. Quisque vel leo nec leo rutrum commodo vitae nec magna. Mauris feugiat ante sit amet lobortis mollis. Pellentesque egestas ac arcu sit amet posuere. Suspendisse mollis arcu vitae condimentum rhoncus. Cras suscipit tincidunt sapien nec lobortis.</p>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-6 col-md-8 col-lg-9 sm-pull-right">
-        <div class="blend">
-            {% for replay in replays %}
-                <div class="replay card">
-                    <h3>
-                        <a href="{{ url_for('views.view_replay', replay_id=replay['ID']) }}">
-                            {{ replay['Name'] }} {{ replay['Map'] }}
-                        </a>
-                    </h3>
-                    {% for (teamid, players) in replay.teams().items() %}
-                    <div>
-                        {% for player in players %}{{ player['name'] }}{% endfor %}
-                    </div>
-                    {% endfor %}
-                </div>
-            {% endfor %}
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-4">
-        <div class="blend">
-            <h2 class="closed">Importance<span class="expand"><i class="fa fa-arrow-circle-down"></i><i class="fa fa-arrow-circle-up"></i></span></h2>
-            <div class="cont">
-                <p>Aliquam et rhoncus lorem. Duis <a href="#">rutrum quam</a> sed dui pretium condimentum. Cras dapibus ultrices nisl. Morbi ornare enim eu felis volutpat iaculis. Suspendisse lobortis diam ut libero egestas porttitor. Donec hendrerit erat in turpis facilisis, at eleifend libero adipiscing. Integer venenatis vestibulum augue, at euismod orci semper eget. Maecenas lobortis libero at orci molestie elementum. Sed purus nulla, volutpat ut tempus vitae, elementum ut neque. </p>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="blend">
-            <h2 class="closed loader">Ajax loaded<span class="expand"><i class="fa fa-arrow-circle-down"></i><i class="fa fa-arrow-circle-up"></i></span></h2>
-            <div class="cont">
-                <p>Aliquam et rhoncus lorem. Duis rutrum quam sed dui pretium condimentum. Cras dapibus ultrices nisl. Morbi ornare enim eu felis volutpat iaculis. Suspendisse lobortis diam ut libero egestas porttitor. Donec hendrerit erat in turpis facilisis, at eleifend libero adipiscing. Integer venenatis vestibulum augue, at euismod orci semper eget. Maecenas lobortis libero at orci molestie elementum. Sed purus nulla, volutpat ut tempus vitae, elementum ut neque. </p>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="blend">
-            <div class="cont">
-                <p>Sed sit amet fringilla dui, lobortis mattis sapien. Praesent fermentum lorem id ligula facilisis suscipit. Aenean a tempor dolor. Aliquam vehicula odio nec mauris auctor rutrum. Fusce eget consequat elit. Aliquam vitae ipsum non mi scelerisque tempor nec eget odio. Sed faucibus leo sit amet mi suscipit pretium. Integer aliquam eros nisi, in mattis diam accumsan porttitor. Sed sodales enim eu tellus tempus tincidunt. Sed dapibus lorem varius tortor facilisis aliquam. Integer sagittis varius sem, ac malesuada augue fermentum ac. Proin vitae lacus tincidunt, dictum nulla eget, mattis metus. Nullam ultrices, odio non mollis dapibus, elit lorem venenatis ligula, vel mollis metus odio a mi. Suspendisse potenti. Vivamus ac odio a mauris tincidunt laoreet quis quis nulla. Etiam convallis massa eget mauris imperdiet pulvinar. </p>
-            </div>
-        </div>
-    </div>
-</div>
+<div class="replay-bar">Showing {{ replays|length }} replays</div>
+
+{% for replay in replays %}
+    {{ replaymacros.card(replay) }}
+{% endfor %}
+
 {% endblock %}
