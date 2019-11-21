@@ -46,11 +46,9 @@
         {% block content %}{% endblock %}
     </div>
     <footer>
-        <div>
-            {% for msg in chatlog['messages'] %}
-            <p>{{ msg }}</p>
-            {% endfor %}
-        </div>
+        {% if chatlog %}
+        <div class="chatlog">{{ chatlog['text'] }}</div>
+        {% endif %}
         <p>Copyright &copy; {{ year }} <a href="mailto:admin@highper.ch">the Broliance</a></p>
     </footer>
     <script src="/static/script/perch.js"></script>
