@@ -1111,9 +1111,12 @@ header h1 {
 footer {
   text-align: center;
 }
-
-footer > div {
+footer p {
+  margin: 0;
+}
+footer .chatlog {
   text-align: left;
+  white-space: pre-wrap;
   display: inline-block;
   margin: 15px;
   background: rgba(141, 168, 226, 0.4);
@@ -1124,10 +1127,6 @@ footer > div {
   font-style: italic;
   font-size: 12px;
   text-shadow: 1px 1px 0 #333;
-}
-
-footer p {
-  margin: 0;
 }
 
 .replay {
