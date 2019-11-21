@@ -7,6 +7,12 @@ from collections import defaultdict
 from datetime import datetime
 from perchweb.models.player import Player
 
+# Todo: gather all the bnet tags
+official_names = {
+    "iggpig#123",
+    "ploter#2"
+}
+
 
 class ReplayListInfo(dict):
     """ Replay list information and partial data, initialized from a row in wig_db """
@@ -50,3 +56,8 @@ class Replay(dict):
     def map_name(self):
         """ More presentable map name """
         return os.path.splitext(os.path.basename(self['map']['file']))[0]
+
+    def official(self):
+        """ Returns True if an officially sanctioned replay else False """
+        # Todo: check if any name in self['players'] in official_names
+        return len(self['players']) > 6

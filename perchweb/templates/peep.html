@@ -7,7 +7,7 @@
             <h2>Peep this pic</h2>
             <div class="cont text-center">
                 <a href="{{ url_for('peep') }}">
-                    <img class="peep" src="{{pic_url}}" />
+                    <img class="peep" src="{{ pic['url'] }}" />
                 </a>
             </div>
         </div>
