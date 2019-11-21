@@ -904,8 +904,6 @@ form.upload input[type=submit] {
   margin: 8px;
 }
 
-/* Stylish styling - Please have opinions and change END */
-/* Background switching START */
 html {
   height: 100%;
 }
@@ -1161,6 +1159,35 @@ footer .chatlog {
 .replay .details .download {
   flex-basis: 100px;
   border: 1px solid black;
+}
+
+.blend {
+  border-top: 1px solid rgba(0, 0, 0, 0.8);
+  overflow: hidden;
+  margin-bottom: 15px;
+}
+.blend.derail {
+  color: #EEE;
+}
+.blend.derail h2 {
+  background: rgba(204, 153, 0, 0.8);
+}
+.blend.derail .cont {
+  background: linear-gradient(to bottom, rgba(204, 153, 0, 0.8) 0%, rgba(204, 153, 0, 0.8) 75%, rgba(204, 153, 0, 0) 100%);
+}
+.blend h2 {
+  margin: 0;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 10px 10px 5px 10px;
+  border-bottom: 1px solid #597AC0;
+  font-family: Friz, Georgia, serif;
+  text-shadow: 2px 2px 1px #000;
+}
+.blend .cont {
+  padding: 10px;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.5) 75%, rgba(0, 0, 0, 0) 100%);
+  padding-bottom: 30px;
+  border-radius: 0;
 }
 
 /*# sourceMappingURL=perch.css.map */
