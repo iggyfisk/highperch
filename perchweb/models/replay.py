@@ -5,7 +5,7 @@ import os
 import json
 from collections import defaultdict
 from datetime import datetime
-from perchweb.models.player import Player
+from models.player import Player
 
 # Todo: gather all the bnet tags
 official_names = {

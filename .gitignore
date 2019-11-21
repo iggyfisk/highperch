@@ -18,7 +18,10 @@ node_modules/
 # OS cache
 .DS_Store
 
-# Content
+# Config
+perchweb/app.cfg
+
+# Content, default paths
 replaydata/*.json
 perchweb/static/replays/*.w3g
 temp/*

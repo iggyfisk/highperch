@@ -15,9 +15,9 @@
     <div></div>
     <nav>
         <div class="views">
-            <a href="{{ url_for('index') }}" class="{% if nav == 'index' %}active{% endif %}">Replays</a>
-            <a href="{{ url_for('peep') }}" class="{% if nav == 'peep' %}active{% endif %}">Pictures</a>
-            <a href="{{ url_for('guide') }}" class="{% if nav == 'guide' %}active{% endif %}">Documentation</a>
+            <a href="{{ url_for('views.index') }}" class="{% if nav == 'index' %}active{% endif %}">Replays</a>
+            <a href="{{ url_for('views.peep') }}" class="{% if nav == 'peep' %}active{% endif %}">Pictures</a>
+            <a href="{{ url_for('views.guide') }}" class="{% if nav == 'guide' %}active{% endif %}">Documentation</a>
         </div>
         <span class="action submenu">▼</span>
         <ul>

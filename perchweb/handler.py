@@ -5,8 +5,8 @@ There's probably a standard way to do this, but homerolling until I discover it
 
 from datetime import datetime
 from flask import render_template
-from perchweb.background import add_background
-from perchweb.chatlog import add_chatlog
+from background import add_background
+from chatlog import add_chatlog
 
 def standard_page(template, title, **attributes):
     bg_attributes = add_background()

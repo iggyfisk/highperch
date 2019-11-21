@@ -3,14 +3,15 @@ Routes and views for the flask application.
 """
 
 import os
-from flask import url_for, request, redirect, flash
+from flask import Blueprint, url_for, request, redirect, flash
 from werkzeug.utils import secure_filename
-from perchweb import app
-from perchweb.handler import standard_page
-from perchweb.replaydb import list_replays, get_replay, get_replay_listinfo, save_replay
-from perchweb.peep import get_pic
+from handler import standard_page
+from replaydb import list_replays, get_replay, get_replay_listinfo, save_replay
+from peep import get_pic
 
-@app.route('/')
+routes = Blueprint('views', __name__)
+
+@routes.route('/')
 def index():
     """Index"""
     # Todo: filter from query
@@ -18,7 +19,7 @@ def index():
 
     return standard_page('index.html', 'Replays', nav='index', replays=replays)
 
-@app.route('/replay/<int:replay_id>')
+@routes.route('/replay/<int:replay_id>')
 def view_replay(replay_id):
     """Replay details"""
     replay_listinfo = get_replay_listinfo(replay_id, inc_views=True)
@@ -26,12 +27,12 @@ def view_replay(replay_id):
     
     if replay_listinfo is None or replay is None:
         # Todo: 404
-        return redirect(url_for('index'))
+        return redirect(url_for('views.index'))
 
     return standard_page('replay.html', replay_listinfo['Name'], replay=replay, listinfo=replay_listinfo)
 
 
-@app.route('/upload', methods=['POST'])
+@routes.route('/upload', methods=['POST'])
 def upload_replay():
     """User replay uploads"""
 
@@ -45,30 +46,30 @@ def upload_replay():
         replay.filename) if replay is not None else None
     if not replay_filename:
         flash('No replay file selected')
-        return redirect(url_for('index'))
+        return redirect(url_for('views.index'))
 
     replay_filename_parts = os.path.splitext(replay_filename)
     if len(replay_filename_parts) < 2 or replay_filename_parts[1] != '.w3g':
         flash('Not a .w3g replay')
-        return redirect(url_for('index'))
+        return redirect(url_for('views.index'))
 
     # Todo: Validation here, filesize etc
 
     save_replay(replay, replay_filename, replay_filename_parts, replay_name, uploader_ip)
-    return redirect(url_for('index'))
+    return redirect(url_for('views.index'))
 
 
-@app.route('/highperching')
+@routes.route('/highperching')
 def guide():
     """The art"""
     return standard_page('guide.html', 'The Art of Highperching', nav='guide')
 
 
-@app.route('/peep/', defaults={'pic_id': None})
-@app.route('/peep/<int:pic_id>')
+@routes.route('/peep/', defaults={'pic_id': None})
+@routes.route('/peep/<int:pic_id>')
 def peep(pic_id):
     """Sometimes random pictures"""
     pic = get_pic(pic_id)
     return standard_page('peep.html', 'Peep a pic', nav='peep',
                          pic=pic,
-                         perma=url_for('peep', pic_id=pic['id']))
+                         perma=url_for('views.peep', pic_id=pic['id']))
