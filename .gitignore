@@ -12,6 +12,9 @@ __pycache__/
 # JS dependencies
 node_modules/
 
+# OS cache
+.DS_Store
+
 # Content
 replaydata/*.json
 perchweb/static/replays/*.w3g
