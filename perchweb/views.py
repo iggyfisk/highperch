@@ -12,8 +12,7 @@ from flask import url_for, request, redirect, flash, g
 from werkzeug.utils import secure_filename
 from perchweb import app
 from perchweb.handler import standard_page
-from perchweb.models.player import Player
-from perchweb.models.replay import Replay
+from perchweb.models.replay import Replay, ReplayListing
 
 
 class ReplayParsingException(Exception):
@@ -47,11 +46,13 @@ def close_connection(exception):
 def index():
     """Index"""
 
-    replays = [ 
-        Replay("Quick 1v1", [Player("bimàldo goodmanners"), Player("iggy")]), 
-        Replay("fours", [Player("mata"), Player("grubby"), Player("tillerman"), Player("th000")]), 
-        Replay("comedy \"third\" game", [Player("timg4strok"), Player("AI (Easy)")])
-    ]
+    rows = query_wig_db('''
+        SELECT ID, Name, TimeStamp, GameType, Version, Length, Map, TowerCount, ChatMessageCount, Players
+        FROM Replays
+        ORDER BY ID DESC
+        ''')
+
+    replays = [ReplayListing(**r) for r in rows]
 
     return standard_page('index.html', 'Replays', nav='index', replays=replays)
 
@@ -89,7 +90,7 @@ def upload_replay():
             raise ReplayParsingException("Replay parsing failed")
 
         with open(temp_data_path) as replay_json:
-            replay_data = json.load(replay_json)
+            replay_data = Replay(**json.load(replay_json))
 
         # Todo: more validation, like gametype and version
         bnet_id = replay_data['id']
@@ -107,8 +108,7 @@ def upload_replay():
             'heroCount': p['heroCount']
         } for p in replay_data['players']]
         chat = [c['message'] for c in replay_data['chat']]
-        # Todo: iterate over replay_data['players'][i]['buildings']['summary'] and add all the tower counts
-        tower_count = 1
+        tower_count = replay_data.tower_count()
         chat_message_count = len(chat)
 
         # Todo: json() function when sqlite supports it everywhere

@@ -37,10 +37,12 @@
         <div class="blend">
             {% for replay in replays %}
                 <div class="replay card">
-                    <h3>{{ replay.title }}</h3>
-                    <div>{% for player in replay.players %}
-                        {{ player.name }}
-                    {% endfor %}</div>
+                    <h3>{{ replay['Name'] }} {{ replay['Map'] }}</h3>
+                    {% for (teamid, players) in replay.teams().items() %}
+                    <div>
+                        {% for player in players %}{{ player['name'] }}{% endfor %}
+                    </div>
+                    {% endfor %}
                 </div>
             {% endfor %}
         </div>
