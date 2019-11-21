@@ -11,5 +11,9 @@ if __name__ == '__main__':
         PORT = int(environ.get('SERVER_PORT', '5555'))
     except ValueError:
         PORT = 5555
-    app.secret_key = 'debug'
+    if environ.get('HIGHPERCH_ENVIRONMENT') == "production":
+        app.secret_key = environ.get('HIGHPERCH_FLASK_KEY')
+        app.config['DEBUG'] = False
+    else:
+        app.secret_key = 'debug'
     app.run(HOST, PORT, debug=True)
