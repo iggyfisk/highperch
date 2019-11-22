@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ title }} - Highper.ch frontend test</title>
-    <link rel="stylesheet" type="text/css" href="/static/style/perch.css" />
+    <link rel="stylesheet" type="text/css" href="/static/style/perch.css?h={{ config['STATIC_HASH'] }}" />
     {% block styles %}{% endblock %}
 </head>
 <body class="{{background_style}}">
@@ -59,7 +59,7 @@
         <p>Copyright &copy; {{ year }} <a href="mailto:admin@highper.ch">the Broliance</a></p>
     </footer>
 
-    <script src="/static/script/perch.js"></script>
+    <script src="/static/script/perch.js?h={{ config['STATIC_HASH'] }}"></script>
     {% block scripts %}{% endblock %}
 </body>
 </html>
