@@ -1,16 +1,23 @@
-header {
-    background: rgba(0, 0, 0, 0.4);
-    text-align: left;
+body {
+    padding-top:50px;
+}
 
-    h1 {
-        font-size: 40px;
-        margin: 0;
-        color: #ccac8f;
-        font-family:"highperch";
-        font-size:80px;
-        cursor: default;
-        .perch {
-            color: #e6d9cf;
-        }
+h1 {
+    font-size: 40px;
+    margin: 0;
+    color: #ccac8f;
+    font-family:"highperch";
+    font-size:80px;
+    letter-spacing:-6px;
+    cursor: default;
+    position: relative;
+    top: -71px;
+    height: 25px;
+    margin-bottom:-25px;
+    z-index: 2;
+    text-shadow: 4px 1px 0px #000;
+    //z-index: 2;
+    .perch {
+        color: #e6d9cf;
     }
 }

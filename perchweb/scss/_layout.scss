@@ -91,30 +91,32 @@ body.lwinter {
 @media (max-width:767px) {
     body {
         background-position: initial;
-    }
-    body.lordaeron {
-        background: url('/static/images/lordaeronmed.jpg');
-    }
-    body.barrens {
-        background: url('/static/images/barrensmed.jpg');
-    }
-    body.icecrown {
-        background: url('/static/images/icecrownmed.jpg');
-    }
-    body.lwinter {
-        background: url('/static/images/lwintermed.jpg');
+        &.lordaeron {
+            background: url('/static/images/lordaeronmed.jpg');
+        }
+        &.barrens {
+            background: url('/static/images/barrensmed.jpg');
+        }
+        &.icecrown {
+            background: url('/static/images/icecrownmed.jpg');
+        }
+        &.lwinter {
+            background: url('/static/images/lwintermed.jpg');
+        }
     }
 }
 
 @media (max-width:575px) {
-    body.lordaeron {
-        background: url('/static/images/lordaeronsmall.jpg');
-    }
-    body.barrens {
-        background: url('/static/images/barrenssmall.jpg');
-    }
-    body.icecrown {
-        background: url('/static/images/icecrownsmall.jpg');
+    body{
+        &.lordaeron {
+            background: url('/static/images/lordaeronsmall.jpg');
+        }
+        &.barrens {
+            background: url('/static/images/barrenssmall.jpg');
+        }
+        &.icecrown {
+            background: url('/static/images/icecrownsmall.jpg');
+        }
     }
 }
 

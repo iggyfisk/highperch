@@ -903,19 +903,15 @@ body.lwinter {
   body {
     background-position: initial;
   }
-
   body.lordaeron {
     background: url("/static/images/lordaeronmed.jpg");
   }
-
   body.barrens {
     background: url("/static/images/barrensmed.jpg");
   }
-
   body.icecrown {
     background: url("/static/images/icecrownmed.jpg");
   }
-
   body.lwinter {
     background: url("/static/images/lwintermed.jpg");
   }
@@ -924,11 +920,9 @@ body.lwinter {
   body.lordaeron {
     background: url("/static/images/lordaeronsmall.jpg");
   }
-
   body.barrens {
     background: url("/static/images/barrenssmall.jpg");
   }
-
   body.icecrown {
     background: url("/static/images/icecrownsmall.jpg");
   }
@@ -953,10 +947,16 @@ nav {
   position: -webkit-sticky;
   position: sticky;
   top: 0;
-  background: rgba(0, 0, 0, 0.75);
-  text-shadow: 1px 1px 1px #000;
+  margin-top: 80px;
   font-size: 16px;
   z-index: 1;
+}
+
+#navbar {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.75);
 }
 
 nav a, span.action, img.action {
@@ -1008,8 +1008,8 @@ nav a {
   display: inline-block;
   padding: 8px;
 }
-nav a:hover {
-  background-color: #000;
+nav a:hover .abar {
+  background-color: rgba(0, 0, 0, 0.75);
 }
 nav .row {
   display: flex;
@@ -1019,6 +1019,18 @@ nav .views {
   flex: auto;
   display: flex;
   margin: 0;
+  z-index: 3;
+}
+nav .views a {
+  position: relative;
+}
+nav .views a .abar {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  z-index: -10;
 }
 nav ul {
   display: flex;
@@ -1067,19 +1079,26 @@ nav span.submenu {
   display: none;
 }
 
-header {
-  background: rgba(0, 0, 0, 0.4);
-  text-align: left;
+body {
+  padding-top: 50px;
 }
-header h1 {
+
+h1 {
   font-size: 40px;
   margin: 0;
   color: #ccac8f;
   font-family: "highperch";
   font-size: 80px;
+  letter-spacing: -6px;
   cursor: default;
+  position: relative;
+  top: -71px;
+  height: 25px;
+  margin-bottom: -25px;
+  z-index: 2;
+  text-shadow: 4px 1px 0px #000;
 }
-header h1 .perch {
+h1 .perch {
   color: #e6d9cf;
 }
 
