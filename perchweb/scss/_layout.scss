@@ -16,54 +16,19 @@ img.action {
 
 a, a:visited {
     color: #FFCCA3;
-    font-weight: bold;
-}
-
-a:hover, a:focus, a.active, span.action:hover, span.action.active, input.action:hover {
-    color: #fff;
 }
 
 span.action:hover, nav a:hover, input.action:hover {
     text-shadow: 1px 1px 3px #000;
 }
 
-img.action:hover, img.action.active, input.action:hover {
-    border-color: #fff;
-}
-
-nav a {
-    text-decoration: none;
-    font-family: 'Courgette', 'Friz', Palatino, serif;
-    margin: 0;
-}
-
 b {
     color: #FA6;
 }
 
-form.upload input {
-    width: 100%;
-    background: #444;
-    border: 1px solid #000F;
-    border-radius: 2px;
-    padding: 2px 4px;
-}
-form.upload input[type=file] {
-    padding-top: 1px;
-    padding-bottom: 1px;
-}
-
-form.upload input[type=text] {
-    width: 100%;
-    background: #444;
-    border: 1px solid #000F;
-    border-radius: 2px;
-    padding: 2px 4px;
-}
-
-form.upload input[type=submit] {
-    width: auto;
-    padding: 2px 8px;
+h2 {
+    font-size: 20px;
+    margin-bottom: 0;
 }
 
 @media (min-width:768px) {
@@ -84,16 +49,16 @@ form.upload input[type=submit] {
 }
 
 .top-controls {
-    display:flex;
+    @media (#{$bp-larger-than-phablet}) {
+        display:flex;
+    }
     .top-control {
         padding: $padding;
-        background-color: $card-background-color;
-    }
-    form {
-        display: flex;
-        input {
-            margin: $margin / 2;
+        margin-bottom: $margin;
+        @media (#{$bp-larger-than-phablet}) {
+            margin-bottom:0;
         }
+        background-color: $card-background-color;
     }
     margin-bottom: $margin;
 }

@@ -823,55 +823,19 @@ img.action {
 
 a, a:visited {
   color: #FFCCA3;
-  font-weight: bold;
-}
-
-a:hover, a:focus, a.active, span.action:hover, span.action.active, input.action:hover {
-  color: #fff;
 }
 
 span.action:hover, nav a:hover, input.action:hover {
   text-shadow: 1px 1px 3px #000;
 }
 
-img.action:hover, img.action.active, input.action:hover {
-  border-color: #fff;
-}
-
-nav a {
-  text-decoration: none;
-  font-family: "Courgette", "Friz", Palatino, serif;
-  margin: 0;
-}
-
 b {
   color: #FA6;
 }
 
-form.upload input {
-  width: 100%;
-  background: #444;
-  border: 1px solid #000F;
-  border-radius: 2px;
-  padding: 2px 4px;
-}
-
-form.upload input[type=file] {
-  padding-top: 1px;
-  padding-bottom: 1px;
-}
-
-form.upload input[type=text] {
-  width: 100%;
-  background: #444;
-  border: 1px solid #000F;
-  border-radius: 2px;
-  padding: 2px 4px;
-}
-
-form.upload input[type=submit] {
-  width: auto;
-  padding: 2px 8px;
+h2 {
+  font-size: 20px;
+  margin-bottom: 0;
 }
 
 @media (min-width: 768px) {
@@ -891,18 +855,22 @@ form.upload input[type=submit] {
   }
 }
 .top-controls {
-  display: flex;
   margin-bottom: 16px;
+}
+@media (min-width: 550px) {
+  .top-controls {
+    display: flex;
+  }
 }
 .top-controls .top-control {
   padding: 8px;
+  margin-bottom: 16px;
   background-color: rgba(0, 0, 0, 0.5);
 }
-.top-controls form {
-  display: flex;
-}
-.top-controls form input {
-  margin: 8px;
+@media (min-width: 550px) {
+  .top-controls .top-control {
+    margin-bottom: 0;
+  }
 }
 
 html {
@@ -1035,17 +1003,53 @@ nav.expanded ul {
   display: block;
 }
 
-nav li {
-  list-style: none;
-  display: inline-block;
+nav .shortname {
+  display: inline;
 }
-
-nav .views {
+@media (min-width: 550px) {
+  nav .shortname {
+    display: none;
+  }
+}
+nav .name {
+  display: none;
+}
+@media (min-width: 550px) {
+  nav .name {
+    display: inline;
+  }
+}
+nav a {
+  text-decoration: none;
   display: inline-block;
+  padding: 8px;
+}
+nav a:hover {
+  background-color: #000;
+}
+nav .row {
+  display: flex;
+  align-items: center;
+}
+nav .views {
+  flex: auto;
+  display: flex;
   margin: 0;
 }
+nav ul {
+  display: flex;
+  justify-items: center;
+  margin: 0;
+  font-size: 18px;
+}
+nav ul li {
+  list-style: none;
+  display: inline-block;
+  margin-bottom: 0;
+  line-height: 1;
+}
 
-@media (min-width: 576px) {
+@media (min-width: 550px) {
   nav {
     font-size: 18px;
     text-align: center;
@@ -1064,21 +1068,6 @@ nav .views {
     top: 1px;
   }
 }
-@media (min-width: 768px) {
-  h1 {
-    font-size: 48px;
-    margin-bottom: 25px;
-  }
-
-  h2 {
-    font-size: 26px;
-  }
-
-  header {
-    text-align: left;
-    padding: 25px 0 0 0;
-  }
-}
 nav {
   text-align: left;
 }
@@ -1087,17 +1076,9 @@ nav span.submenu {
   display: none;
 }
 
-nav ul {
-  float: right;
-  display: block !important;
-  margin: 0;
-  font-size: 18px;
-}
-
 header {
   background: rgba(0, 0, 0, 0.4);
   text-align: left;
-  border-bottom: 2px solid rgba(0, 0, 0, 0.6);
 }
 header h1 {
   font-size: 40px;
@@ -1163,6 +1144,56 @@ footer .chatlog {
 .replay .details .download {
   flex-basis: 100px;
   border: 1px solid black;
+}
+
+form.upload {
+  display: flex;
+  margin: 0;
+}
+form.upload .inputfields {
+  flex: auto;
+  padding: 8px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+form.upload input {
+  background: #444;
+  border: 1px solid #000F;
+  padding: 8px;
+  border-radius: 0;
+  margin-bottom: 8px;
+  width: 100%;
+}
+form.upload input[type=text] {
+  padding: 8px;
+}
+form.upload input[type=submit] {
+  background-image: url("/static/images/BTNStaffOfSanctuary-Reforged.png");
+  background-size: cover;
+  background-position: center;
+  width: 100px;
+  height: 100px;
+  text-shadow: 0px 0px 13px #000, 0px 0px 14px #000, 0px 0px 15px #000;
+  flex: none;
+  padding: 0;
+  color: #fff;
+  font-weight: bold;
+  font-size: 16px;
+  -webkit-transition: text-shadow 0.2s linear;
+  -moz-transition: text-shadow 0.2s linear;
+  -ms-transition: text-shadow 0.2s linear;
+  -o-transition: text-shadow 0.2s linear;
+  transition: text-shadow 0.2s linear;
+  -webkit-transition: box-shadow 0.2s linear;
+  -moz-transition: box-shadow 0.2s linear;
+  -ms-transition: box-shadow 0.2s linear;
+  -o-transition: box-shadow 0.2s linear;
+  transition: box-shadow 0.2s linear;
+}
+form.upload input[type=submit]:hover {
+  box-shadow: inset 0 0 10px #fff;
+  text-shadow: 0px 0px 13px #fff, 0px 0px 14px #fff, 0px 0px 15px #fff;
 }
 
 .text-center h1 {

@@ -20,9 +20,9 @@
         <div class="container">
             <div class="row">
                 <div class="views">
-                    <a href="{{ url_for('views.index') }}" class="{% if nav == 'index' %}active{% endif %}">Replays</a>
-                    <a href="{{ url_for('views.peep') }}" class="{% if nav == 'peep' %}active{% endif %}">Pictures</a>
-                    <a href="{{ url_for('views.guide') }}" class="{% if nav == 'guide' %}active{% endif %}">Documentation</a>
+                    <a href="{{ url_for('views.index') }}" class="{% if nav == 'index' %}active{% endif %}"><span class="name">Replays</span><span class="shortname">Reps</span></a>
+                    <a href="{{ url_for('views.peep') }}" class="{% if nav == 'peep' %}active{% endif %}"><span class="name">Pictures</span><span class="shortname">Pics</span></a>
+                    <a href="{{ url_for('views.guide') }}" class="{% if nav == 'guide' %}active{% endif %}"><span class="name">Documentation</span><span class="shortname">Docs</span></a>
                 </div>
                 <span class="action submenu">▼</span>
                 <ul>
