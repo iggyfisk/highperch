@@ -21,6 +21,9 @@ The `-p` option default should be your Python3 interpreter, else specify it. If 
 * Windows: VSCode, enter your virtual environment above and `pip install pylint` `pip install autopep8` then Ctrl+Shift+P in VSCode and `Python: Select interpreter`, find your virtualenv in the list
 * MacOS: Atom, doesn't pick up the external libraries. Pycharm CE, picks up virtualenv automatically
 
+### Replay data
+Look at `test/Reforged1Pretty.json` and `test/Reforged2Pretty.json` for a human readable glance of the parsed format.
+
 ## Production deployment
 * ssh to production server
 * `git pull` new code somehow? TBD
