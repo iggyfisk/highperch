@@ -78,5 +78,5 @@ replay.winningTeamId = winningTeamId;
 replay.winningTeamConfirmed = winningTeamConfirmed;
 replay.leaveEvents = leaveEvents;
 
-writeFileSync(outputPath, JSON.stringify(replay, null, 2));
+writeFileSync(outputPath, JSON.stringify(replay));
 return 0;
