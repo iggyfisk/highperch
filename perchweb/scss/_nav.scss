@@ -1,3 +1,10 @@
+a, a:visited {
+    color: $primary-color;
+}
+
+a:hover{
+    color: #FFF;
+}
 
 nav {
     width: 100%;
@@ -78,6 +85,15 @@ nav {
             display: inline-block;
             margin-bottom:0;
             line-height: 1;
+            &.background-picker {
+                img {
+                    margin:$padding/2;
+                    border:1px solid rgba(0,0,0,0);
+                    &:hover{
+                        border:1px solid $primary-color;
+                    }
+                }
+            }
         }
     }
 }

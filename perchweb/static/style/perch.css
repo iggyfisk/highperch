@@ -251,10 +251,10 @@ body {
 }
 
 a {
-  color: #1eaedb;
+  color: #FFCCA3;
 }
 a:hover {
-  color: #1b9cc5;
+  color: #ffbe8a;
 }
 
 hr {
@@ -545,7 +545,7 @@ button {
   display: inline-block;
   height: 38px;
   padding: 0 30px;
-  color: #555555;
+  color: #8fb82e;
   text-align: center;
   font-size: 11px;
   font-weight: 600;
@@ -565,7 +565,7 @@ input[type=submit], input[type=reset], input[type=button] {
   display: inline-block;
   height: 38px;
   padding: 0 30px;
-  color: #555555;
+  color: #8fb82e;
   text-align: center;
   font-size: 11px;
   font-weight: 600;
@@ -610,40 +610,40 @@ input[type=submit]:focus, input[type=reset]:focus, input[type=button]:focus {
 .button.button-primary,
 button.button-primary {
   color: #fff;
-  background-color: #33c3f0;
-  border-color: #33c3f0;
+  background-color: #FFCCA3;
+  border-color: #FFCCA3;
 }
 
 input[type=submit].button-primary, input[type=reset].button-primary, input[type=button].button-primary {
   color: #fff;
-  background-color: #33c3f0;
-  border-color: #33c3f0;
+  background-color: #FFCCA3;
+  border-color: #FFCCA3;
 }
 
 .button.button-primary:hover,
 button.button-primary:hover {
   color: #fff;
-  background-color: #1eaedb;
-  border-color: #1eaedb;
+  background-color: #FFCCA3;
+  border-color: #FFCCA3;
 }
 
 input[type=submit].button-primary:hover, input[type=reset].button-primary:hover, input[type=button].button-primary:hover {
   color: #fff;
-  background-color: #1eaedb;
-  border-color: #1eaedb;
+  background-color: #FFCCA3;
+  border-color: #FFCCA3;
 }
 
 .button.button-primary:focus,
 button.button-primary:focus {
   color: #fff;
-  background-color: #1eaedb;
-  border-color: #1eaedb;
+  background-color: #FFCCA3;
+  border-color: #FFCCA3;
 }
 
 input[type=submit].button-primary:focus, input[type=reset].button-primary:focus, input[type=button].button-primary:focus {
   color: #fff;
-  background-color: #1eaedb;
-  border-color: #1eaedb;
+  background-color: #FFCCA3;
+  border-color: #FFCCA3;
 }
 input[type=email], input[type=number], input[type=search], input[type=text], input[type=tel], input[type=url], input[type=password] {
   height: 38px;
@@ -689,13 +689,13 @@ textarea {
 }
 
 input[type=email]:focus, input[type=number]:focus, input[type=search]:focus, input[type=text]:focus, input[type=tel]:focus, input[type=url]:focus, input[type=password]:focus {
-  border: 1px solid #33c3f0;
+  border: 1px solid #FFCCA3;
   outline: 0;
 }
 
 textarea:focus,
 select:focus {
-  border: 1px solid #33c3f0;
+  border: 1px solid #FFCCA3;
   outline: 0;
 }
 
@@ -811,18 +811,10 @@ body > .container {
   padding-top: 20px;
 }
 
-a, span.action {
-  transition: text-shadow 300ms, color 500ms;
-}
-
 img.action {
   transition: border-color 300ms;
   border: 1px solid #fff0;
   box-sizing: border-box;
-}
-
-a, a:visited {
-  color: #FFCCA3;
 }
 
 span.action:hover, nav a:hover, input.action:hover {
@@ -838,22 +830,6 @@ h2 {
   margin-bottom: 0;
 }
 
-@media (min-width: 768px) {
-  div.blend div.cont {
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.5) 75%, rgba(0, 0, 0, 0) 100%);
-    padding-bottom: 30px;
-    border-radius: 0;
-  }
-
-  div.blend.derail div.cont {
-    background: linear-gradient(to bottom, rgba(204, 153, 0, 0.8) 0%, rgba(204, 153, 0, 0.8) 75%, rgba(204, 153, 0, 0) 100%);
-  }
-}
-@media (min-width: 992px) {
-  div.blend {
-    margin-bottom: 10px;
-  }
-}
 .top-controls {
   margin-bottom: 16px;
 }
@@ -964,6 +940,14 @@ img.peep {
 }
 
 /* Peep END */
+a, a:visited {
+  color: #FFCCA3;
+}
+
+a:hover {
+  color: #FFF;
+}
+
 nav {
   width: 100%;
   position: -webkit-sticky;
@@ -1047,6 +1031,13 @@ nav ul li {
   display: inline-block;
   margin-bottom: 0;
   line-height: 1;
+}
+nav ul li.background-picker img {
+  margin: 4px;
+  border: 1px solid rgba(0, 0, 0, 0);
+}
+nav ul li.background-picker img:hover {
+  border: 1px solid #FFCCA3;
 }
 
 @media (min-width: 550px) {
@@ -1236,6 +1227,22 @@ form.upload input[type=submit]:hover {
   border-radius: 0;
 }
 
+@media (min-width: 768px) {
+  div.blend div.cont {
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.5) 75%, rgba(0, 0, 0, 0) 100%);
+    padding-bottom: 30px;
+    border-radius: 0;
+  }
+
+  div.blend.derail div.cont {
+    background: linear-gradient(to bottom, rgba(204, 153, 0, 0.8) 0%, rgba(204, 153, 0, 0.8) 75%, rgba(204, 153, 0, 0) 100%);
+  }
+}
+@media (min-width: 992px) {
+  div.blend {
+    margin-bottom: 10px;
+  }
+}
 @font-face {
   font-family: "highperch";
   src: url("../font/highperch.eot?53185637");

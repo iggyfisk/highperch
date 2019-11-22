@@ -4,18 +4,10 @@ body>.container {
     padding-top: 20px;
 }
 
-a, span.action {
-    transition: text-shadow 300ms, color 500ms;
-}
-
 img.action {
     transition: border-color 300ms;
     border: 1px solid #fff0;
     box-sizing: border-box;
-}
-
-a, a:visited {
-    color: #FFCCA3;
 }
 
 span.action:hover, nav a:hover, input.action:hover {
@@ -29,23 +21,6 @@ b {
 h2 {
     font-size: 20px;
     margin-bottom: 0;
-}
-
-@media (min-width:768px) {
-    div.blend div.cont {
-        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.5) 75%, rgba(0, 0, 0, 0) 100%);
-        padding-bottom: 30px;
-        border-radius: 0;
-    }
-    div.blend.derail div.cont {
-        background: linear-gradient(to bottom, rgba(204, 153, 0, 0.8) 0%, rgba(204, 153, 0, 0.8) 75%, rgba(204, 153, 0, 0) 100%);
-    }
-}
-
-@media (min-width:992px) {
-    div.blend {
-        margin-bottom: 10px;
-    }
 }
 
 .top-controls {
@@ -86,7 +61,7 @@ html.lwinter {
 body {
     min-height: 100%;
     font-family: 'Scada', Tahoma, sans-serif;
-    color: #FFCCA3;
+    color: $primary-color;
 }
 
 body.lordaeron {
