@@ -26,7 +26,7 @@
 				document.body.removeAttribute('class');
 				document.body.setAttribute('class', bgStyle);
 				// 50 year anniversary
-				document.cookie = cookie_name + '=' + bgStyle + '; expires=Mon, 01 Jun 2054 12:00:00 UTC';
+				document.cookie = cookie_name + '=' + bgStyle + ';Path=/;expires=Mon, 01 Jun 2054 12:00:00 UTC';
 			});
 		});
 	});

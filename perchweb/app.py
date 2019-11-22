@@ -26,10 +26,10 @@ if environ.get('HIGHPERCH_ENVIRONMENT') == "production":
 else:
     app.secret_key = 'debug'
 
+# Cache bust CSS and JS which may have changed, quick n dirty
 mutable_static = glob(path.join(app.root_path, 'static/style', '*.css')) + \
     glob(path.join(app.root_path, 'static/script', '*.js'))
 
-# Cache bust CSS and JS which may have changed, quick n dirty
 hash_obj = md5(open(mutable_static[0], 'rb').read())
 for static_file in mutable_static[1:]:
     hash_obj.update(open(static_file, 'rb').read())
