@@ -1086,6 +1086,7 @@ header h1 {
   color: #ccac8f;
   font-family: "highperch";
   font-size: 80px;
+  cursor: default;
 }
 header h1 .perch {
   color: #e6d9cf;

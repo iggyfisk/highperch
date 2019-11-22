@@ -22,4 +22,8 @@ The `-p` option default should be your Python3 interpreter, else specify it. If 
 * MacOS: Atom, doesn't pick up the external libraries. Pycharm CE, picks up virtualenv automatically
 
 ## Production deployment
-Coming soon, something with nginx and uwsgi. No crazy build procedures, just a repo pull and some gitignored config files, probably hash the JS and CSS, MAYBE minify them.
+* ssh to production server
+* `git pull` new code somehow? TBD
+* `python initcontent.py` to reset during the development phase, but don't replace the config!
+* `systemctl restart highperch`
+Before we go public it's `python initcontent.py` one last time. After that, data format updates will probably be more bespoke
