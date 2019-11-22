@@ -1,5 +1,4 @@
 header {
-    background: #085754;
     background: rgba(0, 0, 0, 0.4);
     text-align: left;
     border-bottom: 2px solid rgba(0, 0, 0, 0.6);
@@ -8,6 +7,10 @@ header {
         font-size: 40px;
         margin: 0;
         color: #ccac8f;
-        cursor: default;
+        font-family:"highperch";
+        font-size:80px;
+        .perch {
+            color: #e6d9cf;
+        }
     }
 }

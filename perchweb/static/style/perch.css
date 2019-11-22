@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /*
 * Skeleton V2.0.4
 * Copyright 2014, Dave Gamache
@@ -1094,7 +1095,6 @@ nav ul {
 }
 
 header {
-  background: #085754;
   background: rgba(0, 0, 0, 0.4);
   text-align: left;
   border-bottom: 2px solid rgba(0, 0, 0, 0.6);
@@ -1103,7 +1103,11 @@ header h1 {
   font-size: 40px;
   margin: 0;
   color: #ccac8f;
-  cursor: default;
+  font-family: "highperch";
+  font-size: 80px;
+}
+header h1 .perch {
+  color: #e6d9cf;
 }
 
 footer {
@@ -1161,6 +1165,14 @@ footer .chatlog {
   border: 1px solid black;
 }
 
+.text-center h1 {
+  color: #FFCCA3;
+  font-size: 48px;
+  margin-bottom: 25px;
+  font-family: Friz, Georgia, serif;
+  text-shadow: 2px 2px 1px #000;
+}
+
 .blend {
   border-top: 1px solid rgba(0, 0, 0, 0.8);
   overflow: hidden;
@@ -1191,5 +1203,236 @@ footer .chatlog {
   padding-bottom: 30px;
   border-radius: 0;
 }
+
+@font-face {
+  font-family: "highperch";
+  src: url("../font/highperch.eot?53185637");
+  src: url("../font/highperch.eot?53185637#iefix") format("embedded-opentype"), url("../font/highperch.woff2?53185637") format("woff2"), url("../font/highperch.woff?53185637") format("woff"), url("../font/highperch.ttf?53185637") format("truetype"), url("../font/highperch.svg?53185637#highperch") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+/* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */
+/* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */
+/*
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: 'highperch';
+    src: url('../font/highperch.svg?53185637#highperch') format('svg');
+  }
+}
+*/
+[class^=icon-]:before, [class*=" icon-"]:before {
+  font-family: "highperch";
+  font-style: normal;
+  font-weight: normal;
+  speak: none;
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  margin-right: 0.2em;
+  text-align: center;
+  /* opacity: .8; */
+  /* For safety - reset parent styles, that can break glyph codes*/
+  font-variant: normal;
+  text-transform: none;
+  /* fix buttons height, for twitter bootstrap */
+  line-height: 1em;
+  /* Animation center compensation - margins should be symmetric */
+  /* remove if not needed */
+  margin-left: 0.2em;
+  /* you can be more comfortable with increased icons size */
+  /* font-size: 120%; */
+  /* Font smoothing. That was taken from TWBS */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Uncomment for 3D effect */
+  /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
+}
+
+.icon-period:before {
+  content: ".";
+}
+
+/* '.' */
+.icon-c:before {
+  content: "c";
+}
+
+/* 'c' */
+.icon-e:before {
+  content: "e";
+}
+
+/* 'e' */
+.icon-g:before {
+  content: "g";
+}
+
+/* 'g' */
+.icon-h:before {
+  content: "h";
+}
+
+/* 'h' */
+.icon-i:before {
+  content: "i";
+}
+
+/* 'i' */
+.icon-p:before {
+  content: "p";
+}
+
+/* 'p' */
+.icon-r:before {
+  content: "r";
+}
+
+/* 'r' */
+.icon-download-alt:before {
+  content: "";
+}
+
+/* '' */
+.icon-user:before {
+  content: "";
+}
+
+/* '' */
+.icon-home:before {
+  content: "";
+}
+
+/* '' */
+.icon-picture:before {
+  content: "";
+}
+
+/* '' */
+.icon-chat:before {
+  content: "";
+}
+
+/* '' */
+.icon-menu:before {
+  content: "";
+}
+
+/* '' */
+.icon-eye:before {
+  content: "";
+}
+
+/* '' */
+.icon-eye-off:before {
+  content: "";
+}
+
+/* '' */
+.icon-heart-empty:before {
+  content: "";
+}
+
+/* '' */
+.icon-cog:before {
+  content: "";
+}
+
+/* '' */
+.icon-discord:before {
+  content: "";
+}
+
+/* '' */
+.icon-heart:before {
+  content: "";
+}
+
+/* '' */
+.icon-youtube:before {
+  content: "";
+}
+
+/* '' */
+.icon-comment:before {
+  content: "";
+}
+
+/* '' */
+.icon-cancel:before {
+  content: "";
+}
+
+/* '' */
+.icon-ok:before {
+  content: "";
+}
+
+/* '' */
+.icon-tag:before {
+  content: "";
+}
+
+/* '' */
+.icon-chart-bar:before {
+  content: "";
+}
+
+/* '' */
+.icon-attention:before {
+  content: "";
+}
+
+/* '' */
+.icon-attention-circled:before {
+  content: "";
+}
+
+/* '' */
+.icon-pencil:before {
+  content: "";
+}
+
+/* '' */
+.icon-link:before {
+  content: "";
+}
+
+/* '' */
+.icon-rss:before {
+  content: "";
+}
+
+/* '' */
+.icon-info:before {
+  content: "";
+}
+
+/* '' */
+.icon-youtube-play:before {
+  content: "";
+}
+
+/* '' */
+.icon-share:before {
+  content: "";
+}
+
+/* '' */
+.icon-twitch:before {
+  content: "";
+}
+
+/* '' */
+.icon-user-plus:before {
+  content: "";
+}
+
+/* '' */
+.icon-user-times:before {
+  content: "";
+}
+
+/* '' */
 
 /*# sourceMappingURL=perch.css.map */
