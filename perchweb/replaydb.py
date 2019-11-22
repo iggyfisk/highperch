@@ -9,6 +9,7 @@ from flask import flash, g
 from models.replay import Replay, ReplayListInfo
 import filepaths
 
+
 class ReplayParsingException(Exception):
     """Known parsing error with user readable message"""
 
@@ -17,22 +18,25 @@ context_db_key = '_wig_db'
 
 
 def get_connection():
+    """ Get a replay db connection, store it in the request context for reuse """
     wig_db = getattr(g, context_db_key, None)
-    if wig_db is None:        
+    if wig_db is None:
         wig_db = sqlite3.connect(filepaths.get_db('wig.db'))
         wig_db.row_factory = sqlite3.Row
         setattr(g, context_db_key, wig_db)
     return wig_db
 
 
-def query(query, args=(), one=False):
-    cursor = get_connection().execute(query, args)
+def query(query_text, args=(), one=False):
+    """ Run query_text with args against the replay db, one=True for a single result row """
+    cursor = get_connection().execute(query_text, args)
     results = cursor.fetchall()
     cursor.close()
     return (results[0] if results else None) if one else results
 
 
 def close_connection():
+    """ Cleanup when request is about to end """
     wig_db = getattr(g, context_db_key, None)
     if wig_db is not None:
         wig_db.commit()
@@ -40,7 +44,8 @@ def close_connection():
         setattr(g, context_db_key, None)
 
 
-def list_replays(filter):
+def list_replays(search_filter):
+    """ Search for replays to list on the index page """
     rows = query('''
     SELECT ID, Name, TimeStamp, Official, GameType, Version, Length, Map, TowerCount, ChatMessageCount, Players, Views
     FROM Replays
@@ -51,7 +56,7 @@ def list_replays(filter):
 
 
 def get_replay_listinfo(replay_id, inc_views=False):
-    """ Load the web-specific replay info from DB """
+    """ Load the highper.ch info for a single replay from DB (name, views etc) """
     if inc_views:
         query(
             'UPDATE Replays SET Views = Views + 1 WHERE ID = ?', (replay_id,))
@@ -66,7 +71,7 @@ def get_replay_listinfo(replay_id, inc_views=False):
 
 
 def get_replay(replay_id):
-    """ Load full replay data from JSON """
+    """ Load full replay data from JSON, only contains data from the original .w3g """
     data_path = filepaths.get_replay_data(f"{replay_id}.json")
 
     if not os.path.isfile(data_path):
@@ -121,8 +126,7 @@ def save_replay(replay, replay_filename, replay_filename_parts, replay_name, upl
             ''', (bnet_id, replay_name, timestamp, official, gametype, version, length, map_name, tower_count, chat_message_count,
                   json.dumps(players), json.dumps(chat), uploader_ip))
 
-        replay_id = query(
-            'SELECT last_insert_rowid()', one=True)[0]
+        replay_id = query('SELECT last_insert_rowid()', one=True)[0]
 
         replay_path = filepaths.get_replay(f"{replay_id}.w3g")
         data_path = filepaths.get_replay_data(f"{replay_id}.json")

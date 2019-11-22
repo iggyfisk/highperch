@@ -15,8 +15,12 @@ app.register_blueprint(routes)
 
 # Not a fan of not having this logic contained to whoever needs cleanup but too much time wasted
 @app.teardown_appcontext
-def cleanup(e):
+def cleanup(error):
+    """ End of request, commit all transactions and close connections """
     close_replaydb()
+    if error is not None:
+        # Todo: Log
+        print(error)
 
 
 app.config.from_pyfile(path.join(app.root_path, 'app.cfg'))
