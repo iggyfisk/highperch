@@ -21,7 +21,7 @@
         {% for (teamid, players) in teams.items() %}
             <div class="team">
             {% for player in players %}
-                <img src="{{ player['race'] }}"/>
+                <img src="/static/images/game/racesw3xp/{{ player['race'] }}.gif"/>
                 <a href="{{ url_for('views.view_player', battletag=player['name']) }}">{{ player['name'] }}</a> 
                 {% if detailed %}
                 <div class="details">
