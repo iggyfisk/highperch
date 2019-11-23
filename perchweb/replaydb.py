@@ -6,6 +6,7 @@ import json
 import sqlite3
 from datetime import datetime
 from flask import flash, g
+from hashlib import sha256
 from models.replay import Replay, ReplayListInfo
 import filepaths
 
@@ -164,6 +165,16 @@ def save_replay(replay, replay_name, uploader_ip):
 
     # From here on out we need to clean up if anything goes wrong
     try:
+        with open(temp_replay_path, 'rb') as replay_bytes:
+            file_hash = sha256(replay_bytes.read()).hexdigest()
+
+        dupe_check = query('SELECT Name FROM Replays WHERE FileHash=?;', (file_hash,), one=True)
+        if dupe_check:
+            # Todo: log attempted duplicate upload
+            flash(f"Replay already exists: {dupe_check[0]}")
+            setattr(g, context_rollback_key, True)
+            return
+
         parse_result = subprocess.run(
             ["node", filepaths.get_path("../parsereplay.js"), temp_replay_path, temp_data_path])
         if parse_result.returncode > 0:
@@ -193,8 +204,6 @@ def save_replay(replay, replay_name, uploader_ip):
         chat_message_count = len(chat)
         uploader_battletag = [
             p['name'] for p in replay_data.players if p['id'] == replay_data['saverPlayerId']][0]
-        # todo: real hash, should already have checked if it exists
-        file_hash = os.urandom(32)
 
         query('''
             INSERT INTO Replays(BNetGameID, Name, TimeStamp, Official, GameType, Version, Length, Map,
