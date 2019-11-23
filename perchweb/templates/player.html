@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% import "replays.html" as replaymacros %}
+
+{% block content %}
+<div>
+    <h3>{{ player['name'] }}</h3>
+    <p>{{ player['total_games'] }} games played</p>
+    <ul>
+        <li>{{ player['HUGames'] }} Human</li>
+        <li>{{ player['ORGames'] }} Orc</li>
+        <li>{{ player['NEGames'] }} Night Elves</li>
+        <li>{{ player['UDGames'] }} Undead</li>
+    </ul>
+    <div>{{ player['AvgApm'] }} average APM, {{ player['TowerCount'] }} towers built, {{ player['ChatMessageCount'] }} chirps</div>
+    <div class="replay-bar">{{ recent_replays|length }} recent replays</div>
+
+    {% for replay in recent_replays %}
+        {{ replaymacros.card(replay) }}
+    {% endfor %}
+</div>
+{% endblock %}

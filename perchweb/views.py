@@ -6,7 +6,7 @@ import os
 from flask import Blueprint, url_for, request, redirect, flash
 from werkzeug.utils import secure_filename
 from handler import standard_page
-from replaydb import list_replays, get_replay, get_replay_listinfo, save_replay
+import replaydb
 from peep import get_pic
 
 routes = Blueprint('views', __name__)
@@ -16,7 +16,7 @@ routes = Blueprint('views', __name__)
 def index():
     """Index, replay listing"""
     # Todo: filter from query
-    replays = list_replays({})
+    replays = replaydb.list_replays({})
 
     return standard_page('index.html', 'Replays', nav='index', replays=replays)
 
@@ -24,14 +24,33 @@ def index():
 @routes.route('/replay/<int:replay_id>')
 def view_replay(replay_id):
     """Replay details"""
-    replay_listinfo = get_replay_listinfo(replay_id, inc_views=True)
-    replay = get_replay(replay_id)
+    replay_listinfo = replaydb.get_replay_listinfo(replay_id, inc_views=True)
+    replay = replaydb.get_replay(replay_id)
 
     if replay_listinfo is None or replay is None:
         # Todo: 404
         return redirect(url_for('views.index'))
 
     return standard_page('replay.html', replay_listinfo['Name'], replay=replay, listinfo=replay_listinfo)
+
+
+@routes.route('/player/<string:battletag>')
+def view_player(battletag):
+    """Player details"""
+    player = replaydb.get_player(battletag)
+
+    if player is None:
+        # Todo: 404
+        return redirect(url_for('views.index'))
+
+    recent_replays = replaydb.list_player_replays(battletag)
+
+    player['name'] = battletag
+    # Data crunching goes somewhere else later
+    player['total_games'] = player['HUGames'] + \
+        player['ORGames'] + player['NEGames'] + player['UDGames']
+
+    return standard_page('player.html', f'{battletag} details', player=player, recent_replays=recent_replays)
 
 
 @routes.route('/upload', methods=['POST'])
@@ -61,8 +80,8 @@ def upload_replay():
 
     # Todo: Validation here, filesize etc
 
-    save_replay(replay, replay_filename, replay_filename_parts,
-                replay_name, uploader_ip)
+    replaydb.save_replay(replay, replay_filename, replay_filename_parts,
+                         replay_name, uploader_ip)
     return redirect(url_for('views.index'))
 
 

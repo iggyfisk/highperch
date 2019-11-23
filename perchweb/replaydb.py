@@ -58,6 +58,20 @@ def list_replays(search_filter):
     return [ReplayListInfo(**r) for r in rows]
 
 
+def list_player_replays(battletag):
+    """ Search for replays including a specific player """
+    # Todo: combine key elements with list_replays
+    rows = query('''
+    SELECT ID, Name, TimeStamp, Official, HighQuality, GameType, Version, Length, Map, R.TowerCount, R.ChatMessageCount, Players, Views
+    FROM Replays AS R
+    INNER JOIN GamesPlayed ON ReplayID = ID
+    WHERE PlayerTag = ?
+    ORDER BY ID DESC
+    ''', (battletag,))
+
+    return [ReplayListInfo(**r) for r in rows]
+
+
 def get_replay_listinfo(replay_id, inc_views=False):
     """ Load the highper.ch info for a single replay from DB (name, views etc) """
     if inc_views:
@@ -85,6 +99,32 @@ def get_replay(replay_id):
     return replay_data
 
 
+def get_player(battletag):
+    """ Load some aggregated info for a specific player """
+
+    player_row = query('''
+        SELECT HUGames, ORGames, NEGames, UDGames
+        FROM Players
+        WHERE BattleTag = ?
+        ''', (battletag,), one=True)
+
+    if player_row is None:
+        return None
+    
+    aggregate_row = query('''
+        SELECT AVG(APM) AS AvgApm, SUM(TowerCount) AS TowerCount, SUM(ChatMessageCount) AS ChatMessageCount
+        FROM GamesPlayed
+        WHERE PlayerTag = ?
+        GROUP BY PlayerTag
+    ''', (battletag,), one=True)
+
+    if aggregate_row is None:
+        # Would only happen if someone was part of only 1 replay, which got deleted
+        return None
+
+    return dict(**player_row, **aggregate_row)
+
+
 def create_players(battletags):
     """ Make sure all players in a replay have a player row """
     for tag in battletags:
@@ -103,7 +143,7 @@ def save_game_played(replay_data, replay_id):
             1 for c in replay_data['chat'] if c['playerId'] == player['id'])
 
         query('''
-            INSERT INTO GamesPlayed (PlayerTag, ReplayID, Race, APM, Win, TowerCount, ChatCount)
+            INSERT INTO GamesPlayed (PlayerTag, ReplayID, Race, APM, Win, TowerCount, ChatMessageCount)
             VALUES(?, ?, ?, ?, ?, ?, ?)''', (name, replay_id, race, apm, win, tower_count, chat_count))
 
         col = {'H': 'HUGames', 'O': 'ORGames',

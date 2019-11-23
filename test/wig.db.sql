@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS "GamesPlayed" (
 	"APM"	INTEGER NOT NULL,
 	"Win"	INTEGER,
 	"TowerCount"	INTEGER NOT NULL,
-	"ChatCount"	INTEGER NOT NULL,
+	"ChatMessageCount"	INTEGER NOT NULL,
 	FOREIGN KEY("PlayerTag") REFERENCES "Players"("BattleTag"),
 	PRIMARY KEY("PlayerTag","ReplayID")
 );

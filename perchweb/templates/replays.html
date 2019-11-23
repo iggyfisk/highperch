@@ -12,7 +12,7 @@
             {% for (teamid, players) in replay.teams().items() %}
 
                 {% for player in players %}
-                    <a href="/player/id/">{{ player['name'] }}</a> 
+                    <a href="{{ url_for('views.view_player', battletag=player['name']) }}">{{ player['name'] }}</a> 
                 {% endfor %}
 
             {% if not loop.last %} vs {% endif %}
