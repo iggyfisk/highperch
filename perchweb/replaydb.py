@@ -135,7 +135,7 @@ def save_game_played(replay_data, replay_id):
     """ Record player participation in a replay """
     for player in replay_data.players:
         name = player['name']
-        race = player['raceDetected']
+        race = (player['raceDetected'] or player['race'])
         apm = player['apm']
         win = player['teamid'] == replay_data['winningTeamId'] if replay_data['winningTeamConfirmed'] else None
         tower_count = player.tower_count()
@@ -146,10 +146,12 @@ def save_game_played(replay_data, replay_id):
             INSERT INTO GamesPlayed (PlayerTag, ReplayID, Race, APM, Win, TowerCount, ChatMessageCount)
             VALUES(?, ?, ?, ?, ?, ?, ?)''', (name, replay_id, race, apm, win, tower_count, chat_count))
 
-        col = {'H': 'HUGames', 'O': 'ORGames',
-               'N': 'NEGames', 'U': 'UDGames'}[race]
-        query(
-            f'UPDATE Players SET {col} = {col} + 1 WHERE BattleTag = ?', (name,))
+        # Only record when the players real race was detected, otherwise they weren't really playing
+        if race != 'R':            
+            col = {'H': 'HUGames', 'O': 'ORGames',
+                'N': 'NEGames', 'U': 'UDGames'}[race]
+            query(
+                f'UPDATE Players SET {col} = {col} + 1 WHERE BattleTag = ?', (name,))
 
 
 def save_replay(replay, replay_name, uploader_ip):
@@ -180,7 +182,7 @@ def save_replay(replay, replay_name, uploader_ip):
         length = replay_data['duration']
         map_name = replay_data.map_name()
 
-        players = [{'name': p['name'], 'teamid': p['teamid'], 'race': p['raceDetected']}
+        players = [{'name': p['name'], 'teamid': p['teamid'], 'race': (p['raceDetected'] or p['race'])}
                    for p in replay_data.players]
         create_players([p['name'] for p in players])
 
