@@ -19,7 +19,7 @@ def index():
     replays = replaydb.list_replays({})
 
     # Testy thing
-    if request.args['flash']:
+    if 'flash' in request.args:
         for i in range(int(request.args['flash'])):
             flash("Flash test string" * (i + 1))
 
