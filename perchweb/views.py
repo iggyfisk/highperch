@@ -63,7 +63,7 @@ def upload_replay():
         flash('Bad name')
         return redirect(url_for('views.index'))
 
-    # Proxy compatible? Might have to check X-Forwarder-For headers or similar
+    # Proxy compatible? Might have to check X-Forwarded-For headers or similar
     uploader_ip = request.remote_addr
 
     replay = request.files['replay'] if 'replay' in request.files else None
@@ -80,8 +80,7 @@ def upload_replay():
 
     # Todo: Validation here, filesize etc
 
-    replaydb.save_replay(replay, replay_filename, replay_filename_parts,
-                         replay_name, uploader_ip)
+    replaydb.save_replay(replay, replay_name, uploader_ip)
     return redirect(url_for('views.index'))
 
 

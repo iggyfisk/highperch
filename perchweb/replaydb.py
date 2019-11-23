@@ -135,7 +135,7 @@ def save_game_played(replay_data, replay_id):
     """ Record player participation in a replay """
     for player in replay_data.players:
         name = player['name']
-        race = player['race']
+        race = player['raceDetected']
         apm = player['apm']
         win = player['teamid'] == replay_data['winningTeamId'] if replay_data['winningTeamConfirmed'] else None
         tower_count = player.tower_count()
@@ -152,10 +152,12 @@ def save_game_played(replay_data, replay_id):
             f'UPDATE Players SET {col} = {col} + 1 WHERE BattleTag = ?', (name,))
 
 
-def save_replay(replay, replay_filename, replay_filename_parts, replay_name, uploader_ip):
+def save_replay(replay, replay_name, uploader_ip):
     """ Parse and save replay file """
-    temp_replay_path = filepaths.get_temp(replay_filename)
-    temp_data_path = filepaths.get_temp(f'{replay_filename_parts[0]}.json')
+    timestamp = int(datetime.now().timestamp())
+    unique = int.from_bytes(os.urandom(2), 'little')
+    temp_replay_path = filepaths.get_temp(f'{unique}_{timestamp}.w3g')
+    temp_data_path = filepaths.get_temp(f'{unique}_{timestamp}.json')
     replay.save(temp_replay_path)
 
     # From here on out we need to clean up if anything goes wrong
@@ -168,17 +170,17 @@ def save_replay(replay, replay_filename, replay_filename_parts, replay_name, upl
         with open(temp_data_path) as replay_json:
             replay_data = Replay(**json.load(replay_json))
 
-        # Todo: more validation, like gametype and version
+        # Todo: more validation, like gametype and version,
+        # maybe the battletag that saved the replay is banned
 
         # Not the best connection to the ReplayListInfo class
         bnet_id = replay_data['id']
-        timestamp = int(datetime.now().timestamp())
         gametype = replay_data['type']
         version = replay_data['version']
         length = replay_data['duration']
         map_name = replay_data.map_name()
 
-        players = [{'name': p['name'], 'teamid': p['teamid'], 'race': p['race']}
+        players = [{'name': p['name'], 'teamid': p['teamid'], 'race': p['raceDetected']}
                    for p in replay_data.players]
         create_players([p['name'] for p in players])
 
