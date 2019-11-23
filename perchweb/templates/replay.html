@@ -11,6 +11,13 @@
                 <p>{{ listinfo['Views'] }}</p>
                 <p>{{ replay.map_name() }}</p>
                 {{ replaymacros.teams(replay.teams(), True) }}
+
+
+                <div class="chatlog">
+                    {% for chat in replay.chat %}
+                        <div class="chatmessage">{{ chat['timeMS'] }} [{{ chat['mode'] }}] <span style="color:#f00">{{ chat['player'] }}</span>: {{ chat['message'] }}</div>
+                    {% endfor %}
+                </div>
             </div>
         </div>
     </div>
