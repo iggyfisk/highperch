@@ -171,9 +171,7 @@ def save_replay(replay, replay_name, uploader_ip):
         dupe_check = query('SELECT Name FROM Replays WHERE FileHash=?;', (file_hash,), one=True)
         if dupe_check:
             # Todo: log attempted duplicate upload
-            flash(f"Replay already exists: {dupe_check[0]}")
-            setattr(g, context_rollback_key, True)
-            return
+            raise ReplayParsingException(f"Replay already exists: {dupe_check[0]}")
 
         parse_result = subprocess.run(
             ["node", filepaths.get_path("../parsereplay.js"), temp_replay_path, temp_data_path])
