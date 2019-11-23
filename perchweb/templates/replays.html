@@ -3,9 +3,7 @@
     <div class="minimap">Dare we undertake the sisyphean task of collecting a minimap image for every map?</div>
     <div class="details">
         <div class="header">
-            <a class="title" href="{{ url_for('views.view_replay', replay_id=replay['ID']) }}">
-                {{ replay['Name'] }} {{ replay['Map'] }}
-            </a>
+            <a class="title" href="{{ url_for('views.view_replay', replay_id=replay['ID']) }}">{{ replay['Name'] }}</a>
         </div>
         <p>{{ replay.game_length() }} | {{ replay['GameType'] }} | {{ replay['Map'] }} | {{ replay['TowerCount'] }} towers</p>
         {{ teams(replay.teams()) }}
