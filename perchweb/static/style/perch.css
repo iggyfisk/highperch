@@ -251,17 +251,17 @@ body {
 }
 
 a {
-  color: #FFCCA3;
+  color: #a8c564;
 }
 a:hover {
-  color: #ffbe8a;
+  color: #9ebe51;
 }
 
 hr {
   margin-top: 3rem;
   margin-bottom: 3.5rem;
   border-width: 0;
-  border-top: 1px solid #e1e1e1;
+  border-top: 1px solid #FFF5DF;
 }
 
 .u-full-width {
@@ -623,27 +623,27 @@ input[type=submit].button-primary, input[type=reset].button-primary, input[type=
 .button.button-primary:hover,
 button.button-primary:hover {
   color: #fff;
-  background-color: #FFCCA3;
-  border-color: #FFCCA3;
+  background-color: #a8c564;
+  border-color: #a8c564;
 }
 
 input[type=submit].button-primary:hover, input[type=reset].button-primary:hover, input[type=button].button-primary:hover {
   color: #fff;
-  background-color: #FFCCA3;
-  border-color: #FFCCA3;
+  background-color: #a8c564;
+  border-color: #a8c564;
 }
 
 .button.button-primary:focus,
 button.button-primary:focus {
   color: #fff;
-  background-color: #FFCCA3;
-  border-color: #FFCCA3;
+  background-color: #a8c564;
+  border-color: #a8c564;
 }
 
 input[type=submit].button-primary:focus, input[type=reset].button-primary:focus, input[type=button].button-primary:focus {
   color: #fff;
-  background-color: #FFCCA3;
-  border-color: #FFCCA3;
+  background-color: #a8c564;
+  border-color: #a8c564;
 }
 input[type=email], input[type=number], input[type=search], input[type=text], input[type=tel], input[type=url], input[type=password] {
   height: 38px;
@@ -754,8 +754,8 @@ code {
   margin: 0 0.2rem;
   font-size: 90%;
   white-space: nowrap;
-  background: #f1f1f1;
-  border: 1px solid #e1e1e1;
+  background: white;
+  border: 1px solid #FFF5DF;
   border-radius: 4px;
 }
 
@@ -769,7 +769,7 @@ th,
 td {
   padding: 12px 15px;
   text-align: left;
-  border-bottom: 1px solid #e1e1e1;
+  border-bottom: 1px solid #FFF5DF;
 }
 
 th:first-child,
@@ -841,7 +841,10 @@ h2 {
 .top-controls .top-control {
   padding: 8px;
   margin-bottom: 16px;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(27, 15, 15, 0.5);
+}
+.top-controls .top-control h2 {
+  padding-bottom: 8px;
 }
 @media (min-width: 550px) {
   .top-controls .top-control {
@@ -873,6 +876,7 @@ body {
   min-height: 100%;
   font-family: "Scada", Tahoma, sans-serif;
   color: #FFCCA3;
+  padding-top: 1px;
 }
 
 body.lordaeron {
@@ -897,6 +901,10 @@ body.lwinter {
   background: url("/static/images/lwinterlarge.jpg"), url("/static/images/lwinterlarge.jpg");
   background-position: 5% top, -50% top;
   background-repeat: repeat-x, repeat;
+}
+
+p {
+  margin-bottom: 8px;
 }
 
 @media (max-width: 767px) {
@@ -935,7 +943,7 @@ img.peep {
 
 /* Peep END */
 a, a:visited {
-  color: #FFCCA3;
+  color: #a8c564;
 }
 
 a:hover {
@@ -1006,31 +1014,21 @@ nav .name {
 nav a {
   text-decoration: none;
   display: inline-block;
-  padding: 8px;
+  padding: 16px;
 }
-nav a:hover .abar {
-  background-color: rgba(0, 0, 0, 0.75);
+nav a:hover {
+  text-decoration: underline;
 }
 nav .row {
   display: flex;
   align-items: center;
 }
 nav .views {
+  margin-left: -16px;
   flex: auto;
   display: flex;
   margin: 0;
   z-index: 3;
-}
-nav .views a {
-  position: relative;
-}
-nav .views a .abar {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  left: 0;
-  top: 0;
-  z-index: -10;
 }
 nav ul {
   display: flex;
@@ -1063,7 +1061,8 @@ nav ul li.background-picker img:hover {
   }
 
   nav a {
-    margin-right: 10px;
+    margin-right: 16px;
+    margin-left: -8px;
   }
 
   nav span.submenu {
@@ -1079,10 +1078,6 @@ nav span.submenu {
   display: none;
 }
 
-body {
-  padding-top: 50px;
-}
-
 h1 {
   font-size: 40px;
   margin: 0;
@@ -1091,12 +1086,11 @@ h1 {
   font-size: 80px;
   letter-spacing: -6px;
   cursor: default;
-  position: relative;
+  position: absolute;
   top: -71px;
   height: 25px;
-  margin-bottom: -25px;
   z-index: 2;
-  text-shadow: 4px 1px 0px #000;
+  text-shadow: 4px 2px 2px rgba(0, 0, 0, 0.75);
 }
 h1 .perch {
   color: #e6d9cf;
@@ -1123,13 +1117,39 @@ footer .chatlog {
   text-shadow: 1px 1px 0 #333;
 }
 
+.replays {
+  border-bottom: 1px solid black;
+}
+.replays h2 {
+  padding: 8px;
+  background: rgba(0, 0, 0, 0.75);
+}
+
 .replay {
   border: 1px solid black;
-  background: rgba(0, 0, 0, 0.5);
-  margin-bottom: 16px;
+  border-bottom: 0;
+  background: rgba(0, 0, 0, 0.75);
   padding: 8px;
+  font-size: 12px;
   display: flex;
   text-decoration: none;
+}
+.replay .details a {
+  text-decoration: none;
+  font-weight: bold;
+}
+.replay .details a:hover {
+  text-decoration: underline;
+}
+.replay .details .header {
+  font-size: 20px;
+}
+.replay .details .header a {
+  font-weight: normal;
+  text-decoration: underline;
+}
+.replay:nth-child(even) {
+  background: rgba(27, 15, 15, 0.5);
 }
 .replay .minimap {
   display: none;
@@ -1163,7 +1183,6 @@ form.upload {
 }
 form.upload .inputfields {
   flex: auto;
-  padding: 8px 0;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -1188,7 +1207,7 @@ form.upload input[type=submit] {
   text-shadow: 0px 0px 13px #000, 0px 0px 14px #000, 0px 0px 15px #000;
   flex: none;
   padding: 0;
-  color: #fff;
+  color: #a8c564;
   font-weight: bold;
   font-size: 16px;
   -webkit-transition: text-shadow 0.2s linear;

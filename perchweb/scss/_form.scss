@@ -4,7 +4,6 @@ form.upload {
     margin:0;
     .inputfields {
         flex:auto;
-        padding:$padding 0;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -30,7 +29,7 @@ form.upload {
         text-shadow: 0px 0px 13px #000, 0px 0px 14px #000, 0px 0px 15px #000;
         flex: none;
         padding:0;
-        color: #fff;
+        color: $link-color;
         font-weight: bold;
         font-size: 16px;
 
@@ -45,8 +44,11 @@ form.upload {
         -ms-transition: box-shadow 0.2s linear;
         -o-transition: box-shadow 0.2s linear;
         transition: box-shadow 0.2s linear;
+
+        transition: color 0.2s linear;
         
         &:hover{
+            color: #fff;
             box-shadow: inset 0 0 10px #fff;
             text-shadow: 0px 0px 13px #fff, 0px 0px 14px #fff, 0px 0px 15px #fff;
         }

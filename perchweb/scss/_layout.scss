@@ -28,6 +28,9 @@ h2 {
         display:flex;
     }
     .top-control {
+        h2 {
+            padding-bottom: $padding;
+        }
         padding: $padding;
         margin-bottom: $margin;
         @media (#{$bp-larger-than-phablet}) {
@@ -62,6 +65,7 @@ body {
     min-height: 100%;
     font-family: 'Scada', Tahoma, sans-serif;
     color: $primary-color;
+    padding-top:1px;
 }
 
 body.lordaeron {
@@ -86,6 +90,10 @@ body.lwinter {
     background: url('/static/images/lwinterlarge.jpg'), url('/static/images/lwinterlarge.jpg');
     background-position: 5% top, -50% top;
     background-repeat: repeat-x, repeat;
+}
+
+p{
+    margin-bottom:$padding;
 }
 
 @media (max-width:767px) {

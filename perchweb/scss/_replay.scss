@@ -1,12 +1,37 @@
+.replays {
+    border-bottom:1px solid black;
+    h2 {
+        padding: $padding;
+        background: $card-alt-background-color;
+    }
+}
 .replay {
-
+    .details{
+        a {
+            text-decoration: none; 
+            font-weight:bold;
+            &:hover{
+                text-decoration: underline;
+            }
+        }    
+        .header{
+            font-size:20px;
+            a {
+                font-weight:normal;
+                text-decoration:underline;
+            }
+        }
+    }
     border:1px solid black;
-    background: $card-background-color;
-    margin-bottom: $margin;
+    border-bottom:0;
+    background: $card-alt-background-color;
     padding: $padding;
+    font-size:12px;
     display:flex;
     text-decoration: none;
-
+    &:nth-child(even) {
+        background: $card-background-color;
+    }
     .minimap {
         display:none;  
         width: 100px;

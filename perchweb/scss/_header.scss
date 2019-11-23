@@ -1,7 +1,3 @@
-body {
-    padding-top:50px;
-}
-
 h1 {
     font-size: 40px;
     margin: 0;
@@ -10,12 +6,11 @@ h1 {
     font-size:80px;
     letter-spacing:-6px;
     cursor: default;
-    position: relative;
+    position: absolute;
     top: -71px;
     height: 25px;
-    margin-bottom:-25px;
     z-index: 2;
-    text-shadow: 4px 1px 0px #000;
+    text-shadow: 4px 2px 2px rgba(0, 0, 0, 0.75);
     //z-index: 2;
     .perch {
         color: #e6d9cf;

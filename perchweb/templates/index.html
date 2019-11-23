@@ -18,10 +18,10 @@
         [x] Official replays only <br/> [ ] Show noob vs noob
     </div>
 </div>
-<div class="replay-bar">Showing {{ replays|length }} replays</div>
-
-{% for replay in replays %}
-    {{ replaymacros.card(replay) }}
-{% endfor %}
-
+<div class="replays">
+    <h2>Showing {{ replays|length }} replays</h2>
+    {% for replay in replays %}
+        {{ replaymacros.card(replay) }}
+    {% endfor %}
 {% endblock %}
+</div>
