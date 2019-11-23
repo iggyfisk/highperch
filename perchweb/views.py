@@ -80,8 +80,10 @@ def upload_replay():
 
     # Todo: Validation here, filesize etc
 
-    replaydb.save_replay(replay, replay_name, uploader_ip)
-    return redirect(url_for('views.index'))
+    replay_id = replaydb.save_replay(replay, replay_name, uploader_ip)
+    url = url_for('views.view_replay',
+                  replay_id=replay_id) if replay_id is not None else url_for('views.index')
+    return redirect(url)
 
 
 @routes.route('/highperching')

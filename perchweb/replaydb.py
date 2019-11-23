@@ -212,7 +212,7 @@ def save_replay(replay, replay_name, uploader_ip):
         os.rename(temp_data_path, data_path)
 
         flash('Replay uploaded')
-        # Todo: redirect to replay?
+        return replay_id
     except ReplayParsingException as err:
         flash(str(err))
         setattr(g, context_rollback_key, True)
