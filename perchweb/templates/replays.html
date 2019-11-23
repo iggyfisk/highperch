@@ -8,16 +8,7 @@
             </a>
         </div>
         <p>{{ replay['Length'] }} | {{ replay['GameType'] }} | {{ replay['Map'] }} | {{ replay['TowerCount'] }} towers</p>
-        <div class="teams">
-            {% for (teamid, players) in replay.teams().items() %}
-
-                {% for player in players %}
-                    <a href="{{ url_for('views.view_player', battletag=player['name']) }}">{{ player['name'] }}</a> 
-                {% endfor %}
-
-            {% if not loop.last %} vs {% endif %}
-            {% endfor %}
-        </div>
+        {{ teams(replay.teams()) }}
     </div>
     <a class="download" href="/download/replay">
         <i class="icon-download-alt"></i>
@@ -25,8 +16,15 @@
 </div>
 {% endmacro %}
 
-{% macro replay(replay) %}
-<div class="replay">
-    Big replay page here.
-</div>
+{% macro teams(teams) %}
+    <div class="teams">
+        {% for (teamid, players) in teams.items() %}
+
+            {% for player in players %}
+                <a href="{{ url_for('views.view_player', battletag=player['name']) }}">{{ player['name'] }}</a> 
+            {% endfor %}
+
+        {% if not loop.last %} vs {% endif %}
+        {% endfor %}
+    </div>
 {% endmacro %}

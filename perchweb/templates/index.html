@@ -5,17 +5,21 @@
 <div class="row top-controls">
     <div class="eight columns top-control">
         <h2>Contribute replay</h2>      
-        <form class="upload" action="/upload" method="POST" enctype="multipart/form-data" autocomplete="off">
-            <div class="inputfields">
-                <input type="file" name="replay" accept=".w3g" required />
-                <input type="text" name="name" minlength="6" maxlength="50" placeholder="Name your replay" required />
-            </div>
-            <input type="Submit" class="action" value="Upload" />        
-        </form>        
+        <div class="content">
+            <form class="upload" action="/upload" method="POST" enctype="multipart/form-data" autocomplete="off">
+                <div class="inputfields">
+                    <input type="file" name="replay" accept=".w3g" required />
+                    <input type="text" name="name" minlength="6" maxlength="50" placeholder="Name your replay" required />
+                </div>
+                <input type="Submit" class="action" value="Upload" />        
+            </form>        
+        </div>
     </div>
     <div class="four columns top-control">
         <h2 class="closed">Filter<span class="expand"><i class="fa fa-arrow-circle-down"></i><i class="fa fa-arrow-circle-up"></i></span></h2>
-        [x] Official replays only <br/> [ ] Show noob vs noob
+        <div class="content">
+            [x] Official replays only <br/> [ ] Show noob vs noob
+        </div>
     </div>
 </div>
 <div class="replays">

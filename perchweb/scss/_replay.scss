@@ -4,68 +4,69 @@
         padding: $padding;
         background: $card-alt-background-color;
     }
-}
-.replay {
-    .details{
-        a {
-            text-decoration: none; 
-            font-weight:bold;
-            &:hover{
-                text-decoration: underline;
-            }
-        }    
-        .header{
-            font-size:20px;
+
+    .replay {
+        .details{
             a {
-                font-weight:normal;
-                text-decoration:underline;
+                text-decoration: none; 
+                font-weight:bold;
+                &:hover{
+                    text-decoration: underline;
+                }
+            }    
+            .header{
+                font-size:20px;
+                a {
+                    font-weight:normal;
+                    text-decoration:underline;
+                }
             }
         }
-    }
-    border:1px solid black;
-    border-bottom:0;
-    background: $card-alt-background-color;
-    padding: $padding;
-    font-size:12px;
-    display:flex;
-    align-items: center;
-    text-decoration: none;
-    &:nth-child(even) {
-        background: $card-background-color;
-    }
-    .minimap {
-        margin-right: $padding;
-        font-size:9px;
         border:1px solid black;
-    }
-    .minimap, .download {
-        flex: none;
-        height:80px;
-        width:80px;
-    }
-
-    .download {
-        text-align:center;
-        font-size:42px;
-    }
-
-    .teams {
-        font-size:-1px;
-    }
-
-    .details {
-        width: 100%;
-        .header {
-            display:flex;
-            a.title {
-                flex: auto;
-                margin-bottom:0;
-            }
+        border-bottom:0;
+        background: $card-alt-background-color;
+        padding: $padding;
+        font-size:12px;
+        display:flex;
+        align-items: center;
+        text-decoration: none;
+        &:nth-child(even) {
+            background: $card-background-color;
+        }
+        .minimap {
+            margin-right: $padding;
+            font-size:9px;
+            border:1px solid black;
+        }
+        .minimap, .download {
+            flex: none;
+            height:80px;
+            width:80px;
         }
 
         .download {
-            flex-basis: 100px;
-            border: 1px solid black;
+            text-align:center;
+            font-size:42px;
+        }
+
+        .teams {
+            font-size:-1px;
+        }
+
+        .details {
+            width: 100%;
+            .header {
+                display:flex;
+                a.title {
+                    flex: auto;
+                    margin-bottom:0;
+                }
+            }
+
+            .download {
+                flex-basis: 100px;
+                border: 1px solid black;
+            }
         }
     }
 }

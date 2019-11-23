@@ -21,6 +21,13 @@ b {
 h2 {
     font-size: 20px;
     margin-bottom: 0;
+    padding: $padding;
+    background: $card-alt-background-color;
+}
+
+.content {
+    background-color: $card-background-color;
+    padding:$padding;
 }
 
 .top-controls {
@@ -31,12 +38,10 @@ h2 {
         h2 {
             padding-bottom: $padding;
         }
-        padding: $padding;
         margin-bottom: $margin;
         @media (#{$bp-larger-than-phablet}) {
             margin-bottom:0;
         }
-        background-color: $card-background-color;
     }
     margin-bottom: $margin;
 }

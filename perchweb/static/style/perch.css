@@ -828,6 +828,13 @@ b {
 h2 {
   font-size: 20px;
   margin-bottom: 0;
+  padding: 8px;
+  background: rgba(0, 0, 0, 0.75);
+}
+
+.content {
+  background-color: rgba(27, 15, 15, 0.5);
+  padding: 8px;
 }
 
 .top-controls {
@@ -839,9 +846,7 @@ h2 {
   }
 }
 .top-controls .top-control {
-  padding: 8px;
   margin-bottom: 16px;
-  background-color: rgba(27, 15, 15, 0.5);
 }
 .top-controls .top-control h2 {
   padding-bottom: 8px;
@@ -1124,8 +1129,7 @@ footer .chatlog {
   padding: 8px;
   background: rgba(0, 0, 0, 0.75);
 }
-
-.replay {
+.replays .replay {
   border: 1px solid black;
   border-bottom: 0;
   background: rgba(0, 0, 0, 0.75);
@@ -1135,51 +1139,51 @@ footer .chatlog {
   align-items: center;
   text-decoration: none;
 }
-.replay .details a {
+.replays .replay .details a {
   text-decoration: none;
   font-weight: bold;
 }
-.replay .details a:hover {
+.replays .replay .details a:hover {
   text-decoration: underline;
 }
-.replay .details .header {
+.replays .replay .details .header {
   font-size: 20px;
 }
-.replay .details .header a {
+.replays .replay .details .header a {
   font-weight: normal;
   text-decoration: underline;
 }
-.replay:nth-child(even) {
+.replays .replay:nth-child(even) {
   background: rgba(27, 15, 15, 0.5);
 }
-.replay .minimap {
+.replays .replay .minimap {
   margin-right: 8px;
   font-size: 9px;
   border: 1px solid black;
 }
-.replay .minimap, .replay .download {
+.replays .replay .minimap, .replays .replay .download {
   flex: none;
   height: 80px;
   width: 80px;
 }
-.replay .download {
+.replays .replay .download {
   text-align: center;
   font-size: 42px;
 }
-.replay .teams {
+.replays .replay .teams {
   font-size: -1px;
 }
-.replay .details {
+.replays .replay .details {
   width: 100%;
 }
-.replay .details .header {
+.replays .replay .details .header {
   display: flex;
 }
-.replay .details .header a.title {
+.replays .replay .details .header a.title {
   flex: auto;
   margin-bottom: 0;
 }
-.replay .details .download {
+.replays .replay .details .download {
   flex-basis: 100px;
   border: 1px solid black;
 }
@@ -1227,8 +1231,10 @@ form.upload input[type=submit] {
   -ms-transition: box-shadow 0.2s linear;
   -o-transition: box-shadow 0.2s linear;
   transition: box-shadow 0.2s linear;
+  transition: color 0.2s linear;
 }
 form.upload input[type=submit]:hover {
+  color: #fff;
   box-shadow: inset 0 0 10px #fff;
   text-shadow: 0px 0px 13px #fff, 0px 0px 14px #fff, 0px 0px 15px #fff;
 }
