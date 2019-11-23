@@ -18,7 +18,20 @@
     <div class="four columns top-control">
         <h2 class="closed">Filter<span class="expand"><i class="fa fa-arrow-circle-down"></i><i class="fa fa-arrow-circle-up"></i></span></h2>
         <div class="content">
-            [x] Official replays only <br/> [ ] Show noob vs noob
+            <form class="filter" action="/" method="GET" autocomplete="off">
+                <label for="f_official">Official only</label><input type="checkbox" name="official" id="f_official" {% if replay_filter['official'] %}checked{% endif %} />
+                <input type="text" name="name" placeholder="Replay name" value="{{ replay_filter['name'] or '' }}" />
+                <input type="text" name="map" placeholder="Map name" value="{{ replay_filter['map'] or '' }}" />
+                <input type="text" name="chat" placeholder="Chat content" value="{{ replay_filter['chat'] or '' }}" />
+                <label for="f_sort">Sort by</label>
+                <select name="sort" id="f_sort">
+                    <option value="id" {% if replay_filter['sort'] == 'id' %}selected{% endif %}>Latest</option>
+                    <option value="length" {% if replay_filter['sort'] == 'length' %}selected{% endif %}>Longest</option>
+                    <option value="tower" {% if replay_filter['sort'] == 'tower' %}selected{% endif %}>Most towers</option>
+                    <option value="chat" {% if replay_filter['sort'] == 'chat' %}selected{% endif %}>Spiciest chat</option>
+                </select>
+                <input type="submit" value="Apply"/>
+            </form>
         </div>
     </div>
 </div>

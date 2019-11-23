@@ -15,15 +15,24 @@ routes = Blueprint('views', __name__)
 @routes.route('/')
 def index():
     """Index, replay listing"""
-    # Todo: filter from query
-    replays = replaydb.list_replays({})
+
+    replay_filter = {
+        'official': 'official' in request.args,
+        'name': request.args.get('name', None),
+        'map': request.args.get('map', None),
+        'chat': request.args.get('chat', None),
+        'sort': request.args.get('sort', 'id')
+    }
+    replays = replaydb.list_replays(replay_filter)
 
     # Testy thing
     if 'flash' in request.args:
         for i in range(int(request.args['flash'])):
             flash("Flash test string" * (i + 1))
 
-    return standard_page('index.html', 'Replays', nav='index', replays=replays)
+
+
+    return standard_page('index.html', 'Replays', nav='index', replays=replays, replay_filter=replay_filter)
 
 
 @routes.route('/replay/<int:replay_id>')

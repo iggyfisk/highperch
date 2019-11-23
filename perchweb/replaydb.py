@@ -5,8 +5,8 @@ import subprocess
 import json
 import sqlite3
 from datetime import datetime
-from flask import flash, g
 from hashlib import sha256
+from flask import flash, g
 from models.replay import Replay, ReplayListInfo
 import filepaths
 
@@ -48,13 +48,38 @@ def close_connection():
         setattr(g, context_db_key, None)
 
 
+filter_sort_column = {
+    'id': 'ID',
+    'length': 'Length',
+    'tower': 'TowerCount',
+    'chat': 'ChatMessageCount'
+}
+
+
 def list_replays(search_filter):
     """ Search for replays to list on the index page """
-    rows = query('''
+
+    order_column = filter_sort_column.get(search_filter['sort'], None)
+    if not order_column:
+        # Bad sort order parameter, possibly malicious
+        return []
+
+    name_param = f"%{search_filter['name']}%" if search_filter['name'] else None
+    map_param = f"%{search_filter['map']}%" if search_filter['map'] else None
+    chat_param = f"%{search_filter['chat']}%" if search_filter['chat'] else None
+
+    # Dynamic SQL hell yeah! It's perfectly safe but I'm not 100% about the performance
+    # once we get to 100k replays, ideally only the active filters would be in the query text
+    rows = query(f'''
     SELECT ID, Name, TimeStamp, Official, HighQuality, GameType, Version, Length, Map, TowerCount, ChatMessageCount, Players, Views
     FROM Replays
-    ORDER BY ID DESC
-    ''')
+    WHERE 
+        (? = 0 OR Official = 1) AND
+        (? IS NULL OR Name LIKE ?) AND
+        (? IS NULL OR Map LIKE ?) AND
+        (? IS NULL OR Chat LIKE ?)
+    ORDER BY {order_column} DESC
+    ''', (search_filter['official'], name_param, name_param, map_param, map_param, chat_param, chat_param))
 
     return [ReplayListInfo(**r) for r in rows]
 
@@ -111,7 +136,7 @@ def get_player(battletag):
 
     if player_row is None:
         return None
-    
+
     aggregate_row = query('''
         SELECT AVG(APM) AS AvgApm, SUM(TowerCount) AS TowerCount, SUM(ChatMessageCount) AS ChatMessageCount
         FROM GamesPlayed
@@ -148,9 +173,9 @@ def save_game_played(replay_data, replay_id):
             VALUES(?, ?, ?, ?, ?, ?, ?)''', (name, replay_id, race, apm, win, tower_count, chat_count))
 
         # Only record when the players real race was detected, otherwise they weren't really playing
-        if race != 'R':            
+        if race != 'R':
             col = {'H': 'HUGames', 'O': 'ORGames',
-                'N': 'NEGames', 'U': 'UDGames'}[race]
+                   'N': 'NEGames', 'U': 'UDGames'}[race]
             query(
                 f'UPDATE Players SET {col} = {col} + 1 WHERE BattleTag = ?', (name,))
 
@@ -168,10 +193,12 @@ def save_replay(replay, replay_name, uploader_ip):
         with open(temp_replay_path, 'rb') as replay_bytes:
             file_hash = sha256(replay_bytes.read()).hexdigest()
 
-        dupe_check = query('SELECT Name FROM Replays WHERE FileHash=?;', (file_hash,), one=True)
+        dupe_check = query(
+            'SELECT Name FROM Replays WHERE FileHash=?;', (file_hash,), one=True)
         if dupe_check:
             # Todo: log attempted duplicate upload
-            raise ReplayParsingException(f"Replay already exists: {dupe_check[0]}")
+            raise ReplayParsingException(
+                f"Replay already exists: {dupe_check[0]}")
 
         parse_result = subprocess.run(
             ["node", filepaths.get_path("../parsereplay.js"), temp_replay_path, temp_data_path])
