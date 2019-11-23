@@ -1,422 +1,425 @@
 {% extends "layout.html" %}
 
 {% block styles %}
-<link rel="stylesheet" type="text/css" href="/static/style/bootstrap.min.css" />
 <link rel="stylesheet" type="text/css" href="/static/style/guide.css?h={{ config['STATIC_HASH'] }}" />
 {% endblock %}
 
 {% block content %}
-<div class="text-center">
-    <h1>The Art of Highperching</h1>
-</div>
-<div class="bigtower">
-    <img src="/static/images/guide/bigtower.jpg" title="No humans allowed" />
-</div>
-<div class="row">
-    <div class="col-md-5">
-        <div class="blend">
-            <h2>Introduction</h2>
-            <div class="cont">
-                <p>My Battle.net name is Snarker on Azeroth, and my friends and I enjoy building towers. So much so, in fact, that we created Clan Towa with the unified purpose of spreading our love for these static defenses. We build towers of all shapes and sizes in both solo and team games, but usually prefer the arrow-spitting variants to their bulkier and more expensive cousins. If you ever do happen to catch us not building any during a game, it's probably a safe assumption that our account's been compromised.</p>
-                <p>Towers require little micro to operate, are very easy to queue up and mass produce, can be quickly repaired and rebuilt as needed, and offer little in the way of experience for enemy heroes. Most importantly, they do one thing that our clan has become very good at: pissing off the unsuspecting opposing team. In the competitive Warcraft scene, many bemoan the "unmannered" use of towers; human users are especially notorious for what some would call abusing the seemingly unassailability of massed towers, but often respond by arguing that towers are used with the intent to win and not for manner's sake.</p>
-                <p>We, as Clan Towa, build towers to have a good time at our opponent's expense.</p>
-                <p>The following report is both a commentary on an actual game itself and an outline of what has evolved into an almost textbook strategy designed to abuse certain terrain features of a specific map currently found in the 3v3 map rotation. Throughout the report, I will be including several articles that go in depth about a specific part of the highperch strategy, as well as various screenshots of comments from people we have played in ladder. I hope you enjoy my first battlereport.</p>
-            </div>
+<div class="guide">
+    <div class="row">
+        <h1>The Art of Highperching</h1>
+    </div>
+    <div class="row">
+        <div class="bigtower">
+            <img src="/static/images/guide/bigtower.jpg" title="No humans allowed" />
         </div>
     </div>
-    <div class="col-md-7">
-        <div class="blend derail">
-            <h2>Tower Types</h2>
-            <div class="cont">
-                <img src="/static/images/guide/orctower.png" class="inright" title="Haphazard hovel" />
-                <p>Not all towers are created equal. Human towers come with three upgrades to their heavy armor, and are thus able to have a whopping +8 armor total. Orc towers are able to return damage to melee units as well as switch from heavy to fortified armor later in the game. Undead can upgrade any of their basic food-supplying ziggurats to a tower which can be unsummoned to regain a partial amount of its resource cost, and Night Elf towers can move and cannibalize nearby trees to regenerate its health.</p>
-                <div class="clearfix"></div>
-                <table class="stats">
-                    <tr>
-                        <th class="hidden-xs"></th>
-                        <th colspan="10">Tower Attributes (Fully Upgraded)</th>
-                    </tr>
-                    <tr>
-                        <th class="hidden-xs"></th>
-                        <th>Tower</th>
-                        <th class="hidden-xs"><img src="/static/images/guide/gold.png" title="Gold" /></th>
-                        <th class="hidden-xs"><img src="/static/images/guide/lumber.png" title="Lumber" /></th>
-                        <th>HP</th>
-                        <th>Armor</th>
-                        <th>Range</th>
-                        <th>Build time</th>
-                        <th>DPS</th>
-                        <th>Size</th>
-                        <th>Notes</th>
-                    </tr>
-                    <tr>
-                        <td class="hidden-xs"><img src="/static/images/guide/guardtower.png" title="Guard tower" /></td>
-                        <td>Human<span class="hidden-xs"> Guard Tower</span></td>
-                        <td class="hidden-xs">100</td>
-                        <td class="hidden-xs">70</td>
-                        <td>800</td>
-                        <td>+8 Heavy</td>
-                        <td>70</td>
-                        <td>75</td>
-                        <td>24.4</td>
-                        <td>small</td>
-                        <td>detects invisible units</td>
-                    </tr>
-                    <tr>
-                        <td class="hidden-xs"><img src="/static/images/guide/watchtower.png" title="Watch tower" /></td>
-                        <td>Orc<span class="hidden-xs"> Watch Tower</span></td>
-                        <td class="hidden-xs">110</td>
-                        <td class="hidden-xs">80</td>
-                        <td>500</td>
-                        <td>+3 Fortified</td>
-                        <td>80</td>
-                        <td>60</td>
-                        <td>25.0</td>
-                        <td>small</td>
-                        <td>reflects damage to melee attackers</td>
-                    </tr>
-                    <tr>
-                        <td class="hidden-xs"><img src="/static/images/guide/spirittower.png" title="Spirit tower" /></td>
-                        <td>Undead<span class="hidden-xs"> Spirit Tower</span></td>
-                        <td class="hidden-xs">295</td>
-                        <td class="hidden-xs">90</td>
-                        <td>550</td>
-                        <td>+5 Fortified</td>
-                        <td>70</td>
-                        <td>85</td>
-                        <td>26.0</td>
-                        <td>large</td>
-                        <td>requires creep to be built</td>
-                    </tr>
-                    <tr>
-                        <td class="hidden-xs"><img src="/static/images/guide/spirittower.png" title="Ancient protector" /></td>
-                        <td>Night<span class="hidden-xs"> Elf Ancient Protector</span></td>
-                        <td class="hidden-xs">135</td>
-                        <td class="hidden-xs">80</td>
-                        <td>600</td>
-                        <td>+3 Fortified</td>
-                        <td>70</td>
-                        <td>60</td>
-                        <td>16.6</td>
-                        <td>large</td>
-                        <td>mobile, requires wisp to be built</td>
-                    </tr>
-                </table>
-                <img src="/static/images/guide/hutower.png" class="inleft" title="Fine craftmanship" />
-                <p>Ideally, we would only mass orc and human towers. Undead towers are four times as big, have long build times and high costs, and require creep much like a sunken colony, making them not nearly as versatile on large maps. Ancient protectors require a wisp sacrifice, and this alone makes massing impractical.</p>
-                <p>Depending on the opposing army composition, we build a mix of guard and watch towers. Human towers with their heavy armor are excellent against bats, chimaeras, mortars, and all other forms of siege. Orc towers with their durable fortified armor can take the brunt of entire armies. They also have the highest range of all towers making them invaluable on elevated terrain, a very important fact to take note of as you will soon see. Most games require adaptation and thus our usual rule of thumb is if we find ourselves asking if we built enough towers, then we need to build some more.</p>
-                <div class="clearfix"></div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-8 md-pull-right">
-        <div class="blend">
-            <h2>The Map</h2>
-            <div class="cont">
-                <div class="text-center">
-                    <img src="/static/images/guide/highperch-map.png" class="out" title="The arena" />
+    <div class="row">
+        <div class="col-md-5">
+            <div class="blend">
+                <h2>Introduction</h2>
+                <div class="cont">
+                    <p>My Battle.net name is Snarker on Azeroth, and my friends and I enjoy building towers. So much so, in fact, that we created Clan Towa with the unified purpose of spreading our love for these static defenses. We build towers of all shapes and sizes in both solo and team games, but usually prefer the arrow-spitting variants to their bulkier and more expensive cousins. If you ever do happen to catch us not building any during a game, it's probably a safe assumption that our account's been compromised.</p>
+                    <p>Towers require little micro to operate, are very easy to queue up and mass produce, can be quickly repaired and rebuilt as needed, and offer little in the way of experience for enemy heroes. Most importantly, they do one thing that our clan has become very good at: pissing off the unsuspecting opposing team. In the competitive Warcraft scene, many bemoan the "unmannered" use of towers; human users are especially notorious for what some would call abusing the seemingly unassailability of massed towers, but often respond by arguing that towers are used with the intent to win and not for manner's sake.</p>
+                    <p>We, as Clan Towa, build towers to have a good time at our opponent's expense.</p>
+                    <p>The following report is both a commentary on an actual game itself and an outline of what has evolved into an almost textbook strategy designed to abuse certain terrain features of a specific map currently found in the 3v3 map rotation. Throughout the report, I will be including several articles that go in depth about a specific part of the highperch strategy, as well as various screenshots of comments from people we have played in ladder. I hope you enjoy my first battlereport.</p>
                 </div>
-                <p>Highperch is a 6-player map characterized by a top versus bottom parallel arrangement of starting locations for the two teams. Four additional expansions are arranged in a wide square around the map center, in contrast to other equally-sized maps where the expansions are close to a respective player and, hence, easier to defend. These four expansions are directly in the path of armies en route to an enemy base, and thus are a risky venture for anyone seeking additional resources through a second goldmine. There are two vertical land paths from the top of the map to the bottom, each with a progressive series of chokepoints that can be towered up somewhat easily.</p>
-                <img src="/static/images/guide/lizards.png" class="inright" title="Low-level lizards" />
-                <p>The lack of any high-level red creep camps suggests an easily-crept and expansion-friendly map dotted by numerous green and yellow camps, populated by lightning-spewing thunder lizards, bow and axe-wielding centaurs, and warthog-like razormanes. The thunder lizards have splash damage and can cast purge to make creeping difficult for any intelligence heroes relying on summoned units to soak up damage, the centaurs deal high rates of damage through their archers, and the razormanes can summon little piglets as well as cast healing ward. At the center of the map is a large clearing with a tavern; a mercenary camp sits to its left and a goblin shop to its right.</p>
-                <div class="clearfix"></div>
-                <p>The true anomalies of this map lie in the mountainous plateaus at the 3 o'clock and 9 o'clock positions. Without any Goblin Laboratories on this map and from which no zeppelins to purchase, there is no direct way for land units to ascend these mountains. On the apex of each lies a fountain of health guarded by a green-level swarm of flying harpies.</p>	
-                <div class="text-center">
-                    <img src="/static/images/guide/mountain.jpg" class="out lightborder" title="The destination" />
-                </div>				
-                <p>If one were to hypothetically mass towers upon this plateau (and only the right one, since the pathing is less weird and it has more room for towers), it would be unassailable by any forms of land siege. Air siege units such as chimaeras and frost wyrms are unable to rely on ground support when attacking this position, making them extremely vulnerable to various forms of anti-air air units. We still sometimes wonder why Blizzard's map creators even put them there, because there is neither easy access nor strategic value to these mountains.</p>
             </div>
         </div>
-    </div>
-    <div class="col-md-4 md-pull-righ">
-        <div class="blend derail">
-            <h2>Mountain Mystery</h2>
-            <div class="cont">
-                <p>The first thing people always type when they discover our stronghold atop these mountains is "how'd you get up there?" Without purchasable zeppelins to carry our heroes and workers up the 5 or so levels of elevation depending on which side we approach it from, the answer may not be apparent at first.</p>
-                <img src="/static/images/guide/zep.png" class="inleft lightborder" title="No hot air balloon rides" />
-                <p>The most obvious answer is Warden with her blink ability. I'm sure you are all by now aware of the new Stalker unit in Starcraft 2, able to leap up and down cliffs despite being a ground unit. A Warden can easily clear the mountaintop with a few well-placed blinks and the aid of vision to clear the fog.</p>
-                <p>The next easiest way is to have a gargoyle or druid of the talon in crow form fly up to the mountaintop, have them transform into their land model, and have a hero use a staff of teleportation to warp onto the unit, since the staff can only be used on ground units. A hippogryph rider can also drop an archer to be teleported onto. But what if your team doesn't have a night elf or undead player? The remaining three solutions are subtle and somewhat tedious, involving one of three heroes: a Tinker setting up a pocket factory upon a higher elevation level for heroes to teleport onto, a Keeper of the Grove creating treants upon a higher elevation level for heroes to teleport onto, and a Beastmaster using a level 3 bear with blink for...well, I'm sure you can figure it out by now.</p>
-                <p>Believe it or not, there are actually at least three more ways of reaching the top (and no, a level 6 Archmage doesn't count since he needs a ground unit to teleport onto), but they would take such extraordinary measures that they could never be used practically in a highperch game. Can you think of what they could be?</p>
-                <div class="clearfix"></div>
-            </div>
-        </div>
-        <div class="blend">
-            <h2>The Players</h2>
-            <div class="cont">
-                team <span class="gray">TOWA</span>
-                <ul class="team">
-                    <li><img src="/static/images/guide/human.png" title="Human" /><span class="teal">ugh.2ez</span> leads the courageous human alliance at 11 o'clock.</li>
-                    <li><img src="/static/images/guide/human.png" title="Human" /><span class="yellow">welp.2ez</span> leads the noble human alliance at 12 o'clock.</li>
-                    <li><img src="/static/images/guide/orc.png" title="Orc" /><span class="green">cum.2ez</span> leads the honorable orc tribe at 1 o'clock.</li>
-                </ul>
-                team <span class="purple">GnH</span> (aka grunts'n'hunts)
-                <ul class="team">
-                    <li><img src="/static/images/guide/nightelf.png" title="Night elf" /><span class="red">real331</span> leads the shadowy night elf sluts at 5 o'clock.</li>
-                    <li><img src="/static/images/guide/nightelf.png" title="Night elf" /><span class="blue">b1209irthday</span> leads the reclusive night elf sluts at 6 o'clock.</li>
-                    <li><img src="/static/images/guide/orc.png" title="Orc" /><span class="pink">legd-milk</span> randoms the savage orc horde at 7 o'clock.</li>
-                </ul>
-                <div class="text-center">
-                    <img src="/static/images/guide/minimap.png" class="out" title="The players" />
-                </div>			
-                <p>A little about the players themselves. <span class="green">cum.2ez</span>, <span class="yellow">welp.2ez</span>, and <span class="teal">ugh.2ez</span> are all alternate accounts of my clan mates kunt.roii, sir_tweak, and mrfrosty, respectively, on Lordaeron, made to mass towers in team games. They have a pretty good track record so far in both 2v2s and 3v3s.</p>
-                <p>I'm not sure who <span class="blue">b1209irthday</span>, <span class="pink">legd-milk</span>, and <span class="red">real331</span> are, but with good records and apms averaging over 100 in a game lasting almost two hours, they are a formidable team.</p>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="blend">
-    <h2>Stage 1 - Denial</h2>
-    <div class="cont">
-        <div class="text-center">
-            <img src="/static/images/guide/denial.jpg" class="out lightborder" title="The denial" />
-        </div>		
-        <p><span class="yellow">welp.2ez</span>, having spawned between his two allies, is tasked with feeding them gold and wood so they can tower the chokepoint of their respective lanes. All three go for the standard Clan <span class="gray">TOWA</span> build of altar, farm, and mill-type structures for their respective races, while neglecting to build tier 1 unit-producing barracks of any sort. Both <span class="teal">ugh.2ez</span> and <span class="green">cum.2ez</span> send workers out to their chokepoints and start queuing up towers in a horizontal line, 2 to 3 rows deep.</p>
-        <div class="text-center">
-            <img src="/static/images/guide/line.jpg" class="out lightborder" title="The line" />
-        </div>
-        <p>Meanwhile, on the other side of the map, both <span class="red">real331</span> and <span class="blue">b1209irthday</span> wait for their resources to accumulate before building their ancient of war and hunter's hall simultaneously to set up for huntresses. <span class="pink">legd-milk</span> opts for a standard orc build of altar, burrow, and barracks for good ol' fashioned grunts.</p>
-        <p><span class="yellow">welp.2ez</span> and <span class="teal">ugh.2ez</span> hire dual Archmages to blizzard harass the opposing team's workers, while <span class="green">cum.2ez</span> commands a Blademaster for the same purpose. Water elementals make a negligible impact during large team battles, especially on a map where all the green camps can cast purge to deal 400 damage to summoned units. AoE skills are far more critical when allied forces wholly consist of only heroes and towers defending against a mounting siege army. Blademaster and heroes like the Warden can whittle down enemy forces in long, drawn out tower games while possessing handy escape skills.</p>
-        <p><span class="pink">legd-milk</span> hires a Tauren Chieftain while his slutty night elf allies <span class="red">real331</span> and <span class="blue">b1209irthday</span> hire a Priestess of the Moon and Keeper of the Grove, respectively. These heroes are very army-centric, considering that the Priestess and Tauren wield two of the arguably best auras in the game. The unarmored huntresses, augmented by the Priestess's trueshot aura, can deal the majority of the damage while grunts bear the brunt of enemy forces.</p>
-        <p><span class="blue">b1209irthday</span> sends a scout wisp in a counterclockwise fashion, passing <span class="green">cum.2ez</span>'s peon on its way to make the first of many towers, and soon sends his Priestess of the Moon towards <span class="green">cum.2ez</span>'s base. It spots the towers at the chokepoint on the right side, but before it can prevent their construction, is chased off by <span class="green">cum.2ez</span>'s Blademaster and <span class="yellow">welp.2ez</span>'s Archmage.</p>
-        <div class="text-center">
-            <img src="/static/images/guide/scout.jpg" class="out lightborder" title="The reveal" />
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-9">
-        <div class="blend">
-            <div class="cont">
-                <img src="/static/images/guide/blizz.jpg" class="inleft lightborder" title="The harassment" />
-                <p><span class="teal">ugh.2ez</span>'s Archmage is the first to scout <span class="pink">legd-milk</span>'s base, and decides to harass the exposed gold-mining peons. It manages to unleash a few torrents of blizzard before being chased out by the Tauren Chieftain.</p>
-                <div class="clearfix"></div>				
-                <p>Moments later, the Archmage is ambushed by the Keeper and the Priestess. <span class="teal">ugh.2ez</span>, knowing that his Archmage was not going to survive three successive entangling roots from the Keeper, suicides it into the nearby creep camp to deny valuable experience.</p>
-                <div class="text-center">
-                    <img src="/static/images/guide/deny.png" class="out" title="The other denial" />
+        <div class="col-md-7">
+            <div class="blend derail">
+                <h2>Tower Types</h2>
+                <div class="cont">
+                    <img src="/static/images/guide/orctower.png" class="inright" title="Haphazard hovel" />
+                    <p>Not all towers are created equal. Human towers come with three upgrades to their heavy armor, and are thus able to have a whopping +8 armor total. Orc towers are able to return damage to melee units as well as switch from heavy to fortified armor later in the game. Undead can upgrade any of their basic food-supplying ziggurats to a tower which can be unsummoned to regain a partial amount of its resource cost, and Night Elf towers can move and cannibalize nearby trees to regenerate its health.</p>
+                    <div class="clearfix"></div>
+                    <table class="stats">
+                        <tr>
+                            <th class="hidden-xs"></th>
+                            <th colspan="10">Tower Attributes (Fully Upgraded)</th>
+                        </tr>
+                        <tr>
+                            <th class="hidden-xs"></th>
+                            <th>Tower</th>
+                            <th class="hidden-xs"><img src="/static/images/guide/gold.png" title="Gold" /></th>
+                            <th class="hidden-xs"><img src="/static/images/guide/lumber.png" title="Lumber" /></th>
+                            <th>HP</th>
+                            <th>Armor</th>
+                            <th>Range</th>
+                            <th>Build time</th>
+                            <th>DPS</th>
+                            <th>Size</th>
+                            <th>Notes</th>
+                        </tr>
+                        <tr>
+                            <td class="hidden-xs"><img src="/static/images/guide/guardtower.png" title="Guard tower" /></td>
+                            <td>Human<span class="hidden-xs"> Guard Tower</span></td>
+                            <td class="hidden-xs">100</td>
+                            <td class="hidden-xs">70</td>
+                            <td>800</td>
+                            <td>+8 Heavy</td>
+                            <td>70</td>
+                            <td>75</td>
+                            <td>24.4</td>
+                            <td>small</td>
+                            <td>detects invisible units</td>
+                        </tr>
+                        <tr>
+                            <td class="hidden-xs"><img src="/static/images/guide/watchtower.png" title="Watch tower" /></td>
+                            <td>Orc<span class="hidden-xs"> Watch Tower</span></td>
+                            <td class="hidden-xs">110</td>
+                            <td class="hidden-xs">80</td>
+                            <td>500</td>
+                            <td>+3 Fortified</td>
+                            <td>80</td>
+                            <td>60</td>
+                            <td>25.0</td>
+                            <td>small</td>
+                            <td>reflects damage to melee attackers</td>
+                        </tr>
+                        <tr>
+                            <td class="hidden-xs"><img src="/static/images/guide/spirittower.png" title="Spirit tower" /></td>
+                            <td>Undead<span class="hidden-xs"> Spirit Tower</span></td>
+                            <td class="hidden-xs">295</td>
+                            <td class="hidden-xs">90</td>
+                            <td>550</td>
+                            <td>+5 Fortified</td>
+                            <td>70</td>
+                            <td>85</td>
+                            <td>26.0</td>
+                            <td>large</td>
+                            <td>requires creep to be built</td>
+                        </tr>
+                        <tr>
+                            <td class="hidden-xs"><img src="/static/images/guide/spirittower.png" title="Ancient protector" /></td>
+                            <td>Night<span class="hidden-xs"> Elf Ancient Protector</span></td>
+                            <td class="hidden-xs">135</td>
+                            <td class="hidden-xs">80</td>
+                            <td>600</td>
+                            <td>+3 Fortified</td>
+                            <td>70</td>
+                            <td>60</td>
+                            <td>16.6</td>
+                            <td>large</td>
+                            <td>mobile, requires wisp to be built</td>
+                        </tr>
+                    </table>
+                    <img src="/static/images/guide/hutower.png" class="inleft" title="Fine craftmanship" />
+                    <p>Ideally, we would only mass orc and human towers. Undead towers are four times as big, have long build times and high costs, and require creep much like a sunken colony, making them not nearly as versatile on large maps. Ancient protectors require a wisp sacrifice, and this alone makes massing impractical.</p>
+                    <p>Depending on the opposing army composition, we build a mix of guard and watch towers. Human towers with their heavy armor are excellent against bats, chimaeras, mortars, and all other forms of siege. Orc towers with their durable fortified armor can take the brunt of entire armies. They also have the highest range of all towers making them invaluable on elevated terrain, a very important fact to take note of as you will soon see. Most games require adaptation and thus our usual rule of thumb is if we find ourselves asking if we built enough towers, then we need to build some more.</p>
+                    <div class="clearfix"></div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-md-3">
-        <div class="blend derail">
-            <h2>Aggro Abuse</h2>
-            <div class="cont">
-                <p>All creeps are set to 'guard mode' and have a specific acquisition range (aggro). If a hero falls within that range, the creeps will chase to hit the hero, and continue hitting it until either dies. If the hero goes beyond that target range, they will still continue to chase/hit for three seconds before they make a 180-degree turn and head back to their original spot to 'guard'. This constant shifting between guard and attack modes means free hits by your units while the creeps are shuffling about. This method of creeping is a trade-off between having your units take less damage from more powerful creeps, and taking a longer time to kill the creeps from having to pull the creeps out, getting a few hits, then chasing them back to their camp to continue the cycle until the creeps die.</p>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="blend">
-    <div class="cont">
-        <p class="visible-xs">Meanwhile, <span class="pink">legd-milk</span>'s Tauren and accompanying grunts finish creeping the nearest two green camps of thunder lizards as <span class="green">cum.2ez</span>'s Blademaster approaches <span class="blue">b1209irthday</span>'s soil. <span class="blue">b1209irthday</span>'s arrangement of moonwells and hunter's hall in front of his wood-gathering wisps frustrates the harassment.</p>
-        <img src="/static/images/guide/wall.jpg" class="inright lightborder" title="The wall" />
-        <p class="visible-sm visible-md visible-lg">Meanwhile, <span class="pink">legd-milk</span>'s Tauren and accompanying grunts finish creeping the nearest two green camps of thunder lizards as <span class="green">cum.2ez</span>'s Blademaster approaches <span class="blue">b1209irthday</span>'s soil. <span class="blue">b1209irthday</span>'s arrangement of moonwells and hunter's hall in front of his wood-gathering wisps frustrates the harassment.</p>
-        <p>The Blademaster tries his luck at <span class="red">real331</span>'s base, and manages to kill two unsheltered wisps and cancel a moonwell before being forced to leave under duress by the Keeper. Team <span class="purple">GnH</span> creeps both of its expansions with a hunt and grunt army, while team <span class="gray">TOWA</span> abuses creep AI and lures its expansion creeps into the range of nearby towers. <span class="teal">ugh.2ez</span> blizzard harasses <span class="pink">legd-milk</span>'s peon lines one more time, noticing that the orc built a second barracks at tier 2 and thus informing his team of an inevitable demolisher push.</p>
-        <div class="clearfix"></div>
-        <p>At <time>8:00</time>, team <span class="purple">GnH</span> pushes the left chokepoint with the aid of two demolishers, after <span class="red">real331</span> switched from producing unarmored huntresses to medium-armored archers (all towers have piercing damage which deals 150% damage to unarmored units).</p>
-        <div class="text-center">
-            <img src="/static/images/guide/initial.jpg" class="out lightborder" title="The initial push" />
-        </div>
-        <p>Dual blizzards from the two Archmages stave off the push, but a second Keeper from <span class="blue">b1209irthday</span> and focus fire from the archers bring the two Archmages to near death and force them to teleport out. Owls from <span class="blue">b1209irthday</span>'s Priestess and huntresses effectively render any Blademaster harass futile.</p>
-    </div>
-</div>
-<div class="blend">
-    <h2>Stage 2 - Anger</h2>
-    <div class="cont">
-        <div class="text-center">
-            <img src="/static/images/guide/anger.jpg" class="out lightborder" title="The anger" />
-        </div>
-        <p>While the two Archmages and Blademaster heal, a newly hired Bloodmage by <span class="teal">ugh.2ez</span> fends off the demolishers with a few well-placed flame strikes. Each time team <span class="purple">GnH</span> entangles an Archmage or Bloodmage, the hero is chased into the range of team <span class="gray">TOWA</span>'s towers and several archers and huntresses fall to arrow fire. <span class="pink">legd-milk</span> now has six demolishers delivering their load onto the towers of the left chokepoint, but the twice-upgraded human towers with +7 heavy armor apiece and four heroes with AoE spells prove too challenging, and team <span class="purple">GnH</span> switches its focus to the orc watch towers of the right chokepoint with only +3 armor apiece. The orc watch towers do prove a bit easier for the demolishers, compelling nearby human peasants to hastily add towers along the back row. <span class="green">cum.2ez</span>'s Blademaster and newly hired Alchemist die several times in a brazen effort to kill the siege units. <span class="pink">legd-milk</span> now has eight demolishers, but he and <span class="blue">b1209irthday</span> are both in low upkeep with none of them expanding yet, compared to both expansions on team <span class="gray">TOWA</span>'s side having been taken.</p>
-        <p>Team <span class="purple">GnH</span> inadvertently switches back to assaulting the left chokepoint, killing <span class="yellow">welp.2ez</span>'s Archmage and Bloodmage once more, but loses half of its demolishers after chasing into tower range.</p>
-        <div class="text-center">
-            <img src="/static/images/guide/antisiege.jpg" class="out lightborder" title="The defense" />
-        </div>
-        <p><span class="green">cum.2ez</span> builds half a dozen batriders and attacks <span class="blue">b1209irthday</span>'s base, but is forced to flee from the native dryads. As of now, <span class="yellow">welp.2ez</span> has several priests and dragonhawks while <span class="teal">ugh.2ez</span> has some priests and sorceresses. Team <span class="purple">GnH</span> switches once again to attacking the right chokepoint, and in the meantime <span class="red">real331</span>'s first chimaera arrives on the scene only to dive headlong into the mass of towers, dying after firing a single volley. Newly upgraded fortified watch towers and the squad of dual Bloodmages and Archmages, all armed with orbs of lightning (used to dispel magic and slow the movement speed of enemy units), easily fend off the siege. <span class="teal">ugh.2ez</span>'s Archmage becomes focused and dies, and the Blademaster suicides himself in order to kill <span class="red">real331</span>'s Keeper.</p>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-4">
-        <div class="blend derail">
-            <h2>Fifty Food</h2>
-            <div class="cont">
-                <p>An important rule of any tower game is to stay under fifty food early to avoid any penalties incurred from having too large of an army. This borrows heavily from the FFA mentality of hoarding as many gold mines as possible while staying under the minimum threshold for low upkeep. Both highperch and FFA games can last well over a hour, and it's crucial to have resources for the duration of the game. If the opposing team stays at high upkeep and loses their army, they usually will not come back from the game. Once the mountain has been successfully fully perched with several rings of towers, we can't help but laugh as our opponents throw waves upon waves of siege onto our tower shores at the two chokepoints.</p>
-                <div class="text-center">
-                    <img src="/static/images/guide/upkeep.png" class="out lightborder" title="The upkeep" />
+    <div class="row">
+        <div class="col-md-8 md-pull-right">
+            <div class="blend">
+                <h2>The Map</h2>
+                <div class="cont">
+                    <div class="text-center">
+                        <img src="/static/images/guide/highperch-map.png" class="out" title="The arena" />
+                    </div>
+                    <p>Highperch is a 6-player map characterized by a top versus bottom parallel arrangement of starting locations for the two teams. Four additional expansions are arranged in a wide square around the map center, in contrast to other equally-sized maps where the expansions are close to a respective player and, hence, easier to defend. These four expansions are directly in the path of armies en route to an enemy base, and thus are a risky venture for anyone seeking additional resources through a second goldmine. There are two vertical land paths from the top of the map to the bottom, each with a progressive series of chokepoints that can be towered up somewhat easily.</p>
+                    <img src="/static/images/guide/lizards.png" class="inright" title="Low-level lizards" />
+                    <p>The lack of any high-level red creep camps suggests an easily-crept and expansion-friendly map dotted by numerous green and yellow camps, populated by lightning-spewing thunder lizards, bow and axe-wielding centaurs, and warthog-like razormanes. The thunder lizards have splash damage and can cast purge to make creeping difficult for any intelligence heroes relying on summoned units to soak up damage, the centaurs deal high rates of damage through their archers, and the razormanes can summon little piglets as well as cast healing ward. At the center of the map is a large clearing with a tavern; a mercenary camp sits to its left and a goblin shop to its right.</p>
+                    <div class="clearfix"></div>
+                    <p>The true anomalies of this map lie in the mountainous plateaus at the 3 o'clock and 9 o'clock positions. Without any Goblin Laboratories on this map and from which no zeppelins to purchase, there is no direct way for land units to ascend these mountains. On the apex of each lies a fountain of health guarded by a green-level swarm of flying harpies.</p>	
+                    <div class="text-center">
+                        <img src="/static/images/guide/mountain.jpg" class="out lightborder" title="The destination" />
+                    </div>				
+                    <p>If one were to hypothetically mass towers upon this plateau (and only the right one, since the pathing is less weird and it has more room for towers), it would be unassailable by any forms of land siege. Air siege units such as chimaeras and frost wyrms are unable to rely on ground support when attacking this position, making them extremely vulnerable to various forms of anti-air air units. We still sometimes wonder why Blizzard's map creators even put them there, because there is neither easy access nor strategic value to these mountains.</p>
                 </div>
-                <p>Don't get us wrong, we know perfectly well that our tower defense will eventually crumble. There is little that even a dozen rows of towers can do against dragonhawks and chimaeras determined to break through. But for the past half hour the opposing team is usually over 50 food and losing gold in both upkeep and from replacing their losses, which is more than enough time for us to drain the gold from our expansions, build 50 food armies consisting of mostly anti-air air units, and play the waiting game atop our indomitable perch fortress high up in the clouds.</p>
             </div>
         </div>
-        <div class="blend derail">
-            <h2>Tiny Town</h2>
-            <div class="cont">
-                <p>How essential is it to have an orc ally in a highperch game? Well, we wouldn't be able to tower on the mountaintop without one.</p>
-                <div class="text-center">
-                    <img src="/static/images/guide/voodoo.png" class="out" title="The voodoo" />
+        <div class="col-md-4 md-pull-righ">
+            <div class="blend derail">
+                <h2>Mountain Mystery</h2>
+                <div class="cont">
+                    <p>The first thing people always type when they discover our stronghold atop these mountains is "how'd you get up there?" Without purchasable zeppelins to carry our heroes and workers up the 5 or so levels of elevation depending on which side we approach it from, the answer may not be apparent at first.</p>
+                    <img src="/static/images/guide/zep.png" class="inleft lightborder" title="No hot air balloon rides" />
+                    <p>The most obvious answer is Warden with her blink ability. I'm sure you are all by now aware of the new Stalker unit in Starcraft 2, able to leap up and down cliffs despite being a ground unit. A Warden can easily clear the mountaintop with a few well-placed blinks and the aid of vision to clear the fog.</p>
+                    <p>The next easiest way is to have a gargoyle or druid of the talon in crow form fly up to the mountaintop, have them transform into their land model, and have a hero use a staff of teleportation to warp onto the unit, since the staff can only be used on ground units. A hippogryph rider can also drop an archer to be teleported onto. But what if your team doesn't have a night elf or undead player? The remaining three solutions are subtle and somewhat tedious, involving one of three heroes: a Tinker setting up a pocket factory upon a higher elevation level for heroes to teleport onto, a Keeper of the Grove creating treants upon a higher elevation level for heroes to teleport onto, and a Beastmaster using a level 3 bear with blink for...well, I'm sure you can figure it out by now.</p>
+                    <p>Believe it or not, there are actually at least three more ways of reaching the top (and no, a level 6 Archmage doesn't count since he needs a ground unit to teleport onto), but they would take such extraordinary measures that they could never be used practically in a highperch game. Can you think of what they could be?</p>
+                    <div class="clearfix"></div>
                 </div>
-                <p>The key lies in the orc voodoo shop. Tiny great hall, a costly item that lets the orc player build a great hall instantly, also lets any allied player build the main hall for his respective race. Once a hero with a tiny hall teleports to the mountaintop, any hero can use a teleport scroll to bring workers along with any other necessary units up onto the perch without the aid of a zeppelin. A level 6 Archmage can teleport with workers to a druid of the talon or a gargoyle, but it's neither practical nor a sure thing. Thus, having an orc player is essential to proper perching.</p>
-                <p>On the topic of which racial town hall to build, there isn't that much room on the perch itself. We always try to build a tree if we have a night elf ally, simply because it is the smallest town hall and can eat trees to help clear the way for towers. If we don't have a night elf player, then we build a human town hall because of its upgradeable armor bonuses.</p>
             </div>
-        </div>
-    </div>
-    <div class="col-md-8">
-        <div class="blend">
-            <div class="cont">
-                <p>While team <span class="purple">GnH</span> is preoccupied with the siege, <span class="green">cum.2ez</span>'s half dozen batriders return and burn down <span class="blue">b1209irthday</span>'s tree of eternity.</p>
-                <div class="text-center">
-                    <img src="/static/images/guide/bat.jpg" class="out lightborder" title="What bats? These bats." />
+            <div class="blend">
+                <h2>The Players</h2>
+                <div class="cont">
+                    team <span class="gray">TOWA</span>
+                    <ul class="team">
+                        <li><img src="/static/images/guide/human.png" title="Human" /><span class="teal">ugh.2ez</span> leads the courageous human alliance at 11 o'clock.</li>
+                        <li><img src="/static/images/guide/human.png" title="Human" /><span class="yellow">welp.2ez</span> leads the noble human alliance at 12 o'clock.</li>
+                        <li><img src="/static/images/guide/orc.png" title="Orc" /><span class="green">cum.2ez</span> leads the honorable orc tribe at 1 o'clock.</li>
+                    </ul>
+                    team <span class="purple">GnH</span> (aka grunts'n'hunts)
+                    <ul class="team">
+                        <li><img src="/static/images/guide/nightelf.png" title="Night elf" /><span class="red">real331</span> leads the shadowy night elf sluts at 5 o'clock.</li>
+                        <li><img src="/static/images/guide/nightelf.png" title="Night elf" /><span class="blue">b1209irthday</span> leads the reclusive night elf sluts at 6 o'clock.</li>
+                        <li><img src="/static/images/guide/orc.png" title="Orc" /><span class="pink">legd-milk</span> randoms the savage orc horde at 7 o'clock.</li>
+                    </ul>
+                    <div class="text-center">
+                        <img src="/static/images/guide/minimap.png" class="out" title="The players" />
+                    </div>			
+                    <p>A little about the players themselves. <span class="green">cum.2ez</span>, <span class="yellow">welp.2ez</span>, and <span class="teal">ugh.2ez</span> are all alternate accounts of my clan mates kunt.roii, sir_tweak, and mrfrosty, respectively, on Lordaeron, made to mass towers in team games. They have a pretty good track record so far in both 2v2s and 3v3s.</p>
+                    <p>I'm not sure who <span class="blue">b1209irthday</span>, <span class="pink">legd-milk</span>, and <span class="red">real331</span> are, but with good records and apms averaging over 100 in a game lasting almost two hours, they are a formidable team.</p>
                 </div>
-                <p>This is when <span class="pink">legd-milk</span> and <span class="red">real331</span> both expand to their respective gold mines.</p>
-                <p>All of the players' main goldmines expire around this point in the game. Realizing that their tower defense wasn't going to hold for long, <span class="green">cum.2ez</span> uses an invisibility potion on his Alchemist and sneakily hires a Tinker at the tavern behind enemy lines to begin the long and tedious perching process.</p>
-                <div class="text-center">
-                    <img src="/static/images/guide/climb.gif" class="out lightborder" title="The climb" />
+            </div>
+        </div>
+    </div>
+    <div class="blend">
+        <h2>Stage 1 - Denial</h2>
+        <div class="cont">
+            <div class="text-center">
+                <img src="/static/images/guide/denial.jpg" class="out lightborder" title="The denial" />
+            </div>		
+            <p><span class="yellow">welp.2ez</span>, having spawned between his two allies, is tasked with feeding them gold and wood so they can tower the chokepoint of their respective lanes. All three go for the standard Clan <span class="gray">TOWA</span> build of altar, farm, and mill-type structures for their respective races, while neglecting to build tier 1 unit-producing barracks of any sort. Both <span class="teal">ugh.2ez</span> and <span class="green">cum.2ez</span> send workers out to their chokepoints and start queuing up towers in a horizontal line, 2 to 3 rows deep.</p>
+            <div class="text-center">
+                <img src="/static/images/guide/line.jpg" class="out lightborder" title="The line" />
+            </div>
+            <p>Meanwhile, on the other side of the map, both <span class="red">real331</span> and <span class="blue">b1209irthday</span> wait for their resources to accumulate before building their ancient of war and hunter's hall simultaneously to set up for huntresses. <span class="pink">legd-milk</span> opts for a standard orc build of altar, burrow, and barracks for good ol' fashioned grunts.</p>
+            <p><span class="yellow">welp.2ez</span> and <span class="teal">ugh.2ez</span> hire dual Archmages to blizzard harass the opposing team's workers, while <span class="green">cum.2ez</span> commands a Blademaster for the same purpose. Water elementals make a negligible impact during large team battles, especially on a map where all the green camps can cast purge to deal 400 damage to summoned units. AoE skills are far more critical when allied forces wholly consist of only heroes and towers defending against a mounting siege army. Blademaster and heroes like the Warden can whittle down enemy forces in long, drawn out tower games while possessing handy escape skills.</p>
+            <p><span class="pink">legd-milk</span> hires a Tauren Chieftain while his slutty night elf allies <span class="red">real331</span> and <span class="blue">b1209irthday</span> hire a Priestess of the Moon and Keeper of the Grove, respectively. These heroes are very army-centric, considering that the Priestess and Tauren wield two of the arguably best auras in the game. The unarmored huntresses, augmented by the Priestess's trueshot aura, can deal the majority of the damage while grunts bear the brunt of enemy forces.</p>
+            <p><span class="blue">b1209irthday</span> sends a scout wisp in a counterclockwise fashion, passing <span class="green">cum.2ez</span>'s peon on its way to make the first of many towers, and soon sends his Priestess of the Moon towards <span class="green">cum.2ez</span>'s base. It spots the towers at the chokepoint on the right side, but before it can prevent their construction, is chased off by <span class="green">cum.2ez</span>'s Blademaster and <span class="yellow">welp.2ez</span>'s Archmage.</p>
+            <div class="text-center">
+                <img src="/static/images/guide/scout.jpg" class="out lightborder" title="The reveal" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-9">
+            <div class="blend">
+                <div class="cont">
+                    <img src="/static/images/guide/blizz.jpg" class="inleft lightborder" title="The harassment" />
+                    <p><span class="teal">ugh.2ez</span>'s Archmage is the first to scout <span class="pink">legd-milk</span>'s base, and decides to harass the exposed gold-mining peons. It manages to unleash a few torrents of blizzard before being chased out by the Tauren Chieftain.</p>
+                    <div class="clearfix"></div>				
+                    <p>Moments later, the Archmage is ambushed by the Keeper and the Priestess. <span class="teal">ugh.2ez</span>, knowing that his Archmage was not going to survive three successive entangling roots from the Keeper, suicides it into the nearby creep camp to deny valuable experience.</p>
+                    <div class="text-center">
+                        <img src="/static/images/guide/deny.png" class="out" title="The other denial" />
+                    </div>
                 </div>
-                <p>Meanwhile, both Archmages manage to die from multiple Tauren shockwaves and focus fire from a dozen +3/+0 demolishers. <span class="yellow">welp.2ez</span> feeds gold to <span class="teal">ugh.2ez</span> to buy dragonhawks and both gold and wood to <span class="green">cum.2ez</span> for towers. When the Tinker finally reaches the top, a Bloodmage with a tiny hall teleports along to help clear the harpy camp, raze the trees with flame strike, and set up a human town hall. The Tinker teleports out and a second later town portals back with a dozen orc peons to start construction of the perch tower perimeter. Sadly, he is later killed off, having completed his job and not being able to do much else at level 1. He would actually become a burden, leeching precious experience that could otherwise fuel a level 6 Blademaster or Alchemist.</p>
-                <img src="/static/images/guide/push.jpg" class="inright lightborder" title="The breach" />
-                <p>At <time>28:00</time>, an all-out push by team <span class="purple">GnH</span>, consisting of +0/+3 master bears backed by nine +3/+0 demolishers and a dozen +3/+0 archers with trueshot aura, endurance aura, and roar (in total adding +49 damage to each demolisher's base damage), easily steamrolls through the towers at the right chokepoint.</p>
-                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="blend derail">
+                <h2>Aggro Abuse</h2>
+                <div class="cont">
+                    <p>All creeps are set to 'guard mode' and have a specific acquisition range (aggro). If a hero falls within that range, the creeps will chase to hit the hero, and continue hitting it until either dies. If the hero goes beyond that target range, they will still continue to chase/hit for three seconds before they make a 180-degree turn and head back to their original spot to 'guard'. This constant shifting between guard and attack modes means free hits by your units while the creeps are shuffling about. This method of creeping is a trade-off between having your units take less damage from more powerful creeps, and taking a longer time to kill the creeps from having to pull the creeps out, getting a few hits, then chasing them back to their camp to continue the cycle until the creeps die.</p>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div class="blend">
-    <h2>Stage 3 - Bargaining</h2>
-    <div class="cont">
-        <div class="text-center">
-            <img src="/static/images/guide/bargaining.jpg" class="out lightborder" title="The bargaining" />
-        </div>
-        <p>As team <span class="purple">GnH</span>'s army storms through the top half of the map in a counterclockwise manner, both of team <span class="gray">TOWA</span>'s human players kill off their peasants to deny experience. <span class="teal">ugh.2ez</span> furiously creates dragonhawk riders as fast as he can, but gaffes and forgets to research cloud for them, which is akin to a corsair's disruption web that only works on buildings. <span class="green">cum.2ez</span>'s Blademaster and Alchemist creep the remaining camps left on the map, while <span class="yellow">welp.2ez</span>'s Archmage and Bloodmage single-handedly flatten the entirety of <span class="pink">legd-milk</span>'s main base.</p>
-        <div class="text-center">
-            <img src="/static/images/guide/wreckingcrew.jpg" class="out lightborder" title="The small but gnarly" />
-        </div>
-        <p><span class="teal">ugh.2ez</span> wasn't slacking either, and manages to kill off all the peons at <span class="pink">legd-milk</span>'s nearby expansion with his two heroes. Of course, team <span class="purple">GnH</span>, thinking that the game was already in their grasp, could have cared less about any of these consequences.</p>
-        <p>Team <span class="gray">TOWA</span> quickly realizes that they don't have any ground units on the map that they could teleport to with a staff of teleportation later in the game. Their heroes would just sit idle on the perch twiddling their thumbs while being sieged by chimaeras. However, if allowed to run wild outside their perch home, the Blademaster could steadily gain experience from picking off lone units and workers until it attained level 6. Its ultimate, Bladestorm, can bring clusters of buildings and units alike to their knees. <span class="green">cum.2ez</span> luckily had the foresight to buy four mechanical critters from the human shop and scatter them around the map, hiding them in corners and behind various trees.</p>
-        <div class="text-center">
-            <img src="/static/images/guide/pigs.jpg" class="out lightborder" title="The pigs" />
-        </div>
-    </div>
-</div>
-<div class="blend">
-    <div class="cont">
-        <p>An invulnerable owl scout from <span class="blue">b1209irthday</span>'s Priestess inadvertently flies directly over team <span class="gray">TOWA</span>'s perch fortress at <time>38:30</time>. Half a minute later, team <span class="gray">TOWA</span>'s last non-perch structure falls.</p>
-        <div class="text-center">
-            <img src="/static/images/guide/sweep.gif" class="out lightborder pair-top" title="The ground sweep" />
-            <img src="/static/images/guide/sweepchat.jpg" class="out lightborder pair-bot" title="The commentary" />
-        </div>
-        <h3 class="text-center">A quick update on the two teams:</h3>
-        <div class="row">
-            <div class="col-lg-4 text-center">
-                <img src="/static/images/guide/fullperch.jpg" class="out lightborder" title="The completed perch" />
+    <div class="blend">
+        <div class="cont">
+            <p class="visible-xs">Meanwhile, <span class="pink">legd-milk</span>'s Tauren and accompanying grunts finish creeping the nearest two green camps of thunder lizards as <span class="green">cum.2ez</span>'s Blademaster approaches <span class="blue">b1209irthday</span>'s soil. <span class="blue">b1209irthday</span>'s arrangement of moonwells and hunter's hall in front of his wood-gathering wisps frustrates the harassment.</p>
+            <img src="/static/images/guide/wall.jpg" class="inright lightborder" title="The wall" />
+            <p class="visible-sm visible-md visible-lg">Meanwhile, <span class="pink">legd-milk</span>'s Tauren and accompanying grunts finish creeping the nearest two green camps of thunder lizards as <span class="green">cum.2ez</span>'s Blademaster approaches <span class="blue">b1209irthday</span>'s soil. <span class="blue">b1209irthday</span>'s arrangement of moonwells and hunter's hall in front of his wood-gathering wisps frustrates the harassment.</p>
+            <p>The Blademaster tries his luck at <span class="red">real331</span>'s base, and manages to kill two unsheltered wisps and cancel a moonwell before being forced to leave under duress by the Keeper. Team <span class="purple">GnH</span> creeps both of its expansions with a hunt and grunt army, while team <span class="gray">TOWA</span> abuses creep AI and lures its expansion creeps into the range of nearby towers. <span class="teal">ugh.2ez</span> blizzard harasses <span class="pink">legd-milk</span>'s peon lines one more time, noticing that the orc built a second barracks at tier 2 and thus informing his team of an inevitable demolisher push.</p>
+            <div class="clearfix"></div>
+            <p>At <time>8:00</time>, team <span class="purple">GnH</span> pushes the left chokepoint with the aid of two demolishers, after <span class="red">real331</span> switched from producing unarmored huntresses to medium-armored archers (all towers have piercing damage which deals 150% damage to unarmored units).</p>
+            <div class="text-center">
+                <img src="/static/images/guide/initial.jpg" class="out lightborder" title="The initial push" />
             </div>
-            <div class="col-lg-4 text-center md-expand">
-                <img src="/static/images/guide/roll.jpg" class="out" title="The remaining roster" />
+            <p>Dual blizzards from the two Archmages stave off the push, but a second Keeper from <span class="blue">b1209irthday</span> and focus fire from the archers bring the two Archmages to near death and force them to teleport out. Owls from <span class="blue">b1209irthday</span>'s Priestess and huntresses effectively render any Blademaster harass futile.</p>
+        </div>
+    </div>
+    <div class="blend">
+        <h2>Stage 2 - Anger</h2>
+        <div class="cont">
+            <div class="text-center">
+                <img src="/static/images/guide/anger.jpg" class="out lightborder" title="The anger" />
             </div>
-            <div class="col-lg-4 text-center">
-                <img src="/static/images/guide/useless.jpg" class="out lightborder" title="The useless remnants" />
+            <p>While the two Archmages and Blademaster heal, a newly hired Bloodmage by <span class="teal">ugh.2ez</span> fends off the demolishers with a few well-placed flame strikes. Each time team <span class="purple">GnH</span> entangles an Archmage or Bloodmage, the hero is chased into the range of team <span class="gray">TOWA</span>'s towers and several archers and huntresses fall to arrow fire. <span class="pink">legd-milk</span> now has six demolishers delivering their load onto the towers of the left chokepoint, but the twice-upgraded human towers with +7 heavy armor apiece and four heroes with AoE spells prove too challenging, and team <span class="purple">GnH</span> switches its focus to the orc watch towers of the right chokepoint with only +3 armor apiece. The orc watch towers do prove a bit easier for the demolishers, compelling nearby human peasants to hastily add towers along the back row. <span class="green">cum.2ez</span>'s Blademaster and newly hired Alchemist die several times in a brazen effort to kill the siege units. <span class="pink">legd-milk</span> now has eight demolishers, but he and <span class="blue">b1209irthday</span> are both in low upkeep with none of them expanding yet, compared to both expansions on team <span class="gray">TOWA</span>'s side having been taken.</p>
+            <p>Team <span class="purple">GnH</span> inadvertently switches back to assaulting the left chokepoint, killing <span class="yellow">welp.2ez</span>'s Archmage and Bloodmage once more, but loses half of its demolishers after chasing into tower range.</p>
+            <div class="text-center">
+                <img src="/static/images/guide/antisiege.jpg" class="out lightborder" title="The defense" />
+            </div>
+            <p><span class="green">cum.2ez</span> builds half a dozen batriders and attacks <span class="blue">b1209irthday</span>'s base, but is forced to flee from the native dryads. As of now, <span class="yellow">welp.2ez</span> has several priests and dragonhawks while <span class="teal">ugh.2ez</span> has some priests and sorceresses. Team <span class="purple">GnH</span> switches once again to attacking the right chokepoint, and in the meantime <span class="red">real331</span>'s first chimaera arrives on the scene only to dive headlong into the mass of towers, dying after firing a single volley. Newly upgraded fortified watch towers and the squad of dual Bloodmages and Archmages, all armed with orbs of lightning (used to dispel magic and slow the movement speed of enemy units), easily fend off the siege. <span class="teal">ugh.2ez</span>'s Archmage becomes focused and dies, and the Blademaster suicides himself in order to kill <span class="red">real331</span>'s Keeper.</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="blend derail">
+                <h2>Fifty Food</h2>
+                <div class="cont">
+                    <p>An important rule of any tower game is to stay under fifty food early to avoid any penalties incurred from having too large of an army. This borrows heavily from the FFA mentality of hoarding as many gold mines as possible while staying under the minimum threshold for low upkeep. Both highperch and FFA games can last well over a hour, and it's crucial to have resources for the duration of the game. If the opposing team stays at high upkeep and loses their army, they usually will not come back from the game. Once the mountain has been successfully fully perched with several rings of towers, we can't help but laugh as our opponents throw waves upon waves of siege onto our tower shores at the two chokepoints.</p>
+                    <div class="text-center">
+                        <img src="/static/images/guide/upkeep.png" class="out lightborder" title="The upkeep" />
+                    </div>
+                    <p>Don't get us wrong, we know perfectly well that our tower defense will eventually crumble. There is little that even a dozen rows of towers can do against dragonhawks and chimaeras determined to break through. But for the past half hour the opposing team is usually over 50 food and losing gold in both upkeep and from replacing their losses, which is more than enough time for us to drain the gold from our expansions, build 50 food armies consisting of mostly anti-air air units, and play the waiting game atop our indomitable perch fortress high up in the clouds.</p>
+                </div>
+            </div>
+            <div class="blend derail">
+                <h2>Tiny Town</h2>
+                <div class="cont">
+                    <p>How essential is it to have an orc ally in a highperch game? Well, we wouldn't be able to tower on the mountaintop without one.</p>
+                    <div class="text-center">
+                        <img src="/static/images/guide/voodoo.png" class="out" title="The voodoo" />
+                    </div>
+                    <p>The key lies in the orc voodoo shop. Tiny great hall, a costly item that lets the orc player build a great hall instantly, also lets any allied player build the main hall for his respective race. Once a hero with a tiny hall teleports to the mountaintop, any hero can use a teleport scroll to bring workers along with any other necessary units up onto the perch without the aid of a zeppelin. A level 6 Archmage can teleport with workers to a druid of the talon or a gargoyle, but it's neither practical nor a sure thing. Thus, having an orc player is essential to proper perching.</p>
+                    <p>On the topic of which racial town hall to build, there isn't that much room on the perch itself. We always try to build a tree if we have a night elf ally, simply because it is the smallest town hall and can eat trees to help clear the way for towers. If we don't have a night elf player, then we build a human town hall because of its upgradeable armor bonuses.</p>
+                </div>
             </div>
         </div>
-        <p>Close to 20k gold remain in the only three goldmines left on the map. Realizing that they'll need to stay below upkeep in order to maximize the amount of gold they can mine, <span class="pink">legd-milk</span> smashes one of his demolishers to stay at exactly 50 food. Four minutes later, he says to heck with it and kills the rest of his demolishers, since they were utterly useless against the perch fortress and were only fodder for any invisible Blademasters stalking about.</p>
-        <p>At <time>45:00</time>, <span class="red">real331</span> resumes chimaera production, summoning his second chimaera of the game. Thirteen minutes later, <span class="red">real331</span>'s three chimaera roosts and <span class="pink">legd-milk</span>'s three beastiaries have finished producing eight +2/+1 chimaeras and two dozen +3/+0 batriders, respectively. They're promptly buffed with a +25% damage from the roar of a master bear, and start sieging the lower-left corner of team <span class="gray">TOWA</span>'s perch.</p>
-        <div class="text-center">
-            <img src="/static/images/guide/siege.jpg" class="out lightborder" title="The aerial siege" />
-        </div>
-    </div>
-</div>
-<div class="blend">
-    <h2>Stage 4 - Depression</h2>
-    <div class="cont">
-        <div class="text-center">
-            <img src="/static/images/guide/depression.jpg" class="out lightborder" title="The depression" />
-        </div>
-        <p>The chimaeras successfully take out five watch towers before a batrider succumbs to tower fire. Despite the huge swarm of bats encircling the chimaeras, team <span class="gray">TOWA</span>’s dragonhawk riders instigate a skirmish by using aerial shackles, which immobilizes any air unit and deals 30 damage per second, on several of the chimaeras beyond the range of the towers.</p>
-        <div class="text-center">
-            <img src="/static/images/guide/antisiege2.jpg" class="out lightborder" title="The aerial defense" />
-        </div>
-        <p>In the aftermath, team <span class="gray">TOWA</span> trades all six of its batriders and four dragonhawks for team <span class="purple">GnH</span>’s 24 batriders. All eight chimaeras survive the encounter, but their health are in the yellow from the batriders' splash damage. They retreat briefly to heal under the cast of tranquility from <span class="red">real331</span>’s Keeper.</p>
-        <img src="/static/images/guide/micro.gif" class="inright lightborder" title="The micro" />
-        <p><span class="green">cum.2ez</span>’s Blademaster harasses <span class="pink">legd-milk</span>’s expansion, killing a few burrows and all of the gold-mining peons to become mere experience points away from level 5. Then, a hilarious incident occurs. At <time>58:00</time>, <span class="yellow">welp.2ez</span> makes invisible all nine of his remaining dragonhawk riders with the help of <span class="teal">ugh.2ez</span>’s sorceresses, and dispatches them in search of lone, unsuspecting air units. Despite the danger of invisible-detecting owl scouts on the prowl, the dragonhawks find three batriders near the center of the map. The three immediately get shackled and destroyed, but reinforcements quickly appear in the form of three batriders approaching from the left side and three more from the right. In an amazing feat of micro, <span class="yellow">welp.2ez</span> selects his six remaining dragonhawk riders with aerial shackles not on cooldown and manages to shackle all six incoming batriders.</p>
-        <p>On the way back to their stronghold after their remarkable success, the dragonhawks stumble upon <span class="red">real331</span>’s chimaera group hovering above some archers. The chimaeras become shackled, but the archers force the dragonhawks to retreat and they end up trading a chimaera for a dragonhawk. At this point in the game, both of the bottom two expansions expire and only 2.5k remain in the one at the top right.</p>
-        <div class="clearfix"></div>
-        <p><span class="pink">legd-milk</span> has quickly rebuilt his batrider air force by now and, despite a pesky Blademaster skewering one with the help of purge from its lightning orb, has 24 batriders once again. At <time>1:02:00</time>, nine chimaeras hit the top left corner of the perch, wiping out six towers.</p>
-        <div class="text-center">
-            <img src="/static/images/guide/siege3.jpg" class="out lightborder" title="The aerial defense" />
-        </div>
-        <p>A second skirmish ensues, and a dragonhawk is traded for a chimaera and four bats. Three minutes later, the chimaeras attack the middle of the perch’s left side and lay waste to two towers before losing a chimaera and batrider to tower fire.</p>
-        <p>Meanwhile, <span class="teal">ugh.2ez</span>’s Alchemist kills a few burrows at <span class="pink">legd-milk</span>’s lower-left expansion for 25 valuable experience points apiece. It is very close now to level 5.</p>
-        <div class="text-center">
-            <img src="/static/images/guide/alch.jpg" class="out lightborder" title="The humble alchemist" />
-        </div>
-        <p>Ten chimaeras, accompanied by 18 batriders, hit the bottom side of the perch. A dragonhawk rider is traded for four batriders, and moments later, another three bats suicide themselves to snipe a second dragonhawk rider.</p>
-        <img src="/static/images/guide/cache.jpg" class="inleft lightborder" title="The mighty alchemist" />
-        <p>While running around picking off lone peons, <span class="green">cum.2ez</span>’s Blademaster stumbles upon <span class="red">real331</span>’s cache of archers at the top right expansion. The Alchemist teleports along and the two heroes quickly massacre nine archers, bringing the Alchemist to two-thirds of a level away from level 6.</p>
-        <p>Before reinforcements arrive, the Blademaster uses its staff of sanctuary to teleport the Alchemist back onto the perch, then windwalks himself away into thin air. With transmute as an ultimate and able to turn any non-hero enemy unit into gold at a very low cooldown, a level 6 Alchemist is a clear win against the looming chimaera threat.</p>
-        <div class="clearfix"></div>
-    </div>
-</div>
-<div class="blend">
-    <div class="cont">
-        <p>The chimaeras commit to several hit-and-run attacks, picking off towers one at a time before quickly retreating. At <time>1:15:00</time>, three more bats suicide themselves to kill a dragonhawk, and soon afterwards, <span class="pink">legd-milk</span>’s 10 remaining bats successfully eliminate all five of team <span class="gray">TOWA</span>'s dragonhawks.</p>
-        <p>Fifteen minutes pass. The Blademaster finds two lone bears wandering about the lower-right expansion, and the Alchemist teleports along to try and slay them. However, the rejeuvenation skill of the bears, which heals a unit for 400 hitpoints over twelve seconds, proves too strong for both heroes to overcome before reinforcements arrive. Blademaster staffs out the Alchemist before being ambushed, and this is where <span class="green">cum.2ez</span> makes a huge error. The Blademaster uses a staff of teleportation on himself, which unlike a town portal doesn't make the unit invulnerable during the teleport animation. <span class="green">cum.2ez</span> does this before being entangled by a Keeper that he failed to see in time. Lacking any potions or mana for windwalk, the Blademaster quickly falls.</p>
-        <div class="text-center">
-            <img src="/static/images/guide/oops.jpg" class="out lightborder" title="The greed" />
-        </div>
-        <p><span class="green">cum.2ez</span> now has to build two burrows and an altar in order to revive his slain Blademaster, while his team’s towers are getting picked off left and right by constant fly-bys from the ten chimaeras. Six minutes later the Blademaster is back on the ground, but team <span class="gray">TOWA</span> is down to just three watch towers and one arcane tower. There were originally over 40 towers on the perch; now's there's only four.</p>
-        <p>For the next several minutes, the chimaeras make several more passes at the perch. In the process, they lose four of their number due to purges from the four heroes guarding the perch who all possess an orb of lightning. Alchemist, thanks to these kills, is now only one-fifth of a level away from level 6. It needs to kill pretty much all six of the remaining chimaeras to reach the next level, or a miracle…</p>
-        <p>...a miracle that comes in the form of <span class="red">real331</span>’s level 7 Keeper. None of the players on team <span class="purple">GnH</span> has any gold left, and if one of their heroes were to die, they wouldn't have enough resources to revive it. <span class="green">cum.2ez</span>’s Blademaster spots the Keeper all alone south of their mountain at 1:47:00, and Alchemist quickly teleports along. The Keeper proves no match for a Blademaster with 150 damage critical attacks and a chemically enraged Alchemist. Alchemist reaches level 6, and <span class="pink">legd-milk</span> decides at this point to leave the game.</p>
-        <div class="text-center">
-            <img src="/static/images/guide/gg.gif" class="out lightborder" title="The killing crit" />
-        </div>
-    </div>
-</div>
-<div class="blend">
-    <h2>Stage 5 - Acceptance</h2>
-    <div class="cont">
-        <div class="text-center">
-            <img src="/static/images/guide/acceptance.jpg" class="out lightborder" title="The acceptance" />
-        </div>
-        <p>The game really is over by now. The chimaeras are effectively neutered by the fear of being turned into gold, and <span class="blue">b1209irthday</span> is forced to kill off his bears to avoid having them be transmuted. Eventually, <span class="red">real331</span>'s chimaeras are picked off one by one, and team <span class="purple">GnH</span>'s three heroes can only huddle around the tree of life at the upper-right expansion, knowing that their time has come to an end.</p>
-        <div class="text-center">
-            <img src="/static/images/guide/end.jpg" class="out lightborder" title="The end" />
-        </div>
-        <p>All six of team <span class="gray">TOWA</span>'s heroes teleport down to mop up the remnants of team <span class="purple">GnH</span>'s army and scattered buildings, and the game is finally over at <time>2:04:00</time>.</p>
-    </div>
-</div>
-<div class="row">
-    <div class="col-lg-10">
-        <div class="blend">
-            <h2>Afterthoughts</h2>
-            <div class="cont">
-                <p>The replay of this game can be found <a href="#">here</a>.</p>
-                <p>Some thoughts about this game and highperching in general:</p>
-                <ul class="fa-ul">
-                    <li><i class="fa-li fa fa-circle-o"></i>At a few points late in this game, team <span class="purple">GnH</span> could have won by getting a druid of the talon onto the perch for their heroes to teleport onto, considering they had a level 7 Tauren Chieftain backed up by tranquility, starfall, twin Keepers with entangle, and dozens of disposable chimaeras.</li>
-                    <li><i class="fa-li fa fa-circle-o"></i>If you know the game will facilitate high level heroes, as tower games are prone to do, a level 6 Dark Ranger, Alchemist, or Blademaster will usually secure the win.</li>
-                    <li><i class="fa-li fa fa-circle-o"></i>Against undead players with frost wyrms, build towers at least half a tower square apart. Freezing breath will freeze towers and all adjacent structures, so spacing them out will avoid this.</li>
-                    <li><i class="fa-li fa fa-circle-o"></i>Build orc towers against magic, and human towers against siege. Use your judgment and build a healthy mix of the two.</li>
-                </ul>
-                <p>And some advice for people playing against towering teams:</p>
-                <ul class="fa-ul">
-                    <li><i class="fa-li fa fa-circle-o"></i>A very fast grunt and fiend push can steamroll towers, and footmen are also terribly effective since defend makes them nearly invincible to tower fire. Huntresses aren't encouraged because they're unarmored.</li>
-                    <li><i class="fa-li fa fa-circle-o"></i>We need something below the perch to teleport to, whether it's a mechanical critter, hidden tree of life, or a druid of the talon. You find these, and we can't do shit outside our perch.</li>
-                    <li><i class="fa-li fa fa-circle-o"></i>We will probably use batriders and invisible mortars against your mains. How else do you expect us to win while turtling behind our towers? Expect this and properly defend against it.</li>
-                    <li><i class="fa-li fa fa-circle-o"></i><b>Q</b>: How do you beat a turtling terran in Starcraft? <b>A</b>: You outexpand him. The same principle applies in tower games.</li>
-                    <li><i class="fa-li fa fa-circle-o"></i>Make your base harass-proof against heroes like the Blademaster.</li>
-                    <li><i class="fa-li fa fa-circle-o"></i>Don't go into upkeep! These are three hour long games; gold becomes very precious in the late game.</li>
-                    <li><i class="fa-li fa fa-circle-o"></i>When rushing a towering team early, don't attack the human base with its tough armor, towers, and militia. Try attacking the orc or night elf player first.</li>
-                </ul>
+        <div class="col-md-8">
+            <div class="blend">
+                <div class="cont">
+                    <p>While team <span class="purple">GnH</span> is preoccupied with the siege, <span class="green">cum.2ez</span>'s half dozen batriders return and burn down <span class="blue">b1209irthday</span>'s tree of eternity.</p>
+                    <div class="text-center">
+                        <img src="/static/images/guide/bat.jpg" class="out lightborder" title="What bats? These bats." />
+                    </div>
+                    <p>This is when <span class="pink">legd-milk</span> and <span class="red">real331</span> both expand to their respective gold mines.</p>
+                    <p>All of the players' main goldmines expire around this point in the game. Realizing that their tower defense wasn't going to hold for long, <span class="green">cum.2ez</span> uses an invisibility potion on his Alchemist and sneakily hires a Tinker at the tavern behind enemy lines to begin the long and tedious perching process.</p>
+                    <div class="text-center">
+                        <img src="/static/images/guide/climb.gif" class="out lightborder" title="The climb" />
+                    </div>
+                    <p>Meanwhile, both Archmages manage to die from multiple Tauren shockwaves and focus fire from a dozen +3/+0 demolishers. <span class="yellow">welp.2ez</span> feeds gold to <span class="teal">ugh.2ez</span> to buy dragonhawks and both gold and wood to <span class="green">cum.2ez</span> for towers. When the Tinker finally reaches the top, a Bloodmage with a tiny hall teleports along to help clear the harpy camp, raze the trees with flame strike, and set up a human town hall. The Tinker teleports out and a second later town portals back with a dozen orc peons to start construction of the perch tower perimeter. Sadly, he is later killed off, having completed his job and not being able to do much else at level 1. He would actually become a burden, leeching precious experience that could otherwise fuel a level 6 Blademaster or Alchemist.</p>
+                    <img src="/static/images/guide/push.jpg" class="inright lightborder" title="The breach" />
+                    <p>At <time>28:00</time>, an all-out push by team <span class="purple">GnH</span>, consisting of +0/+3 master bears backed by nine +3/+0 demolishers and a dozen +3/+0 archers with trueshot aura, endurance aura, and roar (in total adding +49 damage to each demolisher's base damage), easily steamrolls through the towers at the right chokepoint.</p>
+                    <div class="clearfix"></div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-lg-2">
-        <div class="blend">
-            <h2>Props</h2>
-            <div class="cont">
-                <ul class="fa-ul">
-                    <li><i class="fa-li fa fa-square"></i>BattleReports for making their reports free throughout the years.</li>
-                    <li><i class="fa-li fa fa-square"></i>ZerG~LinG for his excellent CSS guide. If this report looks good it's because of his very helpful template.</li>
-                    <li><i class="fa-li fa fa-square"></i>Mata., Sir_Tweak, Bear_And, DirtmcGirt, Kunt.Roii, MrFrosty and Timg4Strok for their expertise and excellent replays.</li>
-                </ul>
+    <div class="blend">
+        <h2>Stage 3 - Bargaining</h2>
+        <div class="cont">
+            <div class="text-center">
+                <img src="/static/images/guide/bargaining.jpg" class="out lightborder" title="The bargaining" />
+            </div>
+            <p>As team <span class="purple">GnH</span>'s army storms through the top half of the map in a counterclockwise manner, both of team <span class="gray">TOWA</span>'s human players kill off their peasants to deny experience. <span class="teal">ugh.2ez</span> furiously creates dragonhawk riders as fast as he can, but gaffes and forgets to research cloud for them, which is akin to a corsair's disruption web that only works on buildings. <span class="green">cum.2ez</span>'s Blademaster and Alchemist creep the remaining camps left on the map, while <span class="yellow">welp.2ez</span>'s Archmage and Bloodmage single-handedly flatten the entirety of <span class="pink">legd-milk</span>'s main base.</p>
+            <div class="text-center">
+                <img src="/static/images/guide/wreckingcrew.jpg" class="out lightborder" title="The small but gnarly" />
+            </div>
+            <p><span class="teal">ugh.2ez</span> wasn't slacking either, and manages to kill off all the peons at <span class="pink">legd-milk</span>'s nearby expansion with his two heroes. Of course, team <span class="purple">GnH</span>, thinking that the game was already in their grasp, could have cared less about any of these consequences.</p>
+            <p>Team <span class="gray">TOWA</span> quickly realizes that they don't have any ground units on the map that they could teleport to with a staff of teleportation later in the game. Their heroes would just sit idle on the perch twiddling their thumbs while being sieged by chimaeras. However, if allowed to run wild outside their perch home, the Blademaster could steadily gain experience from picking off lone units and workers until it attained level 6. Its ultimate, Bladestorm, can bring clusters of buildings and units alike to their knees. <span class="green">cum.2ez</span> luckily had the foresight to buy four mechanical critters from the human shop and scatter them around the map, hiding them in corners and behind various trees.</p>
+            <div class="text-center">
+                <img src="/static/images/guide/pigs.jpg" class="out lightborder" title="The pigs" />
+            </div>
+        </div>
+    </div>
+    <div class="blend">
+        <div class="cont">
+            <p>An invulnerable owl scout from <span class="blue">b1209irthday</span>'s Priestess inadvertently flies directly over team <span class="gray">TOWA</span>'s perch fortress at <time>38:30</time>. Half a minute later, team <span class="gray">TOWA</span>'s last non-perch structure falls.</p>
+            <div class="text-center">
+                <img src="/static/images/guide/sweep.gif" class="out lightborder pair-top" title="The ground sweep" />
+                <img src="/static/images/guide/sweepchat.jpg" class="out lightborder pair-bot" title="The commentary" />
+            </div>
+            <h3 class="text-center">A quick update on the two teams:</h3>
+            <div class="row">
+                <div class="col-lg-4 text-center">
+                    <img src="/static/images/guide/fullperch.jpg" class="out lightborder" title="The completed perch" />
+                </div>
+                <div class="col-lg-4 text-center md-expand">
+                    <img src="/static/images/guide/roll.jpg" class="out" title="The remaining roster" />
+                </div>
+                <div class="col-lg-4 text-center">
+                    <img src="/static/images/guide/useless.jpg" class="out lightborder" title="The useless remnants" />
+                </div>
+            </div>
+            <p>Close to 20k gold remain in the only three goldmines left on the map. Realizing that they'll need to stay below upkeep in order to maximize the amount of gold they can mine, <span class="pink">legd-milk</span> smashes one of his demolishers to stay at exactly 50 food. Four minutes later, he says to heck with it and kills the rest of his demolishers, since they were utterly useless against the perch fortress and were only fodder for any invisible Blademasters stalking about.</p>
+            <p>At <time>45:00</time>, <span class="red">real331</span> resumes chimaera production, summoning his second chimaera of the game. Thirteen minutes later, <span class="red">real331</span>'s three chimaera roosts and <span class="pink">legd-milk</span>'s three beastiaries have finished producing eight +2/+1 chimaeras and two dozen +3/+0 batriders, respectively. They're promptly buffed with a +25% damage from the roar of a master bear, and start sieging the lower-left corner of team <span class="gray">TOWA</span>'s perch.</p>
+            <div class="text-center">
+                <img src="/static/images/guide/siege.jpg" class="out lightborder" title="The aerial siege" />
+            </div>
+        </div>
+    </div>
+    <div class="blend">
+        <h2>Stage 4 - Depression</h2>
+        <div class="cont">
+            <div class="text-center">
+                <img src="/static/images/guide/depression.jpg" class="out lightborder" title="The depression" />
+            </div>
+            <p>The chimaeras successfully take out five watch towers before a batrider succumbs to tower fire. Despite the huge swarm of bats encircling the chimaeras, team <span class="gray">TOWA</span>’s dragonhawk riders instigate a skirmish by using aerial shackles, which immobilizes any air unit and deals 30 damage per second, on several of the chimaeras beyond the range of the towers.</p>
+            <div class="text-center">
+                <img src="/static/images/guide/antisiege2.jpg" class="out lightborder" title="The aerial defense" />
+            </div>
+            <p>In the aftermath, team <span class="gray">TOWA</span> trades all six of its batriders and four dragonhawks for team <span class="purple">GnH</span>’s 24 batriders. All eight chimaeras survive the encounter, but their health are in the yellow from the batriders' splash damage. They retreat briefly to heal under the cast of tranquility from <span class="red">real331</span>’s Keeper.</p>
+            <img src="/static/images/guide/micro.gif" class="inright lightborder" title="The micro" />
+            <p><span class="green">cum.2ez</span>’s Blademaster harasses <span class="pink">legd-milk</span>’s expansion, killing a few burrows and all of the gold-mining peons to become mere experience points away from level 5. Then, a hilarious incident occurs. At <time>58:00</time>, <span class="yellow">welp.2ez</span> makes invisible all nine of his remaining dragonhawk riders with the help of <span class="teal">ugh.2ez</span>’s sorceresses, and dispatches them in search of lone, unsuspecting air units. Despite the danger of invisible-detecting owl scouts on the prowl, the dragonhawks find three batriders near the center of the map. The three immediately get shackled and destroyed, but reinforcements quickly appear in the form of three batriders approaching from the left side and three more from the right. In an amazing feat of micro, <span class="yellow">welp.2ez</span> selects his six remaining dragonhawk riders with aerial shackles not on cooldown and manages to shackle all six incoming batriders.</p>
+            <p>On the way back to their stronghold after their remarkable success, the dragonhawks stumble upon <span class="red">real331</span>’s chimaera group hovering above some archers. The chimaeras become shackled, but the archers force the dragonhawks to retreat and they end up trading a chimaera for a dragonhawk. At this point in the game, both of the bottom two expansions expire and only 2.5k remain in the one at the top right.</p>
+            <div class="clearfix"></div>
+            <p><span class="pink">legd-milk</span> has quickly rebuilt his batrider air force by now and, despite a pesky Blademaster skewering one with the help of purge from its lightning orb, has 24 batriders once again. At <time>1:02:00</time>, nine chimaeras hit the top left corner of the perch, wiping out six towers.</p>
+            <div class="text-center">
+                <img src="/static/images/guide/siege3.jpg" class="out lightborder" title="The aerial defense" />
+            </div>
+            <p>A second skirmish ensues, and a dragonhawk is traded for a chimaera and four bats. Three minutes later, the chimaeras attack the middle of the perch’s left side and lay waste to two towers before losing a chimaera and batrider to tower fire.</p>
+            <p>Meanwhile, <span class="teal">ugh.2ez</span>’s Alchemist kills a few burrows at <span class="pink">legd-milk</span>’s lower-left expansion for 25 valuable experience points apiece. It is very close now to level 5.</p>
+            <div class="text-center">
+                <img src="/static/images/guide/alch.jpg" class="out lightborder" title="The humble alchemist" />
+            </div>
+            <p>Ten chimaeras, accompanied by 18 batriders, hit the bottom side of the perch. A dragonhawk rider is traded for four batriders, and moments later, another three bats suicide themselves to snipe a second dragonhawk rider.</p>
+            <img src="/static/images/guide/cache.jpg" class="inleft lightborder" title="The mighty alchemist" />
+            <p>While running around picking off lone peons, <span class="green">cum.2ez</span>’s Blademaster stumbles upon <span class="red">real331</span>’s cache of archers at the top right expansion. The Alchemist teleports along and the two heroes quickly massacre nine archers, bringing the Alchemist to two-thirds of a level away from level 6.</p>
+            <p>Before reinforcements arrive, the Blademaster uses its staff of sanctuary to teleport the Alchemist back onto the perch, then windwalks himself away into thin air. With transmute as an ultimate and able to turn any non-hero enemy unit into gold at a very low cooldown, a level 6 Alchemist is a clear win against the looming chimaera threat.</p>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    <div class="blend">
+        <div class="cont">
+            <p>The chimaeras commit to several hit-and-run attacks, picking off towers one at a time before quickly retreating. At <time>1:15:00</time>, three more bats suicide themselves to kill a dragonhawk, and soon afterwards, <span class="pink">legd-milk</span>’s 10 remaining bats successfully eliminate all five of team <span class="gray">TOWA</span>'s dragonhawks.</p>
+            <p>Fifteen minutes pass. The Blademaster finds two lone bears wandering about the lower-right expansion, and the Alchemist teleports along to try and slay them. However, the rejeuvenation skill of the bears, which heals a unit for 400 hitpoints over twelve seconds, proves too strong for both heroes to overcome before reinforcements arrive. Blademaster staffs out the Alchemist before being ambushed, and this is where <span class="green">cum.2ez</span> makes a huge error. The Blademaster uses a staff of teleportation on himself, which unlike a town portal doesn't make the unit invulnerable during the teleport animation. <span class="green">cum.2ez</span> does this before being entangled by a Keeper that he failed to see in time. Lacking any potions or mana for windwalk, the Blademaster quickly falls.</p>
+            <div class="text-center">
+                <img src="/static/images/guide/oops.jpg" class="out lightborder" title="The greed" />
+            </div>
+            <p><span class="green">cum.2ez</span> now has to build two burrows and an altar in order to revive his slain Blademaster, while his team’s towers are getting picked off left and right by constant fly-bys from the ten chimaeras. Six minutes later the Blademaster is back on the ground, but team <span class="gray">TOWA</span> is down to just three watch towers and one arcane tower. There were originally over 40 towers on the perch; now's there's only four.</p>
+            <p>For the next several minutes, the chimaeras make several more passes at the perch. In the process, they lose four of their number due to purges from the four heroes guarding the perch who all possess an orb of lightning. Alchemist, thanks to these kills, is now only one-fifth of a level away from level 6. It needs to kill pretty much all six of the remaining chimaeras to reach the next level, or a miracle…</p>
+            <p>...a miracle that comes in the form of <span class="red">real331</span>’s level 7 Keeper. None of the players on team <span class="purple">GnH</span> has any gold left, and if one of their heroes were to die, they wouldn't have enough resources to revive it. <span class="green">cum.2ez</span>’s Blademaster spots the Keeper all alone south of their mountain at 1:47:00, and Alchemist quickly teleports along. The Keeper proves no match for a Blademaster with 150 damage critical attacks and a chemically enraged Alchemist. Alchemist reaches level 6, and <span class="pink">legd-milk</span> decides at this point to leave the game.</p>
+            <div class="text-center">
+                <img src="/static/images/guide/gg.gif" class="out lightborder" title="The killing crit" />
+            </div>
+        </div>
+    </div>
+    <div class="blend">
+        <h2>Stage 5 - Acceptance</h2>
+        <div class="cont">
+            <div class="text-center">
+                <img src="/static/images/guide/acceptance.jpg" class="out lightborder" title="The acceptance" />
+            </div>
+            <p>The game really is over by now. The chimaeras are effectively neutered by the fear of being turned into gold, and <span class="blue">b1209irthday</span> is forced to kill off his bears to avoid having them be transmuted. Eventually, <span class="red">real331</span>'s chimaeras are picked off one by one, and team <span class="purple">GnH</span>'s three heroes can only huddle around the tree of life at the upper-right expansion, knowing that their time has come to an end.</p>
+            <div class="text-center">
+                <img src="/static/images/guide/end.jpg" class="out lightborder" title="The end" />
+            </div>
+            <p>All six of team <span class="gray">TOWA</span>'s heroes teleport down to mop up the remnants of team <span class="purple">GnH</span>'s army and scattered buildings, and the game is finally over at <time>2:04:00</time>.</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-10">
+            <div class="blend">
+                <h2>Afterthoughts</h2>
+                <div class="cont">
+                    <p>The replay of this game can be found <a href="#">here</a>.</p>
+                    <p>Some thoughts about this game and highperching in general:</p>
+                    <ul class="fa-ul">
+                        <li><i class="fa-li fa fa-circle-o"></i>At a few points late in this game, team <span class="purple">GnH</span> could have won by getting a druid of the talon onto the perch for their heroes to teleport onto, considering they had a level 7 Tauren Chieftain backed up by tranquility, starfall, twin Keepers with entangle, and dozens of disposable chimaeras.</li>
+                        <li><i class="fa-li fa fa-circle-o"></i>If you know the game will facilitate high level heroes, as tower games are prone to do, a level 6 Dark Ranger, Alchemist, or Blademaster will usually secure the win.</li>
+                        <li><i class="fa-li fa fa-circle-o"></i>Against undead players with frost wyrms, build towers at least half a tower square apart. Freezing breath will freeze towers and all adjacent structures, so spacing them out will avoid this.</li>
+                        <li><i class="fa-li fa fa-circle-o"></i>Build orc towers against magic, and human towers against siege. Use your judgment and build a healthy mix of the two.</li>
+                    </ul>
+                    <p>And some advice for people playing against towering teams:</p>
+                    <ul class="fa-ul">
+                        <li><i class="fa-li fa fa-circle-o"></i>A very fast grunt and fiend push can steamroll towers, and footmen are also terribly effective since defend makes them nearly invincible to tower fire. Huntresses aren't encouraged because they're unarmored.</li>
+                        <li><i class="fa-li fa fa-circle-o"></i>We need something below the perch to teleport to, whether it's a mechanical critter, hidden tree of life, or a druid of the talon. You find these, and we can't do shit outside our perch.</li>
+                        <li><i class="fa-li fa fa-circle-o"></i>We will probably use batriders and invisible mortars against your mains. How else do you expect us to win while turtling behind our towers? Expect this and properly defend against it.</li>
+                        <li><i class="fa-li fa fa-circle-o"></i><b>Q</b>: How do you beat a turtling terran in Starcraft? <b>A</b>: You outexpand him. The same principle applies in tower games.</li>
+                        <li><i class="fa-li fa fa-circle-o"></i>Make your base harass-proof against heroes like the Blademaster.</li>
+                        <li><i class="fa-li fa fa-circle-o"></i>Don't go into upkeep! These are three hour long games; gold becomes very precious in the late game.</li>
+                        <li><i class="fa-li fa fa-circle-o"></i>When rushing a towering team early, don't attack the human base with its tough armor, towers, and militia. Try attacking the orc or night elf player first.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2">
+            <div class="blend">
+                <h2>Props</h2>
+                <div class="cont">
+                    <ul class="fa-ul">
+                        <li><i class="fa-li fa fa-square"></i>BattleReports for making their reports free throughout the years.</li>
+                        <li><i class="fa-li fa fa-square"></i>ZerG~LinG for his excellent CSS guide. If this report looks good it's because of his very helpful template.</li>
+                        <li><i class="fa-li fa fa-square"></i>Mata., Sir_Tweak, Bear_And, DirtmcGirt, Kunt.Roii, MrFrosty and Timg4Strok for their expertise and excellent replays.</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>

@@ -4,7 +4,7 @@
     text-align: center;
     overflow: hidden;
     border: 2px solid #000;
-    margin: 0 25% 20px;
+    margin: 0 auto 20px;
     padding: 10% 0;
 }
 
@@ -148,7 +148,7 @@ img.pair-bot {
 
 @media (min-width:768px) {
     .bigtower {
-        margin: 0 35% 20px;
+        margin: 0 auto 20px;
         padding: 7% 0;
     }
     .inright, .inleft {
