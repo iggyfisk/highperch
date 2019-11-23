@@ -11,6 +11,8 @@ from views import routes
 from replaydb import close_connection as close_replaydb
 
 app = Flask(__name__)
+app.jinja_env.trim_blocks = True
+app.jinja_env.lstrip_blocks = True
 app.register_blueprint(routes)
 
 # Not a fan of not having this logic contained to whoever needs cleanup but too much time wasted

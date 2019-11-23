@@ -34,6 +34,11 @@ class ReplayListInfo(dict):
         """ Replay upload timestamp as Python datetime """
         return datetime.fromtimestamp(self['TimeStamp'])
 
+    def game_length(self):
+        """ Replay lenght in minutes:seconds """
+        minutes, seconds = divmod(int(self['Length'] / 1000), 60)
+        return '{:01}:{:02}'.format(minutes, seconds)
+
 
 class Replay(dict):
     """ Full replay data, initialized from a replay data JSON file """
@@ -57,6 +62,13 @@ class Replay(dict):
     def map_name(self):
         """ More presentable map name """
         return os.path.splitext(os.path.basename(self['map']['file']))[0]
+
+    def replay_saver(self):
+        """ Returns the player that saved this replay """
+        for p in self.players:
+            if p['id'] == self['saverPlayerId']:
+                return p
+        return None
 
     def official(self):
         """ Returns True if an officially sanctioned replay else False """

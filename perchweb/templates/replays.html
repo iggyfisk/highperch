@@ -7,7 +7,7 @@
                 {{ replay['Name'] }} {{ replay['Map'] }}
             </a>
         </div>
-        <p>{{ replay['Length'] }} | {{ replay['GameType'] }} | {{ replay['Map'] }} | {{ replay['TowerCount'] }} towers</p>
+        <p>{{ replay.game_length() }} | {{ replay['GameType'] }} | {{ replay['Map'] }} | {{ replay['TowerCount'] }} towers</p>
         {{ teams(replay.teams()) }}
     </div>
     <a class="download" href="/download/replay">
@@ -16,16 +16,28 @@
 </div>
 {% endmacro %}
 
-{% macro teams(teams, detailed=False) %}
+{% macro teams(teams, detailed=False, winnerId=None) %}
     <div class="teams">
-        {% for (teamid, players) in teams.items() %}
+        {% for (teamId, players) in teams.items() %}            
             <div class="team">
+                {% if detailed %}
+                <div>
+                    <u>
+                        Team {{ teamId }}
+                        {% if teamId == winnerId %}
+                        <b>Winner!</b>
+                        {% elif winnerId is not none %}
+                        <b>Loser!</b>
+                        {% endif %}
+                    </u>
+                </div>
+                {% endif %}
             {% for player in players %}
-                <img src="/static/images/game/racesw3xp/{{ player['race'] }}.gif"/>
+                <img src="/static/images/game/racesw3xp/{{ player['race'] }}.gif"/>{% if player['race'] == 'R' and player['raceDetected'] %}⇛<img src="/static/images/game/racesw3xp/{{ player['raceDetected'] }}.gif"/>{% endif %}
                 <a href="{{ url_for('views.view_player', battletag=player['name']) }}">{{ player['name'] }}</a> 
                 {% if detailed %}
                 <div class="details">
-                    0 APM |
+                    {{ player['apm'] }} APM |
                     Actions |
                     Build order |
                     Units |

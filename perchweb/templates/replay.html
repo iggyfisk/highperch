@@ -7,11 +7,19 @@
         <div class="replay">
             <h2>{{ listinfo['Name'] }}</h2>
             <div class="content">
-                <p>{{ listinfo.upload_date() }}</p>
-                <p>{{ listinfo['Views'] }}</p>
+                <p>Uploaded {{ listinfo.upload_date() }}, {{ listinfo['Views'] }} views</p>
                 <p>{{ replay.map_name() }}</p>
-                {{ replaymacros.teams(replay.teams(), True) }}
+                <p>Saved by {{ replay.replay_saver()['name'] }} </p>
 
+                {% if replay['winningTeamId'] is none %}
+                <p>We have no idea who won this game</p>
+                {% elif not replay['winningTeamConfirmed'] %}
+                <p>We think we know who won this game</p>
+                {% else %}
+                <p>We definitely know the winner of this game!</p> 
+                {% endif %}
+
+                {{ replaymacros.teams(replay.teams(), True, replay['winningTeamId']) }}
 
                 <div class="chatlog">
                     {% for chat in replay.chat %}
