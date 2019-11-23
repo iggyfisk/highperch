@@ -1,17 +1,17 @@
 h1 {
     font-size: 40px;
-    margin: 0;
+    margin: 0 auto;
+    width:80%;
     color: #ccac8f;
     font-family:"highperch";
     font-size:80px;
     letter-spacing:-6px;
     cursor: default;
-    position: absolute;
-    top: -71px;
-    height: 25px;
-    z-index: 2;
+    pointer-events: none;
     text-shadow: 4px 2px 2px rgba(0, 0, 0, 0.75);
-    //z-index: 2;
+    position:relative;
+    margin-bottom:-25px;
+    z-index:2;
     .perch {
         color: #e6d9cf;
     }
