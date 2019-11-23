@@ -84,7 +84,7 @@ def list_replays(search_filter):
     return [ReplayListInfo(**r) for r in rows]
 
 
-def list_player_replays(battletag):
+def list_player_replays(battletag, max_results=5):
     """ Search for replays including a specific player """
     # Todo: combine key elements with list_replays
     rows = query('''
@@ -93,7 +93,8 @@ def list_player_replays(battletag):
     INNER JOIN GamesPlayed ON ReplayID = ID
     WHERE PlayerTag = ?
     ORDER BY ID DESC
-    ''', (battletag,))
+    LIMIT ?
+    ''', (battletag, max_results))
 
     return [ReplayListInfo(**r) for r in rows]
 
