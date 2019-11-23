@@ -28,17 +28,25 @@
     padding: $padding;
     font-size:12px;
     display:flex;
+    align-items: center;
     text-decoration: none;
     &:nth-child(even) {
         background: $card-background-color;
     }
     .minimap {
-        display:none;  
-        width: 100px;
-        height: 100px;
         margin-right: $padding;
+        font-size:9px;
         border:1px solid black;
+    }
+    .minimap, .download {
         flex: none;
+        height:80px;
+        width:80px;
+    }
+
+    .download {
+        text-align:center;
+        font-size:42px;
     }
 
     .teams {

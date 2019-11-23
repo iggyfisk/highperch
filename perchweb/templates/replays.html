@@ -1,13 +1,10 @@
 {% macro card(replay) %}
 <div class="replay card">
-    <div class="minimap">Minimap here</div>
+    <div class="minimap">Dare we undertake the sisyphean task of collecting a minimap image for every map?</div>
     <div class="details">
         <div class="header">
             <a class="title" href="{{ url_for('views.view_replay', replay_id=replay['ID']) }}">
                 {{ replay['Name'] }} {{ replay['Map'] }}
-            </a>
-            <a class="download" href="/download/replay">
-                Download
             </a>
         </div>
         <p>{{ replay['Length'] }} | {{ replay['GameType'] }} | {{ replay['Map'] }} | {{ replay['TowerCount'] }} towers</p>
@@ -22,6 +19,9 @@
             {% endfor %}
         </div>
     </div>
+    <a class="download" href="/download/replay">
+        <i class="icon-download-alt"></i>
+    </a>
 </div>
 {% endmacro %}
 

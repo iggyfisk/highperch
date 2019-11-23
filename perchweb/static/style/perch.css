@@ -1132,6 +1132,7 @@ footer .chatlog {
   padding: 8px;
   font-size: 12px;
   display: flex;
+  align-items: center;
   text-decoration: none;
 }
 .replay .details a {
@@ -1152,12 +1153,18 @@ footer .chatlog {
   background: rgba(27, 15, 15, 0.5);
 }
 .replay .minimap {
-  display: none;
-  width: 100px;
-  height: 100px;
   margin-right: 8px;
+  font-size: 9px;
   border: 1px solid black;
+}
+.replay .minimap, .replay .download {
   flex: none;
+  height: 80px;
+  width: 80px;
+}
+.replay .download {
+  text-align: center;
+  font-size: 42px;
 }
 .replay .teams {
   font-size: -1px;
