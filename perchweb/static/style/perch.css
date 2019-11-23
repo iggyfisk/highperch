@@ -250,13 +250,6 @@ body {
   color: #222;
 }
 
-a {
-  color: #a8c564;
-}
-a:hover {
-  color: #9ebe51;
-}
-
 hr {
   margin-top: 3rem;
   margin-bottom: 3.5rem;
@@ -955,6 +948,20 @@ a:hover {
   color: #FFF;
 }
 
+.lordaeron a, .lordaeron a:visited {
+  color: #e7c595;
+}
+.lordaeron a:hover {
+  color: #FFF;
+}
+
+.icecrown a, .icecrown a:visited {
+  color: #e7c595;
+}
+.icecrown a:hover {
+  color: #FFF;
+}
+
 nav {
   width: 100%;
   position: -webkit-sticky;
@@ -1012,7 +1019,7 @@ nav .name {
 nav a {
   text-decoration: none;
   display: inline-block;
-  padding: 16px;
+  padding: 16px 8px;
 }
 nav a:hover {
   text-decoration: underline;
@@ -1022,7 +1029,6 @@ nav .row {
   align-items: center;
 }
 nav .views {
-  margin-left: -16px;
   flex: auto;
   display: flex;
   margin: 0;
@@ -1060,7 +1066,6 @@ nav ul li.background-picker img:hover {
 
   nav a {
     margin-right: 16px;
-    margin-left: -8px;
   }
 
   nav span.submenu {
@@ -1079,7 +1084,6 @@ nav span.submenu {
 h1 {
   font-size: 40px;
   margin: 0 auto;
-  width: 80%;
   color: #ccac8f;
   font-family: "highperch";
   font-size: 80px;
@@ -1089,10 +1093,19 @@ h1 {
   text-shadow: 4px 2px 2px rgba(0, 0, 0, 0.75);
   position: relative;
   margin-bottom: -25px;
+  max-width: 1170px;
   z-index: 2;
+  text-align: center;
+  width: auto;
 }
 h1 .perch {
   color: #e6d9cf;
+}
+@media (min-width: 550px) {
+  h1 {
+    text-align: left;
+    width: 80%;
+  }
 }
 
 footer {

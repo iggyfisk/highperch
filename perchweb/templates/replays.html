@@ -16,15 +16,27 @@
 </div>
 {% endmacro %}
 
-{% macro teams(teams) %}
+{% macro teams(teams, detailed=False) %}
     <div class="teams">
         {% for (teamid, players) in teams.items() %}
-
+            <div class="team">
             {% for player in players %}
+                <img src="{{ player['race'] }}"/>
                 <a href="{{ url_for('views.view_player', battletag=player['name']) }}">{{ player['name'] }}</a> 
+                {% if detailed %}
+                <div class="details">
+                    0 APM <br />
+                    Actions <br/>
+                    Build order <br />
+                    Units <br />
+                    Buildings <br />
+                    Heroes <br />
+                    Items <br />
+                </div>
+                {% endif %}
             {% endfor %}
-
-        {% if not loop.last %} vs {% endif %}
+            </div>
+        <!--{% if not loop.last %} vs {% endif %}-->
         {% endfor %}
     </div>
 {% endmacro %}

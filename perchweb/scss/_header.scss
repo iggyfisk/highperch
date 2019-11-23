@@ -1,7 +1,6 @@
 h1 {
     font-size: 40px;
     margin: 0 auto;
-    width:80%;
     color: #ccac8f;
     font-family:"highperch";
     font-size:80px;
@@ -11,8 +10,15 @@ h1 {
     text-shadow: 4px 2px 2px rgba(0, 0, 0, 0.75);
     position:relative;
     margin-bottom:-25px;
+    max-width: 1170px;
     z-index:2;
     .perch {
         color: #e6d9cf;
+    }
+    text-align:center;
+    width:auto;
+    @media (#{$bp-larger-than-phablet}) {
+        text-align:left;
+        width:80%;
     }
 }

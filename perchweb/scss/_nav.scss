@@ -1,9 +1,28 @@
-a, a:visited {
+a, a:visited {        
     color: $link-color;
 }
-
 a:hover{
     color: #FFF;
+}
+
+
+.lordaeron {
+    a, a:visited {
+        color: $lordy-link-color;
+    }
+    a:hover{
+        color: #FFF;
+    }
+    
+}
+.icecrown {
+    a, a:visited {
+        color: $ice-link-color;
+    }
+    a:hover{
+        color: #FFF;
+    }
+    
 }
 
 nav {
@@ -60,7 +79,7 @@ nav {
     a {
         text-decoration: none;
         display:inline-block;
-        padding:$padding * 2;
+        padding:$padding*2 $padding;
         &:hover{
             text-decoration: underline;
         }
@@ -70,7 +89,6 @@ nav {
         align-items: center;
     }
     .views {
-        margin-left:-$padding * 2;
         flex:auto;
         display:flex;
         margin: 0;
@@ -109,7 +127,6 @@ nav {
     }
     nav a {
         margin-right: $padding * 2;
-        margin-left: -$padding;
     }
     nav span.submenu {
         right: 2%;
