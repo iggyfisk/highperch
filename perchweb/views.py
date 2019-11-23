@@ -18,6 +18,11 @@ def index():
     # Todo: filter from query
     replays = replaydb.list_replays({})
 
+    # Testy thing
+    if request.args['flash']:
+        for i in range(int(request.args['flash'])):
+            flash("Flash test string" * (i + 1))
+
     return standard_page('index.html', 'Replays', nav='index', replays=replays)
 
 
