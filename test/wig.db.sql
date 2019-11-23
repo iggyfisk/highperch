@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS "Replays" (
 	"Name"	TEXT NOT NULL,
 	"TimeStamp"	INTEGER NOT NULL,
 	"Official"	INTEGER NOT NULL,
+	"HighQuality"	INTEGER NOT NULL DEFAULT 0,
 	"GameType"	TEXT NOT NULL,
 	"Version"	TEXT NOT NULL,
 	"Length"	INTEGER NOT NULL,
@@ -14,16 +15,41 @@ CREATE TABLE IF NOT EXISTS "Replays" (
 	"Views"	INTEGER NOT NULL DEFAULT 0,
 	"Players"	TEXT NOT NULL,
 	"Chat"	TEXT NOT NULL,
-	"UploaderIP"	TEXT NOT NULL
+	"UploaderBattleTag"	TEXT NOT NULL,
+	"UploaderIP"	TEXT NOT NULL,
+	"FileHash"	BLOB NOT NULL,
+	"VODURL"	TEXT
 );
-CREATE INDEX IF NOT EXISTS "IX_ReplayMessages" ON "Replays" (
-	"ChatMessageCount"
+CREATE INDEX IF NOT EXISTS "IX_ReplayLength" ON "Replays" (
+	"Length"
 );
 CREATE INDEX IF NOT EXISTS "IX_ReplayTowers" ON "Replays" (
 	"TowerCount"
 );
-CREATE INDEX IF NOT EXISTS "IX_ReplayLength" ON "Replays" (
-	"Length"
+CREATE INDEX IF NOT EXISTS "IX_ReplayMessages" ON "Replays" (
+	"ChatMessageCount"
+);
+CREATE UNIQUE INDEX IF NOT EXISTS "IX_ReplayHash" ON "Replays" (
+	"FileHash"
+);
+CREATE TABLE IF NOT EXISTS "GamesPlayed" (
+	"PlayerTag"	TEXT NOT NULL,
+	"ReplayID"	INTEGER NOT NULL,
+	"Race"	TEXT NOT NULL,
+	"APM"	INTEGER NOT NULL,
+	"Win"	INTEGER,
+	"TowerCount"	INTEGER NOT NULL,
+	"ChatCount"	INTEGER NOT NULL,
+	FOREIGN KEY("PlayerTag") REFERENCES "Players"("BattleTag"),
+	PRIMARY KEY("PlayerTag","ReplayID")
+);
+CREATE TABLE IF NOT EXISTS "Players" (
+	"BattleTag"	TEXT NOT NULL UNIQUE,
+	"HUGames"	INTEGER NOT NULL DEFAULT 0,
+	"ORGames"	INTEGER NOT NULL DEFAULT 0,
+	"NEGames"	INTEGER NOT NULL DEFAULT 0,
+	"UDGames"	INTEGER NOT NULL DEFAULT 0,
+	PRIMARY KEY("BattleTag")
 );
 CREATE TABLE IF NOT EXISTS "Chatlogs" (
 	"ID"	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,

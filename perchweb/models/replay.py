@@ -41,11 +41,12 @@ class Replay(dict):
     def __init__(self, **args):
         super().__init__(**args)
         self.players = [Player(p) for p in args['players']]
+        del self['players']
 
     def teams(self):
         """ Lists players separated by teams """
         teams = defaultdict(list)
-        for p in self['players']:
+        for p in self.players:
             teams[p['teamid']].append(p)
         return teams
 
@@ -59,5 +60,5 @@ class Replay(dict):
 
     def official(self):
         """ Returns True if an officially sanctioned replay else False """
-        # Todo: check if any name in self['players'] in official_names
-        return len(self['players']) > 6
+        # Todo: check if any name in self.players in official_names
+        return len(self.players) > 6

@@ -15,6 +15,7 @@ class ReplayParsingException(Exception):
 
 
 context_db_key = '_wig_db'
+context_rollback_key = '_wig_db_rollback'
 
 
 def get_connection():
@@ -39,7 +40,9 @@ def close_connection():
     """ Cleanup when request is about to end """
     wig_db = getattr(g, context_db_key, None)
     if wig_db is not None:
-        wig_db.commit()
+        rollback = getattr(g, context_rollback_key, False)
+        if not rollback:
+            wig_db.commit()
         wig_db.close()
         setattr(g, context_db_key, None)
 
@@ -47,7 +50,7 @@ def close_connection():
 def list_replays(search_filter):
     """ Search for replays to list on the index page """
     rows = query('''
-    SELECT ID, Name, TimeStamp, Official, GameType, Version, Length, Map, TowerCount, ChatMessageCount, Players, Views
+    SELECT ID, Name, TimeStamp, Official, HighQuality, GameType, Version, Length, Map, TowerCount, ChatMessageCount, Players, Views
     FROM Replays
     ORDER BY ID DESC
     ''')
@@ -62,7 +65,7 @@ def get_replay_listinfo(replay_id, inc_views=False):
             'UPDATE Replays SET Views = Views + 1 WHERE ID = ?', (replay_id,))
 
     row = query('''
-        SELECT Name, TimeStamp, Views
+        SELECT Name, TimeStamp, HighQuality, Views, UploaderIP, VODURL
         FROM Replays
         WHERE ID = ?
         ''', (replay_id,), one=True)
@@ -80,6 +83,33 @@ def get_replay(replay_id):
     with open(data_path) as replay_json:
         replay_data = Replay(**json.load(replay_json))
     return replay_data
+
+
+def create_players(battletags):
+    """ Make sure all players in a replay have a player row """
+    for tag in battletags:
+        query('INSERT OR IGNORE INTO Players(BattleTag) VALUES(?)', (tag,))
+
+
+def save_game_played(replay_data, replay_id):
+    """ Record player participation in a replay """
+    for player in replay_data.players:
+        name = player['name']
+        race = player['race']
+        apm = player['apm']
+        win = player['teamid'] == replay_data['winningTeamId'] if replay_data['winningTeamConfirmed'] else None
+        tower_count = player.tower_count()
+        chat_count = sum(
+            1 for c in replay_data['chat'] if c['playerId'] == player['id'])
+
+        query('''
+            INSERT INTO GamesPlayed (PlayerTag, ReplayID, Race, APM, Win, TowerCount, ChatCount)
+            VALUES(?, ?, ?, ?, ?, ?, ?)''', (name, replay_id, race, apm, win, tower_count, chat_count))
+
+        col = {'H': 'HUGames', 'O': 'ORGames',
+               'N': 'NEGames', 'U': 'UDGames'}[race]
+        query(
+            f'UPDATE Players SET {col} = {col} + 1 WHERE BattleTag = ?', (name,))
 
 
 def save_replay(replay, replay_filename, replay_filename_parts, replay_name, uploader_ip):
@@ -107,26 +137,30 @@ def save_replay(replay, replay_filename, replay_filename_parts, replay_name, upl
         version = replay_data['version']
         length = replay_data['duration']
         map_name = replay_data.map_name()
-        players = [{
-            'name': p['name'],
-            'teamid': p['teamid'],
-            'race': p['race'],
-            'apm': p['apm'],
-            'heroCount': p['heroCount']
-        } for p in replay_data['players']]
+
+        players = [{'name': p['name'], 'teamid': p['teamid'], 'race': p['race']}
+                   for p in replay_data.players]
+        create_players([p['name'] for p in players])
+
         official = 1 if replay_data.official() else 0
-        chat = [c['message'] for c in replay_data['chat']]
+        # concatenate one big string that can be searched through later
+        chat = '|'.join([c['message'] for c in replay_data['chat']])
         tower_count = replay_data.tower_count()
         chat_message_count = len(chat)
+        uploader_battletag = [
+            p['name'] for p in replay_data.players if p['id'] == replay_data['saverPlayerId']][0]
+        # todo: real hash, should already have checked if it exists
+        file_hash = os.urandom(32)
 
-        # Todo: json() function when sqlite supports it everywhere
         query('''
-            INSERT INTO Replays(BNetGameID, Name, TimeStamp, Official, GameType, Version, Length, Map, TowerCount, ChatMessageCount, Players, Chat, UploaderIP)
-            VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-            ''', (bnet_id, replay_name, timestamp, official, gametype, version, length, map_name, tower_count, chat_message_count,
-                  json.dumps(players), json.dumps(chat), uploader_ip))
-
+            INSERT INTO Replays(BNetGameID, Name, TimeStamp, Official, GameType, Version, Length, Map,
+            TowerCount, ChatMessageCount, Players, Chat, UploaderBattleTag, UploaderIP, FileHash)
+            VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ''', (bnet_id, replay_name, timestamp, official, gametype, version, length, map_name,
+                  tower_count, chat_message_count, json.dumps(players), chat, uploader_battletag, uploader_ip, file_hash))
         replay_id = query('SELECT last_insert_rowid()', one=True)[0]
+
+        save_game_played(replay_data, replay_id)
 
         replay_path = filepaths.get_replay(f"{replay_id}.w3g")
         data_path = filepaths.get_replay_data(f"{replay_id}.json")
@@ -137,9 +171,11 @@ def save_replay(replay, replay_filename, replay_filename_parts, replay_name, upl
         # Todo: redirect to replay?
     except ReplayParsingException as err:
         flash(str(err))
+        setattr(g, context_rollback_key, True)
     except Exception as e:
         # Todo: log error
         flash("Failed, don't try again")
+        setattr(g, context_rollback_key, True)
     finally:
         if os.path.isfile(temp_replay_path):
             os.remove(temp_replay_path)

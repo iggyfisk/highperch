@@ -28,7 +28,7 @@ if __name__ == '__main__':
         os.remove(fp.get_db('wig.db'))
     for data_file in glob.glob(fp.get_replay_data('*.json')):
         os.remove(data_file)
-    for replay_file in glob.glob(fp.get_replay_data('*.w3g')):
+    for replay_file in glob.glob(fp.get_replay('*.w3g')):
         os.remove(replay_file)
 
     wig_db = sqlite3.connect(fp.get_db('wig.db'))
