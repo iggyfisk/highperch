@@ -3,6 +3,7 @@ from os.path import isfile, join
 from re import compile as re_compile
 from filepaths import get_path
 
+
 def gametime(milliseconds):
     """ Convert milliseconds to readable timestamp, like 34:04 """
     minutes, seconds = divmod(int(milliseconds / 1000), 60)
@@ -41,6 +42,8 @@ def race_title(race):
 
 thumbnails = {}
 mapsize = re_compile('^\\(\\d\\)$')
+
+
 def map_thumbnail(map_name):
     """ Map image src for a given map name, placeholder thumbnail if a real one can't be found """
     if map_name in thumbnails:
@@ -56,6 +59,14 @@ def map_thumbnail(map_name):
     return thumbnails[map_name]
 
 
+tag_matcher = re_compile('^([^#]+)')
+
+
+def player_display_name(player_name):
+    """ Player name without # battle tag """
+    match = tag_matcher.match(player_name)
+    return match[0] if match else player_name
+
 
 def register(jinja_environment):
     """ Register all filters to the given jinja environment """
@@ -64,3 +75,4 @@ def register(jinja_environment):
     jinja_environment.filters['raceicon'] = race_icon
     jinja_environment.filters['racetitle'] = race_title
     jinja_environment.filters['mapthumbnail'] = map_thumbnail
+    jinja_environment.filters['displayname'] = player_display_name

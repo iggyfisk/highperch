@@ -34,7 +34,7 @@
                 {% endif %}
             {% for player in players %}
                 {{ racemacros.icon(player['race'], player['raceDetected']) }}
-                <a href="{{ url_for('views.view_player', battletag=player['name']) }}">{{ player['name'] }}</a> 
+                <a href="{{ url_for('views.view_player', battletag=player['name']) }}">{{ player['name']|displayname }}</a> 
                 {% if detailed %}
                 <div class="details">
                     {{ player['apm'] }} APM |
