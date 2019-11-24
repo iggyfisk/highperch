@@ -75,14 +75,16 @@ def rgbToHex(r, g, b):
 
 
 def lighten(hex_color, amount):
-    """ Lighten a given hex_color by a fixed amount 0-0.1 """
+    """ Lighten a given hex_color by a fixed amount 0-1.0 """
     rgb = hexToRgb(hex_color)
     hsl = rgbToHsl(rgb[0], rgb[1], rgb[2])
     light = max(min(hsl[2] + amount, 1), 0)
     rgb = hslToRgb(hsl[0], hsl[1], light)
     return rgbToHex(rgb[0], rgb[1], rgb[2])
 
-# Could easily add saturation and make them optional but we're always doing light atm
+# Could easily add saturation and make them optional but we're always and only doing light atm
+
+
 def scale(hex_color, light_scale):
     """ Lighten a given hex_color by scale, 0.1 = 10% more light than before """
     rgb = hexToRgb(hex_color)
