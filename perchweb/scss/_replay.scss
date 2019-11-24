@@ -117,8 +117,8 @@ a.playername{
     }
 
     .playername {
-        font-size:18px;
-        text-shadow: 2px 1px 1px #000000, -1px -1px 2px rgba(219, 141, 64, 0.4);
+        font-size:15px;
+        text-shadow: 2px 1px 1px #000000/*, -1px -1px 2px rgba(219, 141, 64, 0.4)*/;
     }
     
     .teams {
@@ -170,8 +170,12 @@ a.playername{
     .timestamp {
         width: 120px;
         padding-right:$padding;
-        flex:none;
+        flex:none;    
+        text-align: right;
     }
     display:flex;
-    text-align: right;
+
+    .message {
+        text-align:left;
+    }
 }

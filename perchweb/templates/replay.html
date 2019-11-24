@@ -26,7 +26,9 @@
                     {% for chat in replay.chat %}
                         <div class="chatmessage">
                             <div class="timestamp">({{ chat['timeMS']|gametime }} / {{ chat['mode']|chatmode }})</div> 
-                            <div class="playername" style="color:{{ replay.player_colors[chat['playerId']]|lighten(0.2) }}">{{ chat['player']|displayname }}</div>: {{ chat['message'] }}</div>
+                            <div class="message">
+                                <div class="playername" style="color:{{ replay.player_colors[chat['playerId']]|lighten() }}">{{ chat['player']|displayname }}</div>: {{ chat['message'] }}</div>
+                            </div>
                     {% endfor %}
                 </div>
             </div>

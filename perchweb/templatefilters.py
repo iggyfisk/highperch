@@ -72,7 +72,7 @@ def player_display_name(player_name):
 lightened_colors = {}
 
 
-def lighten_color(hex_color, amount):
+def lighten_color(hex_color, amount = 0.3):
     """ Increases the light of a hex color by a factor of 0-1.0 """
     key = (hex_color, amount)
     if key not in lightened_colors:
