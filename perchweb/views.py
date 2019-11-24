@@ -3,11 +3,12 @@ Routes and views for the flask application.
 """
 
 import os
-from flask import Blueprint, url_for, request, redirect, flash
+from flask import Blueprint, url_for, request, redirect, flash, make_response
 from werkzeug.utils import secure_filename
 from handler import standard_page
 import replaydb
 from peep import get_pic
+from admin import validate_admin_hash, check_if_admin
 
 routes = Blueprint('views', __name__)
 
@@ -113,3 +114,22 @@ def peep(pic_id):
     pic = get_pic(pic_id)
     return standard_page('peep.html', 'Peep a pic', nav='peep', pic=pic,
                          perma=url_for('views.peep', pic_id=pic['id']))
+
+
+@routes.route('/admin')
+def admin():
+    if check_if_admin(request.cookies):
+        return redirect(url_for('views.index'))
+    return standard_page('admin.html', 'Admin login', nav='admin')
+
+
+@routes.route('/login', methods=['POST'])
+def login():
+    if validate_admin_hash(request.form['token']):
+        flash('Welcome to the perch')
+        response = make_response(redirect(url_for('views.admin')))
+        response.set_cookie("HP_ADMIN_TOKEN", value=os.environ.get('HIGHPERCH_ADMIN_HASH'), max_age=7305*86400)
+        return response
+    else:
+        flash('Invalid token')
+        return redirect(url_for('views.admin'))

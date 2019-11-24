@@ -23,6 +23,11 @@
                 </div>
                 <span class="action submenu">▼</span>
                 <ul>
+                    {% if is_admin %}
+                    <li class="background-picker">
+                        <img src="/static/images/brilliance-20x20.png" title="Behind the scenes">
+                    </li>
+                    {% endif %}
                     {% for bg in backgrounds %}
                     <li class="background-picker">
                         <img

@@ -31,6 +31,9 @@ app.config.from_pyfile(path.join(app.root_path, 'app.cfg'))
 
 if environ.get('HIGHPERCH_ENVIRONMENT') == "production":
     app.secret_key = environ.get('HIGHPERCH_FLASK_KEY')
+    app.config.update(SESSION_COOKIE_SECURE=True,
+                      SESSION_COOKIE_HTTPONLY=True,
+                      SESSION_COOKIE_SAMESITE='Strict')
 else:
     app.secret_key = 'debug'
 
