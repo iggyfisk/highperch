@@ -1,3 +1,5 @@
+{% import "races.html" as racemacros %}
+
 {% macro card(replay) %}
 <div class="replay card">
     <div class="minimap">Dare we undertake the sisyphean task of collecting a minimap image for every map?</div>
@@ -5,7 +7,7 @@
         <div class="header">
             <a class="title" href="{{ url_for('views.view_replay', replay_id=replay['ID']) }}">{{ replay['Name'] }}</a>
         </div>
-        <p>{{ replay.game_length() }} | {{ replay['GameType'] }} | {{ replay['Map'] }} | {{ replay['TowerCount'] }} towers</p>
+        <p>{{ replay['Length']|gametime }} | {{ replay['GameType'] }} | {{ replay['Map'] }} | {{ replay['TowerCount'] }} towers | {{ replay.upload_date() }}</p>
         {{ teams(replay.teams()) }}
     </div>
     <a class="download" href="/download/replay">
@@ -31,7 +33,7 @@
                 </div>
                 {% endif %}
             {% for player in players %}
-                <img src="/static/images/game/racesw3xp/{{ player['race'] }}.gif"/>{% if player['race'] == 'R' and player['raceDetected'] %}⇛<img src="/static/images/game/racesw3xp/{{ player['raceDetected'] }}.gif"/>{% endif %}
+                {{ racemacros.icon(player['race'], player['raceDetected']) }}
                 <a href="{{ url_for('views.view_player', battletag=player['name']) }}">{{ player['name'] }}</a> 
                 {% if detailed %}
                 <div class="details">

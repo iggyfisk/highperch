@@ -34,11 +34,6 @@ class ReplayListInfo(dict):
         """ Replay upload timestamp as Python datetime """
         return datetime.fromtimestamp(self['TimeStamp'])
 
-    def game_length(self):
-        """ Replay lenght in minutes:seconds """
-        minutes, seconds = divmod(int(self['Length'] / 1000), 60)
-        return '{:01}:{:02}'.format(minutes, seconds)
-
 
 class Replay(dict):
     """ Full replay data, initialized from a replay data JSON file """
@@ -47,6 +42,7 @@ class Replay(dict):
         super().__init__(**args)
         self.players = [Player(p) for p in args['players']]
         del self['players']
+        self.player_colors = {p['id']: p['color'] for p in self.players}
 
     def teams(self):
         """ Lists players separated by teams """

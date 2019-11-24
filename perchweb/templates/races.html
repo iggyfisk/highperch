@@ -1,0 +1,3 @@
+{% macro icon(race, raceDetected) %}
+<img title="{{ race|racetitle }}" src="{{ race|raceicon }}"/>{% if race == 'R' and raceDetected %}⇛<img title="{{ raceDetected|racetitle }}" src="{{ raceDetected|raceicon }}"/>{% endif %}
+{% endmacro %}

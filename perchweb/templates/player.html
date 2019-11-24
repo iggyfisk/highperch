@@ -1,5 +1,12 @@
 {% extends "layout.html" %}
 {% import "replays.html" as replaymacros %}
+{% import "races.html" as racemacros %}
+
+<!-- Proof of concept OK -->
+{% macro racebar(games, totalGames, color) %}
+<span style="display:inline-block;width:{{ (games*100)//totalGames }}%;background:{{ color }};text-align:center;">{{ games }}</span>
+{% endmacro %}
+
 
 {% block content %}
 <div class="player">
@@ -7,10 +14,18 @@
     <div class="content">
         <p>{{ player['total_games'] }} games played</p>
         <ul>
-            <li>{{ player['HUGames'] }} Human</li>
-            <li>{{ player['ORGames'] }} Orc</li>
-            <li>{{ player['NEGames'] }} Night Elves</li>
-            <li>{{ player['UDGames'] }} Undead</li>
+            {% if player['HUGames'] %}
+            <li>{{ racemacros.icon('H') }}{{ racebar(player['HUGames'], player['total_games'], '#00F') }}</li>
+            {% endif %}
+            {% if player['ORGames'] %}
+            <li>{{ racemacros.icon('O') }}{{ racebar(player['ORGames'], player['total_games'], '#F00') }}</li>
+            {% endif %}
+            {% if player['NEGames'] %}
+            <li>{{ racemacros.icon('N') }}{{ racebar(player['NEGames'], player['total_games'], '#4B0082') }}</li>
+            {% endif %}
+            {% if player['UDGames'] %}
+            <li>{{ racemacros.icon('U') }}{{ racebar(player['UDGames'], player['total_games'], '#222') }}</li>
+            {% endif %}
         </ul>
         <div>{{ player['AvgApm'] }} average APM, {{ player['TowerCount'] }} towers built, {{ player['ChatMessageCount'] }} chirps</div>
     </div>

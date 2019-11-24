@@ -139,7 +139,7 @@ def get_player(battletag):
         return None
 
     aggregate_row = query('''
-        SELECT AVG(APM) AS AvgApm, SUM(TowerCount) AS TowerCount, SUM(ChatMessageCount) AS ChatMessageCount
+        SELECT CAST(AVG(APM) AS INTEGER) AS AvgApm, SUM(TowerCount) AS TowerCount, SUM(ChatMessageCount) AS ChatMessageCount
         FROM GamesPlayed
         WHERE PlayerTag = ?
         GROUP BY PlayerTag

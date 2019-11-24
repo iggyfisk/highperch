@@ -8,11 +8,13 @@ from hashlib import md5
 import base64
 from flask import Flask
 from views import routes
+from templatefilters import register
 from replaydb import close_connection as close_replaydb
 
 app = Flask(__name__)
 app.jinja_env.trim_blocks = True
 app.jinja_env.lstrip_blocks = True
+register(app.jinja_env)
 app.register_blueprint(routes)
 
 # Not a fan of not having this logic contained to whoever needs cleanup but too much time wasted
