@@ -2,6 +2,7 @@
 from os.path import isfile, join
 from re import compile as re_compile
 from filepaths import get_path
+from lib.colors import lighten, scale
 
 
 def gametime(milliseconds):
@@ -68,6 +69,28 @@ def player_display_name(player_name):
     return match[0] if match else player_name
 
 
+lightened_colors = {}
+
+
+def lighten_color(hex_color, amount):
+    """ Increases the light of a hex color by a factor of 0-1.0 """
+    key = (hex_color, amount)
+    if key not in lightened_colors:
+        lightened_colors[key] = lighten(hex_color, amount)
+    return lightened_colors[key]
+
+
+scaled_colors = {}
+
+
+def scale_color(hex_color, amount):
+    """ Scales the light of a hex color by a factor of 0-1.0 """
+    key = (hex_color, amount)
+    if key not in scaled_colors:
+        scaled_colors[key] = scale(hex_color, amount)
+    return scaled_colors[key]
+
+
 def register(jinja_environment):
     """ Register all filters to the given jinja environment """
     jinja_environment.filters['gametime'] = gametime
@@ -76,3 +99,5 @@ def register(jinja_environment):
     jinja_environment.filters['racetitle'] = race_title
     jinja_environment.filters['mapthumbnail'] = map_thumbnail
     jinja_environment.filters['displayname'] = player_display_name
+    jinja_environment.filters['lighten'] = lighten_color
+    jinja_environment.filters['scale'] = scale_color
