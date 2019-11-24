@@ -6922,16 +6922,6 @@
     },
     {
       "type": 32,
-      "playerId": 2,
-      "byteCount": 15,
-      "flags": 32,
-      "mode": "ALL",
-      "message": "gl and HF",
-      "timeMS": 12815,
-      "player": "iggythefisk#236"
-    },
-    {
-      "type": 32,
       "playerId": 4,
       "byteCount": 56,
       "flags": 32,
@@ -6978,16 +6968,6 @@
       "mode": "ALL",
       "message": "gl and HF",
       "timeMS": 59030,
-      "player": "iggythefisk#236"
-    },
-    {
-      "type": 32,
-      "playerId": 2,
-      "byteCount": 15,
-      "flags": 32,
-      "mode": "ALL",
-      "message": "gl and HF",
-      "timeMS": 59126,
       "player": "iggythefisk#236"
     },
     {
@@ -7272,16 +7252,6 @@
     },
     {
       "type": 32,
-      "playerId": 2,
-      "byteCount": 14,
-      "flags": 32,
-      "mode": "ALL",
-      "message": "gg noobs",
-      "timeMS": 2149177,
-      "player": "iggythefisk#236"
-    },
-    {
-      "type": 32,
       "playerId": 6,
       "byteCount": 11,
       "flags": 32,
@@ -7442,16 +7412,6 @@
     },
     {
       "type": 32,
-      "playerId": 2,
-      "byteCount": 16,
-      "flags": 32,
-      "mode": "ALL",
-      "message": "yes they d",
-      "timeMS": 2234333,
-      "player": "iggythefisk#236"
-    },
-    {
-      "type": 32,
       "playerId": 5,
       "byteCount": 7,
       "flags": 32,
@@ -7563,31 +7523,11 @@
     {
       "type": 32,
       "playerId": 2,
-      "byteCount": 28,
-      "flags": 32,
-      "mode": "ALL",
-      "message": "we also have this game",
-      "timeMS": 2252917,
-      "player": "iggythefisk#236"
-    },
-    {
-      "type": 32,
-      "playerId": 2,
       "byteCount": 17,
       "flags": 32,
       "mode": "ALL",
       "message": "that we won",
       "timeMS": 2254355,
-      "player": "iggythefisk#236"
-    },
-    {
-      "type": 32,
-      "playerId": 2,
-      "byteCount": 17,
-      "flags": 32,
-      "mode": "ALL",
-      "message": "that we won",
-      "timeMS": 2254458,
       "player": "iggythefisk#236"
     },
     {
@@ -7608,16 +7548,6 @@
       "mode": "ALL",
       "message": "against a mouthbreathing idiot",
       "timeMS": 2260089,
-      "player": "iggythefisk#236"
-    },
-    {
-      "type": 32,
-      "playerId": 2,
-      "byteCount": 36,
-      "flags": 32,
-      "mode": "ALL",
-      "message": "against a mouthbreathing idiot",
-      "timeMS": 2260141,
       "player": "iggythefisk#236"
     },
     {
@@ -7653,16 +7583,6 @@
     {
       "type": 32,
       "playerId": 2,
-      "byteCount": 28,
-      "flags": 32,
-      "mode": "ALL",
-      "message": "we have won every game",
-      "timeMS": 2275920,
-      "player": "iggythefisk#236"
-    },
-    {
-      "type": 32,
-      "playerId": 2,
       "byteCount": 21,
       "flags": 32,
       "mode": "ALL",
@@ -7679,16 +7599,6 @@
       "message": "i'm feeling pretty \"alpha\" this game",
       "timeMS": 2278483,
       "player": "BEARAND#1604"
-    },
-    {
-      "type": 32,
-      "playerId": 2,
-      "byteCount": 21,
-      "flags": 32,
-      "mode": "ALL",
-      "message": "have you?? nope",
-      "timeMS": 2278533,
-      "player": "iggythefisk#236"
     },
     {
       "type": 32,
@@ -7822,16 +7732,6 @@
     },
     {
       "type": 32,
-      "playerId": 2,
-      "byteCount": 20,
-      "flags": 32,
-      "mode": "ALL",
-      "message": "lost to towers",
-      "timeMS": 2504353,
-      "player": "iggythefisk#236"
-    },
-    {
-      "type": 32,
       "playerId": 8,
       "byteCount": 34,
       "flags": 32,
@@ -7853,31 +7753,11 @@
     {
       "type": 32,
       "playerId": 2,
-      "byteCount": 21,
-      "flags": 32,
-      "mode": "ALL",
-      "message": "how embarrasing",
-      "timeMS": 2506761,
-      "player": "iggythefisk#236"
-    },
-    {
-      "type": 32,
-      "playerId": 2,
       "byteCount": 8,
       "flags": 32,
       "mode": "ALL",
       "message": "np",
       "timeMS": 2507531,
-      "player": "iggythefisk#236"
-    },
-    {
-      "type": 32,
-      "playerId": 2,
-      "byteCount": 8,
-      "flags": 32,
-      "mode": "ALL",
-      "message": "np",
-      "timeMS": 2507633,
       "player": "iggythefisk#236"
     },
     {
@@ -7898,16 +7778,6 @@
       "mode": "ALL",
       "message": "It's very easy to kill bases",
       "timeMS": 2510503,
-      "player": "iggythefisk#236"
-    },
-    {
-      "type": 32,
-      "playerId": 2,
-      "byteCount": 34,
-      "flags": 32,
-      "mode": "ALL",
-      "message": "It's very easy to kill bases",
-      "timeMS": 2510605,
       "player": "iggythefisk#236"
     },
     {
@@ -7949,16 +7819,6 @@
       "message": "keep talking",
       "timeMS": 2534636,
       "player": "ExPeRiEnCeS#120"
-    },
-    {
-      "type": 32,
-      "playerId": 2,
-      "byteCount": 68,
-      "flags": 32,
-      "mode": "ALL",
-      "message": "buildings are stationary so it's impossible to lose in a fight",
-      "timeMS": 2534636,
-      "player": "iggythefisk#236"
     },
     {
       "type": 32,
@@ -8018,16 +7878,6 @@
       "mode": "ALL",
       "message": "somehow you didn't master it throughout this game :/",
       "timeMS": 2557694,
-      "player": "iggythefisk#236"
-    },
-    {
-      "type": 32,
-      "playerId": 2,
-      "byteCount": 58,
-      "flags": 32,
-      "mode": "ALL",
-      "message": "somehow you didn't master it throughout this game :/",
-      "timeMS": 2557796,
       "player": "iggythefisk#236"
     },
     {
@@ -8102,16 +7952,6 @@
     },
     {
       "type": 32,
-      "playerId": 2,
-      "byteCount": 48,
-      "flags": 32,
-      "mode": "ALL",
-      "message": "just staying in the game and soaking in it",
-      "timeMS": 2588037,
-      "player": "iggythefisk#236"
-    },
-    {
-      "type": 32,
       "playerId": 5,
       "byteCount": 38,
       "flags": 32,
@@ -8152,16 +7992,6 @@
     },
     {
       "type": 32,
-      "playerId": 2,
-      "byteCount": 21,
-      "flags": 32,
-      "mode": "ALL",
-      "message": "but you do mind",
-      "timeMS": 2606395,
-      "player": "iggythefisk#236"
-    },
-    {
-      "type": 32,
       "playerId": 8,
       "byteCount": 43,
       "flags": 32,
@@ -8178,16 +8008,6 @@
       "mode": "ALL",
       "message": "very much",
       "timeMS": 2610756,
-      "player": "iggythefisk#236"
-    },
-    {
-      "type": 32,
-      "playerId": 2,
-      "byteCount": 15,
-      "flags": 32,
-      "mode": "ALL",
-      "message": "very much",
-      "timeMS": 2610858,
       "player": "iggythefisk#236"
     },
     {
@@ -8293,31 +8113,11 @@
     {
       "type": 32,
       "playerId": 2,
-      "byteCount": 57,
-      "flags": 32,
-      "mode": "ALL",
-      "message": "your pathetic strat works on mouth breathing idiots",
-      "timeMS": 2729413,
-      "player": "iggythefisk#236"
-    },
-    {
-      "type": 32,
-      "playerId": 2,
       "byteCount": 26,
       "flags": 32,
       "mode": "ALL",
       "message": "words I will cherish",
       "timeMS": 2734027,
-      "player": "iggythefisk#236"
-    },
-    {
-      "type": 32,
-      "playerId": 2,
-      "byteCount": 26,
-      "flags": 32,
-      "mode": "ALL",
-      "message": "words I will cherish",
-      "timeMS": 2734130,
       "player": "iggythefisk#236"
     },
     {
@@ -8342,16 +8142,6 @@
     },
     {
       "type": 32,
-      "playerId": 2,
-      "byteCount": 75,
-      "flags": 32,
-      "mode": "ALL",
-      "message": "do you think you were doing something productive your allies weren't?",
-      "timeMS": 2771941,
-      "player": "iggythefisk#236"
-    },
-    {
-      "type": 32,
       "playerId": 6,
       "byteCount": 47,
       "flags": 32,
@@ -8368,16 +8158,6 @@
       "mode": "ALL",
       "message": "one undead massing wyrms and clicking heroes different from the other?",
       "timeMS": 2784811,
-      "player": "iggythefisk#236"
-    },
-    {
-      "type": 32,
-      "playerId": 2,
-      "byteCount": 76,
-      "flags": 32,
-      "mode": "ALL",
-      "message": "one undead massing wyrms and clicking heroes different from the other?",
-      "timeMS": 2784914,
       "player": "iggythefisk#236"
     },
     {
@@ -8482,16 +8262,6 @@
     },
     {
       "type": 32,
-      "playerId": 2,
-      "byteCount": 127,
-      "flags": 32,
-      "mode": "ALL",
-      "message": "so many years of undeads massing wyrms and clicking heroes and being unable to figure out why it's not working anymore...",
-      "timeMS": 2823899,
-      "player": "iggythefisk#236"
-    },
-    {
-      "type": 32,
       "playerId": 8,
       "byteCount": 40,
       "flags": 32,
@@ -8542,16 +8312,6 @@
     },
     {
       "type": 32,
-      "playerId": 2,
-      "byteCount": 20,
-      "flags": 32,
-      "mode": "ALL",
-      "message": "learn to adapt",
-      "timeMS": 2837909,
-      "player": "iggythefisk#236"
-    },
-    {
-      "type": 32,
       "playerId": 4,
       "byteCount": 43,
       "flags": 32,
@@ -8568,16 +8328,6 @@
       "mode": "ALL",
       "message": "it's a useful skill in life",
       "timeMS": 2842370,
-      "player": "iggythefisk#236"
-    },
-    {
-      "type": 32,
-      "playerId": 2,
-      "byteCount": 33,
-      "flags": 32,
-      "mode": "ALL",
-      "message": "it's a useful skill in life",
-      "timeMS": 2842473,
       "player": "iggythefisk#236"
     },
     {
@@ -8608,16 +8358,6 @@
       "mode": "ALL",
       "message": "sign of a healthy mind",
       "timeMS": 2847339,
-      "player": "iggythefisk#236"
-    },
-    {
-      "type": 32,
-      "playerId": 2,
-      "byteCount": 28,
-      "flags": 32,
-      "mode": "ALL",
-      "message": "sign of a healthy mind",
-      "timeMS": 2847442,
       "player": "iggythefisk#236"
     },
     {
@@ -8684,7 +8424,7 @@
     "randomRaces": false,
     "speed": 2
   },
-  "parseTime": 620,
+  "parseTime": 549,
   "saverPlayerId": 2,
   "winningTeamId": 1,
   "winningTeamConfirmed": true,
