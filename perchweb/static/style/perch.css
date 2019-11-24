@@ -1189,8 +1189,16 @@ footer .chatlog {
   text-align: center;
   font-size: 42px;
 }
-.replays .replay .teams {
-  font-size: -1px;
+.replays .replay .teams, .replays .replay .team {
+  flex-wrap: wrap;
+}
+.replays .replay a.download {
+  display: none;
+}
+@media (min-width: 750px) {
+  .replays .replay a.download {
+    display: block;
+  }
 }
 .replays .replay .details {
   width: 100%;
@@ -1207,6 +1215,17 @@ footer .chatlog {
   border: 1px solid black;
 }
 
+.playername {
+  font-size: 18px;
+  display: inline-block;
+  font-weight: bold;
+  text-shadow: 2px 1px 1px #000000, -1px -1px 2px rgba(138, 86, 35, 0.4);
+}
+
+a.playername:hover {
+  color: #FFF !important;
+}
+
 .player .icon-name {
   display: flex;
   align-items: center;
@@ -1215,37 +1234,40 @@ footer .chatlog {
   margin-right: -4px;
 }
 
-.replay.details .team .player {
-  padding: 8px;
-  background-color: rgba(0, 0, 0, 0.75);
+.large-replay .details {
+  margin-bottom: 16px;
 }
-.replay.details .team .player:nth-child(even) {
-  background-color: rgba(27, 15, 15, 0.5);
-}
-.replay.details .content {
+.large-replay .details .content {
   display: flex;
 }
-.replay.details .content img {
+.large-replay .details .content img {
   width: 160px;
   height: 160px;
 }
-.replay.details .teams {
+.large-replay .teams {
   display: flex;
   flex-direction: column;
   align-items: stretch;
 }
 @media (min-width: 750px) {
-  .replay.details .teams {
+  .large-replay .teams {
     flex-direction: row;
   }
 }
-.replay.details .teams .team {
+.large-replay .teams .team {
   flex: 1;
+  margin-bottom: 16px;
 }
-.replay.details .teams .vs {
+.large-replay .teams .vs {
   text-align: center;
   flex: 0;
   padding: 8px;
+}
+.large-replay .teams .team .player {
+  padding: 8px;
+  background-color: rgba(0, 0, 0, 0.75);
+}
+.large-replay .teams .team .player:nth-child(even) {
   background-color: rgba(27, 15, 15, 0.5);
 }
 
@@ -1256,19 +1278,19 @@ footer .chatlog {
   padding-right: 8px;
 }
 
-.playername {
-  display: inline-block;
-  font-weight: bold;
-  text-shadow: 2px 1px 1px #000000;
-}
-
 .chatlog {
   background-color: rgba(27, 15, 15, 0.5);
   padding: 8px;
 }
 
 .chatmessage {
-  display: block;
+  display: flex;
+  text-align: right;
+}
+.chatmessage .timestamp {
+  width: 120px;
+  padding-right: 8px;
+  flex: none;
 }
 
 form.filters {

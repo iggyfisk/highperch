@@ -8,45 +8,48 @@
             <a class="title" href="{{ url_for('views.view_replay', replay_id=replay['ID']) }}">{{ replay['Name'] }}</a>
         </div>
         <p>{{ replay['Length']|gametime }} | {{ replay['GameType'] }} | {{ replay['Map'] }} | {{ replay['TowerCount'] }} towers | {{ replay.upload_date() }}</p>
-        {{ teams(replay.teams()) }}
+        {{ teams(replay) }}
     </div>
-    <a class="download" href="/download/replay">
+    <a class="download" href="/static/replays/{{ replay['ID'] }}.w3g">
         <i class="icon-download-alt"></i>
     </a>
 </div>
 {% endmacro %}
 
-{% macro teams(teams, detailed=False, winnerId=None) %}
+{% macro teams(replay, detailed=False) %}
     <div class="teams">
-        {% for (teamId, players) in teams.items() %}            
+        {% for (teamId, players) in replay.teams().items() %}            
             <div class="team">
                 {% if detailed %}
                 <h2>
-                        Team {{ teamId }}
-                        {% if teamId == winnerId %}
-                        <b>Winner!</b>
-                        {% elif winnerId is not none %}
-                        <b>Loser!</b>
-                        {% endif %}
-                    </u>
+                    Team {{ teamId }}
+                    {% if teamId == winnerId %}
+                    <b>Winner!</b>
+                    {% elif winnerId is not none %}
+                    <b>Loser!</b>
+                    {% endif %}
                 </h2>
                 {% endif %}
             {% for player in players %}
                 <div class="player">
-                    <div class="icon-name">
-                        {{ racemacros.icon(player['race'], player['raceDetected']) }}<a href="{{ url_for('views.view_player', battletag=player['name']) }}">{{ player['name']|displayname }}</a> 
-                    </div>
                     {% if detailed %}
-                    <div class="details">
-                        {{ player['apm'] }} APM <!-- |
-                        Actions |
-                        Build order |
-                        Units |
-                        Buildings |
-                        Heroes |
-                        Items -->
-                    </div>
-                {% endif %}
+                        <div class="icon-name">
+                            {{ racemacros.icon(player['race'], player['raceDetected']) }}<a class="playername" style="color:{{ replay.player_colors[player['id']] }}" href="{{ url_for('views.view_player', battletag=player['name']) }}">{{ player['name']|displayname }}</a> 
+                        </div>
+                            <div class="details">
+                            {{ player['apm'] }} APM <!-- |
+                            Actions |
+                            Build order |
+                            Units |
+                            Buildings |
+                            Heroes |
+                            Items -->
+                        </div>
+                    {% else %}
+                        <div class="icon-name">
+                            {{ racemacros.icon(player['race'], player['raceDetected']) }}<a class="playername" href="{{ url_for('views.view_player', battletag=player['name']) }}">{{ player['name']|displayname }}</a> 
+                        </div>
+                    {% endif %}
                 </div>
             {% endfor %}
             </div>

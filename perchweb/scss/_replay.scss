@@ -53,8 +53,15 @@
             font-size:42px;
         }
 
-        .teams {
-            font-size:-1px;
+        .teams, .team {
+            flex-wrap: wrap;
+        }
+
+        a.download {
+            display:none;
+            @media (#{$bp-larger-than-tablet}) {
+                display:block;
+            }
         }
 
         .details {
@@ -75,6 +82,19 @@
     }
 }
 
+.playername {
+    font-size:18px;
+    display:inline-block;
+    font-weight:bold;
+    text-shadow: 2px 1px 1px #000000, -1px -1px 2px rgba(138, 86, 35, 0.4);
+}
+a.playername{
+    &:hover{
+        color:#FFF!important;
+    }
+}
+
+
 .player {
     .icon-name {
         display:flex;
@@ -86,23 +106,19 @@
 }
 
 // single replay
-.replay.details {
-    .team {
-        .player {
-            padding: $padding;
-            background-color: $card-alt-background-color;
-            &:nth-child(even) {
-                background-color: $card-background-color;
+.large-replay{
+    .details {
+        .content {
+            display:flex;
+            img {
+                width: 160px;
+                height: 160px;
             }
         }
+        margin-bottom: $padding * 2;
     }
-    .content {
-        display:flex;
-        img {
-            width: 160px;
-            height: 160px;
-        }
-    }
+
+    
     .teams {
         display: flex;
         flex-direction: column;
@@ -112,12 +128,21 @@
         }
         .team {
             flex: 1;
+            margin-bottom: $padding * 2;
         }
         .vs {
             text-align:center;
             flex: 0;
             padding: $padding;
-            background-color :$card-background-color;
+        }
+        .team {
+            .player {
+                padding: $padding;
+                background-color: $card-alt-background-color;
+                &:nth-child(even) {
+                    background-color: $card-background-color;
+                }
+            }
         }
     }
 }
@@ -134,19 +159,17 @@
     }
 }
 
-.playername {
-    display:inline-block;
-    //background-color:$card-background-color;
-    font-weight:bold;
-    text-shadow: 2px 1px 1px #000000;
-}
-
 .chatlog {
     background-color: $card-background-color;
     padding: $padding;
 }
 
 .chatmessage {
-    display:block;
-
+    .timestamp {
+        width: 120px;
+        padding-right:$padding;
+        flex:none;
+    }
+    display:flex;
+    text-align: right;
 }
