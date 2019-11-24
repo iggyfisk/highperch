@@ -1173,6 +1173,9 @@ footer .chatlog {
   height: 80px;
   width: 80px;
 }
+.replays .replay .chatmessage .playername {
+  background-color: rgba(27, 15, 15, 0.5);
+}
 .replays .replay .download {
   text-align: center;
   font-size: 42px;
@@ -1278,6 +1281,18 @@ form.filters .apply-filter {
 form.upload {
   display: flex;
   margin: 0;
+  align-items: center;
+  flex-direction: row;
+}
+@media (min-width: 550px) {
+  form.upload {
+    flex-direction: column;
+  }
+}
+@media (min-width: 1000px) {
+  form.upload {
+    flex-direction: row;
+  }
 }
 form.upload input, form.upload select {
   background: #444;

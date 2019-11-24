@@ -91,6 +91,15 @@ form.filters{
 form.upload {
     display:flex;
     margin:0;
+    align-items: center;
+    flex-direction:row;
+    @media (#{$bp-larger-than-phablet}) {
+        flex-direction:column;
+    }
+    @media (#{$bp-larger-than-desktop}) {
+        flex-direction:row;
+    }
+
     input, select {
         background: #444;
         border: 1px solid #000F;
