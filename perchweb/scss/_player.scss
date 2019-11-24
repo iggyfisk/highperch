@@ -1,0 +1,50 @@
+.player {
+    .stats {
+        display: flex;
+        flex-direction: column;
+        @media (#{$bp-larger-than-tablet}) {
+            flex-direction: row;
+        }
+        div {
+            flex: 1;
+        }
+    }
+    .racechart {
+        display: flex;
+        flex-direction: column;
+        margin-right: $margin;
+        .chartrow {
+            display: flex;
+            flex: 1;
+            margin: 4px 0;
+            .legend {
+                display: flex;
+                align-self: center;
+            }
+            .barcontainer {
+                flex: 1;
+                .bar {
+                    text-align: center;
+                    border: 1px solid #000;
+                    border-radius: $global-radius;
+                    &.H {
+                        background: #0042ff;
+                    }
+                    &.O {
+                        background: #006400;
+                    }
+                    &.N {
+                        background: #540081;
+                    }
+                    &.U {
+                        background: #959697;
+                    }
+                    span {
+                        cursor: default;
+                        font-weight: bold;
+                    }
+                }
+            }
+        }
+    }
+}

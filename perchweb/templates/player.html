@@ -2,32 +2,40 @@
 {% import "replays.html" as replaymacros %}
 {% import "races.html" as racemacros %}
 
-<!-- Proof of concept OK -->
-{% macro racebar(games, totalGames, color) %}
-<span style="display:inline-block;width:{{ (games*100)//totalGames }}%;background:{{ color }};text-align:center;">{{ games }}</span>
+{% macro racebar(games, totalGames, race) %}
+<div class="chartrow">
+    <div class="legend">{{ racemacros.icon(race) }}</div>
+    <div class="barcontainer">
+        <div class="bar {{ race }}" style="width:{{ (games*100)//totalGames }}%;"><span title="Games">{{ games }}</label></div>
+    </div>
+</div>
 {% endmacro %}
 
 
 {% block content %}
 <div class="player">
-    <h2>{{ player['name'] }}</h2>
+    <h2>{{ player['name'] }} player profile</h2>
     <div class="content">
-        <p>{{ player['total_games'] }} games played</p>
-        <ul>
+        <div class="stats">
+            <div><b>{{ player['total_games'] }}</b> games played</div>
+            <div><b>{{ player['AvgApm'] }}</b> average APM</div>
+            <div><b>{{ player['TowerCount'] }}</b> towers built</div>
+            <div><b>{{ player['ChatMessageCount'] }}</b> chirps</div>
+        </div>
+        <div class="racechart">
             {% if player['HUGames'] %}
-            <li>{{ racemacros.icon('H') }}{{ racebar(player['HUGames'], player['total_games'], '#00F') }}</li>
+            {{ racebar(player['HUGames'], player['total_games'], 'H') }}
             {% endif %}
             {% if player['ORGames'] %}
-            <li>{{ racemacros.icon('O') }}{{ racebar(player['ORGames'], player['total_games'], '#F00') }}</li>
+            {{ racebar(player['ORGames'], player['total_games'], 'O') }}
             {% endif %}
             {% if player['NEGames'] %}
-            <li>{{ racemacros.icon('N') }}{{ racebar(player['NEGames'], player['total_games'], '#4B0082') }}</li>
+            {{ racebar(player['NEGames'], player['total_games'], 'N') }}
             {% endif %}
             {% if player['UDGames'] %}
-            <li>{{ racemacros.icon('U') }}{{ racebar(player['UDGames'], player['total_games'], '#222') }}</li>
+            {{ racebar(player['UDGames'], player['total_games'], 'U') }}
             {% endif %}
-        </ul>
-        <div>{{ player['AvgApm'] }} average APM, {{ player['TowerCount'] }} towers built, {{ player['ChatMessageCount'] }} chirps</div>
+        </div>
     </div>
 </div>
 

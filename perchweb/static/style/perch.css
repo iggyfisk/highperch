@@ -1243,6 +1243,7 @@ a.playername:hover {
   height: 160px;
 }
 .large-replay .playername {
+  font-size: 15px;
   text-shadow: 2px 1px 1px #000000;
 }
 .large-replay .teams {
@@ -1295,6 +1296,57 @@ a.playername:hover {
 }
 .chatmessage .message {
   text-align: left;
+}
+
+.player .stats {
+  display: flex;
+  flex-direction: column;
+}
+@media (min-width: 750px) {
+  .player .stats {
+    flex-direction: row;
+  }
+}
+.player .stats div {
+  flex: 1;
+}
+.player .racechart {
+  display: flex;
+  flex-direction: column;
+  margin-right: 16px;
+}
+.player .racechart .chartrow {
+  display: flex;
+  flex: 1;
+  margin: 4px 0;
+}
+.player .racechart .chartrow .legend {
+  display: flex;
+  align-self: center;
+}
+.player .racechart .chartrow .barcontainer {
+  flex: 1;
+}
+.player .racechart .chartrow .barcontainer .bar {
+  text-align: center;
+  border: 1px solid #000;
+  border-radius: 4px;
+}
+.player .racechart .chartrow .barcontainer .bar.H {
+  background: #0042ff;
+}
+.player .racechart .chartrow .barcontainer .bar.O {
+  background: #006400;
+}
+.player .racechart .chartrow .barcontainer .bar.N {
+  background: #540081;
+}
+.player .racechart .chartrow .barcontainer .bar.U {
+  background: #959697;
+}
+.player .racechart .chartrow .barcontainer .bar span {
+  cursor: default;
+  font-weight: bold;
 }
 
 form.filters {
