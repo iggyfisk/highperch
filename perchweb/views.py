@@ -128,7 +128,8 @@ def login():
     if validate_admin_hash(request.form['token']):
         flash('Welcome to the perch')
         response = make_response(redirect(url_for('views.admin')))
-        response.set_cookie("HP_ADMIN_TOKEN", value=os.environ.get('HIGHPERCH_ADMIN_HASH'), max_age=7305*86400)
+        response.set_cookie("HP_ADMIN_TOKEN", value=os.environ.get('HIGHPERCH_ADMIN_HASH'),
+                            max_age=7305*86400, secure=True, httponly=True, samesite=True)
         return response
     else:
         flash('Invalid token')
