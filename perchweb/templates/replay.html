@@ -7,7 +7,7 @@
         <div class="replay details">
             <h2>{{ listinfo['Name'] }}</h2>
             <div class="content">
-                <img class="minimap" src="todo" title="todo" />
+                <img class="minimap" src="{{ replay.map_name()|mapthumbnail }}" title="todo" />
                 <div>
                     <a href="/dl/replay">Download</a>
                     <p>Uploaded {{ listinfo.upload_date() }}, {{ listinfo['Views'] }} views</p>
