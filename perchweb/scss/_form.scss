@@ -1,6 +1,6 @@
 
 form.filters{ 
-    border-left:1px solid black;
+    //border-left:1px solid black;
     display:flex;
     .flowlist{
         flex: 1;
@@ -31,7 +31,7 @@ form.filters{
         //width: 88px;
         padding: 0;
         flex:none;
-        margin:$padding;
+        margin:0 $padding;
     }
     input[type=checkbox] {
         margin-left:$padding;
@@ -40,7 +40,6 @@ form.filters{
     }
     .apply-filter{
         background:$card-alt-background-color;
-        padding-right: 16px;
     }
 }
 .filterrow {
@@ -49,7 +48,7 @@ form.filters{
     flex-direction:column;
     @media (#{$bp-larger-than-tablet}) {
         flex-direction:row;
-        border-bottom:1px solid black;
+        //border-bottom:1px solid black;
     }
 
     &:nth-child(even) {
@@ -70,7 +69,7 @@ form.filters{
 
 
 .filter {
-    border-right:1px solid black;
+    //border-right:1px solid black;
     justify-items: center;
     justify-content: center;
     align-items:center;

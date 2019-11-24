@@ -4,29 +4,33 @@
 {% block content %}
 <div class="row">
     <div class="12 columns">
-        <div class="replay">
+        <div class="replay details">
             <h2>{{ listinfo['Name'] }}</h2>
             <div class="content">
-                <p>Uploaded {{ listinfo.upload_date() }}, {{ listinfo['Views'] }} views</p>
-                <p>{{ replay.map_name() }}</p>
-                <p>Saved by {{ replay.replay_saver()['name']|displayname }} </p>
+                <img class="minimap" src="todo" title="todo" />
+                <div>
+                    <a href="/dl/replay">Download</a>
+                    <p>Uploaded {{ listinfo.upload_date() }}, {{ listinfo['Views'] }} views</p>
+                    <p>{{ replay.map_name() }}</p>
+                    <p>Saved by {{ replay.replay_saver()['name']|displayname }} </p>
 
-                {% if replay['winningTeamId'] is none %}
-                <p>We have no idea who won this game</p>
-                {% elif not replay['winningTeamConfirmed'] %}
-                <p>We think we know who won this game</p>
-                {% else %}
-                <p>We definitely know the winner of this game!</p> 
-                {% endif %}
-
-                {{ replaymacros.teams(replay.teams(), True, replay['winningTeamId']) }}
-
-                <div class="chatlog">
-                    {% for chat in replay.chat %}
-                        <div class="chatmessage">({{ chat['timeMS']|gametime }} / {{ chat['mode']|chatmode }}) <div class="playername" style="color:{{ replay.player_colors[chat['playerId']] }}">{{ chat['player']|displayname }}</div>: {{ chat['message'] }}</div>
-                    {% endfor %}
+                    {% if replay['winningTeamId'] is none %}
+                    <p>We have no idea who won this game</p>
+                    {% elif not replay['winningTeamConfirmed'] %}
+                    <p>We think we know who won this game</p>
+                    {% else %}
+                    <p>We definitely know the winner of this game!</p> 
+                    {% endif %}
                 </div>
             </div>
+            {{ replaymacros.teams(replay.teams(), True, replay['winningTeamId']) }}
+
+            <div class="chatlog">
+                {% for chat in replay.chat %}
+                    <div class="chatmessage">({{ chat['timeMS']|gametime }} / {{ chat['mode']|chatmode }}) <div class="playername" style="color:{{ replay.player_colors[chat['playerId']] }}">{{ chat['player']|displayname }}</div>: {{ chat['message'] }}</div>
+                {% endfor %}
+            </div>
+
         </div>
     </div>
 </div>

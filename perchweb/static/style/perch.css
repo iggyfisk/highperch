@@ -1125,6 +1125,22 @@ footer .chatlog {
   text-shadow: 1px 1px 0 #333;
 }
 
+.minimap {
+  margin-right: 8px;
+  font-size: 9px;
+  border: 1px solid black;
+}
+.minimap img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.minimap, .download {
+  flex: none;
+  height: 80px;
+  width: 80px;
+}
+
 .replays {
   border-bottom: 1px solid black;
 }
@@ -1159,23 +1175,6 @@ footer .chatlog {
 .replays .replay:nth-child(even) {
   background: rgba(27, 15, 15, 0.5);
 }
-.replays .replay .minimap {
-  margin-right: 8px;
-  font-size: 9px;
-  border: 1px solid black;
-}
-.replays .replay .minimap img {
-  max-width: 100%;
-  max-height: 100%;
-}
-.replays .replay .minimap, .replays .replay .download {
-  flex: none;
-  height: 80px;
-  width: 80px;
-}
-.replays .replay .chatmessage .playername {
-  background-color: rgba(27, 15, 15, 0.5);
-}
 .replays .replay .download {
   text-align: center;
   font-size: 42px;
@@ -1198,8 +1197,71 @@ footer .chatlog {
   border: 1px solid black;
 }
 
+.player .icon-name {
+  display: flex;
+  align-items: center;
+}
+.player .icon-name img {
+  margin-right: -4px;
+}
+
+.replay.details .team .player {
+  padding: 8px;
+  background-color: rgba(0, 0, 0, 0.75);
+}
+.replay.details .team .player:nth-child(even) {
+  background-color: rgba(27, 15, 15, 0.5);
+}
+.replay.details .content {
+  display: flex;
+}
+.replay.details .content img {
+  width: 160px;
+  height: 160px;
+}
+.replay.details .teams {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+@media (min-width: 750px) {
+  .replay.details .teams {
+    flex-direction: row;
+  }
+}
+.replay.details .teams .team {
+  flex: 1;
+}
+.replay.details .teams .vs {
+  text-align: center;
+  flex: 0;
+  padding: 8px;
+  background-color: rgba(27, 15, 15, 0.5);
+}
+
+.replay .details .team, .replay .details .teams, .replay .details .icon-name {
+  display: inline-flex;
+}
+.replay .details .player, .replay .details .vs {
+  padding-right: 8px;
+}
+
+.playername {
+  display: inline-block;
+  font-weight: bold;
+  text-shadow: 2px 1px 1px #000000;
+}
+
+.chatlog {
+  background-color: rgba(27, 15, 15, 0.5);
+  padding: 8px;
+}
+
+.chatmessage {
+  display: block;
+}
+
 form.filters {
-  border-left: 1px solid black;
   display: flex;
 }
 form.filters .flowlist {
@@ -1230,7 +1292,7 @@ form.filters input, form.filters select {
 form.filters input[type=submit] {
   padding: 0;
   flex: none;
-  margin: 8px;
+  margin: 0 8px;
 }
 form.filters input[type=checkbox] {
   margin-left: 8px;
@@ -1239,7 +1301,6 @@ form.filters input[type=checkbox] {
 }
 form.filters .apply-filter {
   background: rgba(0, 0, 0, 0.75);
-  padding-right: 16px;
 }
 
 .filterrow {
@@ -1249,7 +1310,6 @@ form.filters .apply-filter {
 @media (min-width: 750px) {
   .filterrow {
     flex-direction: row;
-    border-bottom: 1px solid black;
   }
 }
 .filterrow:nth-child(even) .filter:nth-child(even) {
@@ -1260,7 +1320,6 @@ form.filters .apply-filter {
 }
 
 .filter {
-  border-right: 1px solid black;
   justify-items: center;
   justify-content: center;
   align-items: center;

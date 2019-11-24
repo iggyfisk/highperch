@@ -2,7 +2,7 @@
 
 {% macro card(replay) %}
 <div class="replay card">
-    <div class="minimap"><img src="{{replay['Map']|mapthumbnail}}" title="{{ replay['Map'] }}"></div>
+    <div class="minimap"><img src="{{replay['Map']|mapthumbnail}}" title="{{ replay['Map'] }}" /></div>
     <div class="details">
         <div class="header">
             <a class="title" href="{{ url_for('views.view_replay', replay_id=replay['ID']) }}">{{ replay['Name'] }}</a>
@@ -21,8 +21,7 @@
         {% for (teamId, players) in teams.items() %}            
             <div class="team">
                 {% if detailed %}
-                <div>
-                    <u>
+                <h2>
                         Team {{ teamId }}
                         {% if teamId == winnerId %}
                         <b>Winner!</b>
@@ -30,25 +29,28 @@
                         <b>Loser!</b>
                         {% endif %}
                     </u>
-                </div>
+                </h2>
                 {% endif %}
             {% for player in players %}
-                {{ racemacros.icon(player['race'], player['raceDetected']) }}
-                <a href="{{ url_for('views.view_player', battletag=player['name']) }}">{{ player['name']|displayname }}</a> 
-                {% if detailed %}
-                <div class="details">
-                    {{ player['apm'] }} APM |
-                    Actions |
-                    Build order |
-                    Units |
-                    Buildings |
-                    Heroes |
-                    Items 
-                </div>
+                <div class="player">
+                    <div class="icon-name">
+                        {{ racemacros.icon(player['race'], player['raceDetected']) }}<a href="{{ url_for('views.view_player', battletag=player['name']) }}">{{ player['name']|displayname }}</a> 
+                    </div>
+                    {% if detailed %}
+                    <div class="details">
+                        {{ player['apm'] }} APM <!-- |
+                        Actions |
+                        Build order |
+                        Units |
+                        Buildings |
+                        Heroes |
+                        Items -->
+                    </div>
                 {% endif %}
+                </div>
             {% endfor %}
             </div>
-        <!--{% if not loop.last %} vs {% endif %}-->
+        {% if not loop.last %}<div class="vs">vs</div>{% endif %}
         {% endfor %}
     </div>
 {% endmacro %}

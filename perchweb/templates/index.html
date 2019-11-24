@@ -30,9 +30,6 @@
                 </div>
                 <div class="filterrow">
                     <div class="filter">
-                        <input type="text" name="chat" placeholder="Chat content" value="{{ replay_filter['chat'] or '' }}" />
-                    </div>
-                    <div class="filter">
                         <label for="f_sort">Sort by</label>
                         <select name="sort" id="f_sort">
                             <option value="id" {% if replay_filter['sort'] == 'id' %}selected{% endif %}>Latest</option>
@@ -41,7 +38,10 @@
                             <option value="chat" {% if replay_filter['sort'] == 'chat' %}selected{% endif %}>Spiciest chat</option>
                         </select>
                     </div>
-                    <div class="apply-filter">
+                    <div class="filter">
+                        <input type="text" name="chat" placeholder="Chat content" value="{{ replay_filter['chat'] or '' }}" />
+                    </div>
+                    <div class="filter apply-filter">
                         <input type="submit" value="Apply"/>
                     </div>
                 </div>
