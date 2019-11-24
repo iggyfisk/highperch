@@ -25,6 +25,18 @@ h2 {
     background: $card-alt-background-color;
 }
 
+ul.toasts {
+    li {
+        list-style-type: none;
+        background-color: $card-background-color;
+        margin:0;
+        padding:$padding;
+        &:nth-child(even) {
+            background-color: $card-alt-background-color;
+        }
+    }
+}
+
 .content {
     background-color: $card-background-color;
     padding:$padding;

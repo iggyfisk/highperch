@@ -821,6 +821,16 @@ h2 {
   background: rgba(0, 0, 0, 0.75);
 }
 
+ul.toasts li {
+  list-style-type: none;
+  background-color: rgba(27, 15, 15, 0.5);
+  margin: 0;
+  padding: 8px;
+}
+ul.toasts li:nth-child(even) {
+  background-color: rgba(0, 0, 0, 0.75);
+}
+
 .content {
   background-color: rgba(27, 15, 15, 0.5);
   padding: 8px;
