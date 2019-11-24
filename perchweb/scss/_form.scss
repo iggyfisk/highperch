@@ -1,21 +1,111 @@
 
-form.upload {
+form.filters{ 
+    border-left:1px solid black;
     display:flex;
-    margin:0;
-    .inputfields {
-        flex:auto;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        margin-right:$padding;
+    .flowlist{
+        flex: 1;
     }
-    input {
+    @media (#{$bp-larger-than-phablet}) {
+        display:flex;
+  
+        flex-direction:row;
+        .flowlist{
+            width:100%;
+            display:flex;
+            flex-direction:column;
+        }
+    }
+    label {
+        
+        min-width: 70px;
+    }
+    input, select {
         background: #444;
         border: 1px solid #000F;
         padding: $padding;
         border-radius:0;
         width:100%;
         margin-bottom:0;
+    }
+    input[type=submit] {
+        //width: 88px;
+        padding: 0;
+        flex:none;
+        margin:$padding;
+    }
+    input[type=checkbox] {
+        margin-left:$padding;
+        min-width:auto;
+        width:auto;
+    }
+    .apply-filter{
+        background:$card-alt-background-color;
+        padding-right: 16px;
+    }
+}
+.filterrow {
+    display:flex;
+
+    flex-direction:column;
+    @media (#{$bp-larger-than-tablet}) {
+        flex-direction:row;
+        border-bottom:1px solid black;
+    }
+
+    &:nth-child(even) {
+        .filter {    
+            &:nth-child(even) {
+                background:$card-background-color;
+            }
+        }
+    }
+    &:nth-child(odd) {
+        .filter {    
+            &:nth-child(odd) {
+                background:$card-background-color;
+            }
+        }
+    }
+}
+
+
+.filter {
+    border-right:1px solid black;
+    justify-items: center;
+    justify-content: center;
+    align-items:center;
+    flex-direction: row;
+    display: flex;
+    flex: 1;
+    input {
+        min-width:120px;
+    }
+    padding:$padding;
+    text-align:center;
+    background:$card-background-color;
+    &:nth-child(even) {
+        background:$card-background-color;
+    }
+}
+
+form.upload {
+    display:flex;
+    margin:0;
+    input, select {
+        background: #444;
+        border: 1px solid #000F;
+        padding: $padding;
+        border-radius:0;
+        width:100%;
+        margin-bottom:0;
+    }
+
+    .inputfields {
+        flex:auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin-right:$padding;
     }
     input[type=file] {
         padding:$padding;
