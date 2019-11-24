@@ -78,5 +78,22 @@ replay.winningTeamId = winningTeamId;
 replay.winningTeamConfirmed = winningTeamConfirmed;
 replay.leaveEvents = leaveEvents;
 
+// Clean double chats from replay saver, bug in Reforged beta, Blizzard may have fix it since
+const sanitizedChat = [];
+let lastSaverChatMs = 0;
+let lastSaverChatMessage = null;
+replay.chat.forEach(c => {
+  const { playerId, timeMS, message} = c;
+  if (playerId == replaySaverPlayerId) {
+    if ((timeMS - lastSaverChatMs) < 500 && message == lastSaverChatMessage) {
+      return;
+    }
+    lastSaverChatMs = timeMS;
+    lastSaverChatMessage = message;
+  }
+  sanitizedChat.push(c);
+});
+replay.chat = sanitizedChat;
+
 writeFileSync(outputPath, JSON.stringify(replay));
 return 0;

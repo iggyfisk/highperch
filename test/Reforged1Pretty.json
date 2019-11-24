@@ -7502,16 +7502,6 @@
     },
     {
       "type": 32,
-      "playerId": 2,
-      "byteCount": 13,
-      "flags": 32,
-      "mode": "ALL",
-      "message": "see you",
-      "timeMS": 30107,
-      "player": "iggythefisk#236"
-    },
-    {
-      "type": 32,
       "playerId": 4,
       "byteCount": 22,
       "flags": 32,
@@ -7538,16 +7528,6 @@
       "mode": "ALL",
       "message": "why fan of knives",
       "timeMS": 1791426,
-      "player": "iggythefisk#236"
-    },
-    {
-      "type": 32,
-      "playerId": 2,
-      "byteCount": 23,
-      "flags": 32,
-      "mode": "ALL",
-      "message": "why fan of knives",
-      "timeMS": 1791487,
       "player": "iggythefisk#236"
     },
     {
@@ -7642,16 +7622,6 @@
     },
     {
       "type": 32,
-      "playerId": 2,
-      "byteCount": 64,
-      "flags": 32,
-      "mode": "ALL",
-      "message": "do not engage the towers! all units will die for no reason",
-      "timeMS": 2055239,
-      "player": "iggythefisk#236"
-    },
-    {
-      "type": 32,
       "playerId": 3,
       "byteCount": 32,
       "flags": 32,
@@ -7673,31 +7643,11 @@
     {
       "type": 32,
       "playerId": 2,
-      "byteCount": 14,
-      "flags": 32,
-      "mode": "ALL",
-      "message": "be smart",
-      "timeMS": 2059589,
-      "player": "iggythefisk#236"
-    },
-    {
-      "type": 32,
-      "playerId": 2,
       "byteCount": 19,
       "flags": 32,
       "mode": "ALL",
       "message": "be reasonable",
       "timeMS": 2062283,
-      "player": "iggythefisk#236"
-    },
-    {
-      "type": 32,
-      "playerId": 2,
-      "byteCount": 19,
-      "flags": 32,
-      "mode": "ALL",
-      "message": "be reasonable",
-      "timeMS": 2062344,
       "player": "iggythefisk#236"
     },
     {
@@ -7892,16 +7842,6 @@
     },
     {
       "type": 32,
-      "playerId": 2,
-      "byteCount": 42,
-      "flags": 32,
-      "mode": "ALL",
-      "message": "never heard that one before actually",
-      "timeMS": 2402120,
-      "player": "iggythefisk#236"
-    },
-    {
-      "type": 32,
       "playerId": 3,
       "byteCount": 36,
       "flags": 32,
@@ -7938,16 +7878,6 @@
       "mode": "ALL",
       "message": "typing away",
       "timeMS": 2430917,
-      "player": "iggythefisk#236"
-    },
-    {
-      "type": 32,
-      "playerId": 2,
-      "byteCount": 17,
-      "flags": 32,
-      "mode": "ALL",
-      "message": "typing away",
-      "timeMS": 2431031,
       "player": "iggythefisk#236"
     },
     {
@@ -8024,7 +7954,7 @@
     "randomRaces": false,
     "speed": 2
   },
-  "parseTime": 511,
+  "parseTime": 444,
   "saverPlayerId": 2,
   "winningTeamId": 1,
   "winningTeamConfirmed": true,
