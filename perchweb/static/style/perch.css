@@ -641,7 +641,6 @@ input[type=submit].button-primary:focus, input[type=reset].button-primary:focus,
 input[type=email], input[type=number], input[type=search], input[type=text], input[type=tel], input[type=url], input[type=password] {
   height: 38px;
   padding: 6px 10px;
-  background-color: #fff;
   border: 1px solid #d1d1d1;
   border-radius: 4px;
   box-shadow: none;
@@ -658,10 +657,7 @@ input[type=password],
 textarea,
 select {
   height: 38px;
-  padding: 6px 10px;
-  background-color: #fff;
-  border: 1px solid #d1d1d1;
-  border-radius: 4px;
+  padding: 8px;
   box-shadow: none;
   box-sizing: border-box;
 }
@@ -1177,6 +1173,9 @@ footer .chatlog {
   height: 80px;
   width: 80px;
 }
+.replays .replay .chatmessage .playername {
+  background-color: rgba(27, 15, 15, 0.5);
+}
 .replays .replay .download {
   text-align: center;
   font-size: 42px;
@@ -1199,9 +1198,109 @@ footer .chatlog {
   border: 1px solid black;
 }
 
+form.filters {
+  border-left: 1px solid black;
+  display: flex;
+}
+form.filters .flowlist {
+  flex: 1;
+}
+@media (min-width: 550px) {
+  form.filters {
+    display: flex;
+    flex-direction: row;
+  }
+  form.filters .flowlist {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+}
+form.filters label {
+  min-width: 70px;
+}
+form.filters input, form.filters select {
+  background: #444;
+  border: 1px solid #000F;
+  padding: 8px;
+  border-radius: 0;
+  width: 100%;
+  margin-bottom: 0;
+}
+form.filters input[type=submit] {
+  padding: 0;
+  flex: none;
+  margin: 8px;
+}
+form.filters input[type=checkbox] {
+  margin-left: 8px;
+  min-width: auto;
+  width: auto;
+}
+form.filters .apply-filter {
+  background: rgba(0, 0, 0, 0.75);
+  padding-right: 16px;
+}
+
+.filterrow {
+  display: flex;
+  flex-direction: column;
+}
+@media (min-width: 750px) {
+  .filterrow {
+    flex-direction: row;
+    border-bottom: 1px solid black;
+  }
+}
+.filterrow:nth-child(even) .filter:nth-child(even) {
+  background: rgba(27, 15, 15, 0.5);
+}
+.filterrow:nth-child(odd) .filter:nth-child(odd) {
+  background: rgba(27, 15, 15, 0.5);
+}
+
+.filter {
+  border-right: 1px solid black;
+  justify-items: center;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  display: flex;
+  flex: 1;
+  padding: 8px;
+  text-align: center;
+  background: rgba(27, 15, 15, 0.5);
+}
+.filter input {
+  min-width: 120px;
+}
+.filter:nth-child(even) {
+  background: rgba(27, 15, 15, 0.5);
+}
+
 form.upload {
   display: flex;
   margin: 0;
+  align-items: center;
+  flex-direction: row;
+}
+@media (min-width: 550px) {
+  form.upload {
+    flex-direction: column;
+  }
+}
+@media (min-width: 1000px) {
+  form.upload {
+    flex-direction: row;
+  }
+}
+form.upload input, form.upload select {
+  background: #444;
+  border: 1px solid #000F;
+  padding: 8px;
+  border-radius: 0;
+  width: 100%;
+  margin-bottom: 0;
 }
 form.upload .inputfields {
   flex: auto;
@@ -1209,14 +1308,6 @@ form.upload .inputfields {
   flex-direction: column;
   justify-content: space-between;
   margin-right: 8px;
-}
-form.upload input {
-  background: #444;
-  border: 1px solid #000F;
-  padding: 8px;
-  border-radius: 0;
-  width: 100%;
-  margin-bottom: 0;
 }
 form.upload input[type=file] {
   padding: 8px;

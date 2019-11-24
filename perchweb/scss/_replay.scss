@@ -47,7 +47,6 @@
             height:80px;
             width:80px;
         }
-
         .download {
             text-align:center;
             font-size:42px;
@@ -73,4 +72,13 @@
             }
         }
     }
+}
+
+.playername {
+    background-color:$card-background-color;
+}
+
+.chatmessage {
+    background-color:#f00;
+
 }
