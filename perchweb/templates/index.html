@@ -16,19 +16,24 @@
         </div>
     </div>
     <div class="eight columns top-control">
-        <h2 class="closed">Filter<span class="expand"><i class="fa fa-arrow-circle-down"></i><i class="fa fa-arrow-circle-up"></i></span></h2>
+        <h2 class="closed">Filter</h2>
         <form action="/" class="filters" method="GET" autocomplete="off">
             <div class="flowlist">
                 <div class="filterrow">
                     <div class="filter">
-                        <label for="f_official">Official only</label><input type="checkbox" name="official" id="f_official" {% if replay_filter['official'] %}checked{% endif %} />
+                        <input type="text" name="name" placeholder="Replay name" value="{{ replay_filter['name'] or '' }}" />
                     </div>
-                    <div class="filter"><input type="text" name="name" placeholder="Replay name" value="{{ replay_filter['name'] or '' }}" /></div>
                     <div class="filter">
                         <input type="text" name="map" placeholder="Map name" value="{{ replay_filter['map'] or '' }}" />
                     </div>
+                    <div class="filter">
+                        <input type="text" name="chat" placeholder="Chat content" value="{{ replay_filter['chat'] or '' }}" />
+                    </div>
                 </div>
                 <div class="filterrow">
+                    <div class="filter">
+                        <label for="f_official">Official only</label><input type="checkbox" name="official" id="f_official" {% if replay_filter['official'] %}checked{% endif %} />
+                    </div>
                     <div class="filter">
                         <label for="f_sort">Sort by</label>
                         <select name="sort" id="f_sort">
@@ -37,9 +42,6 @@
                             <option value="tower" {% if replay_filter['sort'] == 'tower' %}selected{% endif %}>Most towers</option>
                             <option value="chat" {% if replay_filter['sort'] == 'chat' %}selected{% endif %}>Spiciest chat</option>
                         </select>
-                    </div>
-                    <div class="filter">
-                        <input type="text" name="chat" placeholder="Chat content" value="{{ replay_filter['chat'] or '' }}" />
                     </div>
                     <div class="filter apply-filter">
                         <input type="submit" value="Apply"/>
@@ -54,5 +56,5 @@
     {% for replay in replays %}
         {{ replaymacros.card(replay) }}
     {% endfor %}
-{% endblock %}
 </div>
+{% endblock %}
