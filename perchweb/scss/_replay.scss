@@ -83,10 +83,8 @@
 }
 
 .playername {
-    font-size:18px;
     display:inline-block;
     font-weight:bold;
-    text-shadow: 2px 1px 1px #000000, -1px -1px 2px rgba(138, 86, 35, 0.4);
 }
 a.playername{
     &:hover{
@@ -118,6 +116,10 @@ a.playername{
         margin-bottom: $padding * 2;
     }
 
+    .playername {
+        font-size:18px;
+        text-shadow: 2px 1px 1px #000000, -1px -1px 2px rgba(219, 141, 64, 0.4);
+    }
     
     .teams {
         display: flex;
