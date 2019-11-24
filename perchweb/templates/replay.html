@@ -14,14 +14,6 @@
                         <p>Uploaded {{ listinfo.upload_date() }}, {{ listinfo['Views'] }} views</p>
                         <p>{{ replay.map_name() }}</p>
                         <p>Saved by {{ replay.replay_saver()['name']|displayname }} </p>
-
-                        {% if replay['winningTeamId'] is none %}
-                        <p>We have no idea who won this game</p>
-                        {% elif not replay['winningTeamConfirmed'] %}
-                        <p>We think we know who won this game</p>
-                        {% else %}
-                        <p>We definitely know the winner of this game!</p> 
-                        {% endif %}
                     </div>
                 </div>
             </div>

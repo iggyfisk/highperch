@@ -23,10 +23,11 @@
                 {% if detailed %}
                 <h2>
                     Team {{ teamId }}
-                    {% if teamId == winnerId %}
-                    <b>Winner!</b>
+                    {% if teamId == replay['winningTeamId'] %}
+                    
+                        <b>Winner{% if not replay['winningTeamConfirmed'] %}?{% else %}!{% endif %}</b>
                     {% elif winnerId is not none %}
-                    <b>Loser!</b>
+                        <b>Loser{% if not replay['winningTeamConfirmed'] %}?{% else %}!{% endif %}</b>
                     {% endif %}
                 </h2>
                 {% endif %}
