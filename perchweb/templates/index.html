@@ -21,16 +21,18 @@
             <div class="flowlist">
                 <div class="filterrow">
                     <div class="filter">
-                        <label for="f_official">Official only</label><input type="checkbox" name="official" id="f_official" {% if replay_filter['official'] %}checked{% endif %} />
+                        <input type="text" name="name" placeholder="Replay name" value="{{ replay_filter['name'] or '' }}" />
                     </div>
-                    <div class="filter"><input type="text" name="name" placeholder="Replay name" value="{{ replay_filter['name'] or '' }}" /></div>
                     <div class="filter">
                         <input type="text" name="map" placeholder="Map name" value="{{ replay_filter['map'] or '' }}" />
+                    </div>
+                    <div class="filter">
+                        <input type="text" name="chat" placeholder="Chat content" value="{{ replay_filter['chat'] or '' }}" />
                     </div>
                 </div>
                 <div class="filterrow">
                     <div class="filter">
-                        <input type="text" name="chat" placeholder="Chat content" value="{{ replay_filter['chat'] or '' }}" />
+                        <label for="f_official">Official only</label><input type="checkbox" name="official" id="f_official" {% if replay_filter['official'] %}checked{% endif %} />
                     </div>
                     <div class="filter">
                         <label for="f_sort">Sort by</label>
