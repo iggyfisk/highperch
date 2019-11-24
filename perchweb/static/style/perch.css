@@ -1195,7 +1195,7 @@ footer .chatlog {
   border: 1px solid black;
 }
 
-.playername {
+.chatmessage .playername {
   background-color: rgba(27, 15, 15, 0.5);
 }
 
