@@ -538,7 +538,7 @@ button {
   display: inline-block;
   height: 38px;
   padding: 0 30px;
-  color: #8fb82e;
+  color: #e54b4b;
   text-align: center;
   font-size: 11px;
   font-weight: 600;
@@ -558,7 +558,7 @@ input[type=submit], input[type=reset], input[type=button] {
   display: inline-block;
   height: 38px;
   padding: 0 30px;
-  color: #8fb82e;
+  color: #e54b4b;
   text-align: center;
   font-size: 11px;
   font-weight: 600;
@@ -572,6 +572,22 @@ input[type=submit], input[type=reset], input[type=button] {
   border: 1px solid #bbb;
   cursor: pointer;
   box-sizing: border-box;
+}
+
+.lordaeron .button,
+.lordaeron button {
+  color: #FFD700;
+}
+.lordaeron input[type=submit], .lordaeron input[type=reset], .lordaeron input[type=button] {
+  color: #FFD700;
+}
+
+.icecrown .button,
+.icecrown button {
+  color: #FFD700;
+}
+.icecrown input[type=submit], .icecrown input[type=reset], .icecrown input[type=button] {
+  color: #FFD700;
 }
 
 .button:hover,
@@ -616,27 +632,27 @@ input[type=submit].button-primary, input[type=reset].button-primary, input[type=
 .button.button-primary:hover,
 button.button-primary:hover {
   color: #fff;
-  background-color: #a8c564;
-  border-color: #a8c564;
+  background-color: #FF7F00;
+  border-color: #FF7F00;
 }
 
 input[type=submit].button-primary:hover, input[type=reset].button-primary:hover, input[type=button].button-primary:hover {
   color: #fff;
-  background-color: #a8c564;
-  border-color: #a8c564;
+  background-color: #FF7F00;
+  border-color: #FF7F00;
 }
 
 .button.button-primary:focus,
 button.button-primary:focus {
   color: #fff;
-  background-color: #a8c564;
-  border-color: #a8c564;
+  background-color: #FF7F00;
+  border-color: #FF7F00;
 }
 
 input[type=submit].button-primary:focus, input[type=reset].button-primary:focus, input[type=button].button-primary:focus {
   color: #fff;
-  background-color: #a8c564;
-  border-color: #a8c564;
+  background-color: #FF7F00;
+  border-color: #FF7F00;
 }
 input[type=email], input[type=number], input[type=search], input[type=text], input[type=tel], input[type=url], input[type=password] {
   height: 38px;
@@ -947,7 +963,7 @@ img.peep {
 
 /* Peep END */
 a, a:visited {
-  color: #a8c564;
+  color: #FF7F00;
 }
 
 a:hover {
@@ -1475,7 +1491,7 @@ form.upload input[type=submit] {
   text-shadow: 0px 0px 13px #000, 0px 0px 14px #000, 0px 0px 15px #000;
   flex: none;
   padding: 0;
-  color: #a8c564;
+  color: #e54b4b;
   font-weight: bold;
   font-size: 16px;
   -webkit-transition: text-shadow 0.2s linear;
@@ -1494,6 +1510,14 @@ form.upload input[type=submit]:hover {
   color: #fff;
   box-shadow: inset 0 0 10px #fff;
   text-shadow: 0px 0px 13px #fff, 0px 0px 14px #fff, 0px 0px 15px #fff;
+}
+
+.lordaeron form.upload input[type=submit] {
+  color: #FFD700;
+}
+
+.icecrown form.upload input[type=submit] {
+  color: #FFD700;
 }
 
 .guide {

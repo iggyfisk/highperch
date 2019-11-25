@@ -46,6 +46,33 @@ input {
   }
 }
 
+.lordaeron {
+  .button,
+  button { 
+      color: $lordy-secondary-color;
+  }
+  input {
+    &[type="submit"],
+    &[type="reset"],
+    &[type="button"] {
+      color: $lordy-secondary-color;
+    }
+  }
+}
+.icecrown {
+  .button,
+  button { 
+      color: $ice-secondary-color;
+  }
+  input {
+    &[type="submit"],
+    &[type="reset"],
+    &[type="button"] {
+      color: $ice-secondary-color;
+    }
+  }
+}
+
 .button:hover,
 button:hover {
   color: $dark-grey;
