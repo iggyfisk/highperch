@@ -1244,7 +1244,7 @@ a.playername:hover {
 }
 .large-replay .playername {
   font-size: 15px;
-  text-shadow: 2px 1px 1px #000000;
+  text-shadow: 1px 1px 1px #000000;
 }
 .large-replay .teams {
   display: flex;
@@ -1286,13 +1286,19 @@ a.playername:hover {
 }
 
 .chatmessage {
+  line-height: 1.6em;
   display: flex;
 }
 .chatmessage .timestamp {
-  width: 120px;
   padding-right: 8px;
   flex: none;
   text-align: right;
+  font-size: 12px;
+}
+@media (min-width: 750px) {
+  .chatmessage .timestamp {
+    width: 120px;
+  }
 }
 .chatmessage .message {
   text-align: left;

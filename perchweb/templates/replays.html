@@ -35,7 +35,7 @@
                 <div class="player">
                     {% if detailed %}
                         <div class="icon-name">
-                            {{ racemacros.icon(player['race'], player['raceDetected']) }}<a class="playername" style="color:{{ replay.player_colors[player['id']]|lighten() }}" href="{{ url_for('views.view_player', battletag=player['name']) }}">{{ player['name']|displayname }}</a> 
+                            {{ racemacros.icon(player['race'], player['raceDetected']) }}<a class="playername" style="color:{{ replay.player_colors[player['id']]|lighten }}" href="{{ url_for('views.view_player', battletag=player['name']) }}">{{ player['name']|displayname }}</a> 
                         </div>
                             <div class="details">
                             {{ player['apm'] }} APM <!-- |
