@@ -25,6 +25,8 @@ def geoip_country(ip_addr):
         return result
     except geoip2.errors.AddressNotFoundError:
         return {'code': "xx", 'name': "unknown"}
+    except Exception as e:
+        return {'code': "xx", 'name': "unknown"}
 
 
 def geoip_city(ip_addr):
