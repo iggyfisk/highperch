@@ -115,6 +115,9 @@ nav {
             }
         }
     }
+    .logout {
+        padding: 0px;
+    }
 }
 
 @media (#{$bp-larger-than-phablet}) {

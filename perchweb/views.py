@@ -128,9 +128,19 @@ def login():
     if validate_admin_hash(request.form['token']):
         flash('Welcome to the perch')
         response = make_response(redirect(url_for('views.admin')))
-        response.set_cookie("HP_ADMIN_TOKEN", value=os.environ.get('HIGHPERCH_ADMIN_HASH'),
-                            max_age=7305*86400, secure=True, httponly=True, samesite=True)
+        response.set_cookie('HP_ADMIN_TOKEN', value=os.environ.get('HIGHPERCH_ADMIN_HASH'),
+                            max_age=7305*86400,
+                            secure=(os.environ.get('HIGHPERCH_ENVIRONMENT') == "production"),
+                            httponly=True,
+                            samesite='Strict')
         return response
     else:
         flash('Invalid token')
         return redirect(url_for('views.admin'))
+
+
+@routes.route('/logout')
+def logout():
+    response = make_response(redirect(url_for('views.index')))
+    response.set_cookie('HP_ADMIN_TOKEN', '', expires=0)
+    return response

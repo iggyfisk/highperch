@@ -25,7 +25,7 @@
                 <ul>
                     {% if is_admin %}
                     <li class="background-picker">
-                        <img src="/static/images/brilliance-20x20.png" title="Behind the scenes">
+                        <a href="{{ url_for('views.logout') }}" class="logout"><img src="/static/images/brilliance-20x20.png" title="Dogg out"></a>
                     </li>
                     {% endif %}
                     {% for bg in backgrounds %}
@@ -64,7 +64,7 @@
         {% if chatlog %}
         <div class="chatlog">{{ chatlog['text'] }}</div>
         {% endif %}
-        <p>Copyright &copy; {{ year }} <a href="mailto:admin@highper.ch">the Broliance</a></p>
+        <p>Copyright <a href="/admin" class="logout">&copy;</a> {{ year }} <a href="mailto:admin@highper.ch">the Broliance</a></p>
     </footer>
 
     <script src="/static/script/perch.js?h={{ config['STATIC_HASH'] }}"></script>
