@@ -64,7 +64,7 @@
         {% if chatlog %}
         <div class="chatlog">{{ chatlog['text'] }}</div>
         {% endif %}
-        <p>Copyright {% if not is_admin %}<a href="/admin" class="logout">{% endif %}&copy; {% if is_admin %}</a>{% endif %} {{ year }} <a href="mailto:admin@highper.ch">the Broliance</a></p>
+        <p>Copyright {% if not is_admin %}<a href="/admin" class="logout">{% endif %}&copy; {% if not is_admin %}</a>{% endif %} {{ year }} <a href="mailto:admin@highper.ch">the Broliance</a></p>
     </footer>
 
     <script src="/static/script/perch.js?h={{ config['STATIC_HASH'] }}"></script>
