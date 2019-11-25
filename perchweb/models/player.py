@@ -21,7 +21,7 @@ class Player(dict):
             This means levelups after player quit won't be captured,
             and doesn't detect shared heroes of the same race. Can be discussed."""
         # Screw you w3gjs and your partial 'E'->'N' renaming
-        own_race = self['raceDetected'] if self['raceDetected'] is not 'N' else 'E'
+        own_race = self['raceDetected'] if self['raceDetected'] != 'N' else 'E'
         return [h for h in self['heroes'] if h['id'][0] == 'N' or h['id'][0] == own_race]
 
     def get_arbitrary_score(self):

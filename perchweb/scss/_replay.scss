@@ -183,6 +183,13 @@ a.playername{
 .chatlog {
     background-color: $card-background-color;
     padding: $padding;
+
+    .silence {
+        height: 1.5em;
+    }
+    .leave {
+        font-style: italic;
+    }
 }
 
 .chatmessage {

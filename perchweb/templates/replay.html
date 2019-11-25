@@ -21,14 +21,22 @@
             {{ replaymacros.teams(replay, True) }}
 
             <h2>Chatlog</h2>
-                <div class="chatlog">
-    
-                    {% for chat in replay.chat %}
+                <div class="chatlog">    
+                    {% for chat in replay.get_formatted_chat() %}
+                        {% if chat is none %}
+                        <div class="silence"></div>
+                        {% else %}
                         <div class="chatmessage">
                             <div class="timestamp">({{ chat['timeMS']|gametime }} / {{ chat['mode']|chatmode }})</div> 
+                            {% if chat['leave'] %}
+                            <div class="playername leave" style="color:{{ replay.player_colors[chat['playerId']]|lighten }}">{{ chat['player']|displayname }} has left the game</div>
+                            {% else %}
                             <div class="message">
-                                <div class="playername" style="color:{{ replay.player_colors[chat['playerId']]|lighten }}">{{ chat['player']|displayname }}</div>: {{ chat['message'] }}</div>
+                                <div class="playername" style="color:{{ replay.player_colors[chat['playerId']]|lighten }}">{{ chat['player']|displayname }}</div>: {{ chat['message'] }}
                             </div>
+                            {% endif %}
+                        </div>
+                        {% endif %}
                     {% endfor %}
                 </div>
             </div>
