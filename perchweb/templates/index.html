@@ -54,7 +54,7 @@
 <div class="replays">
     <h2>Showing {{ replays|length }} replays</h2>
     {% for replay in replays %}
-        {{ replaymacros.card(replay) }}
+        {{ replaymacros.card(replay, is_admin) }}
     {% endfor %}
 </div>
 {% endblock %}

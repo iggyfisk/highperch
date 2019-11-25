@@ -4,6 +4,8 @@ from re import compile as re_compile
 from filepaths import get_path
 from lib.colors import lighten, scale
 from lib.wigcodes import race_titles, hero_names
+from admin import geoip_country
+from urllib.parse import unquote
 
 
 def gametime(milliseconds):
@@ -88,6 +90,11 @@ def scale_color(hex_color, amount):
     return scaled_colors[key]
 
 
+def make_country_embed(ip_addr):
+    country = geoip_country(ip_addr)
+    return f"<img src='/static/images/flags/{country['code']}.png' title='{country['name']}' class='countryflag'>"
+
+
 def register(jinja_environment):
     """ Register all filters to the given jinja environment """
     jinja_environment.filters['gametime'] = gametime
@@ -99,3 +106,4 @@ def register(jinja_environment):
     jinja_environment.filters['displayname'] = player_display_name
     jinja_environment.filters['lighten'] = lighten_color
     jinja_environment.filters['scale'] = scale_color
+    jinja_environment.filters['embed_country'] = make_country_embed

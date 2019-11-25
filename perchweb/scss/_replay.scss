@@ -13,6 +13,10 @@
     width:80px;
 }
 
+.adminonly {
+    color: #33ccff;
+}
+
 .replays {
     border-bottom:1px solid black;
     h2 {
@@ -78,6 +82,10 @@
                 flex-basis: 100px;
                 border: 1px solid black;
             }
+        }
+
+        .countryflag {
+            margin-bottom: -1px;
         }
     }
 }

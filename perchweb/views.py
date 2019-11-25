@@ -31,8 +31,6 @@ def index():
         for i in range(int(request.args['flash'])):
             flash("Flash test string" * (i + 1))
 
-
-
     return standard_page('index.html', 'Replays', nav='index', replays=replays, replay_filter=replay_filter)
 
 
