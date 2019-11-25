@@ -32,7 +32,7 @@ class Player(dict):
         score += len(heroes) * 30
         score += sum(h['level'] for h in heroes) * 2
 
-        score += (self.tower_count() * 500000) / self['currentTimePlayed']
+        score += (self.tower_count() * 500000) / (self['currentTimePlayed'] + 1)
 
         units = self['units']['summary']
         score += 15 if 'ngsp' in units else 0
