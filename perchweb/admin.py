@@ -18,7 +18,7 @@ def check_if_admin(cookies):
 
 
 def geoip_country(ip_addr):
-    reader = geoip2.database.Reader('perchweb/static/geoip/GeoLite2-Country.mmdb')
+    reader = geoip2.database.Reader('static/geoip/GeoLite2-Country.mmdb')
     try:
         response = reader.country(ip_addr)
         result = {'code': response.country.iso_code, 'name': response.country.name}
@@ -28,7 +28,7 @@ def geoip_country(ip_addr):
 
 
 def geoip_city(ip_addr):
-    reader = geoip2.database.Reader('perchweb/static/geoip/GeoLite2-City.mmdb')
+    reader = geoip2.database.Reader('static/geoip/GeoLite2-City.mmdb')
     try:
         return reader.city.name(ip_addr)
     except geoip2.errors.AddressNotFoundError:
