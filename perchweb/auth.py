@@ -14,8 +14,8 @@ env_hash_key = 'HIGHPERCH_ADMIN_HASH'
 def validate_admin_hash(token):
     if env_hash_key in environ:
         return check_password_hash(environ.get(env_hash_key), token)
-
-    # Todo: aaah mega bad but I need to add some admin stuff
+    elif environ.get('HIGHPERCH_ENVIRONMENT') == "production":
+        return False
     return True
 
 
