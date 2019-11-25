@@ -3,12 +3,12 @@ Routes and views for the flask application.
 """
 
 import os
-from flask import Blueprint, url_for, request, redirect, flash, make_response
+from flask import Blueprint, url_for, request, redirect, flash
 from werkzeug.utils import secure_filename
 from handler import standard_page
 import replaydb
 from peep import get_pic
-from admin import validate_admin_hash, check_if_admin
+from auth import login as auth_login, check_if_admin
 
 routes = Blueprint('views', __name__)
 
@@ -116,6 +116,7 @@ def peep(pic_id):
 
 @routes.route('/admin')
 def admin():
+    """ Admin login page, the only one admins can never see! """
     if check_if_admin(request.cookies):
         return redirect(url_for('views.index'))
     return standard_page('admin.html', 'Admin login', nav='admin')
@@ -123,22 +124,11 @@ def admin():
 
 @routes.route('/login', methods=['POST'])
 def login():
-    if validate_admin_hash(request.form['token']):
+    """ Log in and redirect back to index, now as an authenticated admin """
+    response = auth_login(request.form['token'], url_for('views.index'))
+    if response:
         flash('Welcome to the perch')
-        response = make_response(redirect(url_for('views.admin')))
-        response.set_cookie('HP_ADMIN_TOKEN', value=os.environ.get('HIGHPERCH_ADMIN_HASH'),
-                            max_age=7305*86400,
-                            secure=(os.environ.get('HIGHPERCH_ENVIRONMENT') == "production"),
-                            httponly=True,
-                            samesite='Strict')
         return response
-    else:
-        flash('Invalid token')
-        return redirect(url_for('views.admin'))
 
-
-@routes.route('/logout')
-def logout():
-    response = make_response(redirect(url_for('views.index')))
-    response.set_cookie('HP_ADMIN_TOKEN', '', expires=0)
-    return response
+    flash('Invalid token')
+    return redirect(url_for('views.admin'))

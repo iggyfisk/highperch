@@ -1,17 +1,15 @@
-/* Nav submenu START */
+/* hp-expand START */
 (() => {
 	document.addEventListener("DOMContentLoaded", () => {
-		const nav = document.querySelector('nav');
-		nav.querySelector('span.submenu').addEventListener('click', event => {
-			event.target.classList.toggle('active');
-			event.target.textContent = event.target.textContent === '▼'
-				? '▲'
-				: '▼';
-			nav.classList.toggle('expanded');              
+		document.querySelectorAll('.hp-expand').forEach(expEl=> {
+			expEl.addEventListener('click', event => {
+				event.target.classList.toggle('active');
+				event.target.parentNode.querySelector('.hp-hidden').classList.toggle('visible');           
+			});
 		});
 	});
 })();
-/* Nav submenu END */
+/* hp-expand END */
 
 /* Background switching START */
 (() => {

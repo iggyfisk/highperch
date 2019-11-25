@@ -8,6 +8,17 @@
             <div class="details">
                 <h2>{{ listinfo['Name'] }}</h2>
                 <div class="content">
+                    {% if is_admin %}
+                    <div class="admin">
+                        <form
+                            action="/replay/{{ replay_id }}/delete"
+                            method="POST"
+                            onsubmit="return confirm('Permanently delete this replay?');"
+                        >
+                            <input type="submit" value="&#xe816;" />
+                        </form>
+                    </div>
+                    {% endif %}
                     <img class="minimap" src="{{ replay.map_name()|mapthumbnail }}" title="{{ replay.map_name() }}" />
                     <div>
                         <a href="/static/replays/{{ replay_id }}.w3g">Download</a>
@@ -22,6 +33,27 @@
 
             <h2>Chatlog</h2>
             <div class="chatlog">
+                {% if is_admin %}
+                <div class="admin">
+                    <span class="icon hp-expand">★</span>
+                    <div class="addlog-container">
+                        <div class="addlog hp-hidden v">
+                            <div class="content">
+                                <h2>Add to footer</h2>
+                                <form action="/footer/{{ replay_id }}" method="POST">
+                                    <textarea
+                                        name="chat"
+                                        placeholder="Paste chatlog here. Whitespace will be trimmed."
+                                        minlength="20"
+                                        required>
+                                    </textarea>
+                                    <input type="submit" value="Save" />
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
                 {% for chat in replay.get_formatted_chat() %}
                     {% if chat is none %}
                     <div class="silence"></div>

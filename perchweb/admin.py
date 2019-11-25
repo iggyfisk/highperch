@@ -1,27 +1,21 @@
-"""Administration functions"""
+""" Administration routes and utilities """
 
-from os import environ
-from werkzeug.security import check_password_hash
 import geoip2.database
+from flask import Blueprint, url_for, request, redirect, flash
+from auth import admin_only, logout as auth_logout
+from handler import admin_page
+from replaydb import save_chatlog, delete_replay as dbdelete_replay
+from filepaths import get_path
 
-
-def validate_admin_hash(token):
-    return check_password_hash(environ.get('HIGHPERCH_ADMIN_HASH'), token)
-
-
-def check_if_admin(cookies):
-    if 'HP_ADMIN_TOKEN' in cookies:
-        print("admin", cookies['HP_ADMIN_TOKEN'] == environ.get('HIGHPERCH_ADMIN_HASH'))
-        return cookies['HP_ADMIN_TOKEN'] == environ.get('HIGHPERCH_ADMIN_HASH')
-    else:
-        return False
+routes = Blueprint('admin', __name__)
 
 
 def geoip_country(ip_addr):
-    reader = geoip2.database.Reader('static/geoip/GeoLite2-Country.mmdb')
+    reader = geoip2.database.Reader(get_path('resource/GeoLite2-Country.mmdb'))
     try:
         response = reader.country(ip_addr)
-        result = {'code': response.country.iso_code, 'name': response.country.name}
+        result = {'code': response.country.iso_code,
+                  'name': response.country.name}
         return result
     except geoip2.errors.AddressNotFoundError:
         return {'code': "xx", 'name': "unknown"}
@@ -30,8 +24,35 @@ def geoip_country(ip_addr):
 
 
 def geoip_city(ip_addr):
-    reader = geoip2.database.Reader('static/geoip/GeoLite2-City.mmdb')
+    reader = geoip2.database.Reader(get_path('resource/GeoLite2-City.mmdb'))
     try:
         return reader.city.name(ip_addr)
     except geoip2.errors.AddressNotFoundError:
         return "unknown"
+
+
+@routes.route('/logout')
+def logout():
+    """ Log out and go back to index as a member of the general public """
+    return auth_logout(url_for('views.index'))
+
+
+@routes.route('/footer/<int:replay_id>', methods=['POST'])
+@admin_only
+def add_footer(replay_id):
+    """ Add a sick chatlog to the footer rotation """
+    chat = request.form['chat'].strip()
+    save_chatlog(replay_id, chat)
+    flash('Chatlog added to footer rotation')
+
+    return redirect(url_for('views.view_replay', replay_id=replay_id))
+
+
+@routes.route('/replay/<int:replay_id>/delete', methods=['POST'])
+@admin_only
+def delete_replay(replay_id):
+    """ Permanently deletes a replay and related objects from the system """
+    redirect_url = url_for('views.index') if dbdelete_replay(
+        replay_id) else url_for('views.view_replay', replay_id=replay_id)
+
+    return redirect(redirect_url)

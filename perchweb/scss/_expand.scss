@@ -1,0 +1,15 @@
+/* Experimental expand via JS feature */
+.hp-expand {
+  cursor: pointer;
+}
+
+.hp-hidden {
+  overflow: hidden;
+  &.v {
+    transition: max-height 300ms ease-out;
+    max-height: 0;
+    &.visible {
+        max-height: 100vh;
+    }  
+  }
+}

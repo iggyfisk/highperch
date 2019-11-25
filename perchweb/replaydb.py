@@ -260,3 +260,57 @@ def save_replay(replay, replay_name, uploader_ip):
             os.remove(temp_replay_path)
         if os.path.isfile(temp_data_path):
             os.remove(temp_data_path)
+
+
+def delete_replay(replay_id):
+    """ Deletes a replay from disk and db, returns True on success """
+
+    replay_path = filepaths.get_replay(f"{replay_id}.w3g")
+    data_path = filepaths.get_replay_data(f"{replay_id}.json")
+    try:
+        # Any related chatlogs and pics can stay, but they're no longer related
+        query('UPDATE Chatlogs SET ReplayID = NULL WHERE ReplayID = ?', (replay_id,))
+        query('UPDATE Pics SET ReplayID = NULL WHERE ReplayID = ?', (replay_id,))
+
+        # Remove player participation and reduce games played counts
+        def update_race_count(race):
+            col = {'H': 'HUGames', 'O': 'ORGames',
+                   'N': 'NEGames', 'U': 'UDGames'}[race]
+            query(f'''
+                UPDATE Players AS P
+                SET {col} = {col} - 1
+                WHERE EXISTS(SELECT PlayerTag
+                    FROM GamesPlayed AS G
+                    WHERE PlayerTag = P.BattleTag
+                    AND G.ReplayID = ?
+                    AND G.Race = ?);''', (replay_id, race))
+
+        update_race_count('H')
+        update_race_count('O')
+        update_race_count('N')
+        update_race_count('U')
+
+        query('DELETE FROM GamesPlayed WHERE ReplayID = ?', (replay_id,))
+
+        # Remove replay
+        query('DELETE FROM Replays WHERE ID = ?', (replay_id,))
+
+        os.remove(replay_path)
+        os.remove(data_path)
+        flash('Replay deleted')
+        return True
+    except Exception as e:
+        # Todo: log error
+        flash('Unable to delete replay, error follows')
+        flash(str(e))
+        setattr(g, context_rollback_key, True)
+
+    return False
+
+
+def save_chatlog(replay_id, chat):
+    """ Immortalizes a particularly sick chat """
+
+    query('''
+        INSERT INTO Chatlogs (ReplayID, ChatText)
+        VALUES (?,?)''', (replay_id, chat))

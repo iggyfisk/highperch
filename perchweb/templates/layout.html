@@ -21,11 +21,10 @@
                     <a href="{{ url_for('views.peep') }}" class="{% if nav == 'peep' %}active{% endif %}"><span class="name">Pictures</span><span class="shortname">Pics</span></a>
                     <a href="{{ url_for('views.guide') }}" class="{% if nav == 'guide' %}active{% endif %}"><span class="name">Documentation</span><span class="shortname">Docs</span></a>
                 </div>
-                <span class="action submenu">▼</span>
                 <ul>
                     {% if is_admin %}
                     <li class="background-picker">
-                        <a href="{{ url_for('views.logout') }}" class="logout"><img src="/static/images/brilliance-20x20.png" title="Dogg out"></a>
+                        <a href="{{ url_for('admin.logout') }}" class="logout"><img src="/static/images/brilliance-20x20.png" title="Dogg out"></a>
                     </li>
                     {% endif %}
                     {% for bg in backgrounds %}
