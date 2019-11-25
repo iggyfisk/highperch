@@ -58,7 +58,7 @@
                     <div class="silence"></div>
                     {% else %}
                     <div class="chatmessage">
-                        <span class="timestamp">({{ chat['timeMS']|gametime }} / {{ chat['mode']|chatmode }})</span> 
+                        <span class="timestamp">({{ chat['timeMS']|gametime }} / {{ chat['mode']|chatmode }})&nbsp;</span> 
                         {% if chat['leave'] %}
                         <span class="playername leave" style="color:{{ replay.player_colors[chat['playerId']]|lighten }}">{{ chat['player']|displayname }} has left the game</span>
                         {% else %}

@@ -269,19 +269,27 @@ a.playername{
 }
 
 .chatmessage {
-    line-height: 1.6em;
+    position: relative;
     .timestamp {
-        padding-right:$padding;
-        flex:none;    
+        position: absolute;
         text-align: right;
         font-size: 12px;
+        line-height: 25px;
+        min-width: 80px;
         @media (#{$bp-larger-than-tablet}) {
             width: 120px;
         }
     }
-    display:flex;
 
-    .message {
-        text-align:left;
+    .message, .leave {
+        display: inline-block;
+        position: relative;
+        text-align: left;
+        left: 85px;
+        margin-right: 85px;        
+        @media (#{$bp-larger-than-tablet}) {
+            left: 125px;
+            margin-right: 125px;
+        }
     }
 }
