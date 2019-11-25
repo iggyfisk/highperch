@@ -144,6 +144,25 @@ a.playername{
                 &:nth-child(even) {
                     background-color: $card-background-color;
                 }
+                .summary {
+                    font-size: 12px;
+                    margin-left: 4px;
+                    padding-top: 3px;
+                    .award {
+                        cursor: default;
+                    }
+                }
+                .details {
+                    margin: 0 0 $margin 15px;
+                    display: flex;
+                    align-items: center;
+                    font-size: 14px;
+                    .hero {
+                        width: 14px;
+                        height: 14px;
+                        margin: 0 2px 0 7px;
+                    }
+                }
             }
         }
     }

@@ -3,6 +3,7 @@ from os.path import isfile, join
 from re import compile as re_compile
 from filepaths import get_path
 from lib.colors import lighten, scale
+from lib.wigcodes import race_titles, hero_names
 
 
 def gametime(milliseconds):
@@ -27,18 +28,14 @@ def race_icon(race):
     return f'/static/images/game/racesw3xp/{race}.gif'
 
 
-race_titles = {
-    'R': 'Random',
-    'H': 'Human',
-    'O': 'Orc',
-    'N': 'Night Elf',
-    'U': 'Noob Alert'
-}
-
-
 def race_title(race):
     """ Title text for single letter race ID """
     return race_titles[race]
+
+
+def hero_name(hero_id):
+    """ Translates a 4 letter hero ID to glorious full name """
+    return hero_names[hero_id]
 
 
 thumbnails = {}
@@ -96,6 +93,7 @@ def register(jinja_environment):
     jinja_environment.filters['gametime'] = gametime
     jinja_environment.filters['chatmode'] = chatmode
     jinja_environment.filters['raceicon'] = race_icon
+    jinja_environment.filters['heroname'] = hero_name
     jinja_environment.filters['racetitle'] = race_title
     jinja_environment.filters['mapthumbnail'] = map_thumbnail
     jinja_environment.filters['displayname'] = player_display_name

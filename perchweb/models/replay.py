@@ -43,6 +43,7 @@ class Replay(dict):
         self.players = [Player(p) for p in args['players']]
         del self['players']
         self.player_colors = {p['id']: p['color'] for p in self.players}
+        self.arbitrary_scores = None
 
     def teams(self):
         """ Lists players separated by teams """
@@ -70,3 +71,14 @@ class Replay(dict):
         """ Returns True if an officially sanctioned replay else False """
         # Todo: check if any name in self.players in official_names
         return len(self.players) > 6
+
+    def get_arbitrary_scores(self):
+        if not self.arbitrary_scores:
+            self.arbitrary_scores = sorted(((p['id'], p.get_arbitrary_score()) for p in self.players), key=lambda p: p[1])
+        return self.arbitrary_scores
+
+    def mvp_id(self):
+        return self.get_arbitrary_scores()[-1][0]
+
+    def grb_id(self):
+        return self.get_arbitrary_scores()[0][0]
