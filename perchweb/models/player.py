@@ -1,5 +1,7 @@
 """ Could do some data crunching here, count towers, calculate hero levels etc """
 
+from lib.wigcodes import is_tower
+
 arbitrary_item_scores = {
     'stwp': -20,
     'tgrh': 15,
@@ -14,7 +16,7 @@ class Player(dict):
 
     def tower_count(self):
         """ Todo: iterate over self['buildings']['summary'] and add all the tower types """
-        return len(self['buildings']['summary'])
+        return sum(c for (i, c) in self['buildings']['summary'].items() if i in is_tower)
 
     def real_heroes(self):
         """ Filters out heroes from other races, used through shared control.

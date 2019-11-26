@@ -71,7 +71,8 @@ def list_replays(search_filter):
     # Dynamic SQL hell yeah! It's perfectly safe but I'm not 100% about the performance
     # once we get to 100k replays, ideally only the active filters would be in the query text
     rows = query(f'''
-    SELECT ID, Name, TimeStamp, Official, HighQuality, GameType, Version, Length, Map, TowerCount, ChatMessageCount, Players, Views, UploaderIP
+    SELECT ID, Name, TimeStamp, Official, HighQuality, GameType, Version, Length, Map, TowerCount, ChatMessageCount,
+        Towers, Players, Views, UploaderIP
     FROM Replays
     WHERE 
         (? = 0 OR Official = 1) AND
@@ -88,7 +89,8 @@ def list_player_replays(battletag, max_results=5):
     """ Search for replays including a specific player """
     # Todo: combine key elements with list_replays
     rows = query('''
-    SELECT ID, Name, TimeStamp, Official, HighQuality, GameType, Version, Length, Map, R.TowerCount, R.ChatMessageCount, Players, Views
+    SELECT ID, Name, TimeStamp, Official, HighQuality, GameType, Version, Length, Map, R.TowerCount, R.ChatMessageCount,
+        Towers, Players, Views
     FROM Replays AS R
     INNER JOIN GamesPlayed ON ReplayID = ID
     WHERE PlayerTag = ?
@@ -224,6 +226,7 @@ def save_replay(replay, replay_name, uploader_ip):
         create_players([p['name'] for p in players])
 
         official = 1 if replay_data.official() else 0
+        towers = replay_data.get_drawmap()['towers']
         # concatenate one big string that can be searched through later
         chat = '|'.join([c['message'] for c in replay_data['chat']])
         tower_count = replay_data.tower_count()
@@ -233,10 +236,10 @@ def save_replay(replay, replay_name, uploader_ip):
 
         query('''
             INSERT INTO Replays(BNetGameID, Name, TimeStamp, Official, GameType, Version, Length, Map,
-            TowerCount, ChatMessageCount, Players, Chat, UploaderBattleTag, UploaderIP, FileHash)
-            VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            TowerCount, ChatMessageCount, Players, Towers, Chat, UploaderBattleTag, UploaderIP, FileHash)
+            VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             ''', (bnet_id, replay_name, timestamp, official, gametype, version, length, map_name,
-                  tower_count, chat_message_count, json.dumps(players), chat, uploader_battletag, uploader_ip, file_hash))
+                  tower_count, chat_message_count, json.dumps(players), json.dumps(towers), chat, uploader_battletag, uploader_ip, file_hash))
         replay_id = query('SELECT last_insert_rowid()', one=True)[0]
 
         save_game_played(replay_data, replay_id)

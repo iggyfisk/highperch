@@ -44,7 +44,9 @@ def view_replay(replay_id):
         # Todo: 404
         return redirect(url_for('views.index'))
 
-    return standard_page('replay.html', replay_listinfo['Name'], replay=replay, listinfo=replay_listinfo, replay_id=replay_id)
+    drawmap = replay.get_drawmap()
+
+    return standard_page('replay.html', replay_listinfo['Name'], replay=replay, listinfo=replay_listinfo, replay_id=replay_id, drawmap=drawmap)
 
 
 @routes.route('/player/<string:battletag>')

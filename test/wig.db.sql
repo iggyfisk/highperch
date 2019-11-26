@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS "Replays" (
 	"ChatMessageCount"	INTEGER NOT NULL,
 	"Views"	INTEGER NOT NULL DEFAULT 0,
 	"Players"	TEXT NOT NULL,
+	"Towers"	TEXT NOT NULL,
 	"Chat"	TEXT NOT NULL,
 	"UploaderBattleTag"	TEXT NOT NULL,
 	"UploaderIP"	TEXT NOT NULL,

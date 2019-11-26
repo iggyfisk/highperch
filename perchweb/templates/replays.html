@@ -2,7 +2,18 @@
 
 {% macro card(replay, is_admin) %}
 <div class="replay card">
-    <div class="minimap"><img src="{{replay['Map']|mapthumbnail}}" title="{{ replay['Map'] }}" /></div>
+    <div class="minimap">
+        <img src="{{replay['Map']|mapthumbnail}}" title="{{ replay['Map'] }}" />
+        {% with drawmap = replay.get_drawmap() %}
+        {% if drawmap['map_size'] %}
+        <canvas
+            class="drawmap"
+            data-towers='{{ drawmap["towers_json"]|safe }}'
+            data-mapsize='{{ drawmap["map_size"]|tojson|safe }}'
+            data-paintsize='2'></canvas>
+        {% endif %}
+      {% endwith %}
+    </div>
     <div class="details">
         <div class="header">
             <a class="title" href="{{ url_for('views.view_replay', replay_id=replay['ID']) }}">{{ replay['Name'] }}</a>

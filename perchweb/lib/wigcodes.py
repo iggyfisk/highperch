@@ -1,4 +1,4 @@
-""" Map 4 letter codes from replay data to various things """
+""" Warcraft 3 Game Data """
 
 race_titles = {
     'R': 'Random',
@@ -34,4 +34,16 @@ hero_names = {
     "Udea": "Death Knight",
     "Udre": "Dread Lord",
     "Ulic": "Lich"
+}
+
+
+is_tower = {'hwtw', 'owtw', 'etrp'}
+
+map_sizes = {
+    '(8)Feralas_LV': {'minX': -8960, 'maxX': 8960, 'minY': -7424, 'maxY': 6912},
+    '(6)Monsoon_LV': {'minX': -7680, 'maxX': 7680, 'minY': -8192, 'maxY': 7424},
+    '(6)GnollWood': {'minX': -7424, 'maxX': 7936, 'minY': -8192, 'maxY': 7680},
+    "(8)Mur'gulOasis_LV": {'minX': -7680, 'maxX': 7680, 'minY': -8192, 'maxY': 7680},
+    "(8)TwilightRuins_LV": {'minX': -10496, 'maxX': 10496, 'minY': -11008, 'maxY': 10496},
+    "(8)MarketSquare": {'minX': -8320, 'maxX': 8704, 'minY': -8576, 'maxY': 8960}
 }

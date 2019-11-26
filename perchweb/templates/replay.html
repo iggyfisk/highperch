@@ -19,7 +19,17 @@
                         </form>
                     </div>
                     {% endif %}
-                    <img class="minimap" src="{{ replay.map_name()|mapthumbnail }}" title="{{ replay.map_name() }}" />
+                    <div class="minimap">
+                        <img src="{{ replay.map_name()|mapthumbnail }}" title="{{ replay.map_name() }}" />
+                        {% if drawmap['map_size'] %}
+                        <canvas
+                            class="drawmap anim"
+                            data-towers='{{ drawmap["towers"]|tojson|safe }}'
+                            data-mapsize='{{ drawmap["map_size"]|tojson|safe }}'
+                            data-paintsize='4'></canvas>
+                        {% endif %}
+                    </div>
+
                     <div>
                         <a href="/static/replays/{{ replay_id }}.w3g">Download</a>
                         <p>Uploaded {{ listinfo.upload_date() }}, {{ listinfo['Views'] }} views</p>
