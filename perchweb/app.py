@@ -11,13 +11,16 @@ from views import routes as public_routes
 from admin import routes as admin_routes
 from templatefilters import register
 from replaydb import close_connection as close_replaydb
+from werkzeug.middleware.proxy_fix import ProxyFix
 
 app = Flask(__name__)
+app.wsgi_app = ProxyFix(app.wsgi_app)
 app.jinja_env.trim_blocks = True
 app.jinja_env.lstrip_blocks = True
 register(app.jinja_env)
 app.register_blueprint(public_routes)
 app.register_blueprint(admin_routes)
+
 
 # Not a fan of not having this logic contained to whoever needs cleanup but too much time wasted
 @app.teardown_appcontext
