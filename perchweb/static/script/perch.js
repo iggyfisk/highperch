@@ -36,7 +36,7 @@
 	document.addEventListener("DOMContentLoaded", () => {
 		var replayUploader = document.getElementById( 'uploader' );
 		var replayTitle = document.getElementById( 'upload_namer' );
-		if (replayUploader == null & replayTitle == null) {
+		if (replayUploader == null || replayTitle == null) {
 			return;
 		}
 		replayUploader.addEventListener( 'change', event => {
