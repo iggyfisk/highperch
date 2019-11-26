@@ -140,6 +140,16 @@ replay.chat.forEach(c => {
     lastSaverChatMs = timeMS;
     lastSaverChatMessage = message;
   }
+
+  // Fuck these inconsistent timestamp attribute names
+  c.ms = c.timeMS;
+  delete c.timeMS;
+
+  // Looks pointless to me, easy to restore
+  delete c.byteCount;
+  delete c.type;
+  delete c.flags;
+
   sanitizedChat.push(c);
 });
 replay.chat = sanitizedChat;

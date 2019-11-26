@@ -97,50 +97,23 @@ class Replay(dict):
         if self.formatted_chat is not None:
             return self.formatted_chat
 
+        merged_chat = self['chat'] + self['leaveEvents'] + self['pauseEvents']
+        merged_chat.sort(key=lambda c: c['ms'])
+
         formatted_chat = []
-        leave_events = self['leaveEvents'].copy()
         last_message_ms = 0
-
-        for c in self['chat']:
-            # Check if anyone left the game before this message
-            while len(leave_events) > 0 and leave_events[0]['ms'] < c['timeMS']:
-                leave = leave_events.pop(0)
-                ms = leave['ms']
-                player_id = leave['playerId']
-                if len(formatted_chat) > 0 and (ms - last_message_ms) > Replay.silence_period:
-                    formatted_chat.append(None)
-
-                formatted_chat.append({
-                    'timeMS': ms,
-                    'mode': 'ALL',
-                    'playerId': player_id,
-                    'player': self.player_names[player_id],
-                    'leave': True
-                })
-                last_message_ms = ms
-
-            ms = c['timeMS']
+        for c in merged_chat:
+            ms = c['ms']
             if len(formatted_chat) > 0 and (ms - last_message_ms) > Replay.silence_period:
                 formatted_chat.append(None)
 
+            c['mode'] = 'ALL' if 'mode' not in c else c['mode']
+            c['player'] = self.player_names[c['playerId']] if 'player' not in c else c['player']
+            if 'message' not in c and 'pause' not in c:
+                c['leave'] = True
+            
             formatted_chat.append(c)
-            last_message_ms = ms
-
-        # Players left after all the chat is done
-        for leave in leave_events:
-            ms = leave['ms']
-            player_id = leave['playerId']
-            if len(formatted_chat) > 0 and (ms - last_message_ms) > Replay.silence_period:
-                formatted_chat.append(None)
-
-            formatted_chat.append({
-                'timeMS': ms,
-                'mode': 'ALL',
-                'playerId': player_id,
-                'player': self.player_names[player_id],
-                'leave': True
-            })
-            last_message_ms = ms
+            last_message_ms = c['ms']
 
         self.formatted_chat = formatted_chat
         return self.formatted_chat

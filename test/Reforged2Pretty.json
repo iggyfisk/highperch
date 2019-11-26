@@ -7949,1494 +7949,1047 @@
   "type": "4on4",
   "chat": [
     {
-      "type": 32,
       "playerId": 2,
-      "byteCount": 15,
-      "flags": 32,
       "mode": "ALL",
       "message": "gl and HF",
-      "timeMS": 12768,
-      "player": "iggythefisk#236"
+      "player": "iggythefisk#236",
+      "ms": 12768
     },
     {
-      "type": 32,
       "playerId": 4,
-      "byteCount": 56,
-      "flags": 32,
       "mode": "ALL",
       "message": "~*~ Fight With Honor And Have Excellent Manner ~*~",
-      "timeMS": 29333,
-      "player": "IcebergSlim#145"
+      "player": "IcebergSlim#145",
+      "ms": 29333
     },
     {
-      "type": 32,
       "playerId": 6,
-      "byteCount": 10,
-      "flags": 32,
       "mode": "ALL",
       "message": "LLL!",
-      "timeMS": 33332,
-      "player": "TIMG4STRok#1212"
+      "player": "TIMG4STRok#1212",
+      "ms": 33332
     },
     {
-      "type": 32,
       "playerId": 6,
-      "byteCount": 10,
-      "flags": 32,
       "mode": "ALL",
       "message": "LOL!",
-      "timeMS": 34774,
-      "player": "TIMG4STRok#1212"
+      "player": "TIMG4STRok#1212",
+      "ms": 34774
     },
     {
-      "type": 32,
       "playerId": 8,
-      "byteCount": 28,
-      "flags": 32,
       "mode": "ALL",
       "message": "can I fight with tacos",
-      "timeMS": 44880,
-      "player": "ExPeRiEnCeS#120"
+      "player": "ExPeRiEnCeS#120",
+      "ms": 44880
     },
     {
-      "type": 32,
       "playerId": 2,
-      "byteCount": 15,
-      "flags": 32,
       "mode": "ALL",
       "message": "gl and HF",
-      "timeMS": 59030,
-      "player": "iggythefisk#236"
+      "player": "iggythefisk#236",
+      "ms": 59030
     },
     {
-      "type": 32,
       "playerId": 5,
-      "byteCount": 9,
-      "flags": 32,
       "mode": "ALL",
       "message": "lol",
-      "timeMS": 265454,
-      "player": "BEARAND#1604"
+      "player": "BEARAND#1604",
+      "ms": 265454
     },
     {
-      "type": 32,
       "playerId": 5,
-      "byteCount": 10,
-      "flags": 32,
       "mode": "ALL",
       "message": "quit",
-      "timeMS": 988578,
-      "player": "BEARAND#1604"
+      "player": "BEARAND#1604",
+      "ms": 988578
     },
     {
-      "type": 32,
       "playerId": 5,
-      "byteCount": 9,
-      "flags": 32,
       "mode": "ALL",
       "message": "lol",
-      "timeMS": 1107130,
-      "player": "BEARAND#1604"
+      "player": "BEARAND#1604",
+      "ms": 1107130
     },
     {
-      "type": 32,
       "playerId": 5,
-      "byteCount": 21,
-      "flags": 32,
       "mode": "ALL",
       "message": "nice move green",
-      "timeMS": 1279232,
-      "player": "BEARAND#1604"
+      "player": "BEARAND#1604",
+      "ms": 1279232
     },
     {
-      "type": 32,
       "playerId": 6,
-      "byteCount": 7,
-      "flags": 32,
       "mode": "ALL",
       "message": "?",
-      "timeMS": 1657254,
-      "player": "TIMG4STRok#1212"
+      "player": "TIMG4STRok#1212",
+      "ms": 1657254
     },
     {
-      "type": 32,
       "playerId": 6,
-      "byteCount": 27,
-      "flags": 32,
       "mode": "ALL",
       "message": "what was that attempt",
-      "timeMS": 1660625,
-      "player": "TIMG4STRok#1212"
+      "player": "TIMG4STRok#1212",
+      "ms": 1660625
     },
     {
-      "type": 32,
       "playerId": 6,
-      "byteCount": 44,
-      "flags": 32,
       "mode": "ALL",
       "message": "some extreme noob shit let me tell you",
-      "timeMS": 1665586,
-      "player": "TIMG4STRok#1212"
+      "player": "TIMG4STRok#1212",
+      "ms": 1665586
     },
     {
-      "type": 32,
       "playerId": 6,
-      "byteCount": 74,
-      "flags": 32,
       "mode": "ALL",
       "message": "next time try sleeping my paladin in the middle of my staff sequence",
-      "timeMS": 1673566,
-      "player": "TIMG4STRok#1212"
+      "player": "TIMG4STRok#1212",
+      "ms": 1673566
     },
     {
-      "type": 32,
       "playerId": 6,
-      "byteCount": 16,
-      "flags": 32,
       "mode": "ALL",
       "message": "not before",
-      "timeMS": 1675073,
-      "player": "TIMG4STRok#1212"
+      "player": "TIMG4STRok#1212",
+      "ms": 1675073
     },
     {
-      "type": 32,
       "playerId": 8,
-      "byteCount": 28,
-      "flags": 32,
       "mode": "ALL",
       "message": "what ever you say dude",
-      "timeMS": 1675874,
-      "player": "ExPeRiEnCeS#120"
+      "player": "ExPeRiEnCeS#120",
+      "ms": 1675874
     },
     {
-      "type": 32,
       "playerId": 8,
-      "byteCount": 10,
-      "flags": 32,
       "mode": "ALL",
       "message": "huh?",
-      "timeMS": 1859966,
-      "player": "ExPeRiEnCeS#120"
+      "player": "ExPeRiEnCeS#120",
+      "ms": 1859966
     },
     {
-      "type": 32,
       "playerId": 8,
-      "byteCount": 25,
-      "flags": 32,
       "mode": "ALL",
       "message": "what happened buddy",
-      "timeMS": 1862477,
-      "player": "ExPeRiEnCeS#120"
+      "player": "ExPeRiEnCeS#120",
+      "ms": 1862477
     },
     {
-      "type": 32,
       "playerId": 6,
-      "byteCount": 10,
-      "flags": 32,
       "mode": "ALL",
       "message": "oops",
-      "timeMS": 1871417,
-      "player": "TIMG4STRok#1212"
+      "player": "TIMG4STRok#1212",
+      "ms": 1871417
     },
     {
-      "type": 32,
       "playerId": 8,
-      "byteCount": 14,
-      "flags": 32,
       "mode": "ALL",
       "message": "big oops",
-      "timeMS": 1875281,
-      "player": "ExPeRiEnCeS#120"
+      "player": "ExPeRiEnCeS#120",
+      "ms": 1875281
     },
     {
-      "type": 32,
       "playerId": 6,
-      "byteCount": 41,
-      "flags": 32,
       "mode": "ALL",
       "message": "congrats on your first hero kill ;)",
-      "timeMS": 1882209,
-      "player": "TIMG4STRok#1212"
+      "player": "TIMG4STRok#1212",
+      "ms": 1882209
     },
     {
-      "type": 32,
       "playerId": 6,
-      "byteCount": 10,
-      "flags": 32,
       "mode": "ALL",
       "message": "guys",
-      "timeMS": 1963192,
-      "player": "TIMG4STRok#1212"
+      "player": "TIMG4STRok#1212",
+      "ms": 1963192
     },
     {
-      "type": 32,
       "playerId": 6,
-      "byteCount": 28,
-      "flags": 32,
       "mode": "ALL",
       "message": "this isn't working out",
-      "timeMS": 1965654,
-      "player": "TIMG4STRok#1212"
+      "player": "TIMG4STRok#1212",
+      "ms": 1965654
     },
     {
-      "type": 32,
       "playerId": 6,
-      "byteCount": 18,
-      "flags": 32,
       "mode": "ALL",
       "message": "take it slow",
-      "timeMS": 1968021,
-      "player": "TIMG4STRok#1212"
+      "player": "TIMG4STRok#1212",
+      "ms": 1968021
     },
     {
-      "type": 32,
       "playerId": 6,
-      "byteCount": 18,
-      "flags": 32,
       "mode": "ALL",
       "message": "use strategy",
-      "timeMS": 1970483,
-      "player": "TIMG4STRok#1212"
+      "player": "TIMG4STRok#1212",
+      "ms": 1970483
     },
     {
-      "type": 32,
       "playerId": 5,
-      "byteCount": 22,
-      "flags": 32,
       "mode": "ALL",
       "message": "TOWERS DONT MOVE",
-      "timeMS": 1975251,
-      "player": "BEARAND#1604"
+      "player": "BEARAND#1604",
+      "ms": 1975251
     },
     {
-      "type": 32,
       "playerId": 5,
-      "byteCount": 9,
-      "flags": 32,
       "mode": "ALL",
       "message": "lol",
-      "timeMS": 2055933,
-      "player": "BEARAND#1604"
+      "player": "BEARAND#1604",
+      "ms": 2055933
     },
     {
-      "type": 32,
       "playerId": 5,
-      "byteCount": 16,
-      "flags": 32,
       "mode": "ALL",
       "message": "tp on lich",
-      "timeMS": 2059215,
-      "player": "BEARAND#1604"
+      "player": "BEARAND#1604",
+      "ms": 2059215
     },
     {
-      "type": 32,
       "playerId": 5,
-      "byteCount": 16,
-      "flags": 32,
       "mode": "ALL",
       "message": "lol orange",
-      "timeMS": 2110418,
-      "player": "BEARAND#1604"
+      "player": "BEARAND#1604",
+      "ms": 2110418
     },
     {
-      "type": 32,
       "playerId": 6,
-      "byteCount": 15,
-      "flags": 32,
       "mode": "ALL",
       "message": "lol green",
-      "timeMS": 2128691,
-      "player": "TIMG4STRok#1212"
+      "player": "TIMG4STRok#1212",
+      "ms": 2128691
     },
     {
-      "type": 32,
       "playerId": 6,
-      "byteCount": 31,
-      "flags": 32,
       "mode": "ALL",
       "message": "how hard are you clicking",
-      "timeMS": 2132808,
-      "player": "TIMG4STRok#1212"
+      "player": "TIMG4STRok#1212",
+      "ms": 2132808
     },
     {
-      "type": 32,
       "playerId": 7,
-      "byteCount": 8,
-      "flags": 32,
       "mode": "ALL",
       "message": "gg",
-      "timeMS": 2146259,
-      "player": "MuadDib#1641"
+      "player": "MuadDib#1641",
+      "ms": 2146259
     },
     {
-      "type": 32,
       "playerId": 5,
-      "byteCount": 9,
-      "flags": 32,
       "mode": "ALL",
       "message": "bye",
-      "timeMS": 2148675,
-      "player": "BEARAND#1604"
+      "player": "BEARAND#1604",
+      "ms": 2148675
     },
     {
-      "type": 32,
       "playerId": 2,
-      "byteCount": 14,
-      "flags": 32,
       "mode": "ALL",
       "message": "gg noobs",
-      "timeMS": 2149076,
-      "player": "iggythefisk#236"
+      "player": "iggythefisk#236",
+      "ms": 2149076
     },
     {
-      "type": 32,
       "playerId": 6,
-      "byteCount": 11,
-      "flags": 32,
       "mode": "ALL",
       "message": "seeya",
-      "timeMS": 2149578,
-      "player": "TIMG4STRok#1212"
+      "player": "TIMG4STRok#1212",
+      "ms": 2149578
     },
     {
-      "type": 32,
       "playerId": 4,
-      "byteCount": 14,
-      "flags": 32,
       "mode": "ALL",
       "message": "gg noobs",
-      "timeMS": 2152186,
-      "player": "IcebergSlim#145"
+      "player": "IcebergSlim#145",
+      "ms": 2152186
     },
     {
-      "type": 32,
       "playerId": 5,
-      "byteCount": 24,
-      "flags": 32,
       "mode": "ALL",
       "message": "https://highper.ch",
-      "timeMS": 2157403,
-      "player": "BEARAND#1604"
+      "player": "BEARAND#1604",
+      "ms": 2157403
     },
     {
-      "type": 32,
       "playerId": 5,
-      "byteCount": 18,
-      "flags": 32,
       "mode": "ALL",
       "message": "clan towa #1",
-      "timeMS": 2159267,
-      "player": "BEARAND#1604"
+      "player": "BEARAND#1604",
+      "ms": 2159267
     },
     {
-      "type": 32,
       "playerId": 5,
-      "byteCount": 19,
-      "flags": 32,
       "mode": "ALL",
       "message": "you too green",
-      "timeMS": 2210832,
-      "player": "BEARAND#1604"
+      "player": "BEARAND#1604",
+      "ms": 2210832
     },
     {
-      "type": 32,
       "playerId": 5,
-      "byteCount": 19,
-      "flags": 32,
       "mode": "ALL",
       "message": "quit the game",
-      "timeMS": 2212214,
-      "player": "BEARAND#1604"
+      "player": "BEARAND#1604",
+      "ms": 2212214
     },
     {
-      "type": 32,
       "playerId": 6,
-      "byteCount": 20,
-      "flags": 32,
       "mode": "ALL",
       "message": "seeya bad boys",
-      "timeMS": 2213248,
-      "player": "TIMG4STRok#1212"
+      "player": "TIMG4STRok#1212",
+      "ms": 2213248
     },
     {
-      "type": 32,
       "playerId": 8,
-      "byteCount": 27,
-      "flags": 32,
       "mode": "ALL",
       "message": "nah you gotta kill me",
-      "timeMS": 2219582,
-      "player": "ExPeRiEnCeS#120"
+      "player": "ExPeRiEnCeS#120",
+      "ms": 2219582
     },
     {
-      "type": 32,
       "playerId": 5,
-      "byteCount": 8,
-      "flags": 32,
       "mode": "ALL",
       "message": "ok",
-      "timeMS": 2221987,
-      "player": "BEARAND#1604"
+      "player": "BEARAND#1604",
+      "ms": 2221987
     },
     {
-      "type": 32,
       "playerId": 6,
-      "byteCount": 23,
-      "flags": 32,
       "mode": "ALL",
       "message": "please don't stay",
-      "timeMS": 2226492,
-      "player": "TIMG4STRok#1212"
+      "player": "TIMG4STRok#1212",
+      "ms": 2226492
     },
     {
-      "type": 32,
       "playerId": 8,
-      "byteCount": 57,
-      "flags": 32,
       "mode": "ALL",
       "message": "your pathetic strat works on mouth breathing idiots",
-      "timeMS": 2228542,
-      "player": "ExPeRiEnCeS#120"
+      "player": "ExPeRiEnCeS#120",
+      "ms": 2228542
     },
     {
-      "type": 32,
       "playerId": 5,
-      "byteCount": 9,
-      "flags": 32,
       "mode": "ALL",
       "message": "you",
-      "timeMS": 2231976,
-      "player": "BEARAND#1604"
+      "player": "BEARAND#1604",
+      "ms": 2231976
     },
     {
-      "type": 32,
       "playerId": 5,
-      "byteCount": 7,
-      "flags": 32,
       "mode": "ALL",
       "message": "?",
-      "timeMS": 2232897,
-      "player": "BEARAND#1604"
+      "player": "BEARAND#1604",
+      "ms": 2232897
     },
     {
-      "type": 32,
       "playerId": 5,
-      "byteCount": 7,
-      "flags": 32,
       "mode": "ALL",
       "message": "?",
-      "timeMS": 2233515,
-      "player": "BEARAND#1604"
+      "player": "BEARAND#1604",
+      "ms": 2233515
     },
     {
-      "type": 32,
       "playerId": 5,
-      "byteCount": 7,
-      "flags": 32,
       "mode": "ALL",
       "message": "?",
-      "timeMS": 2234027,
-      "player": "BEARAND#1604"
+      "player": "BEARAND#1604",
+      "ms": 2234027
     },
     {
-      "type": 32,
       "playerId": 2,
-      "byteCount": 16,
-      "flags": 32,
       "mode": "ALL",
       "message": "yes they d",
-      "timeMS": 2234232,
-      "player": "iggythefisk#236"
+      "player": "iggythefisk#236",
+      "ms": 2234232
     },
     {
-      "type": 32,
       "playerId": 5,
-      "byteCount": 7,
-      "flags": 32,
       "mode": "ALL",
       "message": "?",
-      "timeMS": 2234384,
-      "player": "BEARAND#1604"
+      "player": "BEARAND#1604",
+      "ms": 2234384
     },
     {
-      "type": 32,
       "playerId": 5,
-      "byteCount": 7,
-      "flags": 32,
       "mode": "ALL",
       "message": "?",
-      "timeMS": 2234742,
-      "player": "BEARAND#1604"
+      "player": "BEARAND#1604",
+      "ms": 2234742
     },
     {
-      "type": 32,
       "playerId": 6,
-      "byteCount": 20,
-      "flags": 32,
       "mode": "ALL",
       "message": "look in mirror",
-      "timeMS": 2234998,
-      "player": "TIMG4STRok#1212"
+      "player": "TIMG4STRok#1212",
+      "ms": 2234998
     },
     {
-      "type": 32,
       "playerId": 5,
-      "byteCount": 7,
-      "flags": 32,
       "mode": "ALL",
       "message": "?",
-      "timeMS": 2235151,
-      "player": "BEARAND#1604"
+      "player": "BEARAND#1604",
+      "ms": 2235151
     },
     {
-      "type": 32,
       "playerId": 4,
-      "byteCount": 14,
-      "flags": 32,
       "mode": "ALL",
       "message": "like you",
-      "timeMS": 2239909,
-      "player": "IcebergSlim#145"
+      "player": "IcebergSlim#145",
+      "ms": 2239909
     },
     {
-      "type": 32,
       "playerId": 5,
-      "byteCount": 7,
-      "flags": 32,
       "mode": "ALL",
       "message": "?",
-      "timeMS": 2242627,
-      "player": "BEARAND#1604"
+      "player": "BEARAND#1604",
+      "ms": 2242627
     },
     {
-      "type": 32,
       "playerId": 8,
-      "byteCount": 37,
-      "flags": 32,
       "mode": "ALL",
       "message": "you cuties only have your words",
-      "timeMS": 2247284,
-      "player": "ExPeRiEnCeS#120"
+      "player": "ExPeRiEnCeS#120",
+      "ms": 2247284
     },
     {
-      "type": 32,
       "playerId": 5,
-      "byteCount": 29,
-      "flags": 32,
       "mode": "ALL",
       "message": "you wasted your 40 euro",
-      "timeMS": 2248408,
-      "player": "BEARAND#1604"
+      "player": "BEARAND#1604",
+      "ms": 2248408
     },
     {
-      "type": 32,
       "playerId": 6,
-      "byteCount": 27,
-      "flags": 32,
       "mode": "ALL",
       "message": "do you post on reddit",
-      "timeMS": 2251024,
-      "player": "TIMG4STRok#1212"
+      "player": "TIMG4STRok#1212",
+      "ms": 2251024
     },
     {
-      "type": 32,
       "playerId": 5,
-      "byteCount": 32,
-      "flags": 32,
       "mode": "ALL",
       "message": "you are getting sweared on",
-      "timeMS": 2252354,
-      "player": "BEARAND#1604"
+      "player": "BEARAND#1604",
+      "ms": 2252354
     },
     {
-      "type": 32,
       "playerId": 2,
-      "byteCount": 28,
-      "flags": 32,
       "mode": "ALL",
       "message": "we also have this game",
-      "timeMS": 2252867,
-      "player": "iggythefisk#236"
+      "player": "iggythefisk#236",
+      "ms": 2252867
     },
     {
-      "type": 32,
       "playerId": 2,
-      "byteCount": 17,
-      "flags": 32,
       "mode": "ALL",
       "message": "that we won",
-      "timeMS": 2254355,
-      "player": "iggythefisk#236"
+      "player": "iggythefisk#236",
+      "ms": 2254355
     },
     {
-      "type": 32,
       "playerId": 4,
-      "byteCount": 28,
-      "flags": 32,
       "mode": "ALL",
       "message": "and our W/L ratio lmao",
-      "timeMS": 2255226,
-      "player": "IcebergSlim#145"
+      "player": "IcebergSlim#145",
+      "ms": 2255226
     },
     {
-      "type": 32,
       "playerId": 2,
-      "byteCount": 36,
-      "flags": 32,
       "mode": "ALL",
       "message": "against a mouthbreathing idiot",
-      "timeMS": 2260089,
-      "player": "iggythefisk#236"
+      "player": "iggythefisk#236",
+      "ms": 2260089
     },
     {
-      "type": 32,
       "playerId": 8,
-      "byteCount": 20,
-      "flags": 32,
       "mode": "ALL",
       "message": "lol what ratio",
-      "timeMS": 2266334,
-      "player": "ExPeRiEnCeS#120"
+      "player": "ExPeRiEnCeS#120",
+      "ms": 2266334
     },
     {
-      "type": 32,
       "playerId": 8,
-      "byteCount": 18,
-      "flags": 32,
       "mode": "ALL",
       "message": "this is beta",
-      "timeMS": 2267719,
-      "player": "ExPeRiEnCeS#120"
+      "player": "ExPeRiEnCeS#120",
+      "ms": 2267719
     },
     {
-      "type": 32,
       "playerId": 2,
-      "byteCount": 28,
-      "flags": 32,
       "mode": "ALL",
       "message": "we have won every game",
-      "timeMS": 2275819,
-      "player": "iggythefisk#236"
+      "player": "iggythefisk#236",
+      "ms": 2275819
     },
     {
-      "type": 32,
       "playerId": 2,
-      "byteCount": 21,
-      "flags": 32,
       "mode": "ALL",
       "message": "have you?? nope",
-      "timeMS": 2278432,
-      "player": "iggythefisk#236"
+      "player": "iggythefisk#236",
+      "ms": 2278432
     },
     {
-      "type": 32,
       "playerId": 5,
-      "byteCount": 42,
-      "flags": 32,
       "mode": "ALL",
       "message": "i'm feeling pretty \"alpha\" this game",
-      "timeMS": 2278483,
-      "player": "BEARAND#1604"
+      "player": "BEARAND#1604",
+      "ms": 2278483
     },
     {
-      "type": 32,
       "playerId": 4,
-      "byteCount": 32,
-      "flags": 32,
       "mode": "ALL",
       "message": "you are owned in beta then",
-      "timeMS": 2278738,
-      "player": "IcebergSlim#145"
+      "player": "IcebergSlim#145",
+      "ms": 2278738
     },
     {
-      "type": 32,
       "playerId": 5,
-      "byteCount": 16,
-      "flags": 32,
       "mode": "ALL",
       "message": "tav res :)",
-      "timeMS": 2310660,
-      "player": "BEARAND#1604"
+      "player": "BEARAND#1604",
+      "ms": 2310660
     },
     {
-      "type": 32,
       "playerId": 6,
-      "byteCount": 17,
-      "flags": 32,
       "mode": "ALL",
       "message": "come on man",
-      "timeMS": 2340965,
-      "player": "TIMG4STRok#1212"
+      "player": "TIMG4STRok#1212",
+      "ms": 2340965
     },
     {
-      "type": 32,
       "playerId": 6,
-      "byteCount": 44,
-      "flags": 32,
       "mode": "ALL",
       "message": "you know i can attack to wake up right",
-      "timeMS": 2345177,
-      "player": "TIMG4STRok#1212"
+      "player": "TIMG4STRok#1212",
+      "ms": 2345177
     },
     {
-      "type": 32,
       "playerId": 8,
-      "byteCount": 14,
-      "flags": 32,
       "mode": "ALL",
       "message": "uhh yeah",
-      "timeMS": 2354456,
-      "player": "ExPeRiEnCeS#120"
+      "player": "ExPeRiEnCeS#120",
+      "ms": 2354456
     },
     {
-      "type": 32,
       "playerId": 6,
-      "byteCount": 38,
-      "flags": 32,
       "mode": "ALL",
       "message": "then why are you fucking this up",
-      "timeMS": 2359986,
-      "player": "TIMG4STRok#1212"
+      "player": "TIMG4STRok#1212",
+      "ms": 2359986
     },
     {
-      "type": 32,
       "playerId": 6,
-      "byteCount": 33,
-      "flags": 32,
       "mode": "ALL",
       "message": "nuke my am before you sleep",
-      "timeMS": 2367719,
-      "player": "TIMG4STRok#1212"
+      "player": "TIMG4STRok#1212",
+      "ms": 2367719
     },
     {
-      "type": 32,
       "playerId": 6,
-      "byteCount": 23,
-      "flags": 32,
       "mode": "ALL",
       "message": "dont open with it",
-      "timeMS": 2369772,
-      "player": "TIMG4STRok#1212"
+      "player": "TIMG4STRok#1212",
+      "ms": 2369772
     },
     {
-      "type": 32,
       "playerId": 4,
-      "byteCount": 26,
-      "flags": 32,
       "mode": "ALL",
       "message": "sorry bout your life",
-      "timeMS": 2496154,
-      "player": "IcebergSlim#145"
+      "player": "IcebergSlim#145",
+      "ms": 2496154
     },
     {
-      "type": 32,
       "playerId": 6,
-      "byteCount": 9,
-      "flags": 32,
       "mode": "ALL",
       "message": "LOL",
-      "timeMS": 2497589,
-      "player": "TIMG4STRok#1212"
+      "player": "TIMG4STRok#1212",
+      "ms": 2497589
     },
     {
-      "type": 32,
       "playerId": 5,
-      "byteCount": 9,
-      "flags": 32,
       "mode": "ALL",
       "message": "bye",
-      "timeMS": 2498155,
-      "player": "BEARAND#1604"
+      "player": "BEARAND#1604",
+      "ms": 2498155
     },
     {
-      "type": 32,
       "playerId": 8,
-      "byteCount": 13,
-      "flags": 32,
       "mode": "ALL",
       "message": "too bad",
-      "timeMS": 2499793,
-      "player": "ExPeRiEnCeS#120"
+      "player": "ExPeRiEnCeS#120",
+      "ms": 2499793
     },
     {
-      "type": 32,
       "playerId": 2,
-      "byteCount": 20,
-      "flags": 32,
       "mode": "ALL",
       "message": "lost to towers",
-      "timeMS": 2504250,
-      "player": "iggythefisk#236"
+      "player": "iggythefisk#236",
+      "ms": 2504250
     },
     {
-      "type": 32,
       "playerId": 8,
-      "byteCount": 34,
-      "flags": 32,
       "mode": "ALL",
       "message": "go ahead and kill everything",
-      "timeMS": 2504815,
-      "player": "ExPeRiEnCeS#120"
+      "player": "ExPeRiEnCeS#120",
+      "ms": 2504815
     },
     {
-      "type": 32,
       "playerId": 2,
-      "byteCount": 21,
-      "flags": 32,
       "mode": "ALL",
       "message": "how embarrasing",
-      "timeMS": 2506607,
-      "player": "iggythefisk#236"
+      "player": "iggythefisk#236",
+      "ms": 2506607
     },
     {
-      "type": 32,
       "playerId": 2,
-      "byteCount": 8,
-      "flags": 32,
       "mode": "ALL",
       "message": "np",
-      "timeMS": 2507531,
-      "player": "iggythefisk#236"
+      "player": "iggythefisk#236",
+      "ms": 2507531
     },
     {
-      "type": 32,
       "playerId": 6,
-      "byteCount": 11,
-      "flags": 32,
       "mode": "ALL",
       "message": "no...",
-      "timeMS": 2508198,
-      "player": "TIMG4STRok#1212"
+      "player": "TIMG4STRok#1212",
+      "ms": 2508198
     },
     {
-      "type": 32,
       "playerId": 2,
-      "byteCount": 34,
-      "flags": 32,
       "mode": "ALL",
       "message": "It's very easy to kill bases",
-      "timeMS": 2510503,
-      "player": "iggythefisk#236"
+      "player": "iggythefisk#236",
+      "ms": 2510503
     },
     {
-      "type": 32,
       "playerId": 6,
-      "byteCount": 60,
-      "flags": 32,
       "mode": "ALL",
       "message": "let me show you how to kill a building that can't move",
-      "timeMS": 2519829,
-      "player": "TIMG4STRok#1212"
+      "player": "TIMG4STRok#1212",
+      "ms": 2519829
     },
     {
-      "type": 32,
       "playerId": 6,
-      "byteCount": 28,
-      "flags": 32,
       "mode": "ALL",
       "message": "stick around & observe",
-      "timeMS": 2523419,
-      "player": "TIMG4STRok#1212"
+      "player": "TIMG4STRok#1212",
+      "ms": 2523419
     },
     {
-      "type": 32,
       "playerId": 2,
-      "byteCount": 68,
-      "flags": 32,
       "mode": "ALL",
       "message": "buildings are stationary so it's impossible to lose in a fight",
-      "timeMS": 2534534,
-      "player": "iggythefisk#236"
+      "player": "iggythefisk#236",
+      "ms": 2534534
     },
     {
-      "type": 32,
       "playerId": 8,
-      "byteCount": 18,
-      "flags": 32,
       "mode": "ALL",
       "message": "keep talking",
-      "timeMS": 2534636,
-      "player": "ExPeRiEnCeS#120"
+      "player": "ExPeRiEnCeS#120",
+      "ms": 2534636
     },
     {
-      "type": 32,
       "playerId": 8,
-      "byteCount": 19,
-      "flags": 32,
       "mode": "ALL",
       "message": "oh man no way",
-      "timeMS": 2539963,
-      "player": "ExPeRiEnCeS#120"
+      "player": "ExPeRiEnCeS#120",
+      "ms": 2539963
     },
     {
-      "type": 32,
       "playerId": 8,
-      "byteCount": 20,
-      "flags": 32,
       "mode": "ALL",
       "message": "big eye opener",
-      "timeMS": 2543244,
-      "player": "ExPeRiEnCeS#120"
+      "player": "ExPeRiEnCeS#120",
+      "ms": 2543244
     },
     {
-      "type": 32,
       "playerId": 6,
-      "byteCount": 39,
-      "flags": 32,
       "mode": "ALL",
       "message": "yes that's why we share this info",
-      "timeMS": 2552466,
-      "player": "TIMG4STRok#1212"
+      "player": "TIMG4STRok#1212",
+      "ms": 2552466
     },
     {
-      "type": 32,
       "playerId": 5,
-      "byteCount": 22,
-      "flags": 32,
       "mode": "ALL",
       "message": "lol 3 bone yards",
-      "timeMS": 2552774,
-      "player": "BEARAND#1604"
+      "player": "BEARAND#1604",
+      "ms": 2552774
     },
     {
-      "type": 32,
       "playerId": 6,
-      "byteCount": 25,
-      "flags": 32,
       "mode": "ALL",
       "message": "you clearly need it",
-      "timeMS": 2555026,
-      "player": "TIMG4STRok#1212"
+      "player": "TIMG4STRok#1212",
+      "ms": 2555026
     },
     {
-      "type": 32,
       "playerId": 2,
-      "byteCount": 58,
-      "flags": 32,
       "mode": "ALL",
       "message": "somehow you didn't master it throughout this game :/",
-      "timeMS": 2557694,
-      "player": "iggythefisk#236"
+      "player": "iggythefisk#236",
+      "ms": 2557694
     },
     {
-      "type": 32,
       "playerId": 8,
-      "byteCount": 17,
-      "flags": 32,
       "mode": "ALL",
       "message": "my feelings",
-      "timeMS": 2571585,
-      "player": "ExPeRiEnCeS#120"
+      "player": "ExPeRiEnCeS#120",
+      "ms": 2571585
     },
     {
-      "type": 32,
       "playerId": 8,
-      "byteCount": 13,
-      "flags": 32,
       "mode": "ALL",
       "message": "so hurt",
-      "timeMS": 2572970,
-      "player": "ExPeRiEnCeS#120"
+      "player": "ExPeRiEnCeS#120",
+      "ms": 2572970
     },
     {
-      "type": 32,
       "playerId": 8,
-      "byteCount": 17,
-      "flags": 32,
       "mode": "ALL",
       "message": "Please stop",
-      "timeMS": 2578758,
-      "player": "ExPeRiEnCeS#120"
+      "player": "ExPeRiEnCeS#120",
+      "ms": 2578758
     },
     {
-      "type": 32,
       "playerId": 5,
-      "byteCount": 34,
-      "flags": 32,
       "mode": "ALL",
       "message": "you're staying in a loss lol",
-      "timeMS": 2579066,
-      "player": "BEARAND#1604"
+      "player": "BEARAND#1604",
+      "ms": 2579066
     },
     {
-      "type": 32,
       "playerId": 6,
-      "byteCount": 11,
-      "flags": 32,
       "mode": "ALL",
       "message": "agree",
-      "timeMS": 2579270,
-      "player": "TIMG4STRok#1212"
+      "player": "TIMG4STRok#1212",
+      "ms": 2579270
     },
     {
-      "type": 32,
       "playerId": 8,
-      "byteCount": 27,
-      "flags": 32,
       "mode": "ALL",
       "message": "with your harsh words",
-      "timeMS": 2581883,
-      "player": "ExPeRiEnCeS#120"
+      "player": "ExPeRiEnCeS#120",
+      "ms": 2581883
     },
     {
-      "type": 32,
       "playerId": 2,
-      "byteCount": 48,
-      "flags": 32,
       "mode": "ALL",
       "message": "just staying in the game and soaking in it",
-      "timeMS": 2587935,
-      "player": "iggythefisk#236"
+      "player": "iggythefisk#236",
+      "ms": 2587935
     },
     {
-      "type": 32,
       "playerId": 5,
-      "byteCount": 38,
-      "flags": 32,
       "mode": "ALL",
       "message": "you're spending more time losing",
-      "timeMS": 2589372,
-      "player": "BEARAND#1604"
+      "player": "BEARAND#1604",
+      "ms": 2589372
     },
     {
-      "type": 32,
       "playerId": 5,
-      "byteCount": 17,
-      "flags": 32,
       "mode": "ALL",
       "message": "voluntarily",
-      "timeMS": 2594910,
-      "player": "BEARAND#1604"
+      "player": "BEARAND#1604",
+      "ms": 2594910
     },
     {
-      "type": 32,
       "playerId": 8,
-      "byteCount": 25,
-      "flags": 32,
       "mode": "ALL",
       "message": "i don't really mind",
-      "timeMS": 2602296,
-      "player": "ExPeRiEnCeS#120"
+      "player": "ExPeRiEnCeS#120",
+      "ms": 2602296
     },
     {
-      "type": 32,
       "playerId": 2,
-      "byteCount": 21,
-      "flags": 32,
       "mode": "ALL",
       "message": "but you do mind",
-      "timeMS": 2606293,
-      "player": "iggythefisk#236"
+      "player": "iggythefisk#236",
+      "ms": 2606293
     },
     {
-      "type": 32,
       "playerId": 8,
-      "byteCount": 43,
-      "flags": 32,
       "mode": "ALL",
       "message": "just watching tv on the other monitor",
-      "timeMS": 2607729,
-      "player": "ExPeRiEnCeS#120"
+      "player": "ExPeRiEnCeS#120",
+      "ms": 2607729
     },
     {
-      "type": 32,
       "playerId": 2,
-      "byteCount": 15,
-      "flags": 32,
       "mode": "ALL",
       "message": "very much",
-      "timeMS": 2610756,
-      "player": "iggythefisk#236"
+      "player": "iggythefisk#236",
+      "ms": 2610756
     },
     {
-      "type": 32,
       "playerId": 6,
-      "byteCount": 12,
-      "flags": 32,
       "mode": "ALL",
       "message": "uh huh",
-      "timeMS": 2612299,
-      "player": "TIMG4STRok#1212"
+      "player": "TIMG4STRok#1212",
+      "ms": 2612299
     },
     {
-      "type": 32,
       "playerId": 6,
-      "byteCount": 48,
-      "flags": 32,
       "mode": "ALL",
       "message": "what noob shit are you pretending to watch",
-      "timeMS": 2630196,
-      "player": "TIMG4STRok#1212"
+      "player": "TIMG4STRok#1212",
+      "ms": 2630196
     },
     {
-      "type": 32,
       "playerId": 6,
-      "byteCount": 31,
-      "flags": 32,
       "mode": "ALL",
       "message": "dancing with the stars???",
-      "timeMS": 2633380,
-      "player": "TIMG4STRok#1212"
+      "player": "TIMG4STRok#1212",
+      "ms": 2633380
     },
     {
-      "type": 32,
       "playerId": 5,
-      "byteCount": 21,
-      "flags": 32,
       "mode": "ALL",
       "message": "rickj and morty",
-      "timeMS": 2634971,
-      "player": "BEARAND#1604"
+      "player": "BEARAND#1604",
+      "ms": 2634971
     },
     {
-      "type": 32,
       "playerId": 8,
-      "byteCount": 50,
-      "flags": 32,
       "mode": "ALL",
       "message": "i'm watching americas next top model alright",
-      "timeMS": 2657727,
-      "player": "ExPeRiEnCeS#120"
+      "player": "ExPeRiEnCeS#120",
+      "ms": 2657727
     },
     {
-      "type": 32,
       "playerId": 8,
-      "byteCount": 28,
-      "flags": 32,
       "mode": "ALL",
       "message": "get your shit straight",
-      "timeMS": 2660345,
-      "player": "ExPeRiEnCeS#120"
+      "player": "ExPeRiEnCeS#120",
+      "ms": 2660345
     },
     {
-      "type": 32,
       "playerId": 6,
-      "byteCount": 33,
-      "flags": 32,
       "mode": "ALL",
       "message": "thanks for another easy win",
-      "timeMS": 2705736,
-      "player": "TIMG4STRok#1212"
+      "player": "TIMG4STRok#1212",
+      "ms": 2705736
     },
     {
-      "type": 32,
       "playerId": 5,
-      "byteCount": 27,
-      "flags": 32,
       "mode": "ALL",
       "message": "what's your apm green",
-      "timeMS": 2712345,
-      "player": "BEARAND#1604"
+      "player": "BEARAND#1604",
+      "ms": 2712345
     },
     {
-      "type": 32,
       "playerId": 6,
-      "byteCount": 53,
-      "flags": 32,
       "mode": "ALL",
       "message": "i don't get many of them....each one is special",
-      "timeMS": 2714136,
-      "player": "TIMG4STRok#1212"
+      "player": "TIMG4STRok#1212",
+      "ms": 2714136
     },
     {
-      "type": 32,
       "playerId": 2,
-      "byteCount": 57,
-      "flags": 32,
       "mode": "ALL",
       "message": "your pathetic strat works on mouth breathing idiots",
-      "timeMS": 2729312,
-      "player": "iggythefisk#236"
+      "player": "iggythefisk#236",
+      "ms": 2729312
     },
     {
-      "type": 32,
       "playerId": 2,
-      "byteCount": 26,
-      "flags": 32,
       "mode": "ALL",
       "message": "words I will cherish",
-      "timeMS": 2734027,
-      "player": "iggythefisk#236"
+      "player": "iggythefisk#236",
+      "ms": 2734027
     },
     {
-      "type": 32,
       "playerId": 8,
-      "byteCount": 43,
-      "flags": 32,
       "mode": "ALL",
       "message": "you forgot the team part of this game",
-      "timeMS": 2741401,
-      "player": "ExPeRiEnCeS#120"
+      "player": "ExPeRiEnCeS#120",
+      "ms": 2741401
     },
     {
-      "type": 32,
       "playerId": 2,
-      "byteCount": 75,
-      "flags": 32,
       "mode": "ALL",
       "message": "do you think you were doing something productive your allies weren't?",
-      "timeMS": 2771838,
-      "player": "iggythefisk#236"
+      "player": "iggythefisk#236",
+      "ms": 2771838
     },
     {
-      "type": 32,
       "playerId": 6,
-      "byteCount": 47,
-      "flags": 32,
       "mode": "ALL",
       "message": "hey you killed uhhhhh 8 towers and a main",
-      "timeMS": 2783430,
-      "player": "TIMG4STRok#1212"
+      "player": "TIMG4STRok#1212",
+      "ms": 2783430
     },
     {
-      "type": 32,
       "playerId": 2,
-      "byteCount": 76,
-      "flags": 32,
       "mode": "ALL",
       "message": "one undead massing wyrms and clicking heroes different from the other?",
-      "timeMS": 2784811,
-      "player": "iggythefisk#236"
+      "player": "iggythefisk#236",
+      "ms": 2784811
     },
     {
-      "type": 32,
       "playerId": 6,
-      "byteCount": 32,
-      "flags": 32,
       "mode": "ALL",
       "message": "and 2 of my heores : - ))\\",
-      "timeMS": 2788910,
-      "player": "TIMG4STRok#1212"
+      "player": "TIMG4STRok#1212",
+      "ms": 2788910
     },
     {
-      "type": 32,
       "playerId": 8,
-      "byteCount": 25,
-      "flags": 32,
       "mode": "ALL",
       "message": "go ahead keep going",
-      "timeMS": 2801942,
-      "player": "ExPeRiEnCeS#120"
+      "player": "ExPeRiEnCeS#120",
+      "ms": 2801942
     },
     {
-      "type": 32,
       "playerId": 8,
-      "byteCount": 37,
-      "flags": 32,
       "mode": "ALL",
       "message": "all you guys have is your words",
-      "timeMS": 2806609,
-      "player": "ExPeRiEnCeS#120"
+      "player": "ExPeRiEnCeS#120",
+      "ms": 2806609
     },
     {
-      "type": 32,
       "playerId": 6,
-      "byteCount": 8,
-      "flags": 32,
       "mode": "ALL",
       "message": "ok",
-      "timeMS": 2807790,
-      "player": "TIMG4STRok#1212"
+      "player": "TIMG4STRok#1212",
+      "ms": 2807790
     },
     {
-      "type": 32,
       "playerId": 6,
-      "byteCount": 15,
-      "flags": 32,
       "mode": "ALL",
       "message": "and a win",
-      "timeMS": 2810246,
-      "player": "TIMG4STRok#1212"
+      "player": "TIMG4STRok#1212",
+      "ms": 2810246
     },
     {
-      "type": 32,
       "playerId": 5,
-      "byteCount": 47,
-      "flags": 32,
       "mode": "ALL",
       "message": "and a win, and a mad mouthbreathing idiot",
-      "timeMS": 2813889,
-      "player": "BEARAND#1604"
+      "player": "BEARAND#1604",
+      "ms": 2813889
     },
     {
-      "type": 32,
       "playerId": 8,
-      "byteCount": 8,
-      "flags": 32,
       "mode": "ALL",
       "message": "so",
-      "timeMS": 2813993,
-      "player": "ExPeRiEnCeS#120"
+      "player": "ExPeRiEnCeS#120",
+      "ms": 2813993
     },
     {
-      "type": 32,
       "playerId": 4,
-      "byteCount": 35,
-      "flags": 32,
       "mode": "ALL",
       "message": "what does that even mean lmao",
-      "timeMS": 2815740,
-      "player": "IcebergSlim#145"
+      "player": "IcebergSlim#145",
+      "ms": 2815740
     },
     {
-      "type": 32,
       "playerId": 8,
-      "byteCount": 27,
-      "flags": 32,
       "mode": "ALL",
       "message": "what does that prove?",
-      "timeMS": 2820253,
-      "player": "ExPeRiEnCeS#120"
+      "player": "ExPeRiEnCeS#120",
+      "ms": 2820253
     },
     {
-      "type": 32,
       "playerId": 2,
-      "byteCount": 127,
-      "flags": 32,
       "mode": "ALL",
       "message": "so many years of undeads massing wyrms and clicking heroes and being unable to figure out why it's not working anymore...",
-      "timeMS": 2823797,
-      "player": "iggythefisk#236"
+      "player": "iggythefisk#236",
+      "ms": 2823797
     },
     {
-      "type": 32,
       "playerId": 8,
-      "byteCount": 40,
-      "flags": 32,
       "mode": "ALL",
       "message": "grats on your internet points boys",
-      "timeMS": 2825182,
-      "player": "ExPeRiEnCeS#120"
+      "player": "ExPeRiEnCeS#120",
+      "ms": 2825182
     },
     {
-      "type": 32,
       "playerId": 5,
-      "byteCount": 29,
-      "flags": 32,
       "mode": "ALL",
       "message": "we played the same game",
-      "timeMS": 2826053,
-      "player": "BEARAND#1604"
+      "player": "BEARAND#1604",
+      "ms": 2826053
     },
     {
-      "type": 32,
       "playerId": 5,
-      "byteCount": 16,
-      "flags": 32,
       "mode": "ALL",
       "message": "you're bad",
-      "timeMS": 2827542,
-      "player": "BEARAND#1604"
+      "player": "BEARAND#1604",
+      "ms": 2827542
     },
     {
-      "type": 32,
       "playerId": 4,
-      "byteCount": 12,
-      "flags": 32,
       "mode": "ALL",
       "message": "thanks",
-      "timeMS": 2829545,
-      "player": "IcebergSlim#145"
+      "player": "IcebergSlim#145",
+      "ms": 2829545
     },
     {
-      "type": 32,
       "playerId": 2,
-      "byteCount": 20,
-      "flags": 32,
       "mode": "ALL",
       "message": "learn to adapt",
-      "timeMS": 2837806,
-      "player": "iggythefisk#236"
+      "player": "iggythefisk#236",
+      "ms": 2837806
     },
     {
-      "type": 32,
       "playerId": 4,
-      "byteCount": 43,
-      "flags": 32,
       "mode": "ALL",
       "message": "alas this charade must come to an end",
-      "timeMS": 2842167,
-      "player": "IcebergSlim#145"
+      "player": "IcebergSlim#145",
+      "ms": 2842167
     },
     {
-      "type": 32,
       "playerId": 2,
-      "byteCount": 33,
-      "flags": 32,
       "mode": "ALL",
       "message": "it's a useful skill in life",
-      "timeMS": 2842370,
-      "player": "iggythefisk#236"
+      "player": "iggythefisk#236",
+      "ms": 2842370
     },
     {
-      "type": 32,
       "playerId": 6,
-      "byteCount": 105,
-      "flags": 32,
       "mode": "ALL",
       "message": "\"grats on your internet points\" says the guy who is sitting in a game he lost, too angry to move on",
-      "timeMS": 2844419,
-      "player": "TIMG4STRok#1212"
+      "player": "TIMG4STRok#1212",
+      "ms": 2844419
     },
     {
-      "type": 32,
       "playerId": 5,
-      "byteCount": 9,
-      "flags": 32,
       "mode": "ALL",
       "message": "bye",
-      "timeMS": 2845290,
-      "player": "BEARAND#1604"
+      "player": "BEARAND#1604",
+      "ms": 2845290
     },
     {
-      "type": 32,
       "playerId": 2,
-      "byteCount": 28,
-      "flags": 32,
       "mode": "ALL",
       "message": "sign of a healthy mind",
-      "timeMS": 2847339,
-      "player": "iggythefisk#236"
+      "player": "iggythefisk#236",
+      "ms": 2847339
     },
     {
-      "type": 32,
       "playerId": 4,
-      "byteCount": 13,
-      "flags": 32,
       "mode": "ALL",
       "message": "get GUD",
-      "timeMS": 2847595,
-      "player": "IcebergSlim#145"
+      "player": "IcebergSlim#145",
+      "ms": 2847595
     },
     {
-      "type": 32,
       "playerId": 5,
-      "byteCount": 27,
-      "flags": 32,
       "mode": "ALL",
       "message": "youtube.com/highperch",
-      "timeMS": 2848825,
-      "player": "BEARAND#1604"
+      "player": "BEARAND#1604",
+      "ms": 2848825
     },
     {
-      "type": 32,
       "playerId": 8,
-      "byteCount": 22,
-      "flags": 32,
       "mode": "ALL",
       "message": "whatever you say",
-      "timeMS": 2854358,
-      "player": "ExPeRiEnCeS#120"
+      "player": "ExPeRiEnCeS#120",
+      "ms": 2854358
     },
     {
-      "type": 32,
       "playerId": 6,
-      "byteCount": 16,
-      "flags": 32,
       "mode": "ALL",
       "message": "gg gl next",
-      "timeMS": 2854824,
-      "player": "TIMG4STRok#1212"
+      "player": "TIMG4STRok#1212",
+      "ms": 2854824
     }
   ],
   "apm": {
@@ -9462,7 +9015,7 @@
     "randomRaces": false,
     "speed": 2
   },
-  "parseTime": 771,
+  "parseTime": 766,
   "saverPlayerId": 2,
   "winningTeamId": 1,
   "winningTeamConfirmed": true,

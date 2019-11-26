@@ -1365,7 +1365,7 @@ a.playername:hover {
 .chatlog .silence {
   height: 1.5em;
 }
-.chatlog .leave {
+.chatlog .leave, .chatlog .pause {
   font-style: italic;
 }
 .chatlog .admin {
@@ -1435,7 +1435,7 @@ a.playername:hover {
     width: 120px;
   }
 }
-.chatmessage .message, .chatmessage .leave {
+.chatmessage .message, .chatmessage .leave, .chatmessage .pause {
   display: inline-block;
   position: relative;
   text-align: left;
@@ -1443,10 +1443,13 @@ a.playername:hover {
   margin-right: 85px;
 }
 @media (min-width: 750px) {
-  .chatmessage .message, .chatmessage .leave {
+  .chatmessage .message, .chatmessage .leave, .chatmessage .pause {
     left: 125px;
     margin-right: 125px;
   }
+}
+.chatmessage .leave, .chatmessage .pause {
+  color: #FFF;
 }
 
 .player.details {

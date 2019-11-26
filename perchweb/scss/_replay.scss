@@ -222,7 +222,7 @@ a.playername{
     .silence {
         height: 1.5em;
     }
-    .leave {
+    .leave, .pause {
         font-style: italic;
     }
     .admin {
@@ -292,7 +292,7 @@ a.playername{
         }
     }
 
-    .message, .leave {
+    .message, .leave, .pause {
         display: inline-block;
         position: relative;
         text-align: left;
@@ -302,5 +302,8 @@ a.playername{
             left: 125px;
             margin-right: 125px;
         }
+    }
+    .leave, .pause {
+        color: #FFF;
     }
 }
