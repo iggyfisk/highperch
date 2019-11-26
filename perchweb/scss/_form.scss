@@ -117,7 +117,7 @@ form.upload {
         padding: $padding;
         border-radius:0;
         width:100%;
-        margin-bottom:0;
+        margin-bottom:-1px;
     }
 
     .inputfields {
@@ -129,7 +129,7 @@ form.upload {
     }
     input[type=file] {
         padding:$padding;
-        width: calc(100% - 16px);
+        width: calc(100% - 18px);
     }
 
     input[type=submit] {
