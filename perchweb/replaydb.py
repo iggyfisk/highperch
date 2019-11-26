@@ -277,11 +277,11 @@ def delete_replay(replay_id):
             col = {'H': 'HUGames', 'O': 'ORGames',
                    'N': 'NEGames', 'U': 'UDGames'}[race]
             query(f'''
-                UPDATE Players AS P
+                UPDATE Players
                 SET {col} = {col} - 1
                 WHERE EXISTS(SELECT PlayerTag
                     FROM GamesPlayed AS G
-                    WHERE PlayerTag = P.BattleTag
+                    WHERE PlayerTag = BattleTag
                     AND G.ReplayID = ?
                     AND G.Race = ?);''', (replay_id, race))
 

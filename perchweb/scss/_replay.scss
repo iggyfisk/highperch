@@ -154,8 +154,12 @@ a.playername{
             flex-direction:row;
         }
         .team {
-            flex: 1;            
+            flex: 1;
+
             &:last-child {
+                margin-bottom: $padding * 2;
+            }
+            @media (#{$bp-larger-than-tablet}) {
                 margin-bottom: $padding * 2;
             }
         }

@@ -1310,6 +1310,11 @@ a.playername:hover {
 .large-replay .teams .team:last-child {
   margin-bottom: 16px;
 }
+@media (min-width: 750px) {
+  .large-replay .teams .team {
+    margin-bottom: 16px;
+  }
+}
 .large-replay .teams .vs {
   text-align: center;
   flex: 0;
