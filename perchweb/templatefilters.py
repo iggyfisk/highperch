@@ -92,7 +92,7 @@ def scale_color(hex_color, amount):
 
 def make_country_embed(ip_addr):
     country = geoip_country(ip_addr)
-    return f"<img src='/static/images/flags/{country['code']}.png' title='{country['name']}' class='countryflag'>"
+    return f"<img src='/static/images/flags/{country['code'].lower()}.png' title='{country['name']}' class='countryflag'>"
 
 
 def register(jinja_environment):
