@@ -1,4 +1,6 @@
 const W3GReplay = require('w3gjs');
+const { ActionBlockList } = require('./node_modules/w3gjs/dist/lib/parsers/actions');
+const { buildings } = require('./node_modules/w3gjs/dist/lib/mappings');
 const { writeFileSync } = require('fs');
 
 const inputPath = process.argv.length >= 3 ? process.argv[2] : null;
@@ -59,8 +61,55 @@ Parser.on('gamedatablock', (block) => {
   }
 });
 
+const pauseEvents = [];
+const playerBuildings = {};
+Parser.on('timeslotblock', (timeSlotBlock) => {
+  timeSlotBlock.actions.forEach(actionBlock => {
+    const { playerId, actions } = actionBlock;
+    ActionBlockList.parse(actions).forEach(action => {
+      switch (action.actionId) {
+        case 1:
+          pauseEvents.push({ playerId, ms: Parser.msElapsed, pause: true });
+          break;
+        case 2:
+          pauseEvents.push({ playerId, ms: Parser.msElapsed, pause: false });
+          break;
+        case 0x11:
+          const { itemId } = action;
+          if (itemId.type !== 'alphanumeric' && buildings[itemId.value]) {
+            if (!playerBuildings[playerId]) playerBuildings[playerId] = [];
+            playerBuildings[playerId].push({ id: itemId.value, ms: Parser.msElapsed, x: action.targetX, y: action.targetY });
+          }
+          break;
+        // I forgot about tavern resurrection. RIP
+        /*
+        case 18:
+          // Use ability with target and object
+          const { itemId :{ value } } = action;
+
+          if (value[0] == 89 && value[1] == 0 && value[2] == 19 && value[3] == 0) {
+            // Revive hero
+            if (!heroRevives[playerId]) heroRevives[playerId] = [];
+            const time = Parser.msElapsed;
+            console.log('Herorevive', playerId, time);
+          }
+          break;          
+        case 29:
+          // Revive cancelled
+          if (!heroRevives[playerId]) heroRevives[playerId] = [];
+          const time = Parser.msElapsed;
+          console.log('Hero revive cancelled', time);
+          break;
+        */
+      }
+    });
+  });
+});
+
+// All callbacks set, start parsing!
 const replay = Parser.parse(inputPath);
 
+// Figure out who saved and who won by looking at leave order
 const replaySaverPlayerId = leaveEvents.length
   ? leaveEvents[leaveEvents.length - 1].playerId
   : null;
@@ -71,19 +120,19 @@ if (!winningTeamConfirmed && replaySaverPlayerId) {
   teamsLeft = teamsLeft.filter(tId => tId !== replaySaverTeamId);
   if (teamsLeft.length == 1) {
     winningTeamId = teamsLeft[0];
-  }  
+  }
 }
 replay.saverPlayerId = replaySaverPlayerId;
 replay.winningTeamId = winningTeamId;
 replay.winningTeamConfirmed = winningTeamConfirmed;
 replay.leaveEvents = leaveEvents;
 
-// Clean double chats from replay saver, bug in Reforged beta, Blizzard may have fix it since
+// Clean double chats from replay saver, bug in Reforged beta, Blizzard may have fixed it since
 const sanitizedChat = [];
 let lastSaverChatMs = 0;
 let lastSaverChatMessage = null;
 replay.chat.forEach(c => {
-  const { playerId, timeMS, message} = c;
+  const { playerId, timeMS, message } = c;
   if (playerId == replaySaverPlayerId) {
     if ((timeMS - lastSaverChatMs) < 500 && message == lastSaverChatMessage) {
       return;
@@ -94,6 +143,20 @@ replay.chat.forEach(c => {
   sanitizedChat.push(c);
 });
 replay.chat = sanitizedChat;
+
+// Include pauses
+replay.pauseEvents = pauseEvents;
+
+// Add X and Y coordinates to building order
+replay.players.forEach(p => {
+  p['buildings']['order'].forEach((b, i) => {
+    if (!playerBuildings[p['id']][i]) {
+      throw "w3gjs and highparser mismatch"
+    }
+  });
+  // Replace with our location-aware list
+  p['buildings']['order'] = playerBuildings[p['id']];
+});
 
 writeFileSync(outputPath, JSON.stringify(replay));
 return 0;
