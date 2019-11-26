@@ -43,7 +43,7 @@
 			var input = event.srcElement;
 			var fileName = replayUploader.files[0].name;
 			if (!fileName.match(/^Replay_\d{4}_/g)) {
-				replayTitle.value = fileName.slice(0, -4);
+				replayTitle.value = fileName.slice(0, -4).slice(0, 50);
 				}
 			replayTitle.focus();
 			replayTitle.select();
