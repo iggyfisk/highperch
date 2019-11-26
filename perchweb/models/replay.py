@@ -43,7 +43,7 @@ class Replay(dict):
         self.players = [Player(p) for p in args['players']]
         del self['players']
         # Need something more general
-        self.player_colors = {p['id']: p['color'] for p in self.players}
+        self.player_colors = defaultdict(lambda: '#FFFFFF', {p['id']: p['color'] for p in self.players})
         self.player_names = {p['id']: p['name'] for p in self.players}
         # I'd like to turn all these cache values into @cached_property but that's Python >= 3.8
         self.arbitrary_scores = None
