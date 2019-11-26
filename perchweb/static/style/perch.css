@@ -1154,7 +1154,7 @@ footer .chatlog {
   text-shadow: 1px 1px 0 #333;
 }
 footer .logout {
-  color: inherit;
+  color: #FFCCA3 !important;
   text-decoration: none;
   cursor: inherit;
 }
