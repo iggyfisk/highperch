@@ -1,4 +1,7 @@
-.player {
+.player {    
+    &.details {
+        margin-bottom: $padding * 2;
+    }
     .stats {
         display: flex;
         flex-direction: column;
