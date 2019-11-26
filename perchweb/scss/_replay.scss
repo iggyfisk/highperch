@@ -154,13 +154,19 @@ a.playername{
             flex-direction:row;
         }
         .team {
-            flex: 1;
-            margin-bottom: $padding * 2;
+            flex: 1;            
+            &:last-child {
+                margin-bottom: $padding * 2;
+            }
         }
         .vs {
             text-align:center;
             flex: 0;
             padding: $padding;
+        }
+        .result {
+            position: absolute;
+            margin-left: 0.5em;
         }
         .team {
             .player {
@@ -220,6 +226,7 @@ a.playername{
         position: -webkit-sticky;
         position: sticky;
         top: 70px;
+        z-index: 1;
         .icon {
             font-size: 30px;
             line-height: 15px;

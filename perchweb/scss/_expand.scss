@@ -1,6 +1,12 @@
 /* Experimental expand via JS feature */
 .hp-expand {
   cursor: pointer;
+
+  &.size-ph {
+    @media (#{$bp-larger-than-phablet}) {
+      display: none;
+    }
+  }
 }
 
 .hp-hidden {
@@ -9,7 +15,25 @@
     transition: max-height 300ms ease-out;
     max-height: 0;
     &.visible {
+      max-height: 100vh;
+    }
+    &.size-ph {
+      @media (#{$bp-larger-than-phablet}) {
         max-height: 100vh;
-    }  
+      }
+    }
+  }
+
+  &.h {
+    transition: max-width 300ms ease-out;
+    max-width: 0;
+    &.visible {
+      max-width: 100vh;
+    }
+    &.size-ph {
+      @media (#{$bp-larger-than-phablet}) {
+        max-width: 100vh;
+      }
+    }
   }
 }

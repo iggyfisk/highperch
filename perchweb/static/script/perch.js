@@ -1,10 +1,18 @@
 /* hp-expand START */
 (() => {
 	document.addEventListener("DOMContentLoaded", () => {
-		document.querySelectorAll('.hp-expand').forEach(expEl=> {
+		document.querySelectorAll('.hp-expand').forEach(expEl => {
 			expEl.addEventListener('click', event => {
-				event.target.classList.toggle('active');
-				event.target.parentNode.querySelector('.hp-hidden').classList.toggle('visible');           
+				let parent = event.target.parentNode;
+				let expandTarget = null;
+				// Recursively look for a .hp-hidden element to expand
+				while (!(expandTarget = parent.querySelector('.hp-hidden')) && parent !== document.body) {
+					parent = parent.parentNode;
+				}
+				if (expandTarget) {
+					event.target.classList.toggle('active');
+					expandTarget.classList.toggle('visible');
+				}
 			});
 		});
 	});
@@ -34,20 +42,20 @@
 /* Replay title prepopulate START */
 (() => {
 	document.addEventListener("DOMContentLoaded", () => {
-		var replayUploader = document.getElementById( 'uploader' );
-		var replayTitle = document.getElementById( 'upload_namer' );
+		var replayUploader = document.getElementById('uploader');
+		var replayTitle = document.getElementById('upload_namer');
 		if (replayUploader == null || replayTitle == null) {
 			return;
 		}
-		replayUploader.addEventListener( 'change', event => {
+		replayUploader.addEventListener('change', event => {
 			var input = event.srcElement;
 			var fileName = replayUploader.files[0].name;
 			if (!fileName.match(/^Replay_\d{4}_/g)) {
 				replayTitle.value = fileName.slice(0, -4).slice(0, 50);
-				}
+			}
 			replayTitle.focus();
 			replayTitle.select();
-			}
+		}
 		);
 	});
 })();

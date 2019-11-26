@@ -22,12 +22,11 @@
             <div class="team">
                 {% if detailed %}
                 <h2>
-                    Team {{ teamId }}
-                    {% if teamId == replay['winningTeamId'] %}
-                    
-                        <b>Winner{% if not replay['winningTeamConfirmed'] %}?{% else %}!{% endif %}</b>
+                    <span class="{% if winnerId is not none %}hp-expand{% endif %}">Team {{ teamId }}</span>
+                    {% if teamId == replay['winningTeamId'] %}                    
+                        <b class="result hp-hidden h">Winner{% if not replay['winningTeamConfirmed'] %}?{% else %}!{% endif %}</b>
                     {% elif winnerId is not none %}
-                        <b>Loser{% if not replay['winningTeamConfirmed'] %}?{% else %}!{% endif %}</b>
+                        <b class="result hp-hidden h">Loser{% if not replay['winningTeamConfirmed'] %}?{% else %}!{% endif %}</b>
                     {% endif %}
                 </h2>
                 {% endif %}

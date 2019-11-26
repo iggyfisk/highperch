@@ -1306,12 +1306,18 @@ a.playername:hover {
 }
 .large-replay .teams .team {
   flex: 1;
+}
+.large-replay .teams .team:last-child {
   margin-bottom: 16px;
 }
 .large-replay .teams .vs {
   text-align: center;
   flex: 0;
   padding: 8px;
+}
+.large-replay .teams .result {
+  position: absolute;
+  margin-left: 0.5em;
 }
 .large-replay .teams .team .player {
   padding: 8px;
@@ -1362,6 +1368,7 @@ a.playername:hover {
   position: -webkit-sticky;
   position: sticky;
   top: 70px;
+  z-index: 1;
 }
 .chatlog .admin .icon {
   font-size: 30px;
@@ -1488,8 +1495,21 @@ a.playername:hover {
   font-weight: bold;
 }
 
+.fexp {
+  float: right;
+  margin-right: 8px;
+  font-family: highperch;
+}
+.fexp::before {
+  content: "";
+}
+.fexp.active::before {
+  content: "";
+}
+
 form.filters {
   display: flex;
+  margin-bottom: 0;
 }
 form.filters .flowlist {
   flex: 1;
@@ -1641,6 +1661,11 @@ form.upload input[type=submit]:hover {
 .hp-expand {
   cursor: pointer;
 }
+@media (min-width: 550px) {
+  .hp-expand.size-ph {
+    display: none;
+  }
+}
 
 .hp-hidden {
   overflow: hidden;
@@ -1651,6 +1676,23 @@ form.upload input[type=submit]:hover {
 }
 .hp-hidden.v.visible {
   max-height: 100vh;
+}
+@media (min-width: 550px) {
+  .hp-hidden.v.size-ph {
+    max-height: 100vh;
+  }
+}
+.hp-hidden.h {
+  transition: max-width 300ms ease-out;
+  max-width: 0;
+}
+.hp-hidden.h.visible {
+  max-width: 100vh;
+}
+@media (min-width: 550px) {
+  .hp-hidden.h.size-ph {
+    max-width: 100vh;
+  }
 }
 
 .guide {

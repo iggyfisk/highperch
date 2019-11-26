@@ -4,20 +4,21 @@
 {% block content %}
 <div class="row top-controls">
     <div class="four columns top-control">
-        <h2>Contribute replay</h2>      
+        <h2>Contribute replay</h2>
         <div class="content">
             <form class="upload" action="/upload" method="POST" enctype="multipart/form-data" autocomplete="off">
                 <div class="inputfields">
                     <input type="file" name="replay" accept=".w3g" id="uploader" required />
-                    <input type="text" name="name" minlength="6" maxlength="50" id="upload_namer" placeholder="Name your replay" required />
+                    <input type="text" name="name" minlength="6" maxlength="50" id="upload_namer"
+                        placeholder="Name your replay" required />
                 </div>
-                <input type="Submit" class="action" value="Upload" />        
-            </form>        
+                <input type="Submit" class="action" value="Upload" />
+            </form>
         </div>
     </div>
     <div class="eight columns top-control">
-        <h2 class="closed">Filter</h2>
-        <form action="/" class="filters" method="GET" autocomplete="off">
+        <h2>Filter <i class="fexp hp-expand size-ph"></i></h2>
+        <form action="/" class="filters hp-hidden v size-ph" method="GET" autocomplete="off">
             <div class="flowlist">
                 <div class="filterrow">
                     <div class="filter">
@@ -44,7 +45,7 @@
                         </select>
                     </div>
                     <div class="filter apply-filter">
-                        <input type="submit" value="Apply"/>
+                        <input type="submit" value="Apply" />
                     </div>
                 </div>
             </div>
@@ -54,7 +55,7 @@
 <div class="replays">
     <h2>Showing {{ replays|length }} replays</h2>
     {% for replay in replays %}
-        {{ replaymacros.card(replay, is_admin) }}
+    {{ replaymacros.card(replay, is_admin) }}
     {% endfor %}
 </div>
 {% endblock %}

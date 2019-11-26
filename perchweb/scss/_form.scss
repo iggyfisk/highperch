@@ -1,7 +1,19 @@
 
+.fexp {
+    float: right;
+    margin-right: $padding;
+    font-family: highperch;
+    &::before {
+        content: "";
+    }
+    &.active::before {
+        content: "";
+    }
+}
 form.filters{ 
     //border-left:1px solid black;
     display:flex;
+    margin-bottom: 0;
     .flowlist{
         flex: 1;
     }
