@@ -17,8 +17,8 @@
         </div>
     </div>
     <div class="eight columns top-control">
-        <h2>Filter <i class="fexp hp-expand size-ph"></i></h2>
-        <form action="/" class="filters hp-hidden v size-ph" method="GET" autocomplete="off">
+        <h2>Filter <i class="fexp hp-expand size-ph {% if filter_active %}active{% endif %}"></i></h2>
+        <form action="/" class="filters hp-hidden v size-ph  {% if filter_active %}visible{% endif %}" method="GET" autocomplete="off">
             <div class="flowlist">
                 <div class="filterrow">
                     <div class="filter">

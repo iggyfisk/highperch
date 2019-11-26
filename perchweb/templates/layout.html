@@ -12,7 +12,7 @@
     <link rel="shortcut icon" href="/static/images/favicon.ico">
 </head>
 <body class="{{background_style}}">
-    <h1>high<span class="perch">per.ch</span></h1>
+    <h1 title="Welcome to OUR web">high<span class="perch">per.ch</span></h1>
     <nav>
         <div class="container">
             <div class="row">
@@ -65,7 +65,6 @@
         {% endif %}
         <p>Copyright {% if not is_admin %}<a href="/admin" class="logout">{% endif %}&copy; {% if not is_admin %}</a>{% endif %} {{ year }} <a href="mailto:admin@highper.ch">the Broliance</a></p>
     </footer>
-
     <script src="/static/script/perch.js?h={{ config['STATIC_HASH'] }}"></script>
     {% block scripts %}{% endblock %}
 </body>

@@ -15,7 +15,7 @@ class Player(dict):
     """ Full player information, initialized from a replay data JSON file """
 
     def tower_count(self):
-        """ Todo: iterate over self['buildings']['summary'] and add all the tower types """
+        """ Total number of buildings made by this player that map to lib.wigcodes.is_tower """
         return sum(c for (i, c) in self['buildings']['summary'].items() if i in is_tower)
 
     def real_heroes(self):
@@ -34,7 +34,8 @@ class Player(dict):
         score += len(heroes) * 30
         score += sum(h['level'] for h in heroes) * 2
 
-        score += (self.tower_count() * 500000) / (self['currentTimePlayed'] + 1)
+        score += (self.tower_count() * 500000) / \
+            (self['currentTimePlayed'] + 1)
 
         units = self['units']['summary']
         score += 15 if 'ngsp' in units else 0
@@ -49,5 +50,3 @@ class Player(dict):
             score += c * arbitrary_item_scores.get(i, 0)
 
         return score
-
-

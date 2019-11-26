@@ -24,14 +24,10 @@ def index():
         'chat': request.args.get('chat', None),
         'sort': request.args.get('sort', 'id')
     }
+    filter_active = any(v and v != 'id' for v in replay_filter.values())
     replays = replaydb.list_replays(replay_filter)
 
-    # Testy thing
-    if 'flash' in request.args:
-        for i in range(int(request.args['flash'])):
-            flash("Flash test string" * (i + 1))
-
-    return standard_page('index.html', 'Replays', nav='index', replays=replays, replay_filter=replay_filter)
+    return standard_page('index.html', 'Replays', nav='index', replays=replays, replay_filter=replay_filter, filter_active=filter_active)
 
 
 @routes.route('/replay/<int:replay_id>')

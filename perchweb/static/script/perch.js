@@ -123,10 +123,8 @@
 
 			if (cnv.classList.contains('anim')) {
 				// Will have to bite the bullet and add something to the DOM instead
-				ctx.font = "40px Scada";
-				ctx.fillStyle = '#EEE';
-				ctx.fillText("▶", (mSize / 2) - 15, (mSize / 2) + 15);
-
+				ctx.font = "40px sans";
+				ctx.fillText("▶️", (mSize / 2) - 25, (mSize / 2) + 15);
 				cnv.addEventListener('click', animate);
 			} else {
 				for (let [color, towers] of Object.entries(playerTowers)) {

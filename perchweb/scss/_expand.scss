@@ -11,11 +11,11 @@
 
 .hp-hidden {
   overflow: hidden;
-  &.v {
-    transition: max-height 300ms ease-out;
+  &.v { 
     max-height: 0;
     &.visible {
       max-height: 100vh;
+      transition: max-height 300ms ease-out;
     }
     &.size-ph {
       @media (#{$bp-larger-than-phablet}) {

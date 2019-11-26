@@ -1697,11 +1697,11 @@ form.upload input[type=submit]:hover {
   overflow: hidden;
 }
 .hp-hidden.v {
-  transition: max-height 300ms ease-out;
   max-height: 0;
 }
 .hp-hidden.v.visible {
   max-height: 100vh;
+  transition: max-height 300ms ease-out;
 }
 @media (min-width: 550px) {
   .hp-hidden.v.size-ph {
