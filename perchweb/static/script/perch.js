@@ -75,48 +75,45 @@
 			const getCoords = t => ([
 				(t[0] - mapSize.minX) * scale + xStart,
 				mapImageSize - ((t[1] - mapSize.minY) * scale + yStart)]);
-		
+
 			cnv.height = cnv.width = mapImageSize;
 			const ctx = cnv.getContext('2d');
-			let queue = 0;
-			const animate = () => {
+			let queue = false;
+			const animate = towers => {
 				if (queue) return;
+				queue = true;
 
 				cnv.classList.toggle('anim');
 				ctx.clearRect(0, 0, cnv.width, cnv.height);
 
-				const frameDelay = 50;
-				const frameLength = 10000;
-				const startSkip = 60000;
+				// Variable delay between each paint, 15 - 250ms;
+				const frameDelay = Math.round(Math.max(Math.min(10000 / towers.length, 250), 15));
+				const drawNext = (i) => {
+					ctx.fillStyle = towers[i][3];
+					coords = getCoords(towers[i++]);
+					ctx.fillRect(coords[0] - po, coords[1] - po, ps, ps);
 
-				for (let [color, towers] of Object.entries(playerTowers)) {
-					const drawNext = (i, time) => {
-						console.log(color, time);
-						ctx.fillStyle = color;
-						while (i < towers.length && time >= towers[i][2]) {
-							coords = getCoords(towers[i++]);
-							ctx.fillRect(coords[0] - po, coords[1] - po, ps, ps);
-						}
-
-						if (i < towers.length) {
-							setTimeout(drawNext.bind(this, i, time + frameLength), frameDelay);
-						} else if (--queue == 0) {
-							cnv.classList.toggle('anim');
-						}
-					}
-
-					if (towers.length) {
-						++queue;
-						drawNext(0, startSkip);
+					if (i < towers.length) {
+						setTimeout(drawNext.bind(this, i), frameDelay);
+					} else {
+						queue = false;
+						cnv.classList.toggle('anim');
 					}
 				}
+				setTimeout(drawNext.bind(this, 0), 1);
 			}
 
 			if (cnv.classList.contains('anim')) {
 				// Will have to bite the bullet and add something to the DOM instead
 				ctx.font = "40px sans";
 				ctx.fillText("▶️", (mapImageSize / 2) - 25, (mapImageSize / 2) + 15);
-				cnv.addEventListener('click', animate);
+
+				// Combine all player's towers and put them in order
+				const orderedTowers = Object.entries(playerTowers)
+					.map(([c, towers]) => towers.map(t => [...t, c]))
+					.flat(1).sort((a, b) => (a[2] > b[2]));
+
+				cnv.addEventListener('click', () => animate(orderedTowers));
 			} else {
 				for (let [color, towers] of Object.entries(playerTowers)) {
 					ctx.fillStyle = color;
