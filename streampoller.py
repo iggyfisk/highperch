@@ -3,7 +3,7 @@
 
 import sqlite3
 import sys
-from os import environ
+from os import environ, path
 import requests
 
 
@@ -13,7 +13,7 @@ db = None
 def get_connection():
     global db
     if db is None:
-        db = sqlite3.connect('streams.db')
+        db = sqlite3.connect(path.join(path.dirname(path.abspath(__file__)), ('streams.db')))
         db.row_factory = sqlite3.Row
     return db
 
