@@ -112,7 +112,7 @@
 				const orderedTowers = Object.entries(playerTowers)
 					.map(([c, towers]) => towers.map(t => [...t, c]))
 					.flat(1).sort((a, b) => (a[2] - b[2]));
-				console.log(orderedTowers);
+
 				cnv.addEventListener('click', () => animate(orderedTowers));
 			} else {
 				for (let [color, towers] of Object.entries(playerTowers)) {
