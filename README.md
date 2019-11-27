@@ -26,7 +26,8 @@ Symbols, highlighting, formatting, debugging
 * `pip install autopep8` auto formatting (Shift+Alt+F / Shift+Option+F)
 * Ctrl+Shift+P / Cmd+Shift+P inside VSCode, `Python: Select interpreter`, find your virtual environment in the list
 * in `launch.json`:
-```{
+```
+{
     "name": "Python: Flask",
     "type": "python",
     "request": "launch",
@@ -63,3 +64,46 @@ Look at `test/Reforged1Pretty.json` and `test/Reforged2Pretty.json` for a human 
 * `systemctl restart highperch`
 
 Before we go public it's `python initcontent.py` one last time, using the production content. After that, data format updates will probably be more bespoke.
+
+## Production environment
+
+This goes in a systemd unit, e.g. `/etc/systemd/system/highperch.service`:
+
+```
+[Unit]
+Description=Gunicorn WSGI for the Highperch Flask app
+After=network.target
+
+[Service]
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/new.highper.ch/perchweb
+Environment="PATH=/var/www/new.highper.ch/env/bin://usr/bin/"
+EnvironmentFile=/etc/nginx/highperch-envvars
+ExecStart=/var/www/new.highper.ch/env/bin/gunicorn --workers 4 --log-file /var/log/nginx/gunicorn/highperch.log --log-level DEBUG --bind unix:../highperch.sock app:app
+
+[Install]
+WantedBy=multi-user.target
+```
+
+The EnvironmentFile from the unit above needs to contain these lines:
+```
+SERVER_HOST=localhost
+SERVER_PORT=5000
+HIGHPERCH_ENVIRONMENT=production
+HIGHPERCH_FLASK_KEY=(it's a secret)
+HIGHPERCH_ADMIN_HASH=(it's a secret)
+```
+
+The stream poller gets called with this cron job, run as `www-data`:
+
+```
+*/1 * * * * /usr/bin/env bash -c 'source /etc/nginx/streampoll-envvars && source /var/www/new.highper.ch/env/bin/activate && python /var/www/new.highper.ch/streampoller.py'
+```
+
+The envvar file from the above needs to contain these lines:
+
+```
+export HIGHPERCH_STREAM_WEBHOOK=(it's a secret)
+export HIGHPERCH_TWITCH_CLIENT_ID=(it's a secret)
+```
