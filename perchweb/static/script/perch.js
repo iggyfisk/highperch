@@ -86,7 +86,7 @@
 				cnv.classList.toggle('anim');
 				ctx.clearRect(0, 0, cnv.width, cnv.height);
 
-				// Variable delay between each paint, 15 - 250ms;
+				// Fixed delay between each paint, but adjusted per replay, 15 - 250ms;
 				const frameDelay = Math.round(Math.max(Math.min(10000 / towers.length, 250), 15));
 				const drawNext = (i) => {
 					ctx.fillStyle = towers[i][3];
@@ -108,11 +108,11 @@
 				ctx.font = "40px sans";
 				ctx.fillText("▶️", (mapImageSize / 2) - 25, (mapImageSize / 2) + 15);
 
-				// Combine all player's towers and put them in order
+				// Combine all players' towers and put them in order
 				const orderedTowers = Object.entries(playerTowers)
 					.map(([c, towers]) => towers.map(t => [...t, c]))
-					.flat(1).sort((a, b) => (a[2] > b[2]));
-
+					.flat(1).sort((a, b) => (a[2] - b[2]));
+				console.log(orderedTowers);
 				cnv.addEventListener('click', () => animate(orderedTowers));
 			} else {
 				for (let [color, towers] of Object.entries(playerTowers)) {

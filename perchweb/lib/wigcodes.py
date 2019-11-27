@@ -4,7 +4,7 @@ race_titles = {
     'R': 'Random',
     'H': 'Human',
     'O': 'Orc',
-    'N': 'Night Elf', # Yes w3gjs remaps E to N for the different race fields
+    'N': 'Night Elf',  # Yes w3gjs remaps E to N for the different race fields
     'U': 'Noob Alert'
 }
 
