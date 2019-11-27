@@ -226,7 +226,7 @@ def save_replay(replay, replay_name, uploader_ip):
         create_players([p['name'] for p in players])
 
         official = 1 if replay_data.official() else 0
-        towers = replay_data.get_drawmap()['towers']
+        towers = replay_data.get_drawmap(force=True)['towers']
         # concatenate one big string that can be searched through later
         chat = '|'.join([c['message'] for c in replay_data['chat']])
         tower_count = replay_data.tower_count()
