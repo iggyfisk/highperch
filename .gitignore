@@ -27,3 +27,4 @@ perchweb/static/replays/*.w3g
 temp/*
 !temp/README.md
 wig.db
+streams.db
