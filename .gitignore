@@ -24,6 +24,8 @@ perchweb/app.cfg
 # Content, default paths
 replaydata/*.json
 perchweb/static/replays/*.w3g
+perchweb/static/pics
 temp/*
 !temp/README.md
 wig.db
+streams.db

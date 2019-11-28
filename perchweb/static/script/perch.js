@@ -63,69 +63,57 @@
 			const ps = cnv.dataset.paintsize;
 			const po = ps / 2;
 
+			const mapImageSize = cnv.clientWidth;
+			const xSize = mapSize.maxX - mapSize.minX;
+			const ySize = mapSize.maxY - mapSize.minY;
+			const maxSize = Math.max(xSize, ySize);
+			const scale = mapImageSize / maxSize;
+
+			const xStart = -(xSize / maxSize * mapImageSize - mapImageSize) / 2;
+			const yStart = -(ySize / maxSize * mapImageSize - mapImageSize) / 2;
+
+			const getCoords = t => ([
+				(t[0] - mapSize.minX) * scale + xStart,
+				mapImageSize - ((t[1] - mapSize.minY) * scale + yStart)]);
+
+			cnv.height = cnv.width = mapImageSize;
 			const ctx = cnv.getContext('2d');
-			const mSize = cnv.clientWidth;
-			cnv.height = cnv.width = mSize;
-
-			// It doesn't start great
-			const xDiff = mapSize.maxX - mapSize.minX;
-			const yDiff = mapSize.maxY - mapSize.minY;
-			const maxDiff = Math.max(xDiff, yDiff);
-
-			// Gets worse
-			const yScale = yDiff / maxDiff;
-			const xScale = xDiff / maxDiff;
-			const yOffset = mSize - (mSize * yScale);
-			const xOffset = mSize - (mSize * xScale);
-
-			const getCoords = t => {
-				// Completely off the rails
-				x = t[0] - mapSize.minX;
-				xPct = x / xDiff;
-				x = xPct * mSize;
-				x = x + (xOffset / 2);
-
-				y = t[1] - mapSize.minY;
-				yPct = y / yDiff;
-				y = yPct * (mSize * yScale);
-				y = y + (yOffset / 2);
-				y = mSize - y;
-
-				return [x, y]
-			}
-
-			// Todo: Draw chunks of time based on replay timestamps
-			let queue = 0;
-			const animate = () => {
+			let queue = false;
+			const animate = towers => {
 				if (queue) return;
+				queue = true;
 
 				cnv.classList.toggle('anim');
 				ctx.clearRect(0, 0, cnv.width, cnv.height);
 
-				for (let [color, towers] of Object.entries(playerTowers)) {
-					const drawNext = i => {
-						coords = getCoords(towers[i]);
-						ctx.fillStyle = color;						
-						ctx.fillRect(coords[0] - po, coords[1] - po, ps, ps);
+				// Fixed delay between each paint, but adjusted per replay, 15 - 250ms;
+				const frameDelay = Math.round(Math.max(Math.min(10000 / towers.length, 250), 15));
+				const drawNext = (i) => {
+					ctx.fillStyle = towers[i][3];
+					coords = getCoords(towers[i++]);
+					ctx.fillRect(coords[0] - po, coords[1] - po, ps, ps);
 
-						if (towers.length > ++i) {
-							setTimeout(drawNext.bind(this, i), 100);
-						} else if (--queue == 0) {
-							cnv.classList.toggle('anim');
-						}
-					}
-					if (towers.length) {
-						++queue;
-						setTimeout(drawNext.bind(this, 0), 1);
+					if (i < towers.length) {
+						setTimeout(drawNext.bind(this, i), frameDelay);
+					} else {
+						queue = false;
+						cnv.classList.toggle('anim');
 					}
 				}
+				setTimeout(drawNext.bind(this, 0), 1);
 			}
 
 			if (cnv.classList.contains('anim')) {
 				// Will have to bite the bullet and add something to the DOM instead
 				ctx.font = "40px sans";
-				ctx.fillText("▶️", (mSize / 2) - 25, (mSize / 2) + 15);
-				cnv.addEventListener('click', animate);
+				ctx.fillText("▶️", (mapImageSize / 2) - 25, (mapImageSize / 2) + 15);
+
+				// Combine all players' towers and put them in order
+				const orderedTowers = Object.entries(playerTowers)
+					.map(([c, towers]) => towers.map(t => [...t, c]))
+					.flat(1).sort((a, b) => (a[2] - b[2]));
+
+				cnv.addEventListener('click', () => animate(orderedTowers));
 			} else {
 				for (let [color, towers] of Object.entries(playerTowers)) {
 					ctx.fillStyle = color;

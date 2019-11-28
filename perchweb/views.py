@@ -40,7 +40,7 @@ def view_replay(replay_id):
         # Todo: 404
         return redirect(url_for('views.index'))
 
-    drawmap = replay.get_drawmap()
+    drawmap = replay.get_drawmap(timestamp=True)
 
     return standard_page('replay.html', replay_listinfo['Name'], replay=replay, listinfo=replay_listinfo, replay_id=replay_id, drawmap=drawmap)
 

@@ -131,7 +131,7 @@ class Replay(dict):
         self.formatted_chat = formatted_chat
         return self.formatted_chat
 
-    def get_drawmap(self):
+    def get_drawmap(self, force=False, timestamp=False):
         """ Map size coordinates and a list of towers per color and coordinate,
             for drawing on the minimap """
 
@@ -140,8 +140,9 @@ class Replay(dict):
         # No minimap drawing for unmapped maps
         if self.map_name() in map_sizes:
             map_size = map_sizes[self.map_name()]
-            # Todo: Optionally include timestamps and extend javascript to use them
-            towers = {p['color']: [[b['x'], b['y']] for b in p['buildings']
-                                   ['order'] if b['id'] in is_tower] for p in self.players}
+
+        if map_size is not None or force:
+            towers = {p['color']: [([b['x'], b['y'], b['ms']] if timestamp else [b['x'], b['y']]) for b in p['buildings']
+                                    ['order'] if b['id'] in is_tower] for p in self.players}
 
         return {'map_size': map_size, 'towers': towers}

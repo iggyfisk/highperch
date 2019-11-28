@@ -7,7 +7,24 @@ arbitrary_item_scores = {
     'tgrh': 15,
     'spre': 10,
     'ssan': 10,
-    'mcri': 1
+    'mcri': 1,
+    'bspd': 3,
+    'stel': 4,
+    'afac': 4,
+    'ajen': 10,
+    'kpin': 5,
+    'lgdh': 10,
+    'sdch': 4,
+    'lhst': 4,
+    'ward': 8,
+}
+
+arbitrary_building_scores = {
+    'hvlt': 1,
+    'ovln': 1,
+    'emow': 1,
+    'eden': 1,
+    'utom': 1
 }
 
 
@@ -32,10 +49,12 @@ class Player(dict):
 
         heroes = self.real_heroes()
         score += len(heroes) * 30
-        score += sum(h['level'] for h in heroes) * 2
+        score += sum(h['level'] for h in heroes) * 2.5
 
-        score += (self.tower_count() * 500000) / \
+        score += (self.tower_count() * 600000) / \
             (self['currentTimePlayed'] + 1)
+        for (i, c) in self['buildings']['summary'].items():
+            score += c * arbitrary_building_scores.get(i, 0)
 
         units = self['units']['summary']
         score += 15 if 'ngsp' in units else 0

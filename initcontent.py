@@ -36,6 +36,11 @@ if __name__ == '__main__':
         wig_db.cursor().executescript(f.read())
     wig_db.commit()
 
+    stream_db = sqlite3.connect(fp.get_db('streams.db'))
+    with open('test/streams.db.sql', mode='r') as f:
+        stream_db.cursor().executescript(f.read())
+    stream_db.commit()
+
     if input("Insert demo content? Type 'yes' to continue: ") == 'yes':
         shutil.copyfile('test/Reforged1.w3g', fp.get_replay('1.w3g'))
         shutil.copyfile('test/Reforged1.json', fp.get_replay_data('1.json'))
@@ -52,8 +57,3 @@ if __name__ == '__main__':
         with open('test/wig.db.data.production.sql', mode='r') as f:
             wig_db.cursor().executescript(f.read())
         wig_db.commit()
-
-
-
-    # Todo: integrate the StreamPoller
-    # conn = sqlite3.connect('streams.db')
