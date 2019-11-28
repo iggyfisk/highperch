@@ -3,7 +3,7 @@ Routes and views for the flask application.
 """
 
 import os
-from flask import Blueprint, url_for, request, redirect, flash
+from flask import Blueprint, url_for, request, redirect, flash, abort
 from werkzeug.utils import secure_filename
 from handler import standard_page
 import replaydb
@@ -37,8 +37,7 @@ def view_replay(replay_id):
     replay = replaydb.get_replay(replay_id)
 
     if replay_listinfo is None or replay is None:
-        # Todo: 404
-        return redirect(url_for('views.index'))
+        abort(404)
 
     drawmap = replay.get_drawmap(timestamp=True)
 
@@ -51,8 +50,7 @@ def view_player(battletag):
     player = replaydb.get_player(battletag)
 
     if player is None:
-        # Todo: 404
-        return redirect(url_for('views.index'))
+        abort(404)
 
     recent_replays = replaydb.list_player_replays(battletag)
 
