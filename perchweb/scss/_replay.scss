@@ -26,12 +26,12 @@
 }
 
 
-.icecrown .replays {
+// for brick layout. TODO
+.replays .grid{
     h2 {
         margin-bottom:$padding;
     }
     .replay {
-        // for brick layout
         flex-direction: column;
         display: inline-flex;
         

@@ -14,11 +14,15 @@ $bp-larger-than-desktophd : "min-width: 1200px" !default;
 // Colors
 $light-grey: #FFF5DF !default;
 $dark-grey: #999 !default;
-$primary-color: #FFCCA3 !default;
+$primary-color: #c4976f; 
 $secondary-color: #e54b4b !default;
 $border-color: #bbb !default;
 $link-color: #FF7F00 !default;
 $font-color: #222 !default;
+$perch-beige: #bf8d60;
+
+// Barrens colors
+$barrens-link-color:#FFCCA3;
 
 // Icecrown Colors
 $ice-link-color: #e7c595;
@@ -32,8 +36,8 @@ $lordy-secondary-color: #FFD700;
 $admin-color: #33ccff;
 $admin-bg: #33ccff99;
 
-$card-background-color: rgba(27, 15, 15, 0.5);
-$card-alt-background-color: rgba(0.2, 0.1, 0, 0.75);
+$card-background-color: rgba(10, 5, 5, 0.75);
+$card-alt-background-color: rgba(1, 5, 0, 0.90);
 
 // Typography
 $font-family: "Raleway", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif !default;

@@ -5,6 +5,15 @@ a:hover{
     color: #FFF;
 }
 
+.barrens {
+    a, a:visited {
+        color: $barrens-link-color;
+    }
+    a:hover{
+        color: #FFF;
+    }
+}
+
 
 .lordaeron {
     a, a:visited {
@@ -32,7 +41,7 @@ nav {
     top: 0;
     font-size: $large-font;
     z-index: 1;
-    background: rgba(0,0,0, 0.75);
+    background: $card-alt-background-color;
 }
 
 nav a, span.action, img.action {

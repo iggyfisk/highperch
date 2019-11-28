@@ -619,14 +619,14 @@ input[type=submit]:focus, input[type=reset]:focus, input[type=button]:focus {
 .button.button-primary,
 button.button-primary {
   color: #fff;
-  background-color: #FFCCA3;
-  border-color: #FFCCA3;
+  background-color: #c4976f;
+  border-color: #c4976f;
 }
 
 input[type=submit].button-primary, input[type=reset].button-primary, input[type=button].button-primary {
   color: #fff;
-  background-color: #FFCCA3;
-  border-color: #FFCCA3;
+  background-color: #c4976f;
+  border-color: #c4976f;
 }
 
 .button.button-primary:hover,
@@ -694,13 +694,13 @@ textarea {
 }
 
 input[type=email]:focus, input[type=number]:focus, input[type=search]:focus, input[type=text]:focus, input[type=tel]:focus, input[type=url]:focus, input[type=password]:focus {
-  border: 1px solid #FFCCA3;
+  border: 1px solid #c4976f;
   outline: 0;
 }
 
 textarea:focus,
 select:focus {
-  border: 1px solid #FFCCA3;
+  border: 1px solid #c4976f;
   outline: 0;
 }
 
@@ -834,21 +834,21 @@ h2 {
   font-size: 20px;
   margin-bottom: 0;
   padding: 8px;
-  background: rgba(0, 0, 0, 0.75);
+  background: rgba(1, 5, 0, 0.9);
 }
 
 ul.toasts li {
   list-style-type: none;
-  background-color: rgba(27, 15, 15, 0.5);
+  background-color: rgba(10, 5, 5, 0.75);
   margin: 0;
   padding: 8px;
 }
 ul.toasts li:nth-child(even) {
-  background-color: rgba(0, 0, 0, 0.75);
+  background-color: rgba(1, 5, 0, 0.9);
 }
 
 .content {
-  background-color: rgba(27, 15, 15, 0.5);
+  background-color: rgba(10, 5, 5, 0.75);
   padding: 8px;
 }
 
@@ -895,7 +895,7 @@ html.lwinter {
 body {
   min-height: 100%;
   font-family: "Scada", Tahoma, sans-serif;
-  color: #FFCCA3;
+  color: #c4976f;
   padding-top: 1px;
 }
 
@@ -970,6 +970,13 @@ a:hover {
   color: #FFF;
 }
 
+.barrens a, .barrens a:visited {
+  color: #FFCCA3;
+}
+.barrens a:hover {
+  color: #FFF;
+}
+
 .lordaeron a, .lordaeron a:visited {
   color: #e7c595;
 }
@@ -991,7 +998,7 @@ nav {
   top: 0;
   font-size: 16px;
   z-index: 1;
-  background: rgba(0, 0, 0, 0.75);
+  background: rgba(1, 5, 0, 0.9);
 }
 
 nav a, span.action, img.action {
@@ -1073,7 +1080,7 @@ nav ul li.background-picker img {
   border: 1px solid rgba(0, 0, 0, 0);
 }
 nav ul li.background-picker img:hover {
-  border: 1px solid #FFCCA3;
+  border: 1px solid #c4976f;
 }
 nav .logout {
   padding: 0px;
@@ -1154,7 +1161,7 @@ footer .chatlog {
   text-shadow: 1px 1px 0 #333;
 }
 footer .logout {
-  color: #FFCCA3 !important;
+  color: #c4976f !important;
   text-decoration: none;
   cursor: inherit;
 }
@@ -1187,15 +1194,15 @@ footer .logout {
   color: #33ccff;
 }
 
-.icecrown .replays h2 {
+.replays .grid h2 {
   margin-bottom: 8px;
 }
-.icecrown .replays .replay {
+.replays .grid .replay {
   flex-direction: column;
   display: inline-flex;
   width: 192px;
 }
-.icecrown .replays .replay .minimap, .icecrown .replays .replay .minimap img {
+.replays .grid .replay .minimap, .replays .grid .replay .minimap img {
   margin-right: 0;
   width: 192px;
   height: 192px;
@@ -1206,12 +1213,12 @@ footer .logout {
 }
 .replays h2 {
   padding: 8px;
-  background: rgba(0, 0, 0, 0.75);
+  background: rgba(1, 5, 0, 0.9);
 }
 .replays .replay {
   border: 1px solid black;
   border-bottom: 0;
-  background: rgba(0, 0, 0, 0.75);
+  background: rgba(1, 5, 0, 0.9);
   padding: 8px;
   font-size: 12px;
   display: flex;
@@ -1233,7 +1240,7 @@ footer .logout {
   text-decoration: underline;
 }
 .replays .replay:nth-child(even) {
-  background: rgba(27, 15, 15, 0.5);
+  background: rgba(10, 5, 5, 0.75);
 }
 .replays .replay .download {
   text-align: center;
@@ -1366,10 +1373,10 @@ a.playername:hover {
 }
 .large-replay .teams .team .player {
   padding: 8px;
-  background-color: rgba(0, 0, 0, 0.75);
+  background-color: rgba(1, 5, 0, 0.9);
 }
 .large-replay .teams .team .player:nth-child(even) {
-  background-color: rgba(27, 15, 15, 0.5);
+  background-color: rgba(10, 5, 5, 0.75);
 }
 .large-replay .teams .team .player .summary {
   font-size: 12px;
@@ -1399,7 +1406,7 @@ a.playername:hover {
 }
 
 .chatlog {
-  background-color: rgba(27, 15, 15, 0.5);
+  background-color: rgba(10, 5, 5, 0.75);
   padding: 8px;
   grid-template-columns: auto 99%;
 }
@@ -1590,7 +1597,7 @@ form.filters input[type=checkbox] {
   width: auto;
 }
 form.filters .apply-filter {
-  background: rgba(0, 0, 0, 0.75);
+  background: rgba(1, 5, 0, 0.9);
 }
 
 .filterrow {
@@ -1603,10 +1610,10 @@ form.filters .apply-filter {
   }
 }
 .filterrow:nth-child(even) .filter:nth-child(even) {
-  background: rgba(27, 15, 15, 0.5);
+  background: rgba(10, 5, 5, 0.75);
 }
 .filterrow:nth-child(odd) .filter:nth-child(odd) {
-  background: rgba(27, 15, 15, 0.5);
+  background: rgba(10, 5, 5, 0.75);
 }
 
 .filter {
@@ -1618,13 +1625,13 @@ form.filters .apply-filter {
   flex: 1;
   padding: 8px;
   text-align: center;
-  background: rgba(27, 15, 15, 0.5);
+  background: rgba(10, 5, 5, 0.75);
 }
 .filter input {
   min-width: 120px;
 }
 .filter:nth-child(even) {
-  background: rgba(27, 15, 15, 0.5);
+  background: rgba(10, 5, 5, 0.75);
 }
 
 form.upload {
@@ -1632,7 +1639,7 @@ form.upload {
   margin: 0;
   align-items: center;
   flex-direction: row;
-  background-color: rgba(27, 15, 15, 0.5);
+  background-color: rgba(10, 5, 5, 0.75);
 }
 @media (min-width: 550px) {
   form.upload {
@@ -5254,7 +5261,7 @@ form.upload input[type=submit]:hover {
   box-sizing: border-box;
 }
 .guide h1 {
-  color: #FFCCA3;
+  color: #c4976f;
   font-size: 48px;
   margin-bottom: 25px;
   font-family: Friz, Georgia, serif;
@@ -5299,7 +5306,7 @@ form.upload input[type=submit]:hover {
 }
 .blend .cont {
   padding: 10px;
-  color: #FFCCA3;
+  color: #c4976f;
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.5) 75%, rgba(0, 0, 0, 0) 100%);
   padding-bottom: 30px;
   border-radius: 0;
