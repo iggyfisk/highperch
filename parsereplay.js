@@ -33,7 +33,10 @@ Parser.on('gamemetadata', (metaData) => {
   });
 });
 
-let lastLeaveEventMs = 0;
+const leaveReasons = {
+  '01000000': 'left',
+  '0c000000': 'gameEnd',
+};
 Parser.on('gamedatablock', (block) => {
   switch (block.type) {
     case 23:
@@ -43,21 +46,8 @@ Parser.on('gamedatablock', (block) => {
       // Non-player left the game
       if (playerTeams[playerId] === undefined) break;
 
-      const teamId = playerTeams[playerId];
-      teams[teamId][playerId] = false;
-      leaveEvents.push({ playerId, ms });
-
-      if (!teams[teamId].some(p => !!p)) {
-        teamsLeft = teamsLeft.filter(tId => tId !== teamId);
-      }
-
-      if (winningTeamId == null && teamsLeft.length === 1) {
-        winningTeamId = teamsLeft[0];
-        // Check for a likely crash where everyone leaves at the same time out of order
-        winningTeamConfirmed = lastLeaveEventMs !== ms;
-      }
-      lastLeaveEventMs = ms;
-      break;
+      reason = leaveReasons[block.reason] || 'unknown';
+      leaveEvents.push({ playerId, ms, reason });
   }
 });
 
@@ -110,21 +100,65 @@ Parser.on('timeslotblock', (timeSlotBlock) => {
 const replay = Parser.parse(inputPath);
 
 // Figure out who saved and who won by looking at leave order
-const replaySaverPlayerId = leaveEvents.length
-  ? leaveEvents[leaveEvents.length - 1].playerId
-  : null;
+const leaveLength = leaveEvents.length;
+let replaySaverPlayerId;
+if (!leaveLength) {
+  replaySaverPlayerId = null;
+} else if (leaveEvents[leaveLength - 1].ms !== leaveEvents[leaveLength - 2].ms) {
+  replaySaverPlayerId = leaveEvents[leaveLength - 1].playerId;
+} else {
+  const selfQuit = leaveEvents.filter(l => l.reason == 'left');
+  replaySaverPlayerId = selfQuit[selfQuit.length - 1].playerId;
+}
 
-if (!winningTeamConfirmed && replaySaverPlayerId) {
-  // If there were only 2 teams left after the replay saver left, guess that the other team won
-  const replaySaverTeamId = playerTeams[replaySaverPlayerId];
-  teamsLeft = teamsLeft.filter(tId => tId !== replaySaverTeamId);
-  if (teamsLeft.length == 1) {
-    winningTeamId = teamsLeft[0];
+// Try do determine game winner
+saverLeft = false;
+leaveEvents.forEach(l => {
+  const teamId = playerTeams[l.playerId];
+  teams[teamId][l.playerId] = false;
+
+  if (!teams[teamId].some(p => !!p)) {
+    // If only one team remains, they probably won. If the saver hasn't left at that point, 
+    // they DEFINITELY won.
+    teamsLeft = teamsLeft.filter(tId => tId !== teamId);
+    if (!winningTeamId && teamsLeft.length == 1) {
+      winningTeamId = teamsLeft[0];
+      winningTeamConfirmed = !saverLeft;
+    }
+  }
+
+  if (l.playerId == replaySaverPlayerId) {
+    saverLeft = true;
+    // If the saver left with only 2 teams remaining, the other team probably won.
+    const teamsLeftGuess = teamsLeft.filter(t => t !== playerTeams[l.playerId]);
+    if (teamsLeftGuess.length == 1) {
+      winningTeamId = teamsLeftGuess[0];
+    }
+  }
+});
+
+// Some players are incorrectly marked as "left" when they stayed til the end, patch it up
+let lastLeaveMs = null;
+let loserLeft = false;
+if (winningTeamId !== null) {
+  for (let i = leaveEvents.length - 1; i > 0; --i) {
+    const { playerId, ms, reason } = leaveEvents[i];
+    const teamId = playerTeams[playerId];
+    const isWinner = teamId == winningTeamId;
+    if (reason == 'gameEnd') {
+      lastLeaveMs = ms;
+      if (!isWinner) loserLeft = true;
+    } else if (isWinner && (ms == lastLeaveMs || !loserLeft)) {
+      leaveEvents[i].reason = 'gameEnd';
+    } else {
+      break;
+    }
   }
 }
+
 replay.saverPlayerId = replaySaverPlayerId;
 replay.winningTeamId = winningTeamId;
-replay.winningTeamConfirmed = winningTeamConfirmed;
+replay.winningTeamConfirmed = winningTeamConfirmed; 
 replay.leaveEvents = leaveEvents;
 
 // Clean double chats from replay saver, bug in Reforged beta, Blizzard may have fixed it since

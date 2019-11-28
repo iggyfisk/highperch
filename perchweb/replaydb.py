@@ -123,7 +123,7 @@ def get_replay(replay_id):
     if not os.path.isfile(data_path):
         return None
 
-    with open(data_path) as replay_json:
+    with open(data_path, encoding='utf8') as replay_json:
         replay_data = Replay(**json.load(replay_json))
     return replay_data
 
@@ -208,7 +208,7 @@ def save_replay(replay, replay_name, uploader_ip):
         if parse_result.returncode > 0:
             raise ReplayParsingException("Replay parsing failed")
 
-        with open(temp_data_path) as replay_json:
+        with open(temp_data_path, encoding='utf8') as replay_json:
             replay_data = Replay(**json.load(replay_json))
 
         # Todo: more validation, like gametype and version,

@@ -109,7 +109,9 @@ class Replay(dict):
         if self.formatted_chat is not None:
             return self.formatted_chat
 
-        merged_chat = self['chat'] + self['leaveEvents'] + self['pauseEvents']
+        merged_chat = self['chat'] + \
+            [l for l in self['leaveEvents'] if l['reason'] != 'gameEnd'] + \
+            self['pauseEvents']
         merged_chat.sort(key=lambda c: c['ms'])
 
         formatted_chat = []
@@ -142,7 +144,9 @@ class Replay(dict):
             map_size = map_sizes[self.map_name()]
 
         if map_size is not None or force:
-            towers = {p['color']: [([b['x'], b['y'], b['ms']] if timestamp else [b['x'], b['y']]) for b in p['buildings']
-                                    ['order'] if b['id'] in is_tower] for p in self.players}
+            towers = {p['color']:
+                      [([b['x'], b['y'], b['ms']] if timestamp else [b['x'], b['y']])
+                       for b in p['buildings'].get('order', []) if b['id'] in is_tower]
+                      for p in self.players}
 
         return {'map_size': map_size, 'towers': towers}

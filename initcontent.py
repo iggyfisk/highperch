@@ -26,6 +26,8 @@ if __name__ == '__main__':
 
     if os.path.isfile(fp.get_db('wig.db')):
         os.remove(fp.get_db('wig.db'))
+    if os.path.isfile(fp.get_db('streams.db')):
+        os.remove(fp.get_db('streams.db'))
     for data_file in glob.glob(fp.get_replay_data('*.json')):
         os.remove(data_file)
     for replay_file in glob.glob(fp.get_replay('*.w3g')):
