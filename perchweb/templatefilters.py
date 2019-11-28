@@ -68,10 +68,19 @@ def player_display_name(player_name):
     return match[0] if match else player_name
 
 
-lightened_colors = {}
+lightened_colors = {
+    ('#0000FF', 0.05): '#2443f0',   # plain blue
+    ('#008080', 0.05): '#60bfa9',   # plain teal or dark teal?
+    ('#800080', 0.05): '#8b3fba',   # plain purple or dark purple?
+    ('#FFFF00', 0.05): '#e8d227',   # plain yellow
+    ('#FF0000', 0.05): '#db2323',   # plain red
+    ('#FFC0CB', 0.05): '#ff91ca',   # plain pink?
+    ('#000080', 0.05): '#0d0da3',   # dark blue
+    ('#E6E6FA', 0.05): '#d6bae8'    # "light purple"
+}
 
 
-def lighten_color(hex_color, amount=0.07):
+def lighten_color(hex_color, amount=0.05):
     """ Increases the light of a hex color by a factor of 0-1.0 """
     key = (hex_color, amount)
     if key not in lightened_colors:
