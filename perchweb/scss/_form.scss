@@ -104,6 +104,7 @@ form.upload {
     margin:0;
     align-items: center;
     flex-direction:row;
+    background-color: $card-background-color;
     @media (#{$bp-larger-than-phablet}) {
         flex-direction:column;
     }
@@ -117,7 +118,7 @@ form.upload {
         padding: $padding;
         border-radius:0;
         width:100%;
-        margin-bottom:-1px;
+        margin: 0;
     }
 
     .inputfields {
@@ -125,19 +126,22 @@ form.upload {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        margin-right:$padding;
+        padding: 8px;
     }
+    
     input[type=file] {
         padding:$padding;
         width: calc(100% - 18px);
+        height: 20px;
+        margin-bottom:$padding;
     }
 
     input[type=submit] {
         background-image: url("/static/images/BTNStaffOfSanctuary-Reforged.png");
         background-size: cover;
         background-position: center;
-        width: 88px;
-        height: 88px;
+        width: 86px;
+        height: 86px;
         text-shadow: 0px 0px 13px #000, 0px 0px 14px #000, 0px 0px 15px #000;
         flex: none;
         padding:0;
@@ -164,6 +168,22 @@ form.upload {
             box-shadow: inset 0 0 10px #fff;
             text-shadow: 0px 0px 13px #fff, 0px 0px 14px #fff, 0px 0px 15px #fff;
         }
+
+        margin-bottom:$padding;
+        margin-top: $padding;
+        margin-right: $padding;
+        margin-left:$padding;
+        @media (#{$bp-larger-than-desktop}) {
+            margin-right:$padding;
+        }
+    }
+}
+
+.barrens {
+    form.upload {
+        input[type=submit] {
+            background-image: url("/static/images/Wc3BTNStaffOfSanctuary.png");
+        }
     }
 }
 
@@ -178,6 +198,7 @@ form.upload {
     form.upload {
         input[type=submit] {
             color: $ice-secondary-color;
+            background-image: url("/static/images/Wc3BTNStaffOfPreservation.png");
         }
     }
 }

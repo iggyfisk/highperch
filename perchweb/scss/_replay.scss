@@ -1,5 +1,4 @@
 .minimap {
-    margin-right: $padding;
     font-size:9px;
     border:1px solid black;
     position: relative;
@@ -17,6 +16,7 @@
 }
 .minimap, .download {
     flex: none;
+    margin-right: $padding;
     height:80px;
     width:80px;
 }
@@ -25,9 +25,29 @@
     color: $admin-color;
 }
 
+
+.icecrown .replays {
+    h2 {
+        margin-bottom:$padding;
+    }
+    .replay {
+        // for brick layout
+        flex-direction: column;
+        display: inline-flex;
+        
+        width: 192px;
+        .minimap, .minimap img {
+            margin-right: 0;
+            width:192px;
+            height:192px;
+            
+        }
+    }
+}
+
 .replays {
     border-bottom:1px solid black;
-    h2 {
+    h2 { 
         padding: $padding;
         background: $card-alt-background-color;
     }
@@ -49,6 +69,7 @@
                 }
             }
         }
+
         border:1px solid black;
         border-bottom:0;
         background: $card-alt-background-color;
@@ -121,16 +142,28 @@ a.playername{
 
 // single replay
 .large-replay{
+
     .details {
         .content {
             display:flex;
             position: relative;
+
+            
             .minimap {
-                width: 160px;
-                height: 160px;
+                margin-right: $padding;
+                width: 192px;
+                height: 192px;
                 img {
-                    width: 160px;
-                    height: 160px;
+                    width: 192px;
+                    height: 192px;
+                }
+                @media (#{$bp-larger-than-tablet}) {
+                    width: 300px;
+                    height: 300px;
+                    img {
+                        width: 300px;
+                        height: 300px;
+                    }
                 }
                 .drawmap.anim {
                     cursor: pointer;

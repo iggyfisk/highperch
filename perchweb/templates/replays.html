@@ -10,7 +10,7 @@
             class="drawmap"
             data-towers='{{ drawmap["towers_json"]|safe }}'
             data-mapsize='{{ drawmap["map_size"]|tojson|safe }}'
-            data-paintsize='2'></canvas>
+            data-paintsize='4'></canvas>
         {% endif %}
       {% endwith %}
     </div>
@@ -18,12 +18,9 @@
         <div class="header">
             <a class="title" href="{{ url_for('views.view_replay', replay_id=replay['ID']) }}">{{ replay['Name'] }}</a>
         </div>
-        <p>{{ replay['Length']|gametime }} | {{ replay['GameType'] }} | {{ replay['Map'] }} | {{ replay['TowerCount'] }} towers | {{ replay.upload_date() }} {% if is_admin %}| <span class="adminonly">{{ replay['UploaderIP'] }}  {{ replay['UploaderIP']|embed_country|safe }}{% endif %}</p>
+        <p><a href="/static/replays/{{ replay['ID'] }}.w3g"><i class="icon-download-alt"></i></a> | {{ replay['Length']|gametime }} | {{ replay['GameType'] }} | {{ replay['Map'] }} | {{ replay['TowerCount'] }} towers | {{ replay.upload_date() }} {% if is_admin %}| <span class="adminonly">{{ replay['UploaderIP'] }}  {{ replay['UploaderIP']|embed_country|safe }}{% endif %}</p>
         {{ teams(replay) }}
     </div>
-    <a class="download" href="/static/replays/{{ replay['ID'] }}.w3g">
-        <i class="icon-download-alt"></i>
-    </a>
 </div>
 {% endmacro %}
 
