@@ -20,6 +20,7 @@ node_modules/
 
 # Config
 perchweb/app.cfg
+perchweb/logging.cfg
 
 # Content, default paths
 replaydata/*.json

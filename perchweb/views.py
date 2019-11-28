@@ -3,7 +3,7 @@ Routes and views for the flask application.
 """
 
 import os
-from flask import Blueprint, url_for, request, redirect, flash, abort
+from flask import Blueprint, url_for, request, redirect, flash, abort, current_app
 from werkzeug.utils import secure_filename
 from handler import standard_page
 import replaydb
@@ -40,7 +40,6 @@ def view_replay(replay_id):
         abort(404)
 
     drawmap = replay.get_drawmap(timestamp=True)
-
     return standard_page('replay.html', replay_listinfo['Name'], replay=replay, listinfo=replay_listinfo, replay_id=replay_id, drawmap=drawmap)
 
 
