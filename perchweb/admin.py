@@ -24,7 +24,8 @@ def geoip_country(ip_addr):
 def geoip_city(ip_addr):
     reader = geoip2.database.Reader(get_path('resource/GeoLite2-City.mmdb'))
     try:
-        return reader.city.name(ip_addr)
+        response = reader.city(ip_addr)
+        return (response.city.name, response.subdivisions.most_specific.iso_code)
     except Exception as e:
         return 'unknown'
 

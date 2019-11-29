@@ -35,5 +35,6 @@ def log_to_slack(level, log_message):
 
 
 def format_ip_addr(ip_addr):
-    failed_country_code = geoip_country(ip_addr)['code']
-    return f'{ip_addr} ({failed_country_code} / {geoip_city(request.remote_addr)})'
+    country_code = geoip_country(ip_addr)['code']
+    city, subdivision = geoip_city(ip_addr)
+    return f'{ip_addr} ({city}, {subdivision}, {country_code})'
