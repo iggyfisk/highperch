@@ -72,7 +72,7 @@ def upload_replay():
     replay_name = request.form['name']
     if (len(replay_name) < 6 or len(replay_name) > 50):
         flash('Bad name')
-        error_string = f'Attempted bad filename length from {format_ip_addr(request.remote_addr)}: "{replay_filename}"'
+        error_string = f'Attempted bad filename length from {format_ip_addr(request.remote_addr)}: "{replay_name}"'
         log_to_slack('WARNING', error_string)
         current_app.logger.warning(error_string)
         return redirect(url_for('views.index'))
