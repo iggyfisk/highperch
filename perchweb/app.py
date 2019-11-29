@@ -41,12 +41,6 @@ def cleanup(error):
     close_replaydb()
 
 
-@app.errorhandler(404)
-def error_404(error):
-    app.logger.error(error)
-    abort(404)
-
-
 @app.errorhandler(Exception)
 def internal_error(error):
     if isinstance(error, HTTPException) and error.code < 500:
@@ -61,7 +55,6 @@ def internal_error(error):
     log_to_slack(
         'ERROR', f"500 [{error.__class__.__name__}]: \n{error_string}")
     return (error if isinstance(error, HTTPException) else InternalServerError()).get_response()
-
 
 
 app.config.from_pyfile(path.join(app.root_path, 'app.cfg'))
