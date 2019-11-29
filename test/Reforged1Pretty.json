@@ -996,7 +996,8 @@
       "_retrainingMetadata": {},
       "_lastRetrainingTime": 0,
       "currentTimePlayed": 2162725,
-      "apm": 89
+      "apm": 89,
+      "allyOptions": []
     },
     {
       "id": 7,
@@ -1841,7 +1842,19 @@
       "_retrainingMetadata": {},
       "_lastRetrainingTime": 0,
       "currentTimePlayed": 2346686,
-      "apm": 54
+      "apm": 54,
+      "allyOptions": [
+        {
+          "playerId": 5,
+          "flags": 1151,
+          "ms": 993175
+        },
+        {
+          "playerId": 5,
+          "flags": 1087,
+          "ms": 998321
+        }
+      ]
     },
     {
       "id": 8,
@@ -2472,7 +2485,19 @@
       "_retrainingMetadata": {},
       "_lastRetrainingTime": 0,
       "currentTimePlayed": 2705367,
-      "apm": 36
+      "apm": 36,
+      "allyOptions": [
+        {
+          "playerId": 5,
+          "flags": 1151,
+          "ms": 1002388
+        },
+        {
+          "playerId": 7,
+          "flags": 1151,
+          "ms": 1002388
+        }
+      ]
     },
     {
       "id": 9,
@@ -2594,7 +2619,8 @@
       "_retrainingMetadata": {},
       "_lastRetrainingTime": 0,
       "currentTimePlayed": 21677,
-      "apm": 1
+      "apm": 1,
+      "allyOptions": []
     },
     {
       "id": 2,
@@ -4521,7 +4547,24 @@
       "_retrainingMetadata": {},
       "_lastRetrainingTime": 0,
       "currentTimePlayed": 2776614,
-      "apm": 92
+      "apm": 92,
+      "allyOptions": [
+        {
+          "playerId": 3,
+          "flags": 1151,
+          "ms": 13083
+        },
+        {
+          "playerId": 4,
+          "flags": 1151,
+          "ms": 13083
+        },
+        {
+          "playerId": 6,
+          "flags": 1151,
+          "ms": 13083
+        }
+      ]
     },
     {
       "id": 3,
@@ -7274,7 +7317,24 @@
       "_retrainingMetadata": {},
       "_lastRetrainingTime": 0,
       "currentTimePlayed": 2775812,
-      "apm": 126
+      "apm": 126,
+      "allyOptions": [
+        {
+          "playerId": 2,
+          "flags": 1151,
+          "ms": 305709
+        },
+        {
+          "playerId": 4,
+          "flags": 1151,
+          "ms": 305709
+        },
+        {
+          "playerId": 6,
+          "flags": 1151,
+          "ms": 305709
+        }
+      ]
     },
     {
       "id": 4,
@@ -7994,7 +8054,24 @@
       "_retrainingMetadata": {},
       "_lastRetrainingTime": 0,
       "currentTimePlayed": 2775985,
-      "apm": 131
+      "apm": 131,
+      "allyOptions": [
+        {
+          "playerId": 2,
+          "flags": 1151,
+          "ms": 24761
+        },
+        {
+          "playerId": 3,
+          "flags": 1151,
+          "ms": 24761
+        },
+        {
+          "playerId": 6,
+          "flags": 1151,
+          "ms": 24761
+        }
+      ]
     },
     {
       "id": 6,
@@ -8677,7 +8754,24 @@
       "_retrainingMetadata": {},
       "_lastRetrainingTime": 0,
       "currentTimePlayed": 2776099,
-      "apm": 109
+      "apm": 109,
+      "allyOptions": [
+        {
+          "playerId": 2,
+          "flags": 1151,
+          "ms": 9643
+        },
+        {
+          "playerId": 3,
+          "flags": 1151,
+          "ms": 9643
+        },
+        {
+          "playerId": 4,
+          "flags": 1151,
+          "ms": 9643
+        }
+      ]
     }
   ],
   "matchup": "HHNNvHNNN",
@@ -9023,42 +9117,633 @@
     "randomRaces": false,
     "speed": 2
   },
-  "parseTime": 726,
+  "parseTime": 731,
   "saverPlayerId": 2,
   "winningTeamId": 1,
   "winningTeamConfirmed": true,
   "leaveEvents": [
     {
       "playerId": 9,
-      "ms": 24761
+      "ms": 24761,
+      "reason": "left"
     },
     {
       "playerId": 5,
-      "ms": 2168147
+      "ms": 2168147,
+      "reason": "left"
     },
     {
       "playerId": 7,
-      "ms": 2349051
+      "ms": 2349051,
+      "reason": "left"
     },
     {
       "playerId": 8,
-      "ms": 2776614
+      "ms": 2776614,
+      "reason": "gameEnd"
     },
     {
       "playerId": 6,
-      "ms": 2776614
+      "ms": 2776614,
+      "reason": "gameEnd"
     },
     {
       "playerId": 4,
-      "ms": 2776614
+      "ms": 2776614,
+      "reason": "gameEnd"
     },
     {
       "playerId": 3,
-      "ms": 2776614
+      "ms": 2776614,
+      "reason": "gameEnd"
     },
     {
       "playerId": 2,
-      "ms": 2777520
+      "ms": 2777520,
+      "reason": "gameEnd"
+    }
+  ],
+  "tradeEvents": [
+    {
+      "playerId": 4,
+      "recipientPlayerId": 3,
+      "ms": 24761,
+      "gold": 100,
+      "lumber": 0
+    },
+    {
+      "playerId": 6,
+      "recipientPlayerId": 2,
+      "ms": 27510,
+      "gold": 100,
+      "lumber": 60
+    },
+    {
+      "playerId": 6,
+      "recipientPlayerId": 2,
+      "ms": 55600,
+      "gold": 100,
+      "lumber": 0
+    },
+    {
+      "playerId": 4,
+      "recipientPlayerId": 3,
+      "ms": 83375,
+      "gold": 0,
+      "lumber": 100
+    },
+    {
+      "playerId": 6,
+      "recipientPlayerId": 2,
+      "ms": 90191,
+      "gold": 90,
+      "lumber": 15
+    },
+    {
+      "playerId": 6,
+      "recipientPlayerId": 2,
+      "ms": 99164,
+      "gold": 0,
+      "lumber": 20
+    },
+    {
+      "playerId": 4,
+      "recipientPlayerId": 3,
+      "ms": 109843,
+      "gold": 100,
+      "lumber": 80
+    },
+    {
+      "playerId": 6,
+      "recipientPlayerId": 2,
+      "ms": 115268,
+      "gold": 100,
+      "lumber": 50
+    },
+    {
+      "playerId": 6,
+      "recipientPlayerId": 2,
+      "ms": 128717,
+      "gold": 0,
+      "lumber": 40
+    },
+    {
+      "playerId": 6,
+      "recipientPlayerId": 2,
+      "ms": 144504,
+      "gold": 0,
+      "lumber": 50
+    },
+    {
+      "playerId": 6,
+      "recipientPlayerId": 2,
+      "ms": 158127,
+      "gold": 0,
+      "lumber": 75
+    },
+    {
+      "playerId": 6,
+      "recipientPlayerId": 2,
+      "ms": 162465,
+      "gold": 200,
+      "lumber": 0
+    },
+    {
+      "playerId": 4,
+      "recipientPlayerId": 3,
+      "ms": 176258,
+      "gold": 0,
+      "lumber": 300
+    },
+    {
+      "playerId": 6,
+      "recipientPlayerId": 2,
+      "ms": 176742,
+      "gold": 0,
+      "lumber": 90
+    },
+    {
+      "playerId": 6,
+      "recipientPlayerId": 2,
+      "ms": 197484,
+      "gold": 100,
+      "lumber": 150
+    },
+    {
+      "playerId": 6,
+      "recipientPlayerId": 2,
+      "ms": 213822,
+      "gold": 99,
+      "lumber": 105
+    },
+    {
+      "playerId": 4,
+      "recipientPlayerId": 3,
+      "ms": 215025,
+      "gold": 200,
+      "lumber": 100
+    },
+    {
+      "playerId": 6,
+      "recipientPlayerId": 2,
+      "ms": 224297,
+      "gold": 100,
+      "lumber": 75
+    },
+    {
+      "playerId": 4,
+      "recipientPlayerId": 3,
+      "ms": 230145,
+      "gold": 25,
+      "lumber": 135
+    },
+    {
+      "playerId": 6,
+      "recipientPlayerId": 2,
+      "ms": 241781,
+      "gold": 0,
+      "lumber": 155
+    },
+    {
+      "playerId": 4,
+      "recipientPlayerId": 3,
+      "ms": 249796,
+      "gold": 196,
+      "lumber": 185
+    },
+    {
+      "playerId": 6,
+      "recipientPlayerId": 2,
+      "ms": 252568,
+      "gold": 250,
+      "lumber": 100
+    },
+    {
+      "playerId": 6,
+      "recipientPlayerId": 2,
+      "ms": 266897,
+      "gold": 100,
+      "lumber": 120
+    },
+    {
+      "playerId": 6,
+      "recipientPlayerId": 2,
+      "ms": 284973,
+      "gold": 0,
+      "lumber": 100
+    },
+    {
+      "playerId": 6,
+      "recipientPlayerId": 2,
+      "ms": 302940,
+      "gold": 0,
+      "lumber": 305
+    },
+    {
+      "playerId": 6,
+      "recipientPlayerId": 2,
+      "ms": 314681,
+      "gold": 200,
+      "lumber": 0
+    },
+    {
+      "playerId": 6,
+      "recipientPlayerId": 2,
+      "ms": 330827,
+      "gold": 116,
+      "lumber": 130
+    },
+    {
+      "playerId": 6,
+      "recipientPlayerId": 2,
+      "ms": 346018,
+      "gold": 0,
+      "lumber": 190
+    },
+    {
+      "playerId": 6,
+      "recipientPlayerId": 2,
+      "ms": 371552,
+      "gold": 0,
+      "lumber": 300
+    },
+    {
+      "playerId": 6,
+      "recipientPlayerId": 2,
+      "ms": 378552,
+      "gold": 182,
+      "lumber": 70
+    },
+    {
+      "playerId": 6,
+      "recipientPlayerId": 2,
+      "ms": 401574,
+      "gold": 0,
+      "lumber": 290
+    },
+    {
+      "playerId": 4,
+      "recipientPlayerId": 3,
+      "ms": 415396,
+      "gold": 0,
+      "lumber": 620
+    },
+    {
+      "playerId": 4,
+      "recipientPlayerId": 3,
+      "ms": 424619,
+      "gold": 124,
+      "lumber": 65
+    },
+    {
+      "playerId": 6,
+      "recipientPlayerId": 2,
+      "ms": 482431,
+      "gold": 316,
+      "lumber": 670
+    },
+    {
+      "playerId": 6,
+      "recipientPlayerId": 2,
+      "ms": 500267,
+      "gold": 0,
+      "lumber": 195
+    },
+    {
+      "playerId": 6,
+      "recipientPlayerId": 2,
+      "ms": 546590,
+      "gold": 417,
+      "lumber": 320
+    },
+    {
+      "playerId": 4,
+      "recipientPlayerId": 2,
+      "ms": 567319,
+      "gold": 0,
+      "lumber": 200
+    },
+    {
+      "playerId": 4,
+      "recipientPlayerId": 3,
+      "ms": 567319,
+      "gold": 0,
+      "lumber": 400
+    },
+    {
+      "playerId": 4,
+      "recipientPlayerId": 3,
+      "ms": 582821,
+      "gold": 372,
+      "lumber": 395
+    },
+    {
+      "playerId": 6,
+      "recipientPlayerId": 2,
+      "ms": 591075,
+      "gold": 477,
+      "lumber": 400
+    },
+    {
+      "playerId": 4,
+      "recipientPlayerId": 3,
+      "ms": 663604,
+      "gold": 560,
+      "lumber": 0
+    },
+    {
+      "playerId": 4,
+      "recipientPlayerId": 3,
+      "ms": 781940,
+      "gold": 437,
+      "lumber": 600
+    },
+    {
+      "playerId": 6,
+      "recipientPlayerId": 2,
+      "ms": 812728,
+      "gold": 0,
+      "lumber": 2590
+    },
+    {
+      "playerId": 4,
+      "recipientPlayerId": 3,
+      "ms": 817182,
+      "gold": 0,
+      "lumber": 600
+    },
+    {
+      "playerId": 6,
+      "recipientPlayerId": 2,
+      "ms": 879654,
+      "gold": 876,
+      "lumber": 0
+    },
+    {
+      "playerId": 4,
+      "recipientPlayerId": 3,
+      "ms": 884731,
+      "gold": 92,
+      "lumber": 600
+    },
+    {
+      "playerId": 4,
+      "recipientPlayerId": 3,
+      "ms": 896907,
+      "gold": 120,
+      "lumber": 0
+    },
+    {
+      "playerId": 4,
+      "recipientPlayerId": 3,
+      "ms": 906248,
+      "gold": 120,
+      "lumber": 0
+    },
+    {
+      "playerId": 6,
+      "recipientPlayerId": 2,
+      "ms": 940084,
+      "gold": 365,
+      "lumber": 1155
+    },
+    {
+      "playerId": 4,
+      "recipientPlayerId": 3,
+      "ms": 969776,
+      "gold": 400,
+      "lumber": 400
+    },
+    {
+      "playerId": 4,
+      "recipientPlayerId": 3,
+      "ms": 974858,
+      "gold": 600,
+      "lumber": 0
+    },
+    {
+      "playerId": 8,
+      "recipientPlayerId": 5,
+      "ms": 1091529,
+      "gold": 300,
+      "lumber": 300
+    },
+    {
+      "playerId": 8,
+      "recipientPlayerId": 7,
+      "ms": 1091529,
+      "gold": 300,
+      "lumber": 300
+    },
+    {
+      "playerId": 6,
+      "recipientPlayerId": 2,
+      "ms": 1098940,
+      "gold": 0,
+      "lumber": 1400
+    },
+    {
+      "playerId": 4,
+      "recipientPlayerId": 3,
+      "ms": 1099370,
+      "gold": 371,
+      "lumber": 400
+    },
+    {
+      "playerId": 4,
+      "recipientPlayerId": 3,
+      "ms": 1159606,
+      "gold": 200,
+      "lumber": 386
+    },
+    {
+      "playerId": 4,
+      "recipientPlayerId": 3,
+      "ms": 1195138,
+      "gold": 400,
+      "lumber": 205
+    },
+    {
+      "playerId": 6,
+      "recipientPlayerId": 2,
+      "ms": 1202548,
+      "gold": 0,
+      "lumber": 1205
+    },
+    {
+      "playerId": 4,
+      "recipientPlayerId": 3,
+      "ms": 1223629,
+      "gold": 1852,
+      "lumber": 0
+    },
+    {
+      "playerId": 6,
+      "recipientPlayerId": 2,
+      "ms": 1223690,
+      "gold": 1181,
+      "lumber": 0
+    },
+    {
+      "playerId": 6,
+      "recipientPlayerId": 2,
+      "ms": 1245559,
+      "gold": 0,
+      "lumber": 430
+    },
+    {
+      "playerId": 4,
+      "recipientPlayerId": 3,
+      "ms": 1286601,
+      "gold": 1070,
+      "lumber": 740
+    },
+    {
+      "playerId": 6,
+      "recipientPlayerId": 2,
+      "ms": 1399703,
+      "gold": 1200,
+      "lumber": 1690
+    },
+    {
+      "playerId": 2,
+      "recipientPlayerId": 6,
+      "ms": 1435005,
+      "gold": 2200,
+      "lumber": 0
+    },
+    {
+      "playerId": 4,
+      "recipientPlayerId": 3,
+      "ms": 1465054,
+      "gold": 1000,
+      "lumber": 0
+    },
+    {
+      "playerId": 2,
+      "recipientPlayerId": 3,
+      "ms": 1471553,
+      "gold": 2800,
+      "lumber": 0
+    },
+    {
+      "playerId": 6,
+      "recipientPlayerId": 2,
+      "ms": 1542708,
+      "gold": 2200,
+      "lumber": 0
+    },
+    {
+      "playerId": 4,
+      "recipientPlayerId": 3,
+      "ms": 1549346,
+      "gold": 1200,
+      "lumber": 1000
+    },
+    {
+      "playerId": 6,
+      "recipientPlayerId": 2,
+      "ms": 1665622,
+      "gold": 1400,
+      "lumber": 0
+    },
+    {
+      "playerId": 4,
+      "recipientPlayerId": 3,
+      "ms": 1771972,
+      "gold": 0,
+      "lumber": 2200
+    },
+    {
+      "playerId": 4,
+      "recipientPlayerId": 3,
+      "ms": 1775097,
+      "gold": 0,
+      "lumber": 1000
+    },
+    {
+      "playerId": 6,
+      "recipientPlayerId": 2,
+      "ms": 1779976,
+      "gold": 800,
+      "lumber": 4000
+    },
+    {
+      "playerId": 4,
+      "recipientPlayerId": 3,
+      "ms": 1836364,
+      "gold": 0,
+      "lumber": 1000
+    },
+    {
+      "playerId": 6,
+      "recipientPlayerId": 2,
+      "ms": 1847031,
+      "gold": 700,
+      "lumber": 1525
+    },
+    {
+      "playerId": 4,
+      "recipientPlayerId": 3,
+      "ms": 1853961,
+      "gold": 1600,
+      "lumber": 0
+    },
+    {
+      "playerId": 2,
+      "recipientPlayerId": 3,
+      "ms": 1864678,
+      "gold": 6600,
+      "lumber": 0
+    },
+    {
+      "playerId": 6,
+      "recipientPlayerId": 2,
+      "ms": 1982359,
+      "gold": 0,
+      "lumber": 1835
+    },
+    {
+      "playerId": 8,
+      "recipientPlayerId": 7,
+      "ms": 2202474,
+      "gold": 0,
+      "lumber": 3280
+    },
+    {
+      "playerId": 6,
+      "recipientPlayerId": 2,
+      "ms": 2249820,
+      "gold": 1000,
+      "lumber": 3255
+    },
+    {
+      "playerId": 2,
+      "recipientPlayerId": 6,
+      "ms": 2279396,
+      "gold": 16518,
+      "lumber": 0
+    },
+    {
+      "playerId": 6,
+      "recipientPlayerId": 2,
+      "ms": 2510247,
+      "gold": 0,
+      "lumber": 3520
+    },
+    {
+      "playerId": 2,
+      "recipientPlayerId": 4,
+      "ms": 2604630,
+      "gold": 0,
+      "lumber": 35169
+    },
+    {
+      "playerId": 2,
+      "recipientPlayerId": 4,
+      "ms": 2626097,
+      "gold": 4110,
+      "lumber": 0
     }
   ],
   "pauseEvents": [
