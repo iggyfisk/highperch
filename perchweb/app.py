@@ -6,17 +6,17 @@ from os import environ, path
 from glob import glob
 from hashlib import md5
 import base64
-from flask import Flask, request, abort
+import logging
+from logging.config import fileConfig
+from werkzeug.exceptions import HTTPException, InternalServerError
+from werkzeug.middleware.proxy_fix import ProxyFix
+from flask import Flask, request
 from views import routes as public_routes
 from admin import routes as admin_routes
 from templatefilters import register
 from replaydb import close_connection as close_replaydb
-from werkzeug.middleware.proxy_fix import ProxyFix
-import logging
-from logging.config import fileConfig
 from perchlogging import log_to_slack, format_traceback, sanitize_cookie
-import traceback
-from pprint import pformat
+
 
 app = Flask(__name__)
 app.wsgi_app = ProxyFix(app.wsgi_app)
@@ -39,21 +39,23 @@ else:
 def cleanup(error):
     """ End of request, commit all transactions and close connections """
     close_replaydb()
-    if error is not None:
-        # Todo: Log
-        print(error)
 
 
 @app.errorhandler(Exception)
 def internal_error(error):
+    if isinstance(error, HTTPException) and error.code < 500:
+        return error.get_response()
     error_string = ('\nRequest IPaddr: ' + request.remote_addr)
     error_string += ('\nURL: ' + request.url)
-    error_string += ('\n----- begin headers -----\n\n' + sanitize_cookie(str(request.headers)))
+    error_string += ('\n----- begin headers -----\n\n' +
+                     sanitize_cookie(str(request.headers)))
     error_string += ('----- end headers -----\nTraceback:\n')
     error_string += format_traceback(error)
     app.logger.error(error_string)
-    log_to_slack('ERROR', f"500 [{error.__class__.__name__}]: \n{error_string}")
-    abort(500)
+    log_to_slack(
+        'ERROR', f"500 [{error.__class__.__name__}]: \n{error_string}")
+    return (error if isinstance(error, HTTPException) else InternalServerError()).get_response()
+
 
 app.config.from_pyfile(path.join(app.root_path, 'app.cfg'))
 
@@ -66,7 +68,6 @@ else:
     app.secret_key = 'debug'
 
 
-
 # Cache bust CSS and JS which may have changed, quick n dirty
 mutable_static = glob(path.join(app.root_path, 'static/style', '*.css')) + \
     glob(path.join(app.root_path, 'static/script', '*.js'))
@@ -74,7 +75,8 @@ mutable_static = glob(path.join(app.root_path, 'static/style', '*.css')) + \
 hash_obj = md5(open(mutable_static[0], 'rb').read())
 for static_file in mutable_static[1:]:
     hash_obj.update(open(static_file, 'rb').read())
-app.config['STATIC_HASH'] = base64.urlsafe_b64encode(hash_obj.digest()).decode('ascii')[:-2]
+app.config['STATIC_HASH'] = base64.urlsafe_b64encode(
+    hash_obj.digest()).decode('ascii')[:-2]
 
 if __name__ == "__main__":
     app.run()
