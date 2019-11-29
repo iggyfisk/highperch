@@ -20,18 +20,22 @@ let winningTeamId = null;
 let winningTeamConfirmed = false;
 
 Parser.on('gamemetadata', (metaData) => {
-  metaData.playerSlotRecords.forEach((player, i) => {
+  metaData.playerSlotRecords.forEach(player => {
     // Team 24 are observers
     if (player.teamId == 24) return;
     if (player.computerFlag) return;
 
     playerTeams[player.playerId] = player.teamId;
-    playerSlots[i] = player.playerId;
     if (!teams[player.teamId]) {
       teams[player.teamId] = [];
       teamsLeft.push(player.teamId);
     }
     teams[player.teamId][player.playerId] = true;
+  });
+
+  playerSlots.push(metaData.player.playerId);
+  metaData.playerList.forEach(player => {
+    playerSlots.push(player.playerId);
   });
 });
 
@@ -85,9 +89,14 @@ Parser.on('timeslotblock', (timeSlotBlock) => {
           });
           break;
         case 0x51:
+          const recipientPlayerId = playerSlots[action.slotNumber];
+          const recipientTeam = playerTeams[recipientPlayerId];
+          const senderTeam = playerTeams[playerId];
+          if (recipientPlayerId == undefined || recipientTeam !== senderTeam) throw ("Invalid resource trade");
+
           tradeEvents.push({
             playerId,
-            recipientPlayerId: playerSlots[action.slotNumber],
+            recipientPlayerId,
             ms: Parser.msElapsed,
             gold: action.gold,
             lumber: action.lumber,
