@@ -700,7 +700,8 @@
       "_retrainingMetadata": {},
       "_lastRetrainingTime": 0,
       "currentTimePlayed": 2211522,
-      "apm": 70
+      "apm": 70,
+      "allyOptions": []
     },
     {
       "id": 7,
@@ -1369,7 +1370,8 @@
       "_retrainingMetadata": {},
       "_lastRetrainingTime": 0,
       "currentTimePlayed": 2114738,
-      "apm": 57
+      "apm": 57,
+      "allyOptions": []
     },
     {
       "id": 8,
@@ -2112,7 +2114,8 @@
       "_retrainingMetadata": {},
       "_lastRetrainingTime": 0,
       "currentTimePlayed": 2833602,
-      "apm": 69
+      "apm": 69,
+      "allyOptions": []
     },
     {
       "id": 9,
@@ -2710,7 +2713,19 @@
       "_retrainingMetadata": {},
       "_lastRetrainingTime": 0,
       "currentTimePlayed": 2202391,
-      "apm": 28
+      "apm": 28,
+      "allyOptions": [
+        {
+          "playerId": 3,
+          "flags": 1151,
+          "ms": 2181352
+        },
+        {
+          "playerId": 8,
+          "flags": 1151,
+          "ms": 2181352
+        }
+      ]
     },
     {
       "id": 2,
@@ -3856,7 +3871,24 @@
       "_retrainingMetadata": {},
       "_lastRetrainingTime": 0,
       "currentTimePlayed": 2854824,
-      "apm": 112
+      "apm": 112,
+      "allyOptions": [
+        {
+          "playerId": 4,
+          "flags": 1151,
+          "ms": 9140
+        },
+        {
+          "playerId": 5,
+          "flags": 1151,
+          "ms": 9140
+        },
+        {
+          "playerId": 6,
+          "flags": 1151,
+          "ms": 9140
+        }
+      ]
     },
     {
       "id": 4,
@@ -4993,7 +5025,24 @@
       "_retrainingMetadata": {},
       "_lastRetrainingTime": 0,
       "currentTimePlayed": 2834937,
-      "apm": 114
+      "apm": 114,
+      "allyOptions": [
+        {
+          "playerId": 2,
+          "flags": 1151,
+          "ms": 12815
+        },
+        {
+          "playerId": 5,
+          "flags": 1151,
+          "ms": 12815
+        },
+        {
+          "playerId": 6,
+          "flags": 1151,
+          "ms": 12815
+        }
+      ]
     },
     {
       "id": 5,
@@ -6063,7 +6112,24 @@
       "_retrainingMetadata": {},
       "_lastRetrainingTime": 0,
       "currentTimePlayed": 2854875,
-      "apm": 127
+      "apm": 127,
+      "allyOptions": [
+        {
+          "playerId": 2,
+          "flags": 1151,
+          "ms": 14325
+        },
+        {
+          "playerId": 4,
+          "flags": 1151,
+          "ms": 14325
+        },
+        {
+          "playerId": 6,
+          "flags": 1151,
+          "ms": 14325
+        }
+      ]
     },
     {
       "id": 6,
@@ -7941,7 +8007,24 @@
       "_retrainingMetadata": {},
       "_lastRetrainingTime": 0,
       "currentTimePlayed": 2851640,
-      "apm": 124
+      "apm": 124,
+      "allyOptions": [
+        {
+          "playerId": 2,
+          "flags": 1151,
+          "ms": 399259
+        },
+        {
+          "playerId": 4,
+          "flags": 1151,
+          "ms": 399259
+        },
+        {
+          "playerId": 5,
+          "flags": 1151,
+          "ms": 399259
+        }
+      ]
     }
   ],
   "matchup": "HHOOvHUUU",
@@ -9015,42 +9098,66 @@
     "randomRaces": false,
     "speed": 2
   },
-  "parseTime": 766,
+  "parseTime": 911,
   "saverPlayerId": 2,
   "winningTeamId": 1,
   "winningTeamConfirmed": true,
   "leaveEvents": [
     {
       "playerId": 7,
-      "ms": 2151892
+      "ms": 2151892,
+      "reason": "left"
     },
     {
       "playerId": 9,
-      "ms": 2206489
+      "ms": 2206489,
+      "reason": "left"
     },
     {
       "playerId": 3,
-      "ms": 2218510
+      "ms": 2218510,
+      "reason": "left"
     },
     {
       "playerId": 8,
-      "ms": 2854875
+      "ms": 2854875,
+      "reason": "gameEnd"
     },
     {
       "playerId": 6,
-      "ms": 2854875
+      "ms": 2854875,
+      "reason": "gameEnd"
     },
     {
       "playerId": 5,
-      "ms": 2854875
+      "ms": 2854875,
+      "reason": "gameEnd"
     },
     {
       "playerId": 4,
-      "ms": 2854875
+      "ms": 2854875,
+      "reason": "gameEnd"
     },
     {
       "playerId": 2,
-      "ms": 2855681
+      "ms": 2855681,
+      "reason": "gameEnd"
+    }
+  ],
+  "tradeEvents": [
+    {
+      "playerId": 4,
+      "recipientPlayerId": 6,
+      "ms": 804478,
+      "gold": 0,
+      "lumber": 700
+    },
+    {
+      "playerId": 6,
+      "recipientPlayerId": 5,
+      "ms": 927353,
+      "gold": 600,
+      "lumber": 0
     }
   ],
   "pauseEvents": [

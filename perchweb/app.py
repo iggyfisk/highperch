@@ -6,17 +6,17 @@ from os import environ, path
 from glob import glob
 from hashlib import md5
 import base64
-from flask import Flask, request, abort
+import logging
+from logging.config import fileConfig
+from werkzeug.exceptions import HTTPException, InternalServerError
+from werkzeug.middleware.proxy_fix import ProxyFix
+from flask import Flask, request
 from views import routes as public_routes
 from admin import routes as admin_routes
 from templatefilters import register
 from replaydb import close_connection as close_replaydb
-from werkzeug.middleware.proxy_fix import ProxyFix
-import logging
-from logging.config import fileConfig
 from perchlogging import log_to_slack, format_traceback, sanitize_cookie
-import traceback
-from pprint import pformat
+
 
 app = Flask(__name__)
 app.wsgi_app = ProxyFix(app.wsgi_app)
@@ -39,9 +39,6 @@ else:
 def cleanup(error):
     """ End of request, commit all transactions and close connections """
     close_replaydb()
-    if error is not None:
-        # Todo: Log
-        print(error)
 
 
 @app.errorhandler(404)
@@ -52,6 +49,8 @@ def error_404(error):
 
 @app.errorhandler(Exception)
 def internal_error(error):
+    if isinstance(error, HTTPException) and error.code < 500:
+        return error.get_response()
     error_string = ('\nRequest IPaddr: ' + request.remote_addr)
     error_string += ('\nURL: ' + request.url)
     error_string += ('\n----- begin headers -----\n\n' +
@@ -59,8 +58,15 @@ def internal_error(error):
     error_string += ('----- end headers -----\nTraceback:\n')
     error_string += format_traceback(error)
     app.logger.error(error_string)
+<<<<<<< HEAD
     log_to_slack('ERROR', f"[{error.__class__.__name__}] \n{error_string}")
     abort(500)
+=======
+    log_to_slack(
+        'ERROR', f"500 [{error.__class__.__name__}]: \n{error_string}")
+    return (error if isinstance(error, HTTPException) else InternalServerError()).get_response()
+
+>>>>>>> e7bd34f4d7a31472a664cec101e3fbf5855b8fc3
 
 
 app.config.from_pyfile(path.join(app.root_path, 'app.cfg'))

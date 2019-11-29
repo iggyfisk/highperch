@@ -17,9 +17,11 @@
     <h2>{{ player['name'] }} player profile</h2>
     <div class="content">
         <div class="stats">
-            <div><b>{{ player['total_games'] }}</b> games played</div>
-            <div><b>{{ player['AvgApm'] }}</b> average APM</div>
-            <div><b>{{ player['TowerCount'] }}</b> towers built</div>
+            <div><b>{{ player['total_games'] }}</b> games</div>
+            <div><b>{{ player['AvgApm'] }}</b> APM</div>
+            <div><b>{{ player['TowerCount'] }}</b> towers</div>
+            {% if player['GoldSent'] != 0 %}<div><b>{{ player['GoldSent']|thousands }}</b> gold fed</div>{% endif %}
+            {% if player['LumberSent'] != 0 %}<div><b>{{ player['LumberSent']|thousands }}</b> wood fed</div>{% endif %}
             <div><b>{{ player['ChatMessageCount'] }}</b> chirps</div>
         </div>
         <div class="racechart">

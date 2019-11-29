@@ -1,6 +1,6 @@
 """ Could do some data crunching here, count towers, calculate hero levels etc """
 
-from lib.wigcodes import is_tower
+from lib.wigcodes import is_tower, tier_upgrades
 
 arbitrary_item_scores = {
     'stwp': -20,
@@ -27,9 +27,29 @@ arbitrary_building_scores = {
     'utom': 1
 }
 
+# Todo: gather all the bnet tags
+official_names = {
+    "iggythefisk#236",
+    "Mata#2275"
+}
+
 
 class Player(dict):
     """ Full player information, initialized from a replay data JSON file """
+
+    def __init__(self, **args):
+        super().__init__(**args)
+        self.trades = [{'ms': t['ms'],
+                        'outgoing': True if t['playerId'] == args['id'] else False,
+                        'gold': t['gold'] if t['playerId'] == args['id'] else -t['gold'],
+                        'lumber': t['lumber'] if t['playerId'] == args['id'] else -t['lumber']}
+                       for t in self['tradeEvents']
+                       if t['playerId'] == args['id'] or t['recipientPlayerId'] == args['id']]
+        del self['tradeEvents']
+
+    def official(self):
+        """ Is this player an Officially Sanctioned player True/False """
+        return self['name'] in official_names
 
     def tower_count(self):
         """ Total number of buildings made by this player that map to lib.wigcodes.is_tower """
@@ -43,7 +63,20 @@ class Player(dict):
         own_race = self['raceDetected'] if self['raceDetected'] != 'N' else 'E'
         return [h for h in self['heroes'] if h['id'][0] == 'N' or h['id'][0] == own_race]
 
-    def get_arbitrary_score(self):
+    def net_feed(self):
+        """ Net gold(0) and lumber(1) fed to allies this game """
+        gold = 0
+        lumber = 0
+        for t in self.trades:
+            gold += t['gold']
+            lumber += t['lumber']
+        return (gold, lumber)
+
+    def first_share(self):
+        """ Time until control shared with allies """
+        return self['allyOptions'][0]['ms'] if len(self['allyOptions']) > 0 else None
+
+    def get_arbitrary_score(self, ally_names):
         score = self['apm']
         score -= 40 if self['raceDetected'] == 'U' else 0
 
@@ -67,5 +100,20 @@ class Player(dict):
         score += 10 if 'pinv' in items else 0
         for (i, c) in items.items():
             score += c * arbitrary_item_scores.get(i, 0)
+
+        if self.official() and any(n in official_names for n in ally_names):
+            first_share = self.first_share() or 3600000
+            score -= (first_share - 45000) / 30000
+
+        tier_ms = next((b['ms'] for b in self['buildings'].get(
+            'order', []) if b['id'] in tier_upgrades), self['currentTimePlayed'])
+        trade_score = 0
+        for t in self.trades:
+            scale = 0.002 / ((t['ms'] / 120000) + 0.5)
+            scale += 0 if t['outgoing'] is False else (
+                0 if tier_ms < t['ms'] else 0.001)
+            trade_score += scale * 1.5 * t['gold']
+            trade_score += scale * t['lumber']
+        score += trade_score if trade_score > 0 else trade_score / 2
 
         return score

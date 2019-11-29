@@ -14,17 +14,19 @@ const Parser = new W3GReplay();
 const teams = [];
 let teamsLeft = [];
 const playerTeams = [];
+const playerSlots = []
 const leaveEvents = [];
 let winningTeamId = null;
 let winningTeamConfirmed = false;
 
 Parser.on('gamemetadata', (metaData) => {
-  metaData.playerSlotRecords.forEach(player => {
+  metaData.playerSlotRecords.forEach((player,i) => {
     // Team 24 are observers
     if (player.teamId == 24) return;
     if (player.computerFlag) return;
 
     playerTeams[player.playerId] = player.teamId;
+    playerSlots[i] = player.playerId;
     if (!teams[player.teamId]) {
       teams[player.teamId] = [];
       teamsLeft.push(player.teamId);
@@ -33,7 +35,10 @@ Parser.on('gamemetadata', (metaData) => {
   });
 });
 
-let lastLeaveEventMs = 0;
+const leaveReasons = {
+  '01000000': 'left',
+  '0c000000': 'gameEnd',
+};
 Parser.on('gamedatablock', (block) => {
   switch (block.type) {
     case 23:
@@ -43,29 +48,19 @@ Parser.on('gamedatablock', (block) => {
       // Non-player left the game
       if (playerTeams[playerId] === undefined) break;
 
-      const teamId = playerTeams[playerId];
-      teams[teamId][playerId] = false;
-      leaveEvents.push({ playerId, ms });
-
-      if (!teams[teamId].some(p => !!p)) {
-        teamsLeft = teamsLeft.filter(tId => tId !== teamId);
-      }
-
-      if (winningTeamId == null && teamsLeft.length === 1) {
-        winningTeamId = teamsLeft[0];
-        // Check for a likely crash where everyone leaves at the same time out of order
-        winningTeamConfirmed = lastLeaveEventMs !== ms;
-      }
-      lastLeaveEventMs = ms;
-      break;
+      reason = leaveReasons[block.reason] || 'unknown';
+      leaveEvents.push({ playerId, ms, reason });
   }
 });
 
 const pauseEvents = [];
 const playerBuildings = {};
+const tradeEvents = [];
+const playerShareEvents = {};
 Parser.on('timeslotblock', (timeSlotBlock) => {
   timeSlotBlock.actions.forEach(actionBlock => {
     const { playerId, actions } = actionBlock;
+    
     ActionBlockList.parse(actions).forEach(action => {
       switch (action.actionId) {
         case 1:
@@ -80,6 +75,23 @@ Parser.on('timeslotblock', (timeSlotBlock) => {
             if (!playerBuildings[playerId]) playerBuildings[playerId] = [];
             playerBuildings[playerId].push({ id: itemId.value, ms: Parser.msElapsed, x: action.targetX, y: action.targetY });
           }
+          break;
+        case 0x50:
+          if (!playerShareEvents[playerId]) playerShareEvents[playerId] = [];
+          playerShareEvents[playerId].push({
+            playerId: playerSlots[action.slotNumber],
+            flags: action.flags,
+            ms: Parser.msElapsed,
+          });
+          break;
+        case 0x51:
+          tradeEvents.push({
+            playerId,
+            recipientPlayerId: playerSlots[action.slotNumber],
+            ms: Parser.msElapsed,
+            gold: action.gold,
+            lumber: action.lumber,
+          });
           break;
         // I forgot about tavern resurrection. RIP
         /*
@@ -110,22 +122,67 @@ Parser.on('timeslotblock', (timeSlotBlock) => {
 const replay = Parser.parse(inputPath);
 
 // Figure out who saved and who won by looking at leave order
-const replaySaverPlayerId = leaveEvents.length
-  ? leaveEvents[leaveEvents.length - 1].playerId
-  : null;
+const leaveLength = leaveEvents.length;
+let replaySaverPlayerId;
+if (!leaveLength) {
+  replaySaverPlayerId = null;
+} else if (leaveEvents[leaveLength - 1].ms !== leaveEvents[leaveLength - 2].ms) {
+  replaySaverPlayerId = leaveEvents[leaveLength - 1].playerId;
+} else {
+  const selfQuit = leaveEvents.filter(l => l.reason == 'left');
+  replaySaverPlayerId = selfQuit[selfQuit.length - 1].playerId;
+}
 
-if (!winningTeamConfirmed && replaySaverPlayerId) {
-  // If there were only 2 teams left after the replay saver left, guess that the other team won
-  const replaySaverTeamId = playerTeams[replaySaverPlayerId];
-  teamsLeft = teamsLeft.filter(tId => tId !== replaySaverTeamId);
-  if (teamsLeft.length == 1) {
-    winningTeamId = teamsLeft[0];
+// Try do determine game winner
+saverLeft = false;
+leaveEvents.forEach(l => {
+  const teamId = playerTeams[l.playerId];
+  teams[teamId][l.playerId] = false;
+
+  if (!teams[teamId].some(p => !!p)) {
+    // If only one team remains, they probably won. If the saver hasn't left at that point, 
+    // they DEFINITELY won.
+    teamsLeft = teamsLeft.filter(tId => tId !== teamId);
+    if (!winningTeamId && teamsLeft.length == 1) {
+      winningTeamId = teamsLeft[0];
+      winningTeamConfirmed = !saverLeft;
+    }
+  }
+
+  if (l.playerId == replaySaverPlayerId) {
+    saverLeft = true;
+    // If the saver left with only 2 teams remaining, the other team probably won.
+    const teamsLeftGuess = teamsLeft.filter(t => t !== playerTeams[l.playerId]);
+    if (teamsLeftGuess.length == 1) {
+      winningTeamId = teamsLeftGuess[0];
+    }
+  }
+});
+
+// Some players are incorrectly marked as "left" when they stayed til the end, patch it up
+let lastLeaveMs = null;
+let loserLeft = false;
+if (winningTeamId !== null) {
+  for (let i = leaveEvents.length - 1; i > 0; --i) {
+    const { playerId, ms, reason } = leaveEvents[i];
+    const teamId = playerTeams[playerId];
+    const isWinner = teamId == winningTeamId;
+    if (reason == 'gameEnd') {
+      lastLeaveMs = ms;
+      if (!isWinner) loserLeft = true;
+    } else if (isWinner && (ms == lastLeaveMs || !loserLeft)) {
+      leaveEvents[i].reason = 'gameEnd';
+    } else {
+      break;
+    }
   }
 }
+
 replay.saverPlayerId = replaySaverPlayerId;
 replay.winningTeamId = winningTeamId;
-replay.winningTeamConfirmed = winningTeamConfirmed;
+replay.winningTeamConfirmed = winningTeamConfirmed; 
 replay.leaveEvents = leaveEvents;
+replay.tradeEvents = tradeEvents;
 
 // Clean double chats from replay saver, bug in Reforged beta, Blizzard may have fixed it since
 const sanitizedChat = [];
@@ -166,6 +223,11 @@ replay.players.forEach(p => {
   });
   // Replace with our location-aware list
   p['buildings']['order'] = playerBuildings[p['id']];
+
+  // Add ally options event (shared control)
+  p['allyOptions'] = playerShareEvents[p['id']]
+    ? playerShareEvents[p['id']]
+    : [];
 });
 
 writeFileSync(outputPath, JSON.stringify(replay));

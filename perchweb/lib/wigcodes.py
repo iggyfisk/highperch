@@ -51,3 +51,14 @@ map_sizes = {
     '(6)RollingHills': {'minX': -3200, 'maxX': 3200, 'minY': -14720, 'maxY': 14208},
     '(2)TerenasStand_LV': {'minX': -4864, 'maxX': 4864, 'minY': -5376, 'maxY': 4864}
 }
+
+tier_upgrades = {
+    'hkee',
+    'hcas',
+    'ostr',
+    'ofrt',
+    'etoa',
+    'etoe',
+    'unp1',
+    'unp2'
+}
