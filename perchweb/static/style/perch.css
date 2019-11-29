@@ -1762,6 +1762,32 @@ form.upload input[type=submit]:hover {
   }
 }
 
+.peep.admin {
+  background: #33ccff99;
+  margin-top: 16px;
+}
+.peep.admin h2 {
+  background: none;
+  color: #fff;
+  text-shadow: 1px 1px 1px #000;
+}
+.peep.admin > div {
+  color: #FFF5DF;
+  padding: 8px;
+}
+.peep.admin form input[type=text] {
+  color: #222;
+}
+@media (min-width: 750px) {
+  .peep.admin form input[type=text] {
+    width: 400px;
+  }
+}
+.peep.admin form input[type=submit] {
+  background: #FFF5DF;
+  margin-left: 16px;
+}
+
 .guide {
   /*!
    * Bootstrap Grid v4.3.1 (https://getbootstrap.com/)

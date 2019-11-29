@@ -2,9 +2,11 @@
 
 import geoip2.database
 from flask import Blueprint, url_for, request, redirect, flash
+from werkzeug.utils import secure_filename
 from auth import admin_only, logout as auth_logout
 from handler import admin_page
 from replaydb import save_chatlog, delete_replay as dbdelete_replay
+from peep import save_pic
 from filepaths import get_path
 
 routes = Blueprint('admin', __name__)
@@ -55,3 +57,30 @@ def delete_replay(replay_id):
         replay_id) else url_for('views.view_replay', replay_id=replay_id)
 
     return redirect(redirect_url)
+
+
+@routes.route('/peep/upload', methods=['POST'])
+@admin_only
+def upload_pick():
+    """Admin peep pic upload"""
+
+    pic = request.files['pic'] if 'pic' in request.files else None
+    pic_filename = secure_filename(pic.filename) if pic is not None else None
+    if not pic_filename:
+        flash('No image file selected')
+        return redirect(url_for('views.peep'))
+
+    replay = request.form['replay']
+    replay_id = None
+    if replay:
+        if '/' in replay:
+            replay = replay[replay.rfind('/') + 1:]
+        if replay.isdigit():
+            replay_id = int(replay)
+        else:
+            flash('Invalid replay reference format. Enter replay ID or URL')
+            return redirect(url_for('views.peep'))
+
+    pic_id = save_pic(pic, pic_filename, replay_id)
+
+    return redirect(url_for('views.peep', pic_id=pic_id))

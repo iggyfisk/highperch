@@ -25,6 +25,8 @@ perchweb/logging.cfg
 # Content, default paths
 replaydata/*.json
 perchweb/static/replays/*.w3g
+perchweb/static/images/peep/*
+!perchweb/static/images/peep/README.md
 perchweb/static/pics
 temp/*
 !temp/README.md

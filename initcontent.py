@@ -32,6 +32,10 @@ if __name__ == '__main__':
         os.remove(data_file)
     for replay_file in glob.glob(fp.get_replay('*.w3g')):
         os.remove(replay_file)
+    for peep_file in glob.glob(fp.get_peep('*')):
+        if 'README.md' in peep_file:
+            continue
+        os.remove(peep_file)
 
     wig_db = sqlite3.connect(fp.get_db('wig.db'))
     with open('test/wig.db.sql', mode='r') as f:
@@ -60,10 +64,14 @@ if __name__ == '__main__':
         shutil.copyfile('test/7.json', fp.get_replay_data('7.json'))
         shutil.copyfile('test/8.w3g', fp.get_replay('8.w3g'))
         shutil.copyfile('test/8.json', fp.get_replay_data('8.json'))
+        for peep_file in glob.glob('test/peep/*'):
+            shutil.copyfile(peep_file, fp.get_peep(os.path.basename(peep_file)))
         with open('test/wig.db.data.sql', mode='r') as f:
             wig_db.cursor().executescript(f.read())
         wig_db.commit()
     elif input("Insert production content? Type 'yes' to continue: ") == 'yes':
+        for peep_file in glob.glob('test/peep/*'):
+            shutil.copyfile(peep_file, fp.get_peep(os.path.basename(peep_file)))
         with open('test/wig.db.data.production.sql', mode='r') as f:
             wig_db.cursor().executescript(f.read())
         wig_db.commit()

@@ -1,0 +1,27 @@
+.peep {
+    &.admin{
+        background: $admin-bg;
+        margin-top: $margin;
+        h2 {
+            background: none;
+            color: #fff;
+            text-shadow: 1px 1px 1px #000;
+        }
+        > div {
+            color: $light-grey;
+            padding: $padding;
+        }
+        form {            
+            input[type=text] {
+                color: $font-color;
+                @media (#{$bp-larger-than-tablet}) {
+                    width: 400px;
+                }                
+            }
+            input[type="submit"] {
+                background: $light-grey;
+                margin-left: $margin;
+            }
+        }
+    }
+}

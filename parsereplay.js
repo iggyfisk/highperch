@@ -20,7 +20,7 @@ let winningTeamId = null;
 let winningTeamConfirmed = false;
 
 Parser.on('gamemetadata', (metaData) => {
-  metaData.playerSlotRecords.forEach((player,i) => {
+  metaData.playerSlotRecords.forEach((player, i) => {
     // Team 24 are observers
     if (player.teamId == 24) return;
     if (player.computerFlag) return;
@@ -60,7 +60,7 @@ const playerShareEvents = {};
 Parser.on('timeslotblock', (timeSlotBlock) => {
   timeSlotBlock.actions.forEach(actionBlock => {
     const { playerId, actions } = actionBlock;
-    
+
     ActionBlockList.parse(actions).forEach(action => {
       switch (action.actionId) {
         case 1:
@@ -180,7 +180,7 @@ if (winningTeamId !== null) {
 
 replay.saverPlayerId = replaySaverPlayerId;
 replay.winningTeamId = winningTeamId;
-replay.winningTeamConfirmed = winningTeamConfirmed; 
+replay.winningTeamConfirmed = winningTeamConfirmed;
 replay.leaveEvents = leaveEvents;
 replay.tradeEvents = tradeEvents;
 

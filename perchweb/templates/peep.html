@@ -20,4 +20,19 @@
         </div>
     </div>
 </div>
+{% if is_admin %}
+<div class="row">
+    <div class="twelve columns admin peep">
+        <h2>Add-a-pic</h2>
+        <div>
+            <p>Filename will be preserved. If the picture is somehow connected to a reforged replay, specify.</p>
+            <form action="/peep/upload" method="POST" enctype="multipart/form-data" autocomplete="off">
+                <input type="file" name="pic" accept="image/*" required />
+                <input type="text" name="replay" placeholder="Replay URL or ID, if applicable"  />
+                <input type="Submit" class="action" value="Upload" />
+            </form>
+        </div>
+    </div>
+</div>
+{% endif %}
 {% endblock %}
