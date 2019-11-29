@@ -48,6 +48,9 @@
                                 {% if player.tower_count() %}
                                 | <b>{{ player.tower_count() }}</b> towers
                                 {% endif %}
+                                {% if player.net_feed()[0] + player.net_feed()[1] > 0 %}
+                                | <b>{{ (player.net_feed()[0] + player.net_feed()[1])|thousands }}</b> sources fed
+                                {% endif %}
                                 {% if player['id'] == replay.mvp_id() %}
                                 | <span class="award" title="MVP">👑</span>
                                 {% elif player['id'] == replay.grb_id() %}
