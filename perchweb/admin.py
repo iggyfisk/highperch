@@ -17,8 +17,6 @@ def geoip_country(ip_addr):
         result = {'code': response.country.iso_code,
                   'name': response.country.name}
         return result
-    except geoip2.errors.AddressNotFoundError:
-        return {'code': "xx", 'name': "unknown"}
     except Exception as e:
         return {'code': "xx", 'name': "unknown"}
 
@@ -27,8 +25,8 @@ def geoip_city(ip_addr):
     reader = geoip2.database.Reader(get_path('resource/GeoLite2-City.mmdb'))
     try:
         return reader.city.name(ip_addr)
-    except geoip2.errors.AddressNotFoundError:
-        return "unknown"
+    except Exception as e:
+        return 'unknown'
 
 
 @routes.route('/logout')

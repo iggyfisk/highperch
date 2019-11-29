@@ -44,16 +44,24 @@ def cleanup(error):
         print(error)
 
 
+@app.errorhandler(404)
+def error_404(error):
+    app.logger.error(error)
+    abort(404)
+
+
 @app.errorhandler(Exception)
 def internal_error(error):
     error_string = ('\nRequest IPaddr: ' + request.remote_addr)
     error_string += ('\nURL: ' + request.url)
-    error_string += ('\n----- begin headers -----\n\n' + sanitize_cookie(str(request.headers)))
+    error_string += ('\n----- begin headers -----\n\n' +
+                     sanitize_cookie(str(request.headers)))
     error_string += ('----- end headers -----\nTraceback:\n')
     error_string += format_traceback(error)
     app.logger.error(error_string)
-    log_to_slack('ERROR', f"500 [{error.__class__.__name__}]: \n{error_string}")
+    log_to_slack('ERROR', f"[{error.__class__.__name__}] \n{error_string}")
     abort(500)
+
 
 app.config.from_pyfile(path.join(app.root_path, 'app.cfg'))
 
@@ -66,7 +74,6 @@ else:
     app.secret_key = 'debug'
 
 
-
 # Cache bust CSS and JS which may have changed, quick n dirty
 mutable_static = glob(path.join(app.root_path, 'static/style', '*.css')) + \
     glob(path.join(app.root_path, 'static/script', '*.js'))
@@ -74,7 +81,13 @@ mutable_static = glob(path.join(app.root_path, 'static/style', '*.css')) + \
 hash_obj = md5(open(mutable_static[0], 'rb').read())
 for static_file in mutable_static[1:]:
     hash_obj.update(open(static_file, 'rb').read())
-app.config['STATIC_HASH'] = base64.urlsafe_b64encode(hash_obj.digest()).decode('ascii')[:-2]
+app.config['STATIC_HASH'] = base64.urlsafe_b64encode(
+    hash_obj.digest()).decode('ascii')[:-2]
 
 if __name__ == "__main__":
     app.run()
+
+if __name__ != "__main__":
+    gunicorn_logger = logging.getLogger('gunicorn.error')
+    app.logger.handlers = gunicorn_logger.handlers
+    app.logger.setLevel(gunicorn_logger.level)

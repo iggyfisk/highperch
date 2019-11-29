@@ -9,6 +9,7 @@ from handler import standard_page
 import replaydb
 from peep import get_pic
 from auth import login as auth_login, check_if_admin
+from perchlogging import log_to_slack, format_ip_addr
 
 routes = Blueprint('views', __name__)
 
@@ -37,6 +38,7 @@ def view_replay(replay_id):
     replay = replaydb.get_replay(replay_id)
 
     if replay_listinfo is None or replay is None:
+        current_app.logger.warning(f'404 on replay ID {replay_id}')
         abort(404)
 
     drawmap = replay.get_drawmap(timestamp=True)
@@ -49,6 +51,7 @@ def view_player(battletag):
     player = replaydb.get_player(battletag)
 
     if player is None:
+        current_app.logger.warning(f'404 on player "{battletag}"')
         abort(404)
 
     recent_replays = replaydb.list_player_replays(battletag)
@@ -69,6 +72,9 @@ def upload_replay():
     replay_name = request.form['name']
     if (len(replay_name) < 6 or len(replay_name) > 50):
         flash('Bad name')
+        error_string = f'Attempted bad filename length from {format_ip_addr(request.remote_addr)}: "{replay_filename}"'
+        log_to_slack('WARNING', error_string)
+        current_app.logger.warning(error_string)
         return redirect(url_for('views.index'))
 
     uploader_ip = request.remote_addr
@@ -83,6 +89,9 @@ def upload_replay():
     replay_filename_parts = os.path.splitext(replay_filename)
     if len(replay_filename_parts) < 2 or replay_filename_parts[1] != '.w3g':
         flash('Not a .w3g replay')
+        error_string = f'Attempted bad filename from {format_ip_addr(request.remote_addr)}: "{replay_filename}"'
+        log_to_slack('WARNING', error_string)
+        current_app.logger.warning(error_string)
         return redirect(url_for('views.index'))
 
     # Todo: Validation here, filesize etc
@@ -122,7 +131,13 @@ def login():
     response = auth_login(request.form['token'], url_for('views.index'))
     if response:
         flash('Welcome to the perch')
+        error_string = f'Successful admin login from {format_ip_addr(request.remote_addr)}'
+        current_app.logger.warning(error_string)
         return response
+
+    error_string = f'Failed admin login from {format_ip_addr(request.remote_addr)}'
+    log_to_slack('ERROR', error_string)
+    current_app.logger.error(error_string)
 
     flash('Invalid token')
     return redirect(url_for('views.admin'))
