@@ -36,5 +36,5 @@ def log_to_slack(level, log_message):
 
 def format_ip_addr(ip_addr):
     country_code = geoip_country(ip_addr)['code']
-    city, subdivision = geoip_city(ip_addr)
+    city, subdivision = geoip_city(ip_addr)[0], geoip_city(ip_addr)[1]
     return f'{ip_addr} ({city}, {subdivision}, {country_code})'
