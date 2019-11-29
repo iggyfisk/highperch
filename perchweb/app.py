@@ -53,7 +53,7 @@ def internal_error(error):
     error_string += format_traceback(error)
     app.logger.error(error_string)
     log_to_slack(
-        'ERROR', f"500 [{error.__class__.__name__}]: \n{error_string}")
+        'ERROR', f"500 [{error.__class__.__name__}] \n{error_string}")
     return (error if isinstance(error, HTTPException) else InternalServerError()).get_response()
 
 

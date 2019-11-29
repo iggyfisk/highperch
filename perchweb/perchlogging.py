@@ -7,7 +7,7 @@ from json import dumps
 from re import sub
 import traceback
 from admin import geoip_city, geoip_country
-from flask import current_app
+from flask import current_app, request
 from requests import post
 
 
