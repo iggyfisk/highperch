@@ -58,15 +58,10 @@ def internal_error(error):
     error_string += ('----- end headers -----\nTraceback:\n')
     error_string += format_traceback(error)
     app.logger.error(error_string)
-<<<<<<< HEAD
-    log_to_slack('ERROR', f"[{error.__class__.__name__}] \n{error_string}")
-    abort(500)
-=======
     log_to_slack(
         'ERROR', f"500 [{error.__class__.__name__}]: \n{error_string}")
     return (error if isinstance(error, HTTPException) else InternalServerError()).get_response()
 
->>>>>>> e7bd34f4d7a31472a664cec101e3fbf5855b8fc3
 
 
 app.config.from_pyfile(path.join(app.root_path, 'app.cfg'))
