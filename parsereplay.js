@@ -14,17 +14,19 @@ const Parser = new W3GReplay();
 const teams = [];
 let teamsLeft = [];
 const playerTeams = [];
+const playerSlots = []
 const leaveEvents = [];
 let winningTeamId = null;
 let winningTeamConfirmed = false;
 
 Parser.on('gamemetadata', (metaData) => {
-  metaData.playerSlotRecords.forEach(player => {
+  metaData.playerSlotRecords.forEach((player,i) => {
     // Team 24 are observers
     if (player.teamId == 24) return;
     if (player.computerFlag) return;
 
     playerTeams[player.playerId] = player.teamId;
+    playerSlots[i] = player.playerId;
     if (!teams[player.teamId]) {
       teams[player.teamId] = [];
       teamsLeft.push(player.teamId);
@@ -53,9 +55,12 @@ Parser.on('gamedatablock', (block) => {
 
 const pauseEvents = [];
 const playerBuildings = {};
+const tradeEvents = [];
+const playerShareEvents = {};
 Parser.on('timeslotblock', (timeSlotBlock) => {
   timeSlotBlock.actions.forEach(actionBlock => {
     const { playerId, actions } = actionBlock;
+    
     ActionBlockList.parse(actions).forEach(action => {
       switch (action.actionId) {
         case 1:
@@ -70,6 +75,23 @@ Parser.on('timeslotblock', (timeSlotBlock) => {
             if (!playerBuildings[playerId]) playerBuildings[playerId] = [];
             playerBuildings[playerId].push({ id: itemId.value, ms: Parser.msElapsed, x: action.targetX, y: action.targetY });
           }
+          break;
+        case 0x50:
+          if (!playerShareEvents[playerId]) playerShareEvents[playerId] = [];
+          playerShareEvents[playerId].push({
+            playerId: playerSlots[action.slotNumber],
+            flags: action.flags,
+            ms: Parser.msElapsed,
+          });
+          break;
+        case 0x51:
+          tradeEvents.push({
+            playerId,
+            recipientPlayerId: playerSlots[action.slotNumber],
+            ms: Parser.msElapsed,
+            gold: action.gold,
+            lumber: action.lumber,
+          });
           break;
         // I forgot about tavern resurrection. RIP
         /*
@@ -160,6 +182,7 @@ replay.saverPlayerId = replaySaverPlayerId;
 replay.winningTeamId = winningTeamId;
 replay.winningTeamConfirmed = winningTeamConfirmed; 
 replay.leaveEvents = leaveEvents;
+replay.tradeEvents = tradeEvents;
 
 // Clean double chats from replay saver, bug in Reforged beta, Blizzard may have fixed it since
 const sanitizedChat = [];
@@ -200,6 +223,11 @@ replay.players.forEach(p => {
   });
   // Replace with our location-aware list
   p['buildings']['order'] = playerBuildings[p['id']];
+
+  // Add ally options event (shared control)
+  p['allyOptions'] = playerShareEvents[p['id']]
+    ? playerShareEvents[p['id']]
+    : [];
 });
 
 writeFileSync(outputPath, JSON.stringify(replay));

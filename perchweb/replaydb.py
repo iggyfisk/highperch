@@ -141,7 +141,9 @@ def get_player(battletag):
         return None
 
     aggregate_row = query('''
-        SELECT CAST(AVG(APM) AS INTEGER) AS AvgApm, SUM(TowerCount) AS TowerCount, SUM(ChatMessageCount) AS ChatMessageCount
+        SELECT CAST(AVG(APM) AS INTEGER) AS AvgApm, SUM(TowerCount) AS TowerCount, SUM(ChatMessageCount) AS ChatMessageCount,
+	        SUM(CASE WHEN NetGoldFed > 0 THEN NetGoldFed ELSE 0 END) AS GoldSent,
+	        SUM(CASE WHEN NetLumberFed > 0 THEN NetLumberFed ELSE 0 END) AS LumberSent
         FROM GamesPlayed
         WHERE PlayerTag = ?
         GROUP BY PlayerTag
@@ -170,10 +172,14 @@ def save_game_played(replay_data, replay_id):
         tower_count = player.tower_count()
         chat_count = sum(
             1 for c in replay_data['chat'] if c['playerId'] == player['id'])
+        net_feed = player.net_feed()
+        net_gold = net_feed[0]
+        net_lumber = net_feed[1]
+        first_share = player.first_share()
 
         query('''
-            INSERT INTO GamesPlayed (PlayerTag, ReplayID, Race, APM, Win, TowerCount, ChatMessageCount)
-            VALUES(?, ?, ?, ?, ?, ?, ?)''', (name, replay_id, race, apm, win, tower_count, chat_count))
+            INSERT INTO GamesPlayed (PlayerTag, ReplayID, Race, APM, Win, TowerCount, ChatMessageCount, NetGoldFed, NetLumberFed, TimeToShare)
+            VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''', (name, replay_id, race, apm, win, tower_count, chat_count, net_gold, net_lumber, first_share))
 
         # Only record when the players real race was detected, otherwise they weren't really playing
         if race != 'R':

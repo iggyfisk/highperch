@@ -8,12 +8,6 @@ from datetime import datetime
 from lib.wigcodes import is_tower, map_sizes
 from models.player import Player
 
-# Todo: gather all the bnet tags
-official_names = {
-    "iggpig#123",
-    "ploter#2"
-}
-
 
 class ReplayListInfo(dict):
     """ Replay list information and partial data, initialized from a row in wig_db """
@@ -52,22 +46,26 @@ class Replay(dict):
 
     def __init__(self, **args):
         super().__init__(**args)
-        self.players = [Player(p) for p in args['players']]
+        # I'd like to turn all these cache values into @cached_property but that's Python >= 3.8
+        self.arbitrary_scores = None
+        self.formatted_chat = None
+        self.teams_dict = None
+
+        self.players = [Player(tradeEvents=args['tradeEvents'], **p)
+                        for p in self['players']]
         del self['players']
         # Need something more general
         self.player_colors = defaultdict(
             lambda: '#FFFFFF', {p['id']: p['color'] for p in self.players})
         self.player_names = {p['id']: p['name'] for p in self.players}
-        # I'd like to turn all these cache values into @cached_property but that's Python >= 3.8
-        self.arbitrary_scores = None
-        self.formatted_chat = None
 
     def teams(self):
         """ Lists players separated by teams """
-        teams = defaultdict(list)
-        for p in self.players:
-            teams[p['teamid']].append(p)
-        return teams
+        if self.teams_dict is None:
+            self.teams_dict = defaultdict(list)
+            for p in self.players:
+                self.teams_dict[p['teamid']].append(p)
+        return self.teams_dict
 
     def tower_count(self):
         """ Count every tower built by every player in this game """
@@ -92,7 +90,8 @@ class Replay(dict):
     def get_arbitrary_scores(self):
         if not self.arbitrary_scores:
             self.arbitrary_scores = sorted(
-                ((p['id'], p.get_arbitrary_score()) for p in self.players), key=lambda p: p[1])
+                ((p['id'], p.get_arbitrary_score([a['name'] for a in self.teams()[p['teamid']] if a['id'] != p['id']]))
+                 for p in self.players), key=lambda p: p[1])
         return self.arbitrary_scores
 
     def mvp_id(self):

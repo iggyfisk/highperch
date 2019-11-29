@@ -68,6 +68,11 @@ def player_display_name(player_name):
     return match[0] if match else player_name
 
 
+def thousands(amount):
+    """ Big number go down """
+    return f'{round(amount / 1000, 1)}k'
+
+
 lightened_colors = {
     ('#0000FF', 0.05): '#2443f0',   # plain blue
     ('#008080', 0.05): '#3f9682',   # dark teal
@@ -117,3 +122,4 @@ def register(jinja_environment):
     jinja_environment.filters['lighten'] = lighten_color
     jinja_environment.filters['scale'] = scale_color
     jinja_environment.filters['embed_country'] = make_country_embed
+    jinja_environment.filters['thousands'] = thousands
