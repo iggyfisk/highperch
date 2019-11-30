@@ -1,7 +1,10 @@
 /* Experimental expand via JS feature */
 .hp-expand {
   cursor: pointer;
-
+  transition: color 200ms linear;
+  &:hover {
+      color: #FFF;
+  }
   &.size-ph {
     @media (#{$bp-larger-than-phablet}) {
       display: none;

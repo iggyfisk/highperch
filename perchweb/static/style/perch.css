@@ -1433,7 +1433,6 @@ a.playername:hover {
   font-size: 30px;
   line-height: 15px;
   color: #33ccff;
-  transition: color 200ms linear;
 }
 .chatlog .admin .icon:hover {
   color: #FFF;
@@ -1731,6 +1730,10 @@ form.upload input[type=submit]:hover {
 /* Experimental expand via JS feature */
 .hp-expand {
   cursor: pointer;
+  transition: color 200ms linear;
+}
+.hp-expand:hover {
+  color: #FFF;
 }
 @media (min-width: 550px) {
   .hp-expand.size-ph {
