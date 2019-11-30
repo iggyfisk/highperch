@@ -101,11 +101,14 @@ def list_player_replays(battletag, max_results=5):
     return [ReplayListInfo(**r) for r in rows]
 
 
-def get_replay_listinfo(replay_id, inc_views=False):
+def get_replay_listinfo(replay_id, inc_views=False, inc_downloads=False):
     """ Load the highper.ch info for a single replay from DB (name, views etc) """
     if inc_views:
         query(
             'UPDATE Replays SET Views = Views + 1 WHERE ID = ?', (replay_id,))
+    if inc_downloads:
+        query(
+            'UPDATE Replays SET Downloads = Downloads + 1 WHERE ID = ?', (replay_id,))
 
     row = query('''
         SELECT Name, TimeStamp, HighQuality, Views, UploaderIP, VODURL
@@ -236,7 +239,7 @@ def save_replay(replay, replay_name, uploader_ip):
         # concatenate one big string that can be searched through later
         chat = '|'.join([c['message'] for c in replay_data['chat']])
         tower_count = replay_data.tower_count()
-        chat_message_count = len(chat)
+        chat_message_count = len(replay_data['chat'])
         uploader_battletag = [
             p['name'] for p in replay_data.players if p['id'] == replay_data['saverPlayerId']][0]
 

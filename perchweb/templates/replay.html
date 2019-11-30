@@ -31,7 +31,7 @@
                     </div>
 
                     <div>
-                        <a href="/static/replays/{{ replay_id }}.w3g">Download</a>
+                        <a href="/replay/{{ replay_id }}/download">Download</a>
                         <p>Uploaded {{ listinfo.upload_date() }}, {{ listinfo['Views'] }} views</p>
                         <p>{{ replay.map_name() }}</p>
                         <p>Saved by <a href="{{ url_for('views.view_player', battletag=replay.replay_saver()['name']) }}">{{ replay.replay_saver()['name']|displayname }}</a></p>

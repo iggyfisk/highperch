@@ -3,10 +3,11 @@ Routes and views for the flask application.
 """
 
 import os
-from flask import Blueprint, url_for, request, redirect, flash, abort, current_app
+from flask import Blueprint, url_for, request, redirect, flash, abort, current_app, send_file
 from werkzeug.utils import secure_filename
 from handler import standard_page
 import replaydb
+from filepaths import get_replay
 from peep import get_pic
 from auth import login as auth_login, check_if_admin
 from perchlogging import log_to_slack, format_ip_addr
@@ -38,11 +39,28 @@ def view_replay(replay_id):
     replay = replaydb.get_replay(replay_id)
 
     if replay_listinfo is None or replay is None:
-        current_app.logger.warning(f'404 on replay ID {replay_id}')
+        current_app.logger.warning(f'404 on replay view, ID: {replay_id}')
         abort(404)
 
     drawmap = replay.get_drawmap(timestamp=True)
     return standard_page('replay.html', replay_listinfo['Name'], replay=replay, listinfo=replay_listinfo, replay_id=replay_id, drawmap=drawmap)
+
+
+@routes.route('/replay/<int:replay_id>/download')
+def download_replay(replay_id):
+    """Custom replay download"""
+    # Todo: banlist here, return a different send_file
+
+    replay_listinfo = replaydb.get_replay_listinfo(
+        replay_id, inc_downloads=True)
+
+    if replay_listinfo is None:
+        current_app.logger.warning(f'404 on replay download, ID: {replay_id}')
+        abort(404)
+
+    filename = ''.join(
+        c for c in replay_listinfo['Name'] if c.isalnum() or c == ' ').strip()
+    return send_file(get_replay(f'{replay_id}.w3g'), attachment_filename=f'{filename}.w3g', as_attachment=True)
 
 
 @routes.route('/player/<string:battletag>')
