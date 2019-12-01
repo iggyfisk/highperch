@@ -44,9 +44,10 @@
                     </div>
 
                     <div>
-                        <a href="/replay/{{ replay_id }}/download">Download</a>
-                        <p>Uploaded {{ listinfo.upload_date() }}, {{ listinfo['Views'] }} views</p>
-                        <p>{{ replay.map_name() }}</p>
+                        <a href="/replay/{{ replay_id }}/download">Download<i class="icon-download-alt"></i></a>
+                        <p><b>{{ listinfo['Views'] }}</b> views</p>
+                        <p>Uploaded {{ listinfo.upload_date() }}</p>
+                        <p>{{ replay['duration']|gametime }} long {{ replay['type'] }} game on {{ replay.map_name() }}</p>
                         <p>Saved by <a href="{{ url_for('views.view_player', battletag=replay.replay_saver()['name']) }}">{{ replay.replay_saver()['name']|displayname }}</a></p>
                     </div>
                 </div>

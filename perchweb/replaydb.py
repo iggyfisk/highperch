@@ -218,7 +218,7 @@ def save_replay(replay, replay_name, uploader_ip):
         parse_result = subprocess.run(
             ["node", filepaths.get_path("../parsereplay.js"), temp_replay_path, temp_data_path])
         if parse_result.returncode > 0:
-            raise ReplayParsingException("Replay parsing failed")
+            raise ReplayParsingException("Replay parsing failed. If it's really a valid Reforged replay, let us know.")
 
         with open(temp_data_path, encoding='utf8') as replay_json:
             replay_data = Replay(**json.load(replay_json))
@@ -270,7 +270,7 @@ def save_replay(replay, replay_name, uploader_ip):
         error_string = f'Failed upload from {format_ip_addr(request.remote_addr)}: "{replay_name}"\nError follows:\n{format_traceback(e)}'
         log_to_slack('WARNING', error_string)
         current_app.logger.warning(error_string)
-        flash("Failed, don't try again")
+        flash("Looks like a legit replay but something broke, we'll look into it.")
         setattr(g, context_rollback_key, True)
     finally:
         if os.path.isfile(temp_replay_path):
