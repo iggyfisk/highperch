@@ -75,13 +75,13 @@ nav.expanded ul {
 nav {
     .shortname {
         display:inline;
-        @media (#{$bp-larger-than-phablet}) {
+        @media (#{$bp-larger-than-tablet}) {
             display:none;
         }
     }
     .name {
         display:none;
-        @media (#{$bp-larger-than-phablet}) {
+        @media (#{$bp-larger-than-tablet}) {
             display:inline;
         }
     }
@@ -113,6 +113,7 @@ nav {
             display: inline-block;
             margin-bottom:0;
             line-height: 1;
+            &.admin,
             &.background-picker {
                 img {
                     margin:$padding/2;
@@ -121,11 +122,17 @@ nav {
                         border:1px solid $primary-color;
                     }
                 }
+                a {
+                    padding: 0px;
+                    margin: 0;
+                }
+            }
+            &.admin.div a {
+                @media (#{$bp-larger-than-phablet}) {
+                    margin-right: $padding * 2;
+                }
             }
         }
-    }
-    .admin {
-        padding: 0px;
     }
 }
 

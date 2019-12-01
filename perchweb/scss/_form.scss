@@ -97,6 +97,14 @@ form.filters{
     &:nth-child(even) {
         background:$card-background-color;
     }
+    @media (#{$bp-larger-than-tablet}) {
+        &:first-child {
+            padding-right: 0;
+        }
+        &:last-child {
+            padding-left: 0;
+        }
+    }
 }
 
 form.upload {

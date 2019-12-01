@@ -20,15 +20,15 @@
                     <a href="{{ url_for('views.index') }}" class="{% if nav == 'index' %}active{% endif %}"><span class="name">Replays</span><span class="shortname">Reps</span></a>
                     <a href="{{ url_for('views.peep') }}" class="{% if nav == 'peep' %}active{% endif %}"><span class="name">Pictures</span><span class="shortname">Pics</span></a>
                     <a href="{{ url_for('views.guide') }}" class="{% if nav == 'guide' %}active{% endif %}"><span class="name">Documentation</span><span class="shortname">Docs</span></a>
-                    <a href="https://classic.highper.ch"><span class="name">Archives</span><span class="shortname">Old</span></a>
+                    <a href="https://classic.highper.ch" target="_blank"><span class="name">Archives</span><span class="shortname">Old</span></a>
                 </div>
                 <ul>
                     {% if is_admin %}
-                    <li class="background-picker">
-                        <a href="{{ url_for('admin.analytics_report') }}" class="admin"><img src="/static/images/reveal-20x20.png" title="Spying"></a>
+                    <li class="admin">
+                        <a href="{{ url_for('admin.analytics_report') }}"><img src="/static/images/reveal-20x20.png" title="Spying"></a>
                     </li>
-                    <li class="background-picker">
-                        <a href="{{ url_for('admin.logout') }}" class="admin"><img src="/static/images/brilliance-20x20.png" title="Dogg out"></a>
+                    <li class="admin div">
+                        <a href="{{ url_for('admin.logout') }}"><img src="/static/images/brilliance-20x20.png" title="Dogg out"></a>
                     </li>
                     {% endif %}
                     {% for bg in backgrounds %}
