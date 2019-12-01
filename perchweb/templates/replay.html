@@ -42,12 +42,12 @@
                             data-paintsize='4'></canvas>
                         {% endif %}
                     </div>
-
-                    <div>
-                        <a href="/replay/{{ replay_id }}/download">Download<i class="icon-download-alt"></i></a>
+                    <div class="summary">
+                        <p><a href="/replay/{{ replay_id }}/download">Download<i class="icon-download-alt"></i></a></p>
                         <p><b>{{ listinfo['Views'] }}</b> views</p>
                         <p>Uploaded {{ listinfo.upload_date() }}</p>
-                        <p>{{ replay['duration']|gametime }} long {{ replay['type'] }} game on {{ replay.map_name() }}</p>
+                        <p>Game version <b>{{ replay['version'] }}</b></p>
+                        <p><b>{{ replay['duration']|gametime }}</b> long {{ replay['type'] }} game on {{ replay.map_name() }}</p>
                         <p>Saved by <a href="{{ url_for('views.view_player', battletag=replay.replay_saver()['name']) }}">{{ replay.replay_saver()['name']|displayname }}</a></p>
                     </div>
                 </div>

@@ -154,6 +154,14 @@ a.playername{
                 height: 2em;
             }
         }
+        .summary {
+            p {
+                margin-bottom: $padding / 2;
+                &:first-child {
+                    margin-bottom: $padding;
+                }
+            }
+        }
         .content {
             display:flex;
             position: relative;

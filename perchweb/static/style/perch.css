@@ -1311,6 +1311,12 @@ a.playername:hover {
 .large-replay .details .edit.visible {
   height: 2em;
 }
+.large-replay .details .summary p {
+  margin-bottom: 4px;
+}
+.large-replay .details .summary p:first-child {
+  margin-bottom: 8px;
+}
 .large-replay .details .content {
   display: flex;
   position: relative;
