@@ -6,8 +6,9 @@ import json
 import sqlite3
 from datetime import datetime
 from hashlib import sha256
-from flask import flash, g
+from flask import flash, g, current_app, request
 from models.replay import Replay, ReplayListInfo
+from perchlogging import log_to_slack, format_ip_addr, format_traceback
 import filepaths
 
 
@@ -208,7 +209,9 @@ def save_replay(replay, replay_name, uploader_ip):
         dupe_check = query(
             'SELECT Name FROM Replays WHERE FileHash=?;', (file_hash,), one=True)
         if dupe_check:
-            # Todo: log attempted duplicate upload
+            error_string = f'Attempted duplicate upload from {format_ip_addr(request.remote_addr)}: "{replay_name}"'
+            log_to_slack('WARNING', error_string)
+            current_app.logger.warning(error_string)
             raise ReplayParsingException(
                 f"Replay already exists: {dupe_check[0]}")
 
@@ -264,7 +267,9 @@ def save_replay(replay, replay_name, uploader_ip):
         flash(str(err))
         setattr(g, context_rollback_key, True)
     except Exception as e:
-        # Todo: log error
+        error_string = f'Failed upload from {format_ip_addr(request.remote_addr)}: "{replay_name}"\nError follows:\n{format_traceback(e)}'
+        log_to_slack('WARNING', error_string)
+        current_app.logger.warning(error_string)
         flash("Failed, don't try again")
         setattr(g, context_rollback_key, True)
     finally:
@@ -312,7 +317,9 @@ def delete_replay(replay_id):
         flash('Replay deleted')
         return True
     except Exception as e:
-        # Todo: log error
+        error_string = f'Failed deletion from {format_ip_addr(request.remote_addr)}: ID {replay_id}"\nError follows:\n{format_traceback(e)}'
+        log_to_slack('WARNING', error_string)
+        current_app.logger.warning(error_string)
         flash('Unable to delete replay, error follows')
         flash(str(e))
         setattr(g, context_rollback_key, True)

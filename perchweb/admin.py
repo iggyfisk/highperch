@@ -1,36 +1,13 @@
 """ Administration routes and utilities """
 
-import geoip2.database
 from flask import Blueprint, url_for, request, redirect, flash
 from werkzeug.utils import secure_filename
 from auth import admin_only, logout as auth_logout
 from handler import admin_page
 from replaydb import save_chatlog, delete_replay as dbdelete_replay
 from peep import save_pic
-from filepaths import get_path
 
 routes = Blueprint('admin', __name__)
-
-
-def geoip_country(ip_addr):
-    reader = geoip2.database.Reader(get_path('resource/GeoLite2-Country.mmdb'))
-    try:
-        response = reader.country(ip_addr)
-        result = {'code': response.country.iso_code,
-                  'name': response.country.name}
-        return result
-    except Exception as e:
-        return {'code': "xx", 'name': "unknown"}
-
-
-def geoip_city(ip_addr):
-    reader = geoip2.database.Reader(get_path('resource/GeoLite2-City.mmdb'))
-    try:
-        response = reader.city(ip_addr)
-        return (response.city.name, response.subdivisions.most_specific.iso_code)
-    except Exception as e:
-        return 'unknown'
-
 
 @routes.route('/logout')
 def logout():

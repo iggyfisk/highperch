@@ -4,7 +4,7 @@ from re import compile as re_compile
 from filepaths import get_path
 from lib.colors import lighten, scale
 from lib.wigcodes import race_titles, hero_names
-from admin import geoip_country
+from perchlogging import geoip_country
 from urllib.parse import unquote
 
 

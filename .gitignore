@@ -30,6 +30,7 @@ replays/*.w3g
 perchweb/static/images/peep/*
 !perchweb/static/images/peep/README.md
 perchweb/static/pics
+perchweb/resource/analytics.html
 temp/*
 !temp/README.md
 wig.db
