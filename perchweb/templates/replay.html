@@ -6,7 +6,20 @@
     <div class="12 columns">
         <div class="large-replay">
             <div class="details">
-                <h2>{{ listinfo['Name'] }}</h2>
+                <h2>
+                    <span class="{% if is_admin %}hp-expand{% endif %}">{{ listinfo['Name'] }}</span>
+                    {% if is_admin %}
+                    <form
+                        class="edit hp-hidden h"
+                        action="/replay/{{ replay_id }}/edit"
+                        method="POST"
+                    >
+                        <input type="text" name="name" minlength="6" maxlength="50" placeholder="New replay name"
+                            value="{{ listinfo['Name'] }}" required />
+                        <input type="submit" value="Save" />
+                    </form>
+                    {% endif %}
+                </h2>
                 <div class="content">
                     {% if is_admin %}
                     <div class="admin">

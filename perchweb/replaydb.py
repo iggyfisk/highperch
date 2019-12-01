@@ -279,6 +279,13 @@ def save_replay(replay, replay_name, uploader_ip):
             os.remove(temp_data_path)
 
 
+def edit_replay(replay_id, name=None):
+    """ Edit replay db entry """
+    query('UPDATE Replays SET Name = CASE WHEN ? IS NOT NULL THEN ? ELSE NAME END WHERE ID = ?',
+          (name, name, replay_id,))
+    return True
+
+
 def delete_replay(replay_id):
     """ Deletes a replay from disk and db, returns True on success """
 

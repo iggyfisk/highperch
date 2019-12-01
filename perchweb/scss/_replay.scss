@@ -142,8 +142,18 @@ a.playername{
 
 // single replay
 .large-replay{
-
     .details {
+        .edit {
+            display: inline-block;
+            margin: 0 0 0 $margin;
+            height: 0;
+            input {
+                margin: 0;
+            }
+            &.visible {
+                height: 2em;
+            }
+        }
         .content {
             display:flex;
             position: relative;

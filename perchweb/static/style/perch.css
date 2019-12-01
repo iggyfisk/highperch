@@ -1300,6 +1300,17 @@ a.playername:hover {
 .large-replay .details {
   margin-bottom: 16px;
 }
+.large-replay .details .edit {
+  display: inline-block;
+  margin: 0 0 0 16px;
+  height: 0;
+}
+.large-replay .details .edit input {
+  margin: 0;
+}
+.large-replay .details .edit.visible {
+  height: 2em;
+}
 .large-replay .details .content {
   display: flex;
   position: relative;

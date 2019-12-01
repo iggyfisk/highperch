@@ -87,7 +87,7 @@ def upload_replay():
     """User replay uploads"""
 
     # Todo: Validation here, replay name, geoblocking etc
-    replay_name = request.form['name']
+    replay_name = request.form['name'].strip()
     if (len(replay_name) < 6 or len(replay_name) > 50):
         flash('Bad name')
         error_string = f'Attempted bad replay name length from {format_ip_addr(request.remote_addr)}: "{replay_name}"'

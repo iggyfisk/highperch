@@ -4,10 +4,11 @@ from flask import Blueprint, url_for, request, redirect, flash, send_from_direct
 from werkzeug.utils import secure_filename
 from auth import admin_only, logout as auth_logout
 from handler import admin_page
-from replaydb import save_chatlog, delete_replay as dbdelete_replay
+from replaydb import save_chatlog, delete_replay as dbdelete_replay, edit_replay as dbedit_replay
 from peep import save_pic
 
 routes = Blueprint('admin', __name__)
+
 
 @routes.route('/logout')
 def logout():
@@ -34,6 +35,19 @@ def delete_replay(replay_id):
         replay_id) else url_for('views.view_replay', replay_id=replay_id)
 
     return redirect(redirect_url)
+
+
+@routes.route('/replay/<int:replay_id>/edit', methods=['POST'])
+@admin_only
+def edit_replay(replay_id):
+    """ Changes whatever replay information in the DB that could reasobly be changed """
+    replay_name = request.form['name'].strip()
+    if (len(replay_name) < 6 or len(replay_name) > 50):
+        flash('Bad name')
+    else:
+        dbedit_replay(replay_id, replay_name)
+
+    return redirect(url_for('views.view_replay', replay_id=replay_id))
 
 
 @routes.route('/peep/upload', methods=['POST'])
