@@ -59,13 +59,14 @@
 	document.addEventListener("DOMContentLoaded", () => {
 		document.body.querySelectorAll('.drawmap').forEach(cnv => {
 			const playerTowers = JSON.parse(cnv.dataset.towers);
+			const playerLocations = JSON.parse(cnv.dataset.startlocations);
 			const mapSize = JSON.parse(cnv.dataset.mapsize);
 			const ps = cnv.dataset.paintsize;
 			const po = ps / 2;
 
 			const mapImageSize = cnv.clientWidth;
-			const xSize = mapSize.maxX - mapSize.minX;
-			const ySize = mapSize.maxY - mapSize.minY;
+			const xSize = mapSize[1] - mapSize[0];
+			const ySize = mapSize[3] - mapSize[2];
 			const maxSize = Math.max(xSize, ySize);
 			const scale = mapImageSize / maxSize;
 
@@ -73,11 +74,20 @@
 			const yStart = -(ySize / maxSize * mapImageSize - mapImageSize) / 2;
 
 			const getCoords = t => ([
-				(t[0] - mapSize.minX) * scale + xStart,
-				mapImageSize - ((t[1] - mapSize.minY) * scale + yStart)]);
+				(t[0] - mapSize[0]) * scale + xStart,
+				mapImageSize - ((t[1] - mapSize[2]) * scale + yStart)]);
 
 			cnv.height = cnv.width = mapImageSize;
 			const ctx = cnv.getContext('2d');
+
+			const drawStarts = () => {
+				for (let [color, start] of Object.entries(playerLocations)) {
+					ctx.fillStyle = color;
+					const c = getCoords(start);
+					ctx.fillRect(c[0] - ps, c[1] - ps, ps * 2, ps * 2);
+				}
+			}
+
 			let queue = false;
 			const animate = towers => {
 				if (queue) return;
@@ -85,6 +95,7 @@
 
 				cnv.classList.toggle('anim');
 				ctx.clearRect(0, 0, cnv.width, cnv.height);
+				drawStarts();
 
 				// Fixed delay between each paint, but adjusted per replay, 15 - 250ms;
 				const frameDelay = Math.round(Math.max(Math.min(10000 / towers.length, 250), 15));
@@ -103,7 +114,8 @@
 				setTimeout(drawNext.bind(this, 0), 1);
 			}
 
-			if (cnv.classList.contains('anim')) {
+			drawStarts();
+			if (cnv.classList.contains('anim')) {				
 				// Will have to bite the bullet and add something to the DOM instead
 				ctx.font = "40px sans";
 				ctx.fillText("▶️", (mapImageSize / 2) - 25, (mapImageSize / 2) + 15);

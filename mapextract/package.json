@@ -1,0 +1,15 @@
+{
+    "name": "maper.chtract",
+    "version": "0.1.0",
+    "description": "Official highper.ch map info extraction tool",
+    "main": "parsemap.js",
+    "repository": "https://github.com/iggyfisk/highperch.git",
+    "author": "clan TOWA",
+    "license": "Don't even think about it",
+    "private": true,
+    "dependencies": {
+      "glob": "7.1.6",
+      "wc3maptranslator": "https://github.com/iggyfisk/WC3MapTranslator#407a1e6"
+    }
+  }
+  

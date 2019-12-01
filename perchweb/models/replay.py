@@ -5,7 +5,8 @@ import os
 import json
 from collections import defaultdict
 from datetime import datetime
-from lib.wigcodes import is_tower, map_sizes
+from math import sqrt
+from lib.wigcodes import is_tower, get_map_size, get_starting_locations
 from models.player import Player
 
 
@@ -33,12 +34,9 @@ class ReplayListInfo(dict):
         """ Map size coordinates and a list of towers per color and coordinate,
             for drawing on the minimap """
 
-        map_size = None
-        # No minimap drawing for unmapped maps
-        if self['Map'] in map_sizes:
-            map_size = map_sizes[self['Map']]
+        map_size = get_map_size(self['Map'])
 
-        return {'map_size': map_size, 'towers_json': self['Towers']}
+        return {'map_size': map_size, 'towers_json': self['Towers'], 'start_locations_json': self['StartLocations']}
 
 
 class Replay(dict):
@@ -132,20 +130,36 @@ class Replay(dict):
         self.formatted_chat = formatted_chat
         return self.formatted_chat
 
+    @staticmethod
+    def pyth_distance(x0, x1, y0, y1):
+        """ Distance between 2 2d points, wow """
+        return sqrt(((x0 - x1)**2) + ((y0 - y1)**2))
+
     def get_drawmap(self, force=False, timestamp=False):
         """ Map size coordinates and a list of towers per color and coordinate,
             for drawing on the minimap """
 
-        map_size = None
+        map_size = get_map_size(self.map_name())
+        start_locations = get_starting_locations(self.map_name())
         towers = None
-        # No minimap drawing for unmapped maps
-        if self.map_name() in map_sizes:
-            map_size = map_sizes[self.map_name()]
+        player_start_locations = {}
 
         if map_size is not None or force:
             towers = {p['color']:
                       [([b['x'], b['y'], b['ms']] if timestamp else [b['x'], b['y']])
-                       for b in p['buildings'].get('order', []) if b['id'] in is_tower]
+                       for i, b in enumerate(p['buildings'].get('order', [])) if b['id'] in is_tower or i == 0]
                       for p in self.players}
 
-        return {'map_size': map_size, 'towers': towers}
+        if start_locations is not None:
+            for p in self.players:
+                buildings = p['buildings'].get('order', [])
+                if len(buildings) < 1:
+                    continue
+                x = buildings[0]['x']
+                y = buildings[0]['y']
+
+                player_start_locations[
+                    self.player_colors[p['id']]] = sorted(start_locations,
+                                                          key=lambda l: Replay.pyth_distance(l[0], x, l[1], y))[0]
+
+        return {'map_size': map_size, 'towers': towers, 'start_locations': player_start_locations}

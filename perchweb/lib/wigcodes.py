@@ -1,4 +1,6 @@
 """ Warcraft 3 Game Data """
+from filepaths import get_path
+import json
 
 race_titles = {
     'R': 'Random',
@@ -39,19 +41,6 @@ hero_names = {
 
 is_tower = {'hwtw', 'owtw', 'etrp'}
 
-# Todo: Add manually as maps enter the rotation, or see if someone (wc3v?) has them standardized.
-# Using Camera size from the world editor for now, seems to work
-map_sizes = {
-    '(8)Feralas_LV': {'minX': -8960, 'maxX': 8960, 'minY': -7424, 'maxY': 6912},
-    '(6)Monsoon_LV': {'minX': -7680, 'maxX': 7680, 'minY': -8192, 'maxY': 7424},
-    '(6)GnollWood': {'minX': -7424, 'maxX': 7936, 'minY': -8192, 'maxY': 7680},
-    "(8)Mur'gulOasis_LV": {'minX': -7680, 'maxX': 7680, 'minY': -8192, 'maxY': 7680},
-    "(8)TwilightRuins_LV": {'minX': -10496, 'maxX': 10496, 'minY': -11008, 'maxY': 10496},
-    "(8)MarketSquare": {'minX': -8320, 'maxX': 8704, 'minY': -8576, 'maxY': 8960},
-    '(6)RollingHills': {'minX': -3200, 'maxX': 3200, 'minY': -14720, 'maxY': 14208},
-    '(2)TerenasStand_LV': {'minX': -4864, 'maxX': 4864, 'minY': -5376, 'maxY': 4864}
-}
-
 tier_upgrades = {
     'hkee',
     'hcas',
@@ -62,3 +51,31 @@ tier_upgrades = {
     'unp1',
     'unp2'
 }
+
+
+# Todo: move to a models/map when we create the map details
+
+map_info = None
+
+
+def get_map_size(map_name):
+    global map_info
+    if map_info is None:
+        with open(get_path('resource/mapinfo.json'), 'r') as f:
+            map_info = json.load(f)
+
+    if map_name not in map_info:
+        return None
+    x = map_info[map_name]['x']
+    y = map_info[map_name]['y']
+    return [x[0], x[1], y[0], y[1]]
+
+
+def get_starting_locations(map_name):
+    global map_info
+    if map_info is None:
+        with open(get_path('resource/mapinfo.json'), 'r') as f:
+            map_info = json.load(f)
+    if map_name not in map_info:
+        return None
+    return map_info[map_name]['start']

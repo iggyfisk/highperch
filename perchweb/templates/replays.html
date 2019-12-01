@@ -10,7 +10,8 @@
             class="drawmap"
             data-towers='{{ drawmap["towers_json"]|safe }}'
             data-mapsize='{{ drawmap["map_size"]|tojson|safe }}'
-            data-paintsize='4'></canvas>
+            data-startlocations='{{ drawmap["start_locations_json"]|safe }}'
+            data-paintsize='2'></canvas>
         {% endif %}
       {% endwith %}
     </div>
