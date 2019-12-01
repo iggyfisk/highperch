@@ -64,6 +64,7 @@ def get_map_size(map_name):
         with open(get_path('resource/mapinfo.json'), 'r') as f:
             map_info = json.load(f)
 
+    map_name = map_name.lower()
     if map_name not in map_info:
         return None
     x = map_info[map_name]['x']
@@ -76,6 +77,8 @@ def get_starting_locations(map_name):
     if map_info is None:
         with open(get_path('resource/mapinfo.json'), 'r') as f:
             map_info = json.load(f)
+
+    map_name = map_name.lower()
     if map_name not in map_info:
         return None
     return map_info[map_name]['start']

@@ -24,18 +24,22 @@ const parseInfo = infoPath => {
   };
 }
 
-const mapName = new RegExp('^.*\\/(\\(\\d\\).*)\\.w3x$');
+const mapName = new RegExp('^.*\\/(\\(\\d*\\).*)\\.w3x$');
 const parseMap = mapPath => {
   const nameMatch = mapPath.match(mapName);
   if (!nameMatch) {
     console.log('Ladder map name not found, skipping', mapPath);
     return null;
   }
-  const name = nameMatch[1];
+  const name = nameMatch[1].toLowerCase();
 
   const infoFile = extractInfo(mapPath);
-  const info = parseInfo(infoFile);
-  return [name, info];
+  try {
+    const info = parseInfo(infoFile);
+    return [name, info];
+  } catch {
+    return null;
+  }
 }
 
 let mapInfo = {};
@@ -46,12 +50,14 @@ if (fs.existsSync(mapInfoFile)) {
 glob(mapsDir + '/**/*.w3x', null, function (err, files) {
   if (err) throw err;
   files.forEach(path => {
+
     const parsed = parseMap(path);
-    mapInfo[parsed[0]] = parsed[1];
+    if (parsed) mapInfo[parsed[0]] = parsed[1];
+    if (!parsed) console.log('Map failed:', path);
   });
   fs.writeFileSync(mapInfoFile, JSON.stringify(mapInfo));
 
   if (fs.existsSync(infoFile)) {
-    fs.unlinkSync(infoFile)
+    fs.unlinkSync(infoFile);
   }
 });
