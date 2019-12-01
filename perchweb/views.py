@@ -148,7 +148,7 @@ def login():
     """ Log in and redirect back to index, now as an authenticated admin """
     response = auth_login(request.form['token'], url_for('views.index'))
     if response:
-        flash('Welcome to the perch')
+        flash('Welcome, wig dad')
         error_string = f'Successful admin login from {format_ip_addr(request.remote_addr)}'
         current_app.logger.warning(error_string)
         return response
