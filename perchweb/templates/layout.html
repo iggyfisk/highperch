@@ -25,7 +25,10 @@
                 <ul>
                     {% if is_admin %}
                     <li class="background-picker">
-                        <a href="{{ url_for('admin.logout') }}" class="logout"><img src="/static/images/brilliance-20x20.png" title="Dogg out"></a>
+                        <a href="{{ url_for('admin.analytics_report') }}" class="admin"><img src="/static/images/reveal-20x20.png" title="Spying"></a>
+                    </li>
+                    <li class="background-picker">
+                        <a href="{{ url_for('admin.logout') }}" class="admin"><img src="/static/images/brilliance-20x20.png" title="Dogg out"></a>
                     </li>
                     {% endif %}
                     {% for bg in backgrounds %}

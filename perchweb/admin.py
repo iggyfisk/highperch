@@ -1,6 +1,6 @@
 """ Administration routes and utilities """
 
-from flask import Blueprint, url_for, request, redirect, flash
+from flask import Blueprint, url_for, request, redirect, flash, send_from_directory
 from werkzeug.utils import secure_filename
 from auth import admin_only, logout as auth_logout
 from handler import admin_page
@@ -61,3 +61,11 @@ def upload_pick():
     pic_id = save_pic(pic, pic_filename, replay_id)
 
     return redirect(url_for('views.peep', pic_id=pic_id))
+
+
+@routes.route('/analytics')
+@admin_only
+def analytics_report():
+    """View goaccess report output"""
+
+    return send_from_directory('resource', 'analytics.html')
