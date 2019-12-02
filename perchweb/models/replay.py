@@ -147,7 +147,7 @@ class Replay(dict):
         if map_size is not None or force:
             towers = {p['color']:
                       [([b['x'], b['y'], b['ms']] if timestamp else [b['x'], b['y']])
-                       for i, b in enumerate(p['buildings'].get('order', [])) if b['id'] in is_tower or i == 0]
+                       for b in p['buildings'].get('order', []) if b['id'] in is_tower]
                       for p in self.players}
 
         if start_locations is not None:
