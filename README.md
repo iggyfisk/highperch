@@ -76,10 +76,10 @@ After=network.target
 [Service]
 User=www-data
 Group=www-data
-WorkingDirectory=/var/www/new.highper.ch/perchweb
-Environment="PATH=/var/www/new.highper.ch/env/bin://usr/bin/"
+WorkingDirectory=/var/www/highper.ch/perchweb
+Environment="PATH=/var/www/highper.ch/env/bin://usr/bin/"
 EnvironmentFile=/etc/nginx/highperch-envvars
-ExecStart=/var/www/new.highper.ch/env/bin/gunicorn --workers 4 --log-file /var/log/nginx/gunicorn/highperch.log --log-level DEBUG --bind unix:../highperch.sock app:app
+ExecStart=/var/www/highper.ch/env/bin/gunicorn --workers 4 --log-file /var/log/nginx/gunicorn/highperch.log --log-level DEBUG --bind unix:../highperch.sock app:app
 
 [Install]
 WantedBy=multi-user.target
@@ -97,7 +97,7 @@ HIGHPERCH_ADMIN_HASH=(it's a secret)
 The stream poller gets called with this cron job, run as `www-data`:
 
 ```
-*/1 * * * * /usr/bin/env bash -c 'source /etc/nginx/streampoll-envvars && source /var/www/new.highper.ch/env/bin/activate && python /var/www/new.highper.ch/streampoller.py'
+*/1 * * * * /usr/bin/env bash -c 'source /etc/nginx/streampoll-envvars && source /var/www/highper.ch/env/bin/activate && python /var/www/highper.ch/streampoller.py'
 ```
 
 The envvar file from the above needs to contain these lines:
