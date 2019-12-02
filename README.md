@@ -60,10 +60,9 @@ Look at `test/Reforged1Pretty.json` and `test/Reforged2Pretty.json` for a human 
 ## Production deployment
 * ssh to production server
 * `sudo -u www-data git pull`
-* `python initcontent.py` to reset during the development phase, but don't replace the config!
 * `systemctl restart highperch`
 
-Before we go public it's `python initcontent.py` one last time, using the production content. After that, data format updates will probably be more bespoke.
+Some updates will change the formats of the SQLite `.db`s and/or `replaydata/.json`s, manual update script will be provided.
 
 ## Production environment
 
