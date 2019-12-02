@@ -1269,9 +1269,14 @@ footer .logout {
   display: flex;
 }
 .replays .replay .details .header a.title {
-  flex: none;
+  flex: auto;
   margin-bottom: 0;
   padding-right: 16px;
+}
+@media (min-width: 750px) {
+  .replays .replay .details .header a.title {
+    flex: none;
+  }
 }
 .replays .replay .details .download {
   flex-basis: 100px;

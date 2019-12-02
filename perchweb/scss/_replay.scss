@@ -102,9 +102,12 @@
             .header {
                 display:flex;
                 a.title {
-                    flex: none;
+                    flex: auto;
                     margin-bottom:0;
                     padding-right: $margin;
+                    @media (#{$bp-larger-than-tablet}) {
+                        flex: none;
+                    }
                 }
             }
 
