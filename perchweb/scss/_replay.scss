@@ -102,8 +102,9 @@
             .header {
                 display:flex;
                 a.title {
-                    flex: auto;
+                    flex: none;
                     margin-bottom:0;
+                    padding-right: $margin;
                 }
             }
 
@@ -143,6 +144,9 @@ a.playername{
 // single replay
 .large-replay{
     .details {
+        h2 {
+            display: flex;
+        }
         .edit {
             display: inline-block;
             margin: 0 0 0 $margin;

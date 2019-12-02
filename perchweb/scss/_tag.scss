@@ -1,0 +1,15 @@
+.tag {
+    border: 1px solid $dark-grey;
+    padding: 1px;
+    margin-right: $padding / 2;
+    cursor: default;
+    align-self: center;
+    &.official {
+        height: 6px;
+    }
+}
+
+.large-replay .tags {
+    display: flex;
+    margin-left: $margin;
+}

@@ -1,5 +1,7 @@
 {% extends "layout.html" %}
 {% import "replays.html" as replaymacros %}
+{% import "tags.html" as tagmacros %}
+
 
 {% block content %}
 <div class="row">
@@ -19,6 +21,11 @@
                         <input type="submit" value="Save" />
                     </form>
                     {% endif %}
+                    <div class="tags">
+                        {% if replay.official() %}
+                        {{ tagmacros.tag('Official') }}
+                        {% endif %}
+                    </div>
                 </h2>
                 <div class="content">
                     {% if is_admin %}

@@ -1,5 +1,6 @@
 {% extends "layout.html" %}
 {% import "replays.html" as replaymacros %}
+{% import "tags.html" as tagmacros %}
 
 {% block content %}
 <div class="row top-controls">
@@ -31,7 +32,7 @@
                 </div>
                 <div class="filterrow">
                     <div class="filter">
-                        <label for="f_official">Official only</label><input type="checkbox" name="official" id="f_official" {% if replay_filter['official'] %}checked{% endif %} />
+                        <label for="f_official">{{ tagmacros.tag('Official') }}only</label><input type="checkbox" name="official" id="f_official" {% if replay_filter['official'] %}checked{% endif %} />
                     </div>
                     <div class="filter">
                         <label for="f_sort">Sort by</label>

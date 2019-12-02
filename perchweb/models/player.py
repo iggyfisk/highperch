@@ -27,10 +27,13 @@ arbitrary_building_scores = {
     'utom': 1
 }
 
-# Todo: gather all the bnet tags
 official_names = {
     "iggythefisk#236",
-    "Mata#2275"
+    "Mata#2275",
+    "Blinn#2885",
+    "BEARAND#1604",
+    "TIMG4STRok#1212",
+    "IcebergSlim#145"
 }
 
 

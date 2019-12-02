@@ -1269,8 +1269,9 @@ footer .logout {
   display: flex;
 }
 .replays .replay .details .header a.title {
-  flex: auto;
+  flex: none;
   margin-bottom: 0;
+  padding-right: 16px;
 }
 .replays .replay .details .download {
   flex-basis: 100px;
@@ -1299,6 +1300,9 @@ a.playername:hover {
 
 .large-replay .details {
   margin-bottom: 16px;
+}
+.large-replay .details h2 {
+  display: flex;
 }
 .large-replay .details .edit {
   display: inline-block;
@@ -1874,6 +1878,22 @@ form.adminlogin input[type=submit]:hover {
   .hp-hidden.h.size-ph {
     max-width: 100vh;
   }
+}
+
+.tag {
+  border: 1px solid #999;
+  padding: 1px;
+  margin-right: 4px;
+  cursor: default;
+  align-self: center;
+}
+.tag.official {
+  height: 6px;
+}
+
+.large-replay .tags {
+  display: flex;
+  margin-left: 16px;
 }
 
 .peep.admin {

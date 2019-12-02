@@ -82,8 +82,8 @@ class Replay(dict):
 
     def official(self):
         """ Returns True if an officially sanctioned replay else False """
-        # Todo: check if replay save in official_names
-        return len(self.players) > 6
+        saver = self.replay_saver()
+        return saver.official() if saver is not None else False
 
     def get_arbitrary_scores(self):
         if not self.arbitrary_scores:

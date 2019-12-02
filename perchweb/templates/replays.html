@@ -1,25 +1,31 @@
 {% import "races.html" as racemacros %}
+{% import "tags.html" as tagmacros %}
 
 {% macro card(replay, is_admin) %}
 <div class="replay card">
     <div class="minimap">
-        <img src="{{replay['Map']|mapthumbnail}}" title="{{ replay['Map'] }}" />
-        {% with drawmap = replay.get_drawmap() %}
-        {% if drawmap['map_size'] %}
-        <canvas
-            class="drawmap"
-            data-towers='{{ drawmap["towers_json"]|safe }}'
-            data-mapsize='{{ drawmap["map_size"]|tojson|safe }}'
-            data-startlocations='{{ drawmap["start_locations_json"]|safe }}'
-            data-paintsize='2'></canvas>
-        {% endif %}
-      {% endwith %}
+        <a href="{{ url_for('views.view_replay', replay_id=replay['ID']) }}">
+            <img src="{{replay['Map']|mapthumbnail}}" title="{{ replay['Map'] }}" />
+            {% with drawmap = replay.get_drawmap() %}
+            {% if drawmap['map_size'] %}
+            <canvas
+                class="drawmap"
+                data-towers='{{ drawmap["towers_json"]|safe }}'
+                data-mapsize='{{ drawmap["map_size"]|tojson|safe }}'
+                data-startlocations='{{ drawmap["start_locations_json"]|safe }}'
+                data-paintsize='2'></canvas>
+            {% endif %}
+            {% endwith %}
+       </a>
     </div>
     <div class="details">
         <div class="header">
             <a class="title" href="{{ url_for('views.view_replay', replay_id=replay['ID']) }}">{{ replay['Name'] }}</a>
+            {% if replay['Official'] %}
+            {{ tagmacros.tag('Official') }}
+            {% endif %}
         </div>
-        <p><a href="/replay/{{ replay['ID'] }}/download"><i class="icon-download-alt"></i></a> | {{ replay['Length']|gametime }} | {{ replay['GameType'] }} | {{ replay['Map'] }} | {{ replay['TowerCount'] }} towers | {{ replay.upload_date() }} {% if is_admin %}| <span class="adminonly">{{ replay['UploaderIP'] }}  {{ replay['UploaderIP']|embed_country|safe }}{% endif %}</p>
+        <p><a href="/replay/{{ replay['ID'] }}/download" title="Download replay"><i class="icon-download-alt"></i></a> | {{ replay['Length']|gametime }} | {{ replay['GameType'] }} | {{ replay['Map'] }} | {{ replay['TowerCount'] }} towers | {{ replay.upload_date() }} {% if is_admin %}| <span class="adminonly">{{ replay['UploaderIP'] }}  {{ replay['UploaderIP']|embed_country|safe }}{% endif %}</p>
         {{ teams(replay) }}
     </div>
 </div>
