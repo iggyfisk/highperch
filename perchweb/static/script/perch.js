@@ -74,8 +74,8 @@
 			const yStart = -(ySize / maxSize * mapImageSize - mapImageSize) / 2;
 
 			const getCoords = t => ([
-				(t[0] - mapSize[0]) * scale + xStart,
-				mapImageSize - ((t[1] - mapSize[2]) * scale + yStart)]);
+				Math.round((t[0] - mapSize[0]) * scale + xStart),
+				Math.round(mapImageSize - ((t[1] - mapSize[2]) * scale + yStart))]);
 
 			cnv.height = cnv.width = mapImageSize;
 			const ctx = cnv.getContext('2d');
