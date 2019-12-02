@@ -2,6 +2,8 @@
     border: 1px solid $dark-grey;
     padding: 1px;
     margin-right: $padding / 2;
+    margin-left: $padding / 2;
+    margin-bottom: -1px;
     cursor: default;
     align-self: center;
     &.official {
