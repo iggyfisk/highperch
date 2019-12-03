@@ -9,7 +9,6 @@ import traceback
 from flask import current_app, request
 from requests import post
 from filepaths import get_path
-import geoip2.database
 
 
 def sanitize_cookie(headers):
@@ -36,9 +35,8 @@ def log_to_slack(level, log_message):
 
 
 def geoip_country(ip_addr):
-    reader = geoip2.database.Reader(get_path('resource/GeoLite2-Country.mmdb'))
     try:
-        response = reader.country(ip_addr)
+        response = current_app.reader.country(ip_addr)
         result = {'code': response.country.iso_code,
                   'name': response.country.name}
         return result
@@ -47,9 +45,8 @@ def geoip_country(ip_addr):
 
 
 def geoip_city(ip_addr):
-    reader = geoip2.database.Reader(get_path('resource/GeoLite2-City.mmdb'))
     try:
-        response = reader.city(ip_addr)
+        response = current_app.reader.city(ip_addr)
         return (response.city.name, response.subdivisions.most_specific.iso_code)
     except Exception as e:
         return 'unknown'

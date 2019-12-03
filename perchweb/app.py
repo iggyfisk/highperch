@@ -7,6 +7,7 @@ from glob import glob
 from hashlib import md5
 import base64
 import logging
+import geoip2.database
 from logging.config import fileConfig
 from werkzeug.exceptions import HTTPException, InternalServerError
 from werkzeug.middleware.proxy_fix import ProxyFix
@@ -34,6 +35,8 @@ if path.exists(log_cfg):
 else:
     logging.basicConfig(level=logging.DEBUG)
 
+geoip_country_reader = geoip2.database.Reader(path.join(app.root_path, 'resource/GeoLite2-Country.mmdb'))
+geoip_city_reader = geoip2.database.Reader(path.join(app.root_path, 'resource/GeoLite2-City.mmdb'))
 
 # Not a fan of not having this logic contained to whoever needs cleanup but too much time wasted
 @app.teardown_appcontext
