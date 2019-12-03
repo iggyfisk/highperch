@@ -4,7 +4,7 @@ from re import compile as re_compile
 from filepaths import get_path
 from lib.colors import lighten, scale
 from lib.wigcodes import race_titles, hero_names
-from perchlogging import geoip_country
+import geoip
 from urllib.parse import unquote
 
 
@@ -106,7 +106,7 @@ def scale_color(hex_color, amount):
 
 
 def make_country_embed(ip_addr):
-    country = geoip_country(ip_addr)
+    country = geoip.lookup_country(ip_addr)
     return f"<img src='/static/images/flags/{country['code'].lower()}.png' title='{country['name']}' class='countryflag'>"
 
 
