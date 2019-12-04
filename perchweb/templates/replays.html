@@ -51,7 +51,7 @@
                                 <b>{{ player['apm'] }}</b>&nbsp;APM
                                 {% if player.tower_count() %}
                                 | <span class="towerdata"><b>{{ player.tower_count() }}</b> towers</span>
-                                <span class="tpmdata"><b>{{ player.towers_per_minute(replay.get_stay_times()[player['id']]) }}</b>&nbsp;TPM</span>
+                                <span class="tpmdata"><b>{{ player.towers_per_minute() }}</b>&nbsp;TPM</span>
                                 {% endif %}
                                 {% if player.net_feed()[0] + player.net_feed()[1] > 0 %}
                                 | <b>{{ (player.net_feed()[0] + player.net_feed()[1])|thousands }}</b> sources fed
