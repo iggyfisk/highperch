@@ -34,10 +34,12 @@ class ReplayListInfo(dict):
     def get_drawmap(self):
         """ Map size coordinates and a list of towers per color and coordinate,
             for drawing on the minimap """
-
         map_size = get_map_size(self['Map'])
-
-        return {'map_size': map_size, 'towers_json': self['Towers'], 'start_locations_json': self['StartLocations']}
+        recolored_start_locations = json.dumps({lighten_color(color): coords for (
+            color, coords) in json.loads(self['StartLocations']).items()})
+        recolored_towers = json.dumps({lighten_color(color): coords for (
+            color, coords) in json.loads(self['Towers']).items()})
+        return {'map_size': map_size, 'towers_json': recolored_towers, 'start_locations_json': recolored_start_locations}
 
 
 class Replay(dict):
