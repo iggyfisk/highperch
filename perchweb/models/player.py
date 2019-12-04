@@ -86,6 +86,10 @@ class Player(dict):
             return None
         return tpm
 
+    def action_count(self):
+        # Todo: get the real action count from the parser instead of reconstructing an approximation like this
+        return round((self['apm'] * self['currentTimePlayed'] / 1000 / 60))
+
     def get_arbitrary_score(self, ally_names):
         score = self['apm']
         score -= 40 if self['raceDetected'] == 'U' else 0

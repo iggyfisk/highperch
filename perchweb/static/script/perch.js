@@ -83,6 +83,37 @@
 	});
 })();
 
+/* Actions/APM visibility toggle */
+/* Todo: generalize this with the tower/TPM toggle using parent node stuff */
+(() => {
+	document.addEventListener("DOMContentLoaded", () => {
+		const actionSpans = document.querySelectorAll('.actiondata');
+		const apmSpans = document.querySelectorAll('.apmdata');
+		actionSpans.forEach(item => {
+			item.addEventListener('click', event => {
+				actionSpans.forEach(as => {
+					as.style.display = 'none';
+				})
+				apmSpans.forEach(as => {
+					as.style.display = 'inline';
+				})
+			});
+		});
+		apmSpans.forEach(item => {
+			item.addEventListener('click', event => {
+				apmSpans.forEach(as => {
+					as.style.display = 'none';
+				})
+				actionSpans.forEach(as => {
+					as.style.display = 'inline';
+				})
+			});
+		});
+	});
+})();
+
+
+
 /* Minimap drawings */
 (() => {
 	document.addEventListener("DOMContentLoaded", () => {

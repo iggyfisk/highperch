@@ -1135,6 +1135,12 @@ a.playername:hover {
 .tpmdata {
   display: none; }
 
+.apmdata {
+  display: inline; }
+
+.actiondata {
+  display: none; }
+
 .chatlog {
   background-color: rgba(10, 5, 5, 0.75);
   padding: 8px;

@@ -48,7 +48,8 @@
                         <div class="icon-name">
                             {{ racemacros.icon(player['race'], player['raceDetected']) }}<a class="playername" style="color:{{ replay.player_colors[player['id']]|lighten }}" href="{{ url_for('views.view_player', battletag=player['name']) }}">{{ player['name']|displayname }}</a>:
                             <div class="summary">
-                                <b>{{ player['apm'] }}</b>&nbsp;APM
+                                <span class="apmdata"><b>{{ player['apm'] }}</b>&nbsp;APM</span>
+                                <span class="actiondata"><b>{{ player.action_count() }}</b>&nbsp;actions</span>
                                 {% if player.tower_count() %}
                                 | <span class="towerdata"><b>{{ player.tower_count() }}</b> towers</span>
                                 <span class="tpmdata"><b>{{ player.towers_per_minute() }}</b>&nbsp;TPM</span>

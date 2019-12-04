@@ -296,6 +296,14 @@ a.playername{
     display: none;
 }
 
+.apmdata {
+    display: inline;
+}
+
+.actiondata {
+    display: none;
+}
+
 .chatlog {
     background-color: $card-background-color;
     padding: $padding;
