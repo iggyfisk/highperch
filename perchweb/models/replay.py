@@ -7,6 +7,7 @@ from collections import defaultdict
 from datetime import datetime
 from math import sqrt
 from lib.wigcodes import is_tower, get_map_size, get_starting_locations
+from templatefilters import lighten_color
 from models.player import Player
 
 
@@ -54,7 +55,7 @@ class Replay(dict):
         del self['players']
         # Need something more general
         self.player_colors = defaultdict(
-            lambda: '#FFFFFF', {p['id']: p['color'] for p in self.players})
+            lambda: '#FFFFFF', {p['id']: lighten_color(p['color']) for p in self.players})
         self.player_names = {p['id']: p['name'] for p in self.players}
 
     def teams(self):
@@ -145,7 +146,7 @@ class Replay(dict):
         player_start_locations = {}
 
         if map_size is not None or force:
-            towers = {p['color']:
+            towers = {lighten_color(p['color']):
                       [([b['x'], b['y'], b['ms']] if timestamp else [b['x'], b['y']])
                        for b in p['buildings'].get('order', []) if b['id'] in is_tower]
                       for p in self.players}

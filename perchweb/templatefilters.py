@@ -76,7 +76,7 @@ def thousands(amount):
 lightened_colors = {
     ('#0000FF', 0.05): '#2443f0',   # plain blue
     ('#008080', 0.05): '#3f9682',   # dark teal
-    ('#3eb489', 0.05): '#79e0c8',   # light teal
+    ('#3eb489', 0.05): '#6e6e6e',   # dark gray? or light teal/#79e0c8?
     ('#800080', 0.05): '#8b3fba',   # plain purple or dark purple?
     ('#FFFF00', 0.05): '#e8d227',   # plain yellow
     ('#FF0000', 0.05): '#db2323',   # plain red
