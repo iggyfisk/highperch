@@ -98,6 +98,12 @@ class Replay(dict):
     def grb_id(self):
         return self.get_arbitrary_scores()[0][0]
 
+    def get_stay_times(self):
+        stay_times = {}
+        for leave in self['leaveEvents']:
+            stay_times[leave['playerId']] = leave['ms']
+        return stay_times
+
     # Minimum time between events to insert a space in the chatlog
     silence_period = 180000
 

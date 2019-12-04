@@ -54,6 +54,35 @@
 	});
 })();
 
+
+/* Towers/TPM visibility toggle */
+(() => {
+	document.addEventListener("DOMContentLoaded", () => {
+		const towerSpans = document.querySelectorAll('.towerdata');
+		const tpmSpans = document.querySelectorAll('.tpmdata');
+		towerSpans.forEach(item => {
+			item.addEventListener('click', event => {
+				towerSpans.forEach(ts => {
+					ts.style.display = 'none';
+				})
+				tpmSpans.forEach(ts => {
+					ts.style.display = 'inline';
+				})
+			});
+		});
+		tpmSpans.forEach(item => {
+			item.addEventListener('click', event => {
+				tpmSpans.forEach(ts => {
+					ts.style.display = 'none';
+				})
+				towerSpans.forEach(ts => {
+					ts.style.display = 'inline';
+				})
+			});
+		});
+	});
+})();
+
 /* Minimap drawings */
 (() => {
 	document.addEventListener("DOMContentLoaded", () => {
@@ -115,7 +144,7 @@
 			}
 
 			drawStarts();
-			if (cnv.classList.contains('anim')) {				
+			if (cnv.classList.contains('anim')) {
 				// Will have to bite the bullet and add something to the DOM instead
 				ctx.font = "40px sans";
 				ctx.fillText("▶️", (mapImageSize / 2) - 25, (mapImageSize / 2) + 15);

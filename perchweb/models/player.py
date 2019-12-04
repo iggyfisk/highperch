@@ -79,6 +79,15 @@ class Player(dict):
         """ Time until control shared with allies """
         return self['allyOptions'][0]['ms'] if len(self['allyOptions']) > 0 else None
 
+
+    def towers_per_minute(self, stay_length):
+        stay_minutes = stay_length / 1000 / 60
+        tpm = round((self.tower_count() / stay_minutes), 2)
+        if tpm == 0:
+            return None
+        return tpm
+
+
     def get_arbitrary_score(self, ally_names):
         score = self['apm']
         score -= 40 if self['raceDetected'] == 'U' else 0

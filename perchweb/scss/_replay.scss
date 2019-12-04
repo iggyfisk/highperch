@@ -288,6 +288,14 @@ a.playername{
     }
 }
 
+.towerdata {
+    display: inline;
+}
+
+.tpmdata {
+    display: none;
+}
+
 .chatlog {
     background-color: $card-background-color;
     padding: $padding;

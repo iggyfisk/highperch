@@ -1129,6 +1129,12 @@ a.playername:hover {
 .replay .details .player, .replay .details .vs {
   padding-right: 8px; }
 
+.towerdata {
+  display: inline; }
+
+.tpmdata {
+  display: none; }
+
 .chatlog {
   background-color: rgba(10, 5, 5, 0.75);
   padding: 8px;
