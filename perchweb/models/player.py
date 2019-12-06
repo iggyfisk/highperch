@@ -1,6 +1,7 @@
 """ Could do some data crunching here, count towers, calculate hero levels etc """
 
 from lib.wigcodes import is_tower, tier_upgrades
+from copy import deepcopy
 
 arbitrary_item_scores = {
     'stwp': -20,
@@ -86,9 +87,13 @@ class Player(dict):
             return None
         return tpm
 
+    def get_action_types(self):
+        action_types = deepcopy(self['actions'])
+        action_types.pop('timed')
+        return action_types
+
     def action_count(self):
-        # Todo: get the real action count from the parser instead of reconstructing an approximation like this
-        return round((self['apm'] * self['currentTimePlayed'] / 1000 / 60))
+        return sum(self.get_action_types().values())
 
     def get_arbitrary_score(self, ally_names):
         score = self['apm']
