@@ -46,7 +46,14 @@
                 <div class="player">
                     {% if detailed %}
                         <div class="icon-name">
-                            {{ racemacros.icon(player['race'], player['raceDetected']) }}<a class="playername" style="color:{{ replay.player_colors[player['id']]|lighten }}" href="{{ url_for('views.view_player', battletag=player['name']) }}">{{ player['name']|displayname }}</a>:
+                            {{ racemacros.icon(player['race'], player['raceDetected']) }}<a class="playername" style="color:{{ replay.player_colors[player['id']]|lighten }}" href="{{ url_for('views.view_player', battletag=player['name']) }}">{{ player['name']|displayname }}</a>
+                            {% if replay.official() %}
+                                {% if player.games_count() > 1 %}
+                                    {% if not player.official() %}
+                                        <span class="gamecount"><sup>({{ player.games_count() }})</sup></span>
+                                    {% endif %}
+                                {% endif %}
+                            {% endif %}:
                             <div class="summary">
                                 <span class="apmdata"><b>{{ player['apm'] }}</b>&nbsp;APM</span>
                                 <span class="actiondata"><b>{{ player.action_count() }}</b>&nbsp;actions</span>

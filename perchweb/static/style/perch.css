@@ -1081,6 +1081,10 @@ a.playername:hover {
   font-size: 15px;
   text-shadow: 1px 1px 1px #000000; }
 
+.large-replay .gamecount {
+  font-size: 15px;
+  color: #F00; }
+
 .large-replay .teams {
   display: flex;
   flex-direction: column;
