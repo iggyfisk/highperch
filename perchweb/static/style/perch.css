@@ -1145,6 +1145,18 @@ a.playername:hover {
 .actiondata {
   display: none; }
 
+.feedsummary {
+  display: inline; }
+
+.feeddetails {
+  display: none; }
+  .feeddetails .feedgold {
+    color: #FFA600;
+    font-weight: bold; }
+  .feeddetails .feedlumber {
+    color: #00910A;
+    font-weight: bold; }
+
 .chatlog {
   background-color: rgba(10, 5, 5, 0.75);
   padding: 8px;

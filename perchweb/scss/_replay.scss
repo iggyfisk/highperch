@@ -309,6 +309,22 @@ a.playername{
     display: none;
 }
 
+.feedsummary {
+    display: inline;
+}
+
+.feeddetails {
+    display: none;
+    .feedgold {
+        color: #FFA600;
+        font-weight: bold;
+    }
+    .feedlumber {
+        color: #00910A;
+        font-weight: bold;
+    }
+}
+
 .chatlog {
     background-color: $card-background-color;
     padding: $padding;

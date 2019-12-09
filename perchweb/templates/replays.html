@@ -62,7 +62,10 @@
                                 <span class="tpmdata"><b>{{ player.towers_per_minute() }}</b>&nbsp;TPM</span>
                                 {% endif %}
                                 {% if player.net_feed()[0] + player.net_feed()[1] > 0 %}
-                                | <b>{{ (player.net_feed()[0] + player.net_feed()[1])|thousands }}</b> sources fed
+                                <span class="feedsummary">| <b>{{ (player.net_feed()[0] + player.net_feed()[1])|thousands }}</b> sources fed</span>
+                                {% endif %}
+                                {% if player.net_feed()[0] != 0 or player.net_feed()[1] != 0 %}
+                                <span class="feeddetails">| <span class="feedgold">{{ player.net_feed()[0] }}</span> / <span class="feedlumber">{{ player.net_feed()[1] }}</span> fed</span>
                                 {% endif %}
                                 {% if player['id'] == replay.mvp_id() %}
                                 | <span class="award" title="MVP">👑</span>

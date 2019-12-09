@@ -84,7 +84,7 @@
 })();
 
 /* Actions/APM visibility toggle */
-/* Todo: generalize this with the tower/TPM toggle using parent node stuff */
+/* Todo: generalize this with the other toggles using parent node stuff */
 (() => {
 	document.addEventListener("DOMContentLoaded", () => {
 		const actionSpans = document.querySelectorAll('.actiondata');
@@ -112,6 +112,34 @@
 	});
 })();
 
+/* Detailed feedstats visibility toggle */
+/* Todo: generalize this with the other toggles using parent node stuff */
+(() => {
+	document.addEventListener("DOMContentLoaded", () => {
+		const feedSummarySpans = document.querySelectorAll('.feedsummary');
+		const feedDetailSpans = document.querySelectorAll('.feeddetails');
+		feedSummarySpans.forEach(item => {
+			item.addEventListener('click', event => {
+				feedSummarySpans.forEach(fs => {
+					fs.style.display = 'none';
+				})
+				feedDetailSpans.forEach(fs => {
+					fs.style.display = 'inline';
+				})
+			});
+		});
+		feedDetailSpans.forEach(item => {
+			item.addEventListener('click', event => {
+				feedDetailSpans.forEach(fs => {
+					fs.style.display = 'none';
+				})
+				feedSummarySpans.forEach(fs => {
+					fs.style.display = 'inline';
+				})
+			});
+		});
+	});
+})();
 
 
 /* Minimap drawings */
