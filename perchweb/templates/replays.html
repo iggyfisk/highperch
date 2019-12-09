@@ -55,17 +55,17 @@
                                 {% endif %}
                             {% endif %}:
                             <div class="summary">
-                                <span class="apmdata"><b>{{ player['apm'] }}</b>&nbsp;APM</span>
-                                <span class="actiondata"><b>{{ player.action_count() }}</b>&nbsp;actions</span>
+                                <span class="hp-toggle" data-group="pm"><b>{{ player['apm'] }}</b>&nbsp;APM</span>
+                                <span class="hp-toggle hidden" data-group="pm"><b>{{ player.action_count() }}</b>&nbsp;actions</span>
                                 {% if player.tower_count() %}
-                                | <span class="towerdata"><b>{{ player.tower_count() }}</b> towers</span>
-                                <span class="tpmdata"><b>{{ player.towers_per_minute() }}</b>&nbsp;TPM</span>
+                                | <span class="hp-toggle" data-group="pm"><b>{{ player.tower_count() }}</b> towers</span>
+                                <span class="hp-toggle hidden" data-group="pm"><b>{{ player.towers_per_minute() }}</b>&nbsp;TPM</span>
                                 {% endif %}
                                 {% if player.net_feed()[0] + player.net_feed()[1] > 0 %}
-                                <span class="feedsummary">| <b>{{ (player.net_feed()[0] + player.net_feed()[1])|thousands }}</b> sources fed</span>
+                                <span class="hp-toggle" data-group="feed"><span class="no-hover">|</span> <b>{{ (player.net_feed()[0] + player.net_feed()[1])|thousands }}</b> sources fed</span>
                                 {% endif %}
                                 {% if player.net_feed()[0] != 0 or player.net_feed()[1] != 0 %}
-                                <span class="feeddetails">| <span class="feedgold">{{ player.net_feed()[0] }}</span> / <span class="feedlumber">{{ player.net_feed()[1] }}</span> fed</span>
+                                <span class="feeddetails hp-toggle hidden" data-group="feed"><span class="no-hover">|</span> <b class="gold">{{ player.net_feed()[0] }}</b> / <b class="lumber">{{ player.net_feed()[1] }}</b> fed</span>
                                 {% endif %}
                                 {% if player['id'] == replay.mvp_id() %}
                                 | <span class="award" title="MVP">👑</span>

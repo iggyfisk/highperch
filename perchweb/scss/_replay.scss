@@ -293,35 +293,12 @@ a.playername{
     }
 }
 
-.towerdata {
-    display: inline;
-}
-
-.tpmdata {
-    display: none;
-}
-
-.apmdata {
-    display: inline;
-}
-
-.actiondata {
-    display: none;
-}
-
-.feedsummary {
-    display: inline;
-}
-
 .feeddetails {
-    display: none;
-    .feedgold {
+    .gold {
         color: #FFA600;
-        font-weight: bold;
     }
-    .feedlumber {
+    .lumber {
         color: #00910A;
-        font-weight: bold;
     }
 }
 

@@ -1,5 +1,5 @@
-/* Experimental expand via JS feature */
-.hp-expand {
+.hp-expand,
+.hp-toggle {
   cursor: pointer;
   transition: color 200ms linear;
   &:hover {
@@ -10,6 +10,10 @@
       display: none;
     }
   }
+}
+
+.no-hover {
+  color: $primary-color !important;
 }
 
 .hp-hidden {
@@ -39,4 +43,8 @@
       }
     }
   }
+}
+
+.hp-toggle.hidden {
+  display: none;
 }

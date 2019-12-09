@@ -83,64 +83,17 @@
 	});
 })();
 
-/* Actions/APM visibility toggle */
-/* Todo: generalize this with the other toggles using parent node stuff */
+/* hp-toggle */
 (() => {
 	document.addEventListener("DOMContentLoaded", () => {
-		const actionSpans = document.querySelectorAll('.actiondata');
-		const apmSpans = document.querySelectorAll('.apmdata');
-		actionSpans.forEach(item => {
-			item.addEventListener('click', event => {
-				actionSpans.forEach(as => {
-					as.style.display = 'none';
-				})
-				apmSpans.forEach(as => {
-					as.style.display = 'inline';
-				})
-			});
-		});
-		apmSpans.forEach(item => {
-			item.addEventListener('click', event => {
-				apmSpans.forEach(as => {
-					as.style.display = 'none';
-				})
-				actionSpans.forEach(as => {
-					as.style.display = 'inline';
-				})
+		document.querySelectorAll('.hp-toggle').forEach(el => {
+			const { group } = el.dataset;
+			el.addEventListener('click', () => {
+				document.querySelectorAll(`.hp-toggle[data-group="${group}"`).forEach(e => e.classList.toggle('hidden'));
 			});
 		});
 	});
 })();
-
-/* Detailed feedstats visibility toggle */
-/* Todo: generalize this with the other toggles using parent node stuff */
-(() => {
-	document.addEventListener("DOMContentLoaded", () => {
-		const feedSummarySpans = document.querySelectorAll('.feedsummary');
-		const feedDetailSpans = document.querySelectorAll('.feeddetails');
-		feedSummarySpans.forEach(item => {
-			item.addEventListener('click', event => {
-				feedSummarySpans.forEach(fs => {
-					fs.style.display = 'none';
-				})
-				feedDetailSpans.forEach(fs => {
-					fs.style.display = 'inline';
-				})
-			});
-		});
-		feedDetailSpans.forEach(item => {
-			item.addEventListener('click', event => {
-				feedDetailSpans.forEach(fs => {
-					fs.style.display = 'none';
-				})
-				feedSummarySpans.forEach(fs => {
-					fs.style.display = 'inline';
-				})
-			});
-		});
-	});
-})();
-
 
 /* Minimap drawings */
 (() => {
