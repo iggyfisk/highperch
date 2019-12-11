@@ -89,7 +89,7 @@
 		document.querySelectorAll('.hp-toggle').forEach(el => {
 			const { group } = el.dataset;
 			el.addEventListener('click', () => {
-				document.querySelectorAll(`.hp-toggle[data-group="${group}"`).forEach(e => e.classList.toggle('hidden'));
+				document.querySelectorAll(`.hp-toggle[data-group="${group}"]`).forEach(e => e.classList.toggle('hidden'));
 			});
 		});
 	});
