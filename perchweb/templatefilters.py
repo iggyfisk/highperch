@@ -1,6 +1,7 @@
 """ Jinja2 utility filters """
 from os.path import isfile, join
 from re import compile as re_compile
+from re import sub as re_sub
 from filepaths import get_path
 from lib.colors import lighten, scale
 from lib.wigcodes import race_titles, hero_names
@@ -57,6 +58,10 @@ def map_thumbnail(map_name):
         # Todo: real placeholder
         thumbnails[map_name] = f'/static/images/minimaps/fakethumbnail.jpg'
     return thumbnails[map_name]
+
+
+def map_biglink(map_name):
+    return re_sub('minimaps', 'bigmaps', map_thumbnail(map_name))
 
 
 tag_matcher = re_compile('^([^#]+)')
@@ -118,6 +123,7 @@ def register(jinja_environment):
     jinja_environment.filters['heroname'] = hero_name
     jinja_environment.filters['racetitle'] = race_title
     jinja_environment.filters['mapthumbnail'] = map_thumbnail
+    jinja_environment.filters['bigmapurl'] = map_biglink
     jinja_environment.filters['displayname'] = player_display_name
     jinja_environment.filters['lighten'] = lighten_color
     jinja_environment.filters['scale'] = scale_color
