@@ -61,6 +61,7 @@ const pauseEvents = [];
 const playerBuildings = {};
 const tradeEvents = [];
 const playerShareEvents = {};
+//const heroRevives = {};
 Parser.on('timeslotblock', (timeSlotBlock) => {
   timeSlotBlock.actions.forEach(actionBlock => {
     const { playerId, actions } = actionBlock;
@@ -102,26 +103,24 @@ Parser.on('timeslotblock', (timeSlotBlock) => {
             lumber: action.lumber,
           });
           break;
-        // I forgot about tavern resurrection. RIP
-        /*
-        case 18:
+        /*case 18:
           // Use ability with target and object
-          const { itemId :{ value } } = action;
-
-          if (value[0] == 89 && value[1] == 0 && value[2] == 19 && value[3] == 0) {
-            // Revive hero
-            if (!heroRevives[playerId]) heroRevives[playerId] = [];
-            const time = Parser.msElapsed;
-            console.log('Herorevive', playerId, time);
+          const { itemId: { value } } = action;
+          if (value[2] == 19 && value[3] == 0) {
+            // Todo: value[0] for altar resing third slot
+            if (value[1] == 0 && (value[0] == 89 || value[0] == 96 || false)) {
+              console.log('Altar revive', playerId, Parser.msElapsed, action.objectId1, action.objectId2);
+            } else if (value[1] ==1 && (value[0] == 568 || value[0] == 569 || value[0] == 576)) {
+              console.log('Tavern revive', playerId, Parser.msElapsed, action.objectId1, action.objectId2);
+            }
           }
-          break;          
+          break;
         case 29:
           // Revive cancelled
           if (!heroRevives[playerId]) heroRevives[playerId] = [];
           const time = Parser.msElapsed;
-          console.log('Hero revive cancelled', time);
-          break;
-        */
+          console.log('Hero revive cancelled', playerId, time);
+          break;*/
       }
     });
   });
