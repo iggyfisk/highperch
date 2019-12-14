@@ -86,7 +86,7 @@ def list_replays(search_filter):
     return [ReplayListInfo(**r) for r in rows]
 
 
-def list_player_replays(battletag, max_results=5):
+def list_player_replays(battletag, max_results=20):
     """ Search for replays including a specific player """
     # Todo: combine key elements with list_replays
     rows = query('''
