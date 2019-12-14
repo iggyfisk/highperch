@@ -93,7 +93,19 @@ Parser.on('timeslotblock', (timeSlotBlock) => {
           const recipientPlayerId = playerSlots[action.slotNumber];
           const recipientTeam = playerTeams[recipientPlayerId];
           const senderTeam = playerTeams[playerId];
-          if (recipientPlayerId == undefined || recipientTeam !== senderTeam) throw ("Invalid resource trade");
+
+          // Todo: identify why in at least one replay there are invalid trades
+          if (recipientPlayerId == undefined) {
+            console.log("Invalid resource trade: undefined recipient");
+            console.log(Parser.msElapsed, playerId + '=>' + recipientPlayerId, ':', action.gold, 'gold', action.lumber, 'lumber')
+            break;
+          }
+
+          if (recipientTeam !== senderTeam) {
+            console.log("Invalid resource trade: wrong recipient team");
+            console.log(Parser.msElapsed, playerId + '=>' + recipientPlayerId, ':', action.gold, 'gold', action.lumber, 'lumber')
+            break;
+          }
 
           tradeEvents.push({
             playerId,

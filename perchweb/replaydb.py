@@ -209,18 +209,24 @@ def save_replay(replay, replay_name, uploader_ip):
         dupe_check = query(
             'SELECT Name FROM Replays WHERE FileHash=?;', (file_hash,), one=True)
         if dupe_check:
-            error_string = f'Attempted duplicate upload from {format_ip_addr(request.remote_addr)}: "{replay_name}"'
+            error_string = f'Attempted duplicate upload from {format_ip_addr(request.remote_addr)}: "{replay_name}", aka "{dupe_check[0]}""'
             log_to_slack('WARNING', error_string)
             current_app.logger.warning(error_string)
             raise ReplayParsingException(
                 f"Replay already exists: {dupe_check[0]}")
 
         parse_result = subprocess.run(
-            ["node", filepaths.get_path("../parsereplay.js"), temp_replay_path, temp_data_path])
+            ["node", filepaths.get_path("../parsereplay.js"), temp_replay_path, temp_data_path], capture_output=True)
         if parse_result.returncode > 0:
+            error_string = f'Parser failure from {format_ip_addr(request.remote_addr)} - "{replay_name}":\n{parse_result.stderr.decode("utf-8")}'
+            log_to_slack('ERROR', error_string)
+            current_app.logger.warning(error_string)
             raise ReplayParsingException(
                 "Replay parsing failed. If it's really a valid Reforged replay, let us know.")
-
+        if parse_result.stdout != None:
+            error_string = f'Parser warning from {format_ip_addr(request.remote_addr)} - "{replay_name}:"\n{parse_result.stdout.decode("utf-8")}'
+            log_to_slack('WARNING', error_string)
+            current_app.logger.warning(error_string)
         with open(temp_data_path, encoding='utf8') as replay_json:
             replay_data = Replay(**json.load(replay_json))
 
