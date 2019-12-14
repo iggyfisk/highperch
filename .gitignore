@@ -34,4 +34,5 @@ perchweb/resource/analytics.html
 temp/*
 !temp/README.md
 wig.db
+wig.db-journal
 streams.db
