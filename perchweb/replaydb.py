@@ -4,6 +4,7 @@ import os
 import subprocess
 import json
 import sqlite3
+import glob
 from datetime import datetime
 from hashlib import sha256
 from flask import flash, g, current_app, request
@@ -130,6 +131,15 @@ def get_replay(replay_id):
     with open(data_path, encoding='utf8') as replay_json:
         replay_data = Replay(**json.load(replay_json))
     return replay_data
+
+
+def get_all_replays():
+    """ Full replay data for every processed reep"""
+    replays = []
+    for data_path in glob.glob(filepaths.get_replay_data('*.json')):
+        with open(data_path, encoding='utf8') as replay_json:
+            replays.append(Replay(**json.load(replay_json)))
+    return replays
 
 
 def get_player(battletag):
