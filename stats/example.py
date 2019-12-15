@@ -14,4 +14,13 @@ for replay in loader.get_all_replays():
         for (unit, count) in player['units']['summary'].items():
             unit_counts[unit] += count
 
-print(f"A total of {unit_counts['hpea']} peasants have been made")
+print(f"A total of {unit_counts['hmpr']} peasants have been made")
+###
+
+testreplay = loader.get_all_replays()
+testplayer = replay.players
+
+print(testreplay[0].keys())
+# for key, value in testplayer[0].items():
+#     print(key, value)
+    
