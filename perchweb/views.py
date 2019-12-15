@@ -11,6 +11,7 @@ from filepaths import get_replay
 from peep import get_pic
 from auth import login as auth_login, check_if_admin
 from perchlogging import log_to_slack, format_ip_addr
+from templatefilters import lighten_color
 
 routes = Blueprint('views', __name__)
 
@@ -42,7 +43,7 @@ def view_replay(replay_id):
         current_app.logger.warning(f'404 on replay view, ID: {replay_id}')
         abort(404)
 
-    drawmap = replay.get_drawmap(timestamp=True)
+    drawmap = replay.get_drawmap(timestamp=True, color_transform=lighten_color)
     game_count = replaydb.get_game_count(replay_id)
     return standard_page('replay.html', replay_listinfo['Name'], replay=replay, listinfo=replay_listinfo,
                          replay_id=replay_id, drawmap=drawmap, game_count=game_count)

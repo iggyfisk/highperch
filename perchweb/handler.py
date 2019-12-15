@@ -8,7 +8,7 @@ from flask import render_template, abort
 from background import add_background
 from chatlog import add_chatlog
 from auth import add_auth_attributes
-
+from templatefilters import lighten_color
 
 def standard_page(template, title, **attributes):
     auth_attributes = add_auth_attributes()
@@ -19,6 +19,7 @@ def standard_page(template, title, **attributes):
         template,
         title=title,
         year=datetime.now().year,
+        lighten_color=lighten_color,
         **auth_attributes,
         **chat_attributes,
         **bg_attributes,

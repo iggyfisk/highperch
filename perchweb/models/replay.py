@@ -7,7 +7,6 @@ from collections import defaultdict
 from datetime import datetime
 from math import sqrt
 from lib.wigcodes import is_tower, get_map_size, get_starting_locations
-from templatefilters import lighten_color
 from models.player import Player
 
 
@@ -31,13 +30,13 @@ class ReplayListInfo(dict):
         """ Replay upload timestamp as Python datetime """
         return datetime.fromtimestamp(self['TimeStamp'])
 
-    def get_drawmap(self):
+    def get_drawmap(self, color_transform=lambda c: c):
         """ Map size coordinates and a list of towers per color and coordinate,
-            for drawing on the minimap """
+            for drawing on the minimap. """
         map_size = get_map_size(self['Map'])
-        recolored_start_locations = json.dumps({lighten_color(color): coords for (
+        recolored_start_locations = json.dumps({color_transform(color): coords for (
             color, coords) in json.loads(self['StartLocations']).items()})
-        recolored_towers = json.dumps({lighten_color(color): coords for (
+        recolored_towers = json.dumps({color_transform(color): coords for (
             color, coords) in json.loads(self['Towers']).items()})
         return {'map_size': map_size, 'towers_json': recolored_towers, 'start_locations_json': recolored_start_locations}
 
@@ -57,7 +56,7 @@ class Replay(dict):
         del self['players']
         # Need something more general
         self.player_colors = defaultdict(
-            lambda: '#FFFFFF', {p['id']: lighten_color(p['color']) for p in self.players})
+            lambda: '#FFFFFF', {p['id']: p['color'] for p in self.players})
         self.player_names = {p['id']: p['name'] for p in self.players}
 
     def teams(self):
@@ -138,7 +137,7 @@ class Replay(dict):
         """ Distance between 2 2d points, wow """
         return sqrt(((x0 - x1)**2) + ((y0 - y1)**2))
 
-    def get_drawmap(self, force=False, timestamp=False):
+    def get_drawmap(self, force=False, timestamp=False, color_transform=lambda c: c):
         """ Map size coordinates and a list of towers per color and coordinate,
             for drawing on the minimap """
 
@@ -148,7 +147,7 @@ class Replay(dict):
         player_start_locations = {}
 
         if map_size is not None or force:
-            towers = {lighten_color(p['color']):
+            towers = {color_transform(p['color']):
                       [([b['x'], b['y'], b['ms']] if timestamp else [b['x'], b['y']])
                        for b in p['buildings'].get('order', []) if b['id'] in is_tower]
                       for p in self.players}
@@ -162,7 +161,7 @@ class Replay(dict):
                 y = buildings[0]['y']
 
                 player_start_locations[
-                    self.player_colors[p['id']]] = sorted(start_locations,
+                    color_transform(self.player_colors[p['id']])] = sorted(start_locations,
                                                           key=lambda l: Replay.pyth_distance(l[0], x, l[1], y))[0]
 
         return {'map_size': map_size, 'towers': towers, 'start_locations': player_start_locations}

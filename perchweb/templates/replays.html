@@ -1,12 +1,12 @@
 {% import "races.html" as racemacros %}
 {% import "tags.html" as tagmacros %}
 
-{% macro card(replay, is_admin) %}
+{% macro card(replay, is_admin, lighten) %}
 <div class="replay card">
     <div class="minimap">
         <a href="{{ url_for('views.view_replay', replay_id=replay['ID']) }}">
             <img src="{{replay['Map']|mapthumbnail}}" title="{{ replay['Map'] }}" />
-            {% with drawmap = replay.get_drawmap() %}
+            {% with drawmap = replay.get_drawmap(color_transform=lighten) %}
             {% if drawmap['map_size'] %}
             <canvas
                 class="drawmap"
