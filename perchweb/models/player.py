@@ -1,8 +1,7 @@
 """ Could do some data crunching here, count towers, calculate hero levels etc """
-
-from lib.wigcodes import is_tower, tier_upgrades
-import replaydb
 from copy import deepcopy
+from lib.wigcodes import is_tower, tier_upgrades
+
 
 arbitrary_item_scores = {
     'stwp': -20,
@@ -40,7 +39,7 @@ official_names = {
 
 
 class Player(dict):
-    """ Full player information, initialized from a replay data JSON file """
+    """ Full replay player information, initialized from a replay data JSON file """
 
     def __init__(self, **args):
         super().__init__(**args)
@@ -137,9 +136,3 @@ class Player(dict):
         score += trade_score if trade_score > 0 else trade_score / 2
 
         return score
-
-    def games_count(self):
-        return replaydb.query('''
-                    SELECT COUNT(PlayerTag)
-                    FROM GamesPlayed
-                    WHERE PlayerTag=?;''', (self['name'],), one=True)[0]

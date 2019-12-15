@@ -43,7 +43,9 @@ def view_replay(replay_id):
         abort(404)
 
     drawmap = replay.get_drawmap(timestamp=True)
-    return standard_page('replay.html', replay_listinfo['Name'], replay=replay, listinfo=replay_listinfo, replay_id=replay_id, drawmap=drawmap)
+    game_count = replaydb.get_game_count(replay_id)
+    return standard_page('replay.html', replay_listinfo['Name'], replay=replay, listinfo=replay_listinfo,
+                         replay_id=replay_id, drawmap=drawmap, game_count=game_count)
 
 
 @routes.route('/replay/<int:replay_id>/download')

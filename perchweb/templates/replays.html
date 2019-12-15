@@ -28,7 +28,7 @@
 </div>
 {% endmacro %}
 
-{% macro teams(replay, detailed=False) %}
+{% macro teams(replay, detailed=False, game_count=None) %}
     <div class="teams">
         {% for (teamId, players) in replay.teams().items() %}            
             <div class="team">
@@ -47,10 +47,10 @@
                     {% if detailed %}
                         <div class="icon-name">
                             {{ racemacros.icon(player['race'], player['raceDetected']) }}<a class="playername" style="color:{{ replay.player_colors[player['id']]|lighten }}" href="{{ url_for('views.view_player', battletag=player['name']) }}">{{ player['name']|displayname }}</a>
-                            {% if replay.official() %}
-                                {% if player.games_count() > 1 %}
+                            {% if replay.official() and game_count %}
+                                {% if game_count[player['name']] > 1 %}
                                     {% if not player.official() %}
-                                        <span class="gamecount"><sup>({{ player.games_count() }})</sup></span>
+                                        <span class="gamecount"><sup>({{ game_count[player['name']] }})</sup></span>
                                     {% endif %}
                                 {% endif %}
                             {% endif %}:

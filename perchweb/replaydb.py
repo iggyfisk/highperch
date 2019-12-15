@@ -160,6 +160,16 @@ def get_player(battletag):
     return dict(**player_row, **aggregate_row)
 
 
+def get_game_count(replay_id):
+    """ Get total games played for all players in a replay """
+    result = query('''
+            SELECT G1.PlayerTag, COUNT(*)
+            FROM GamesPlayed AS G1
+			INNER JOIN GamesPlayed G2 ON G1.PlayerTag = G2.PlayerTag AND G2.ReplayID = ?
+			GROUP BY G1.PlayerTag;''', (replay_id,))
+    return {r[0]: r[1] for r in result}
+
+
 def create_players(battletags):
     """ Make sure all players in a replay have a player row """
     for tag in battletags:
