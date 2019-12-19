@@ -140,7 +140,10 @@ class Player(dict):
     def decode_items(self):
         player_race_shop = 'race_' + self['raceDetected']
         race_shops = ['race_H', 'race_O', 'race_N', 'race_U']
-        race_shops.remove(player_race_shop)
+        try:
+            race_shops.remove(player_race_shop)
+        except ValueError:
+            pass
         purchased_items = []
         for item_code, item_count in self['items']['summary'].items():
             try:
