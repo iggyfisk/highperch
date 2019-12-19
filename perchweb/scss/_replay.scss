@@ -47,11 +47,6 @@
 
 .replays {
     border-bottom:1px solid black;
-    h2 { 
-        padding: $padding;
-        background: $card-alt-background-color;
-    }
-
     .replay {
         .details{
             a {
@@ -254,10 +249,28 @@ a.playername{
             padding: $padding;
         }
         .result {
-            position: absolute;
             margin-left: 0.5em;
         }
+        .teamhead {
+            display: flex;
+            padding: $padding;
+            background: $card-alt-background-color;
+        }
         .team {
+            .teamitems {
+                margin-left: auto;
+                font-size: 14px;
+                text-align: right;
+                letter-spacing: 0rem;
+                .teamitemcount {
+                    font-weight: bold;
+                }
+                .teamitemcost {
+                    color: #FFA600;
+                    font-weight: bold;
+                }
+            }
+
             .player {
                 padding: $padding;
                 background-color: $card-alt-background-color;
@@ -288,12 +301,11 @@ a.playername{
                     }
                     .itemdetails {
                         background-color: rgba(255,255,255,0.05);
-                        width: 70%;
+                        width: fit-content;
+                        border-left: 5px #fff;
                         margin-top: 5px;
-                        margin-left: 5px;
-                        padding-left: 20px;
-                        padding-top: 5px;
-                        padding-bottom: 5px;
+                        margin-left: 20px;
+                        padding: 5px 20px 5px 20px;
                         table {
                             border-collapse: collapse;
                             margin-bottom: 0px;

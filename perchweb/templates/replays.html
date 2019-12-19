@@ -36,14 +36,19 @@
         {% for (teamId, players) in replay.teams().items() %}            
             <div class="team">
                 {% if detailed %}
-                <h2>
+                <div class="teamhead">
                     <span class="{% if winnerId is not none %}hp-expand{% endif %}">Team {{ teamId }}</span>
                     {% if teamId == replay['winningTeamId'] %}                    
                         <b class="result hp-hidden h">Winner{% if not replay['winningTeamConfirmed'] %}?{% else %}!{% endif %}</b>
                     {% elif winnerId is not none %}
                         <b class="result hp-hidden h">Loser{% if not replay['winningTeamConfirmed'] %}?{% else %}!{% endif %}</b>
                     {% endif %}
-                </h2>
+                    {% if replay.team_item_count(teamId) > 0 %}
+                    <span class="hp-toggle hidden teamitems" data-group="items">
+                        <span class="teamitemcount">{{ replay.team_item_count(teamId) }}</span> items @ <span class="teamitemcost">{{ replay.team_item_cost(teamId) }}g</span>
+                    </span>
+                    {% endif %}
+                </div>
                 {% endif %}
             {% for player in players %}
                 <div class="player">

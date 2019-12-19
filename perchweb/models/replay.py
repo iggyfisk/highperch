@@ -71,6 +71,23 @@ class Replay(dict):
         """ Count every tower built by every player in this game """
         return sum(p.tower_count() for p in self.players)
 
+    def item_count(self):
+        return sum(p.total_items_count() for p in self.players)
+
+    def team_item_count(self, teamid):
+        items = 0
+        for p in self.players:
+            if p['teamid'] == teamid:
+                items += p.total_items_count()
+        return items
+
+    def team_item_cost(self, teamid):
+        cost = 0
+        for p in self.players:
+            if p['teamid'] == teamid:
+                cost += p.total_items_cost()
+        return cost
+
     def map_name(self):
         """ More presentable map name """
         return os.path.splitext(os.path.basename(self['map']['file']))[0]
@@ -162,6 +179,6 @@ class Replay(dict):
 
                 player_start_locations[
                     color_transform(self.player_colors[p['id']])] = sorted(start_locations,
-                                                          key=lambda l: Replay.pyth_distance(l[0], x, l[1], y))[0]
+                                                                           key=lambda l: Replay.pyth_distance(l[0], x, l[1], y))[0]
 
         return {'map_size': map_size, 'towers': towers, 'start_locations': player_start_locations}
