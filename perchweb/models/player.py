@@ -1,6 +1,6 @@
 """ Could do some data crunching here, count towers, calculate hero levels etc """
 from copy import deepcopy
-from lib.wigcodes import is_tower, tier_upgrades
+from lib.wigcodes import is_tower, tier_upgrades, item_codes
 
 
 arbitrary_item_scores = {
@@ -136,3 +136,36 @@ class Player(dict):
         score += trade_score if trade_score > 0 else trade_score / 2
 
         return score
+
+    def decode_items(self):
+        player_race_shop = 'race_' + self['raceDetected']
+        race_shops = ['race_H', 'race_O', 'race_N', 'race_U']
+        race_shops.remove(player_race_shop)
+        purchased_items = []
+        for item_code, item_count in self['items']['summary'].items():
+            try:
+                item_name = item_codes[item_code]['name']
+                item_cost = item_codes[item_code]['price'] * item_count
+                item_shop = item_codes[item_code]['shop']
+            except KeyError:
+                item_name = item_code
+                item_cost = 0
+                item_shop = 'non-melee'
+            item_priority = 6
+            item_priority = 0 if item_shop == player_race_shop or item_shop == 'race_all' else item_priority
+            item_priority = 1 if item_shop == 'ambiguous' else item_priority
+            item_priority = 2 if item_shop == 'goblin' else item_priority
+            item_priority = 3 if item_shop in race_shops else item_priority
+            item_priority = 4 if item_shop == 'marketplace' else item_priority
+            item_priority = 5 if item_shop == 'non-melee' else item_priority
+            purchased_items.append({'name': item_name, 'count': item_count, 'gold': item_cost, 'priority': item_priority})
+        return sorted(purchased_items, key=lambda i: i['priority'])
+
+    def total_items_count(self):
+        return sum(self['items']['summary'].values())
+
+    def total_items_cost(self):
+        total = 0
+        for item_code, item_count in self['items']['summary'].items():
+            total += item_codes[item_code]['price'] * item_count
+        return total

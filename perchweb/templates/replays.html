@@ -29,6 +29,9 @@
 {% endmacro %}
 
 {% macro teams(replay, detailed=False, game_count=None) %}
+    <div class="controls">
+        <span class="itemcontrolshow hp-toggle" data-group="items">Items</span><span class="itemcontrolhide hp-toggle hidden" data-group="items">Hide items</span>
+    </div>
     <div class="teams">
         {% for (teamId, players) in replay.teams().items() %}            
             <div class="team">
@@ -75,9 +78,24 @@
                             </div>
                         </div>
                             <div class="details">
-                            {% for h in player.real_heroes() %}
-                                <img class="hero" src="/static/images/game/heroes/{{ h['id'] }}.gif" title="{{ h['id']|heroname }}" /><b>{{ h['level'] }}</b>
-                            {% endfor%}
+                                <div class="herodetails">
+                                    {% for h in player.real_heroes() %}
+                                        <img class="hero" src="/static/images/game/heroes/{{ h['id'] }}.gif" title="{{ h['id']|heroname }}" /><b>{{ h['level'] }}</b>
+                                    {% endfor %}
+                                </div>
+                                {% set player_items = player.decode_items() %}
+                                <div class="itemdetails hp-toggle hidden" data-group="items">
+                                {% if player_items|length == 0 %}
+                                    <div class="item"><i>Zero items purchased!</i></div>
+                                {% else %}
+                                <table>
+                                    {% for pi in player_items %}
+                                        <tr class="item"><td class="itemname">{{ pi['name'] }}</td> <td class="itemcount">{{ pi['count'] }}</td> <td class="itemgold">({{ pi['gold'] }})</td></tr></div>
+                                    {% endfor %}
+                                    <tr class="item"><td class="itemname"><i>total</i>:</td> <td class="itemcount">{{ player.total_items_count() }}</td> <td class="itemgold">&nbsp;{{ player.total_items_cost() }}g</td></tr>
+                                </table>
+                                {% endif %}
+                                </div>
                         </div>
                     {% else %}
                         <div class="icon-name">
