@@ -219,11 +219,24 @@ a.playername{
         color: #F00;
     }
     .controls {
-        width: 10%;
+        width: fit-content;
+        width: -moz-fit-content;
         font-size: 12px;
+        padding: 0px 5px 0px 5px;
         margin: auto;
         text-align: center;
         background-color: $card-background-color;
+        margin-bottom: 15px;
+    }
+    .statwarning {
+        width: fit-content;
+        width: -moz-fit-content;
+        font-size: 12px;
+        padding: 10px 20px 10px 20px;
+        margin: auto;
+        text-align: center;
+        background-color: rgba(0,0,0,0.6);
+        border-radius: 10px;
         margin-bottom: 15px;
     }
     .teams {
@@ -253,24 +266,46 @@ a.playername{
         }
         .teamhead {
             display: flex;
+            flex-wrap: wrap;
             padding: $padding;
             background: $card-alt-background-color;
         }
         .team {
+            .teamcount {
+                font-weight: bold;
+            }
+            .teamgold {
+                color: #FFA600;
+                font-weight: bold;
+            }
+            .teamwood {
+                color: #00910A;
+                font-weight: bold;
+            }
             .teamitems {
+                flex-shrink: 0;
                 margin-left: auto;
                 font-size: 14px;
                 text-align: right;
                 letter-spacing: 0rem;
-                .teamitemcount {
-                    font-weight: bold;
-                }
-                .teamitemcost {
-                    color: #FFA600;
-                    font-weight: bold;
-                }
+                padding: 0px 5px 0px 5px;
             }
-
+            .teamunits {
+                flex-shrink: 0;
+                margin-left: auto;
+                font-size: 14px;
+                text-align: right;
+                letter-spacing: 0rem;
+                padding: 0px 5px 0px 5px;
+            }
+            .teambuildings {
+                flex-shrink: 0;
+                margin-left: auto;
+                font-size: 14px;
+                text-align: right;
+                letter-spacing: 0rem;
+                padding: 0px 5px 0px 5px;
+            }
             .player {
                 padding: $padding;
                 background-color: $card-alt-background-color;
@@ -290,6 +325,46 @@ a.playername{
                     align-items: center;
                     margin:0;
                     font-size: 14px;
+                    table {
+                        border-collapse: collapse;
+                        margin-bottom: 0px;
+                    }
+                    tr {
+                        padding-bottom: 0px;
+                    }
+                    td {
+                        border-top: none;
+                        border-bottom: none;
+                        padding-top: 0px;
+                        padding-bottom: 0px;
+                    }
+                    .name {
+                        color: $primary-color;
+                        text-align: right;
+                        padding-right: 5px;
+                    }
+                    .count {
+                        font-weight: bold;
+                        color: #fa6;
+                        padding-left: 5px;
+                        padding-right: 5px;
+                    }
+                    .gold {
+                        color: #FFA600;
+                        text-align: right;
+                        padding-right: 0px;
+                    }
+                    .slash{
+                        color: $primary-color;
+                        text-align: center;
+                        padding: 2px;
+                    }
+                    .wood {
+                        color: #00910A;
+                        text-align: left;
+                        padding-left: 0px;
+                    }
+
                     .herodetails{
                         display: flex;
                         align-items: center;
@@ -300,45 +375,34 @@ a.playername{
                         }
                     }
                     .itemdetails {
+                        font-size: 10px;
                         background-color: rgba(255,255,255,0.05);
                         width: fit-content;
+                        width: -moz-fit-content;
                         border-left: 5px #fff;
                         margin-top: 5px;
                         margin-left: 20px;
                         padding: 5px 20px 5px 20px;
-                        table {
-                            border-collapse: collapse;
-                            margin-bottom: 0px;
-                        }
-                        tr {
-                            padding-bottom: 0px;
-                        }
-                        td {
-                            border-top: none;
-                            border-bottom: none;
-                            padding-top: 0px;
-                            padding-bottom: 0px;
-                        }
-                        .item {
-                            .itemname {
-                                color: $primary-color;
-                                font-size: 10px;
-                                text-align: right;
-                                padding-right: 5px;
-                            }
-                            .itemcount {
-                                font-weight: bold;
-                                font-size: 10px;
-                                color: #fa6;
-                                padding-left: 5px;
-                                padding-right: 5px;
-                            }
-                            .itemgold {
-                                font-size: 8px;
-                                color: #FFA600;
-                                padding-left: 10px;
-                            }
-                        }
+                    }
+                    .unitdetails {
+                        font-size: 10px;
+                        background-color: rgba(255,255,255,0.05);
+                        width: fit-content;
+                        width: -moz-fit-content;
+                        border-left: 5px #fff;
+                        margin-top: 5px;
+                        margin-left: 20px;
+                        padding: 5px 20px 5px 20px;
+                    }
+                    .buildingdetails {
+                        font-size: 10px;
+                        background-color: rgba(255,255,255,0.05);
+                        width: fit-content;
+                        width: -moz-fit-content;
+                        border-left: 5px #fff;
+                        margin-top: 5px;
+                        margin-left: 20px;
+                        padding: 5px 20px 5px 20px;
                     }
                 }
             }

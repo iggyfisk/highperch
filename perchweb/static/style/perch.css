@@ -1083,11 +1083,24 @@ a.playername:hover {
   color: #F00; }
 
 .large-replay .controls {
-  width: 10%;
+  width: fit-content;
+  width: -moz-fit-content;
   font-size: 12px;
+  padding: 0px 5px 0px 5px;
   margin: auto;
   text-align: center;
   background-color: rgba(10, 5, 5, 0.75);
+  margin-bottom: 15px; }
+
+.large-replay .statwarning {
+  width: fit-content;
+  width: -moz-fit-content;
+  font-size: 12px;
+  padding: 10px 20px 10px 20px;
+  margin: auto;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 10px;
   margin-bottom: 15px; }
 
 .large-replay .teams {
@@ -1112,18 +1125,38 @@ a.playername:hover {
     margin-left: 0.5em; }
   .large-replay .teams .teamhead {
     display: flex;
+    flex-wrap: wrap;
     padding: 8px;
     background: rgba(1, 1, 1, 0.9); }
+  .large-replay .teams .team .teamcount {
+    font-weight: bold; }
+  .large-replay .teams .team .teamgold {
+    color: #FFA600;
+    font-weight: bold; }
+  .large-replay .teams .team .teamwood {
+    color: #00910A;
+    font-weight: bold; }
   .large-replay .teams .team .teamitems {
+    flex-shrink: 0;
     margin-left: auto;
     font-size: 14px;
     text-align: right;
-    letter-spacing: 0rem; }
-    .large-replay .teams .team .teamitems .teamitemcount {
-      font-weight: bold; }
-    .large-replay .teams .team .teamitems .teamitemcost {
-      color: #FFA600;
-      font-weight: bold; }
+    letter-spacing: 0rem;
+    padding: 0px 5px 0px 5px; }
+  .large-replay .teams .team .teamunits {
+    flex-shrink: 0;
+    margin-left: auto;
+    font-size: 14px;
+    text-align: right;
+    letter-spacing: 0rem;
+    padding: 0px 5px 0px 5px; }
+  .large-replay .teams .team .teambuildings {
+    flex-shrink: 0;
+    margin-left: auto;
+    font-size: 14px;
+    text-align: right;
+    letter-spacing: 0rem;
+    padding: 0px 5px 0px 5px; }
   .large-replay .teams .team .player {
     padding: 8px;
     background-color: rgba(1, 1, 1, 0.9); }
@@ -1140,6 +1173,37 @@ a.playername:hover {
       align-items: center;
       margin: 0;
       font-size: 14px; }
+      .large-replay .teams .team .player .details table {
+        border-collapse: collapse;
+        margin-bottom: 0px; }
+      .large-replay .teams .team .player .details tr {
+        padding-bottom: 0px; }
+      .large-replay .teams .team .player .details td {
+        border-top: none;
+        border-bottom: none;
+        padding-top: 0px;
+        padding-bottom: 0px; }
+      .large-replay .teams .team .player .details .name {
+        color: #c4976f;
+        text-align: right;
+        padding-right: 5px; }
+      .large-replay .teams .team .player .details .count {
+        font-weight: bold;
+        color: #fa6;
+        padding-left: 5px;
+        padding-right: 5px; }
+      .large-replay .teams .team .player .details .gold {
+        color: #FFA600;
+        text-align: right;
+        padding-right: 0px; }
+      .large-replay .teams .team .player .details .slash {
+        color: #c4976f;
+        text-align: center;
+        padding: 2px; }
+      .large-replay .teams .team .player .details .wood {
+        color: #00910A;
+        text-align: left;
+        padding-left: 0px; }
       .large-replay .teams .team .player .details .herodetails {
         display: flex;
         align-items: center; }
@@ -1148,37 +1212,32 @@ a.playername:hover {
           height: 14px;
           margin: 0 2px 0 7px; }
       .large-replay .teams .team .player .details .itemdetails {
+        font-size: 10px;
         background-color: rgba(255, 255, 255, 0.05);
         width: fit-content;
+        width: -moz-fit-content;
         border-left: 5px #fff;
         margin-top: 5px;
         margin-left: 20px;
         padding: 5px 20px 5px 20px; }
-        .large-replay .teams .team .player .details .itemdetails table {
-          border-collapse: collapse;
-          margin-bottom: 0px; }
-        .large-replay .teams .team .player .details .itemdetails tr {
-          padding-bottom: 0px; }
-        .large-replay .teams .team .player .details .itemdetails td {
-          border-top: none;
-          border-bottom: none;
-          padding-top: 0px;
-          padding-bottom: 0px; }
-        .large-replay .teams .team .player .details .itemdetails .item .itemname {
-          color: #c4976f;
-          font-size: 10px;
-          text-align: right;
-          padding-right: 5px; }
-        .large-replay .teams .team .player .details .itemdetails .item .itemcount {
-          font-weight: bold;
-          font-size: 10px;
-          color: #fa6;
-          padding-left: 5px;
-          padding-right: 5px; }
-        .large-replay .teams .team .player .details .itemdetails .item .itemgold {
-          font-size: 8px;
-          color: #FFA600;
-          padding-left: 10px; }
+      .large-replay .teams .team .player .details .unitdetails {
+        font-size: 10px;
+        background-color: rgba(255, 255, 255, 0.05);
+        width: fit-content;
+        width: -moz-fit-content;
+        border-left: 5px #fff;
+        margin-top: 5px;
+        margin-left: 20px;
+        padding: 5px 20px 5px 20px; }
+      .large-replay .teams .team .player .details .buildingdetails {
+        font-size: 10px;
+        background-color: rgba(255, 255, 255, 0.05);
+        width: fit-content;
+        width: -moz-fit-content;
+        border-left: 5px #fff;
+        margin-top: 5px;
+        margin-left: 20px;
+        padding: 5px 20px 5px 20px; }
 
 .replay .details .team, .replay .details .teams, .replay .details .icon-name {
   display: inline-flex; }
@@ -1521,6 +1580,13 @@ form.adminlogin {
     .hp-expand.size-ph,
     .hp-toggle.size-ph {
       display: none; } }
+.hp-controls {
+  cursor: pointer; }
+  .hp-controls:hover {
+    color: #FFF; }
+  @media (min-width: 550px) {
+    .hp-controls.size-ph {
+      display: none; } }
 .no-hover {
   color: #c4976f !important; }
 
@@ -1543,6 +1609,12 @@ form.adminlogin {
       .hp-hidden.h.size-ph {
         max-width: 100vh; } }
 .hp-toggle.hidden {
+  display: none; }
+
+.hp-controls.hidden {
+  display: none; }
+
+.statwarning.hidden {
   display: none; }
 
 .tag {

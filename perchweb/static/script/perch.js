@@ -95,6 +95,35 @@
 	});
 })();
 
+/* Replay detail controls */
+(() => {
+	document.addEventListener("DOMContentLoaded", () => {
+		document.querySelectorAll('.control').forEach(el => {
+			const { group } = el.dataset;
+			el.addEventListener('click', () => {
+				document.querySelectorAll(`.hp-controls[data-group="${group}"]`).forEach(e => e.classList.toggle('hidden'));
+			});
+		});
+	});
+})();
+
+/* Inaccuracy warning toggle */
+// Todo: only hide statwarning when the last remaining inaccurate details are hidden
+(() => {
+	document.addEventListener("DOMContentLoaded", () => {
+		document.querySelectorAll('.inaccurate-enable').forEach(el => {
+			el.addEventListener('click', () => {
+				document.querySelectorAll('.statwarning').forEach(e => e.style.display = 'block');
+			});
+		});
+		document.querySelectorAll('.inaccurate-disable').forEach(el => {
+			el.addEventListener('click', () => {
+				document.querySelectorAll('.statwarning').forEach(e => e.style.display = 'none');
+			});
+		});
+	});
+})();
+
 /* Minimap drawings */
 (() => {
 	document.addEventListener("DOMContentLoaded", () => {

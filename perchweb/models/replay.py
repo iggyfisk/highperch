@@ -88,6 +88,38 @@ class Replay(dict):
                 cost += p.total_items_cost()
         return cost
 
+    def team_unit_count(self, teamid):
+        units = 0
+        for p in self.players:
+            if p['teamid'] == teamid:
+                units += p.total_units_count()
+        return units
+
+    def team_unit_cost(self, teamid):
+        gold = 0
+        wood = 0
+        for p in self.players:
+            if p['teamid'] == teamid:
+                gold += p.total_units_cost()[0]
+                wood += p.total_units_cost()[1]
+        return (gold, wood)
+
+    def team_building_count(self, teamid):
+        buildings = 0
+        for p in self.players:
+            if p['teamid'] == teamid:
+                buildings += p.total_buildings_count()
+        return buildings
+
+    def team_building_cost(self, teamid):
+        gold = 0
+        wood = 0
+        for p in self.players:
+            if p['teamid'] == teamid:
+                gold += p.total_buildings_cost()[0]
+                wood += p.total_buildings_cost()[1]
+        return (gold, wood)
+
     def map_name(self):
         """ More presentable map name """
         return os.path.splitext(os.path.basename(self['map']['file']))[0]

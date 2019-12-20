@@ -8,109 +8,206 @@
             <img src="{{replay['Map']|mapthumbnail}}" title="{{ replay['Map'] }}" />
             {% with drawmap = replay.get_drawmap(color_transform=lighten) %}
             {% if drawmap['map_size'] %}
-            <canvas
-                class="drawmap"
-                data-towers='{{ drawmap["towers_json"]|safe }}'
+            <canvas class="drawmap" data-towers='{{ drawmap["towers_json"]|safe }}'
                 data-mapsize='{{ drawmap["map_size"]|tojson|safe }}'
-                data-startlocations='{{ drawmap["start_locations_json"]|safe }}'
-                data-paintsize='2'></canvas>
+                data-startlocations='{{ drawmap["start_locations_json"]|safe }}' data-paintsize='2'></canvas>
             {% endif %}
             {% endwith %}
-       </a>
+        </a>
     </div>
     <div class="details">
         <div class="header">
             <a class="title" href="{{ url_for('views.view_replay', replay_id=replay['ID']) }}">{{ replay['Name'] }}</a>
         </div>
-        <p><a href="/replay/{{ replay['ID'] }}/download" title="Download replay"><i class="icon-download-alt"></i></a> | {{ replay['Length']|gametime }} | {{ replay['GameType'] }} | {{ replay['Map'] }} | {{ replay['TowerCount'] }} towers | {{ replay.upload_date() }} {% if replay['Official'] %}| {{ tagmacros.tag('Official') }}{% endif %}{% if is_admin %}| <span class="adminonly">{{ replay['UploaderIP'] }}  {{ replay['UploaderIP']|embed_country|safe }}{% endif %}</p>
+        <p><a href="/replay/{{ replay['ID'] }}/download" title="Download replay"><i class="icon-download-alt"></i></a> |
+            {{ replay['Length']|gametime }} | {{ replay['GameType'] }} | {{ replay['Map'] }} |
+            {{ replay['TowerCount'] }} towers | {{ replay.upload_date() }} {% if replay['Official'] %}|
+            {{ tagmacros.tag('Official') }}{% endif %}{% if is_admin %}| <span
+                class="adminonly">{{ replay['UploaderIP'] }} {{ replay['UploaderIP']|embed_country|safe }}{% endif %}
+        </p>
         {{ teams(replay) }}
     </div>
 </div>
 {% endmacro %}
 
 {% macro teams(replay, detailed=False, game_count=None) %}
-    <div class="controls">
-        <span class="itemcontrolshow hp-toggle" data-group="items">Items</span><span class="itemcontrolhide hp-toggle hidden" data-group="items">Hide items</span>
-    </div>
-    <div class="teams">
-        {% for (teamId, players) in replay.teams().items() %}            
-            <div class="team">
-                {% if detailed %}
-                <div class="teamhead">
-                    <span class="{% if winnerId is not none %}hp-expand{% endif %}">Team {{ teamId }}</span>
-                    {% if teamId == replay['winningTeamId'] %}                    
-                        <b class="result hp-hidden h">Winner{% if not replay['winningTeamConfirmed'] %}?{% else %}!{% endif %}</b>
-                    {% elif winnerId is not none %}
-                        <b class="result hp-hidden h">Loser{% if not replay['winningTeamConfirmed'] %}?{% else %}!{% endif %}</b>
-                    {% endif %}
-                    {% if replay.team_item_count(teamId) > 0 %}
-                    <span class="hp-toggle hidden teamitems" data-group="items">
-                        <span class="teamitemcount">{{ replay.team_item_count(teamId) }}</span> items @ <span class="teamitemcost">{{ replay.team_item_cost(teamId) }}g</span>
-                    </span>
-                    {% endif %}
-                </div>
+{% if detailed %}
+<div class="controls">
+    <span class="controlshow hp-controls control" data-group="items">Items</span>
+    <span class="controlhide hp-controls control hidden" data-group="items">Hide items</span>
+    |
+    <span class="controlshow hp-controls control inaccurate-enable" data-group="units">Units</span>
+    <span class="controlhide hp-controls control inaccurate-disable hidden" data-group="units">Hide units</span>
+    |
+    <span class="controlshow hp-controls control inaccurate-enable" data-group="buildings">Buildings</span>
+    <span class="controlhide hp-controls control inaccurate-disable hidden" data-group="buildings">Hide buildings</span>
+</div>
+<div class="statwarning hidden">
+    N.B. the unit and building counts are imperfect - we're not currently tracking canceled construction or products of
+    multiple building select!
+</div>
+{% endif %}
+<div class="teams">
+    {% for (teamId, players) in replay.teams().items() %}
+    <div class="team">
+        {% if detailed %}
+        <div class="teamhead">
+            <span class="{% if winnerId is not none %}hp-expand{% endif %}">Team {{ teamId }}</span>
+            {% if teamId == replay['winningTeamId'] %}
+            <b class="result hp-hidden h">Winner{% if not replay['winningTeamConfirmed'] %}?{% else %}!{% endif %}</b>
+            {% elif winnerId is not none %}
+            <b class="result hp-hidden h">Loser{% if not replay['winningTeamConfirmed'] %}?{% else %}!{% endif %}</b>
+            {% endif %}
+            {% if replay.team_item_count(teamId) > 0 %}
+            <span class="hp-controls hidden teamitems" data-group="items">
+                <span class="teamcount">{{ replay.team_item_count(teamId) }}</span> items @ <span
+                    class="teamgold">{{ replay.team_item_cost(teamId) }}g</span>
+            </span>
+            {% endif %}
+            {% if replay.team_unit_count(teamId) > 0 %}
+            <span class="hp-controls hidden teamunits" data-group="units">
+                <span class="teamcount">{{ replay.team_unit_count(teamId) }}</span> units @ <span
+                    class="teamgold">{{ replay.team_unit_cost(teamId)[0] }}g</span> / <span
+                    class="teamwood">{{ replay.team_unit_cost(teamId)[1] }}w</span>
+            </span>
+            {% endif %}
+            {% if replay.team_building_count(teamId) > 0 %}
+            <span class="hp-controls hidden teambuildings" data-group="buildings">
+                <span class="teamcount">{{ replay.team_building_count(teamId) }}</span> buildings @ <span
+                    class="teamgold">{{ replay.team_building_cost(teamId)[0] }}g</span> / <span
+                    class="teamwood">{{ replay.team_building_cost(teamId)[1] }}w</span>
+            </span>
+            {% endif %}
+        </div>
+        {% endif %}
+        {% for player in players %}
+        <div class="player">
+            {% if detailed %}
+            <div class="icon-name">
+                {{ racemacros.icon(player['race'], player['raceDetected']) }}<a class="playername"
+                    style="color:{{ replay.player_colors[player['id']]|lighten }}"
+                    href="{{ url_for('views.view_player', battletag=player['name']) }}">{{ player['name']|displayname }}</a>
+                {% if replay.official() and game_count %}
+                {% if game_count[player['name']] > 1 %}
+                {% if not player.official() %}
+                <span class="gamecount"><sup>({{ game_count[player['name']] }})</sup></span>
                 {% endif %}
-            {% for player in players %}
-                <div class="player">
-                    {% if detailed %}
-                        <div class="icon-name">
-                            {{ racemacros.icon(player['race'], player['raceDetected']) }}<a class="playername" style="color:{{ replay.player_colors[player['id']]|lighten }}" href="{{ url_for('views.view_player', battletag=player['name']) }}">{{ player['name']|displayname }}</a>
-                            {% if replay.official() and game_count %}
-                                {% if game_count[player['name']] > 1 %}
-                                    {% if not player.official() %}
-                                        <span class="gamecount"><sup>({{ game_count[player['name']] }})</sup></span>
-                                    {% endif %}
-                                {% endif %}
-                            {% endif %}:
-                            <div class="summary">
-                                <span class="hp-toggle" data-group="pm"><b>{{ player['apm'] }}</b>&nbsp;APM</span>
-                                <span class="hp-toggle hidden" data-group="pm"><b>{{ player.action_count() }}</b>&nbsp;actions</span>
-                                {% if player.tower_count() %}
-                                | <span class="hp-toggle" data-group="pm"><b>{{ player.tower_count() }}</b> towers</span>
-                                <span class="hp-toggle hidden" data-group="pm"><b>{{ player.towers_per_minute() }}</b>&nbsp;TPM</span>
-                                {% endif %}
-                                {% if player.net_feed()[0] + player.net_feed()[1] > 0 %}
-                                <span class="hp-toggle" data-group="feed"><span class="no-hover">|</span> <b>{{ (player.net_feed()[0] + player.net_feed()[1])|thousands }}</b> sources fed</span>
-                                {% endif %}
-                                {% if player.net_feed()[0] != 0 or player.net_feed()[1] != 0 %}
-                                <span class="feeddetails hp-toggle hidden" data-group="feed"><span class="no-hover">|</span> <b class="gold">{{ player.net_feed()[0] }}</b> / <b class="lumber">{{ player.net_feed()[1] }}</b> fed</span>
-                                {% endif %}
-                                {% if player['id'] == replay.mvp_id() %}
-                                | <span class="award" title="MVP">👑</span>
-                                {% elif player['id'] == replay.grb_id() %}
-                                | <span class="award" title="Garbage award">🗑️</span>
-                                {% endif %}
-                            </div>
-                        </div>
-                            <div class="details">
-                                <div class="herodetails">
-                                    {% for h in player.real_heroes() %}
-                                        <img class="hero" src="/static/images/game/heroes/{{ h['id'] }}.gif" title="{{ h['id']|heroname }}" /><b>{{ h['level'] }}</b>
-                                    {% endfor %}
-                                </div>
-                                {% set player_items = player.decode_items() %}
-                                <div class="itemdetails hp-toggle hidden" data-group="items">
-                                {% if player_items|length == 0 %}
-                                    <div class="item"><i>Zero items purchased!</i></div>
-                                {% else %}
-                                <table>
-                                    {% for pi in player_items %}
-                                        <tr class="item"><td class="itemname">{{ pi['name'] }}</td> <td class="itemcount">{{ pi['count'] }}</td> <td class="itemgold">({{ pi['gold'] }})</td></tr></div>
-                                    {% endfor %}
-                                    <tr class="item"><td class="itemname"><i>total</i>:</td> <td class="itemcount">{{ player.total_items_count() }}</td> <td class="itemgold">&nbsp;{{ player.total_items_cost() }}g</td></tr>
-                                </table>
-                                {% endif %}
-                                </div>
-                        </div>
-                    {% else %}
-                        <div class="icon-name">
-                            {{ racemacros.icon(player['race'], player['raceDetected']) }}<a class="playername" href="{{ url_for('views.view_player', battletag=player['name']) }}">{{ player['name']|displayname }}</a> 
-                        </div>
+                {% endif %}
+                {% endif %}:
+                <div class="summary">
+                    <span class="hp-toggle" data-group="pm"><b>{{ player['apm'] }}</b>&nbsp;APM</span>
+                    <span class="hp-toggle hidden"
+                        data-group="pm"><b>{{ player.action_count() }}</b>&nbsp;actions</span>
+                    {% if player.tower_count() %}
+                    | <span class="hp-toggle" data-group="pm"><b>{{ player.tower_count() }}</b> towers</span>
+                    <span class="hp-toggle hidden"
+                        data-group="pm"><b>{{ player.towers_per_minute() }}</b>&nbsp;TPM</span>
+                    {% endif %}
+                    {% if player.net_feed()[0] + player.net_feed()[1] > 0 %}
+                    <span class="hp-toggle" data-group="feed"><span class="no-hover">|</span>
+                        <b>{{ (player.net_feed()[0] + player.net_feed()[1])|thousands }}</b> sources fed</span>
+                    {% endif %}
+                    {% if player.net_feed()[0] != 0 or player.net_feed()[1] != 0 %}
+                    <span class="feeddetails hp-toggle hidden" data-group="feed"><span class="no-hover">|</span> <b
+                            class="gold">{{ player.net_feed()[0] }}</b> / <b
+                            class="lumber">{{ player.net_feed()[1] }}</b> fed</span>
+                    {% endif %}
+                    {% if player['id'] == replay.mvp_id() %}
+                    | <span class="award" title="MVP">👑</span>
+                    {% elif player['id'] == replay.grb_id() %}
+                    | <span class="award" title="Garbage award">🗑️</span>
                     {% endif %}
                 </div>
-            {% endfor %}
             </div>
-        {% if not loop.last %}<div class="vs">vs</div>{% endif %}
+            <div class="details">
+                <div class="herodetails">
+                    {% for h in player.real_heroes() %}
+                    <img class="hero" src="/static/images/game/heroes/{{ h['id'] }}.gif"
+                        title="{{ h['id']|heroname }}" /><b>{{ h['level'] }}</b>
+                    {% endfor %}
+                </div>
+                {% set player_items = player.decode_items() %}
+                <div class="itemdetails hp-controls hidden" data-group="items">
+                    {% if player_items|length == 0 %}
+                    <div class="item"><i>Zero items purchased!</i></div>
+                    {% else %}
+                    <table>
+                        {% for pi in player_items %}
+                        <tr class="item">
+                            <td class="name">{{ pi['name'] }}</td>
+                            <td class="count">{{ pi['count'] }}</td>
+                            <td class="gold">{{ pi['gold'] }}</td>
+                        </tr>
+                        {% endfor %}
+                        <tr class="item">
+                            <td class="name"><i>total</i>:</td>
+                            <td class="count">{{ player.total_items_count() }}</td>
+                            <td class="gold">{{ player.total_items_cost() }}g</td>
+                        </tr>
+                    </table>
+                    {% endif %}
+                </div>
+                {% set player_units = player.decode_units() %}
+                <div class="unitdetails hp-controls hidden" data-group="units">
+                    {% if player_units|length == 0 %}
+                    <div class="unit"><i>Zero units created!</i></div>
+                    {% else %}
+                    <table>
+                        {% for pu in player_units %}
+                        <tr class="unit">
+                            <td class="name">{{ pu['name'] }}</td>
+                            <td class="count">{{ pu['count'] }}</td>
+                            <td class="gold">{{ pu['gold'] }}</td>
+                            <td class="slash"> / </td>
+                            <td class="wood">{{ pu['wood'] }}</td>
+                        </tr>
+                        {% endfor %}
+                        <tr class="unit">
+                            <td class="name"><i>total</i>:</td>
+                            <td class="count">{{ player.total_units_count() }}</td>
+                            <td class="gold">{{ player.total_units_cost()[0] }}g</td>
+                            <td class="slash"> / </td>
+                            <td class="wood">{{ player.total_units_cost()[1] }}w</td>
+                        </tr>
+                    </table>
+                    {% endif %}
+                </div>
+                {% set player_buildings = player.decode_buildings() %}
+                <div class="buildingdetails hp-controls hidden" data-group="buildings">
+                    {% if player_buildings|length == 0 %}
+                    <div class="building"><i>Zero buildings created!</i></div>
+                    {% else %}
+                    <table>
+                        {% for pb in player_buildings %}
+                        <tr class="building">
+                            <td class="name">{{ pb['name'] }}</td>
+                            <td class="count">{{ pb['count'] }}</td>
+                            <td class="gold">{{ pb['gold'] }}</td>
+                            <td class="slash"> / </td>
+                            <td class="wood">{{ pb['wood'] }}</td>
+                        </tr>
+                        {% endfor %}
+                        <tr class="building">
+                            <td class="building"><i>total</i>:</td>
+                            <td class="count">{{ player.total_buildings_count() }}</td>
+                            <td class="gold">{{ player.total_buildings_cost()[0] }}g</td>
+                            <td class="slash"> / </td>
+                            <td class="wood">{{ player.total_buildings_cost()[1] }}w</td>
+                        </tr>
+                    </table>
+                    {% endif %}
+                </div>
+            </div>
+            {% else %}
+            <div class="icon-name">
+                {{ racemacros.icon(player['race'], player['raceDetected']) }}<a class="playername"
+                    href="{{ url_for('views.view_player', battletag=player['name']) }}">{{ player['name']|displayname }}</a>
+            </div>
+            {% endif %}
+        </div>
         {% endfor %}
     </div>
+    {% if not loop.last %}<div class="vs">vs</div>{% endif %}
+    {% endfor %}
+</div>
 {% endmacro %}
