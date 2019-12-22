@@ -200,7 +200,11 @@ class Player(dict):
         return sorted(created_units, key=lambda i: i['priority'])
 
     def total_units_count(self):
-        return sum(self['units']['summary'].values())
+        units = 0
+        for unit_code, unit_count in self['units']['summary'].items():
+            if unit_code in unit_codes:
+                units += unit_count
+        return units
 
     def total_units_cost(self):
         gold = 0
@@ -223,7 +227,7 @@ class Player(dict):
     def total_army_units(self):
         army_units = 0
         for unit_code, unit_count in self['items']['summary'].items():
-            army_units += unit_count if unit_code not in is_worker else 0
+            army_units += unit_count if unit_code not in is_worker and unit_code in unit_codes else 0
         return army_units
 
     def parse_building_code(self, code, count, races):
@@ -270,7 +274,13 @@ class Player(dict):
         return sorted(created_buildings, key=lambda i: i['priority'])
 
     def total_buildings_count(self):
-        return sum(self['buildings']['summary'].values())
+        buildings = 0
+        for building_code, building_count in self['buildings']['summary'].items():
+            if building_code in building_codes:
+                buildings += building_count
+            if building_code in unit_codes:
+                buildings += building_count
+        return buildings
 
     def total_buildings_cost(self):
         gold = 0
