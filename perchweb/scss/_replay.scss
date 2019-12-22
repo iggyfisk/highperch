@@ -64,7 +64,6 @@
                 }
             }
         }
-
         border:1px solid black;
         border-bottom:0;
         background: $card-alt-background-color;
@@ -128,7 +127,6 @@ a.playername{
     }
 }
 
-
 .player {
     .icon-name {
         display:flex;
@@ -141,6 +139,10 @@ a.playername{
 
 // single replay
 .large-replay{
+    $item-color: #e1642a;
+    $unit-color: #00cddb;
+    $building-color: blue;
+    $action-color: red;
     .details {
         h2 {
             display: flex;
@@ -222,21 +224,41 @@ a.playername{
         width: fit-content;
         width: -moz-fit-content;
         font-size: 12px;
-        padding: 0px 5px 0px 5px;
+        padding: 5px 5px 0px 5px;
         margin: auto;
         text-align: center;
         background-color: $card-background-color;
         margin-bottom: 15px;
+        $outline-size: 3px;
+        .controlshow {
+            outline: $outline-size rgba(0,0,0,0.0) solid;
+        }
+        .itemhide {
+            outline: $outline-size $item-color solid;
+            outline-offset: -$outline-size;
+        }
+        .unithide {
+            outline: $outline-size $unit-color solid;
+            outline-offset: -$outline-size;
+        }
+        .buildinghide {
+            outline: $outline-size $building-color solid;
+            outline-offset: -$outline-size;
+        }
+        .actionhide {
+            outline: $outline-size $action-color solid;
+            outline-offset: -$outline-size;
+        }
     }
     .statwarning {
         width: fit-content;
         width: -moz-fit-content;
-        font-size: 12px;
-        padding: 10px 20px 10px 20px;
+        font-size: 10px;
+        padding: 5px 10px 5px 10px;
         margin: auto;
         text-align: center;
-        background-color: rgba(0,0,0,0.6);
-        border-radius: 10px;
+        background-color: rgba(0,0,0,0.4);
+        border-radius: 5px;
         margin-bottom: 15px;
     }
     .teams {
@@ -275,30 +297,14 @@ a.playername{
                 font-weight: bold;
             }
             .teamgold {
-                color: #FFA600;
+                color: #ffcc44;
                 font-weight: bold;
             }
             .teamwood {
                 color: #00910A;
                 font-weight: bold;
             }
-            .teamitems {
-                flex-shrink: 0;
-                margin-left: auto;
-                font-size: 14px;
-                text-align: right;
-                letter-spacing: 0rem;
-                padding: 0px 5px 0px 5px;
-            }
-            .teamunits {
-                flex-shrink: 0;
-                margin-left: auto;
-                font-size: 14px;
-                text-align: right;
-                letter-spacing: 0rem;
-                padding: 0px 5px 0px 5px;
-            }
-            .teambuildings {
+            .teamstats {
                 flex-shrink: 0;
                 margin-left: auto;
                 font-size: 14px;
@@ -350,7 +356,7 @@ a.playername{
                         padding-right: 5px;
                     }
                     .gold {
-                        color: #FFA600;
+                        color: #ffcc44;
                         text-align: right;
                         padding-right: 0px;
                     }
@@ -374,35 +380,26 @@ a.playername{
                             margin: 0 2px 0 7px;
                         }
                     }
-                    .itemdetails {
+                    .extendeddetails {
                         font-size: 10px;
                         background-color: rgba(255,255,255,0.05);
                         width: fit-content;
                         width: -moz-fit-content;
-                        border-left: 5px #fff;
                         margin-top: 5px;
                         margin-left: 20px;
                         padding: 5px 20px 5px 20px;
                     }
-                    .unitdetails {
-                        font-size: 10px;
-                        background-color: rgba(255,255,255,0.05);
-                        width: fit-content;
-                        width: -moz-fit-content;
-                        border-left: 5px #fff;
-                        margin-top: 5px;
-                        margin-left: 20px;
-                        padding: 5px 20px 5px 20px;
+                    .itemdetails{
+                        border-left: 1px $item-color solid;
                     }
-                    .buildingdetails {
-                        font-size: 10px;
-                        background-color: rgba(255,255,255,0.05);
-                        width: fit-content;
-                        width: -moz-fit-content;
-                        border-left: 5px #fff;
-                        margin-top: 5px;
-                        margin-left: 20px;
-                        padding: 5px 20px 5px 20px;
+                    .unitdetails{
+                        border-left: 1px $unit-color solid;
+                    }
+                    .buildingdetails{
+                        border-left: 1px $building-color solid;
+                    }
+                    .actiondetails{
+                        border-left: 1px $action-color solid;
                     }
                 }
             }
@@ -424,7 +421,7 @@ a.playername{
 
 .feeddetails {
     .gold {
-        color: #FFA600;
+        color: #ffcc44;
     }
     .lumber {
         color: #00910A;

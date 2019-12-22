@@ -280,3 +280,18 @@ class Player(dict):
                 gold += building_codes[building_code]['gold'] * building_count
                 wood += building_codes[building_code]['wood'] * building_count
         return (gold, wood)
+
+    def parse_actions(self):
+        actions = self.get_action_types()
+        actions['Assign group'] = actions.pop('assigngroup')
+        actions['Right click'] = actions.pop('rightclick')
+        actions['Basic action'] = actions.pop('basic')
+        actions['Build/train'] = actions.pop('buildtrain')
+        actions['Ability/item use'] = actions.pop('ability')
+        actions['Item give/drop'] = actions.pop('item')
+        actions['Select'] = actions.pop('select')
+        actions['Remove unit'] = actions.pop('removeunit')
+        actions['Subgroup select'] = actions.pop('subgroup')
+        actions['Select group'] = actions.pop('selecthotkey')
+        actions['Esc'] = actions.pop('esc')
+        return sorted(actions.items(), key=lambda i: i[1], reverse=True)

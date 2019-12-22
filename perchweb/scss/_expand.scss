@@ -13,10 +13,6 @@
 }
 
 .hp-controls {
-  cursor: pointer;
-  &:hover {
-      color: #FFF;
-  }
   &.size-ph {
     @media (#{$bp-larger-than-phablet}) {
       display: none;

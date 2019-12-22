@@ -108,17 +108,21 @@
 })();
 
 /* Inaccuracy warning toggle */
-// Todo: only hide statwarning when the last remaining inaccurate details are hidden
 (() => {
 	document.addEventListener("DOMContentLoaded", () => {
+		var inaccurateStatsOpen = 0;
 		document.querySelectorAll('.inaccurate-enable').forEach(el => {
 			el.addEventListener('click', () => {
+				inaccurateStatsOpen++;
 				document.querySelectorAll('.statwarning').forEach(e => e.style.display = 'block');
 			});
 		});
 		document.querySelectorAll('.inaccurate-disable').forEach(el => {
 			el.addEventListener('click', () => {
-				document.querySelectorAll('.statwarning').forEach(e => e.style.display = 'none');
+				inaccurateStatsOpen--;
+				if (inaccurateStatsOpen == 0) {
+					document.querySelectorAll('.statwarning').forEach(e => e.style.display = 'none');
+				}
 			});
 		});
 	});

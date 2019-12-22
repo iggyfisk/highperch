@@ -33,18 +33,18 @@
 {% macro teams(replay, detailed=False, game_count=None) %}
 {% if detailed %}
 <div class="controls">
-    <span class="controlshow hp-controls control" data-group="items">Items</span>
-    <span class="controlhide hp-controls control hidden" data-group="items">Hide items</span>
-    |
-    <span class="controlshow hp-controls control inaccurate-enable" data-group="units">Units</span>
-    <span class="controlhide hp-controls control inaccurate-disable hidden" data-group="units">Hide units</span>
-    |
-    <span class="controlshow hp-controls control inaccurate-enable" data-group="buildings">Buildings</span>
-    <span class="controlhide hp-controls control inaccurate-disable hidden" data-group="buildings">Hide buildings</span>
+    <span class="hp-controls control" data-group="items"><img class="controlshow" src="/static/images/townportal.gif"></span>
+    <span class="hp-controls control hidden" data-group="items"><img class="itemhide" src="/static/images/townportal.gif"></span>
+    <span class="hp-controls control inaccurate-enable" data-group="units"><img class="controlshow" src="/static/images/peasant.gif"></span>
+    <span class="hp-controls control inaccurate-disable hidden" data-group="units"><img class="unithide" src="/static/images/peasant.gif"></span>
+    <span class="hp-controls control inaccurate-enable" data-group="buildings"><img class="controlshow" src="/static/images/castle.gif"></span>
+    <span class="hp-controls control inaccurate-disable hidden" data-group="buildings"><img class="buildinghide" src="/static/images/castle.gif"></span>
+    <span class="hp-controls control" data-group="actions"><img class="controlshow" src="/static/images/move.gif"></span>
+    <span class="hp-controls control hidden" data-group="actions"><img class="actionhide" src="/static/images/move.gif"></span>
 </div>
 <div class="statwarning hidden">
-    N.B. the unit and building counts are imperfect - we're not currently tracking canceled construction or products of
-    multiple building select!
+    N.B. unit and building counts are inaccurate - canceled construction and products of multiple building select are
+    not tracked.
 </div>
 {% endif %}
 <div class="teams">
@@ -59,23 +59,23 @@
             <b class="result hp-hidden h">Loser{% if not replay['winningTeamConfirmed'] %}?{% else %}!{% endif %}</b>
             {% endif %}
             {% if replay.team_item_count(teamId) > 0 %}
-            <span class="hp-controls hidden teamitems" data-group="items">
+            <span class="hp-controls hidden teamstats" data-group="items">
                 <span class="teamcount">{{ replay.team_item_count(teamId) }}</span> items @ <span
-                    class="teamgold">{{ replay.team_item_cost(teamId) }}g</span>
+                    class="teamgold">{{ replay.team_item_cost(teamId)|thousands }} <img src="/static/images/gold-sm.gif"></span>
             </span>
             {% endif %}
             {% if replay.team_unit_count(teamId) > 0 %}
-            <span class="hp-controls hidden teamunits" data-group="units">
+            <span class="hp-controls hidden teamstats" data-group="units">
                 <span class="teamcount">{{ replay.team_unit_count(teamId) }}</span> units @ <span
-                    class="teamgold">{{ replay.team_unit_cost(teamId)[0] }}g</span> / <span
-                    class="teamwood">{{ replay.team_unit_cost(teamId)[1] }}w</span>
+                    class="teamgold">{{ replay.team_unit_cost(teamId)[0]|thousands }} <img src="/static/images/gold-sm.gif"></span> / <span
+                    class="teamwood">{{ replay.team_unit_cost(teamId)[1]|thousands }} <img src="/static/images/lumber-sm.gif"></span>
             </span>
             {% endif %}
             {% if replay.team_building_count(teamId) > 0 %}
-            <span class="hp-controls hidden teambuildings" data-group="buildings">
+            <span class="hp-controls hidden teamstats" data-group="buildings">
                 <span class="teamcount">{{ replay.team_building_count(teamId) }}</span> buildings @ <span
-                    class="teamgold">{{ replay.team_building_cost(teamId)[0] }}g</span> / <span
-                    class="teamwood">{{ replay.team_building_cost(teamId)[1] }}w</span>
+                    class="teamgold">{{ replay.team_building_cost(teamId)[0]|thousands }} <img src="/static/images/gold-sm.gif"></span> / <span
+                    class="teamwood">{{ replay.team_building_cost(teamId)[1]|thousands }} <img src="/static/images/lumber-sm.gif"></span>
             </span>
             {% endif %}
         </div>
@@ -127,7 +127,7 @@
                     {% endfor %}
                 </div>
                 {% set player_items = player.decode_items() %}
-                <div class="itemdetails hp-controls hidden" data-group="items">
+                <div class="extendeddetails itemdetails hp-controls hidden" data-group="items">
                     {% if player_items|length == 0 %}
                     <div class="item"><i>Zero items purchased!</i></div>
                     {% else %}
@@ -148,7 +148,7 @@
                     {% endif %}
                 </div>
                 {% set player_units = player.decode_units() %}
-                <div class="unitdetails hp-controls hidden" data-group="units">
+                <div class="extendeddetails unitdetails hp-controls hidden" data-group="units">
                     {% if player_units|length == 0 %}
                     <div class="unit"><i>Zero units created!</i></div>
                     {% else %}
@@ -173,9 +173,9 @@
                     {% endif %}
                 </div>
                 {% set player_buildings = player.decode_buildings() %}
-                <div class="buildingdetails hp-controls hidden" data-group="buildings">
+                <div class="extendeddetails buildingdetails hp-controls hidden" data-group="buildings">
                     {% if player_buildings|length == 0 %}
-                    <div class="building"><i>Zero buildings created!</i></div>
+                    <div class="building"><i>Zero buildings constructed!</i></div>
                     {% else %}
                     <table>
                         {% for pb in player_buildings %}
@@ -194,6 +194,21 @@
                             <td class="slash"> / </td>
                             <td class="wood">{{ player.total_buildings_cost()[1] }}w</td>
                         </tr>
+                    </table>
+                    {% endif %}
+                </div>
+                <div class="extendeddetails actiondetails hp-controls hidden" data-group="actions">
+                    {% set player_actions = player.parse_actions() %}
+                    {% if player.action_count() == 0 %}
+                    <div class="building"><i>Zero actions performed!</i></div>
+                    {% else %}
+                    <table>
+                    {% for pa in player_actions %}
+                    <tr>
+                        <td class="name">{{ pa[0] }}</td>
+                        <td class="count">{{ pa[1] }}</td>
+                    </tr>
+                    {% endfor %}
                     </table>
                     {% endif %}
                 </div>

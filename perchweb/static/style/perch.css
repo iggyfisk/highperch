@@ -1086,21 +1086,35 @@ a.playername:hover {
   width: fit-content;
   width: -moz-fit-content;
   font-size: 12px;
-  padding: 0px 5px 0px 5px;
+  padding: 5px 5px 0px 5px;
   margin: auto;
   text-align: center;
   background-color: rgba(10, 5, 5, 0.75);
   margin-bottom: 15px; }
+  .large-replay .controls .controlshow {
+    outline: 3px rgba(0, 0, 0, 0) solid; }
+  .large-replay .controls .itemhide {
+    outline: 3px #e1642a solid;
+    outline-offset: -3px; }
+  .large-replay .controls .unithide {
+    outline: 3px #00cddb solid;
+    outline-offset: -3px; }
+  .large-replay .controls .buildinghide {
+    outline: 3px blue solid;
+    outline-offset: -3px; }
+  .large-replay .controls .actionhide {
+    outline: 3px red solid;
+    outline-offset: -3px; }
 
 .large-replay .statwarning {
   width: fit-content;
   width: -moz-fit-content;
-  font-size: 12px;
-  padding: 10px 20px 10px 20px;
+  font-size: 10px;
+  padding: 5px 10px 5px 10px;
   margin: auto;
   text-align: center;
-  background-color: rgba(0, 0, 0, 0.6);
-  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 5px;
   margin-bottom: 15px; }
 
 .large-replay .teams {
@@ -1131,26 +1145,12 @@ a.playername:hover {
   .large-replay .teams .team .teamcount {
     font-weight: bold; }
   .large-replay .teams .team .teamgold {
-    color: #FFA600;
+    color: #ffcc44;
     font-weight: bold; }
   .large-replay .teams .team .teamwood {
     color: #00910A;
     font-weight: bold; }
-  .large-replay .teams .team .teamitems {
-    flex-shrink: 0;
-    margin-left: auto;
-    font-size: 14px;
-    text-align: right;
-    letter-spacing: 0rem;
-    padding: 0px 5px 0px 5px; }
-  .large-replay .teams .team .teamunits {
-    flex-shrink: 0;
-    margin-left: auto;
-    font-size: 14px;
-    text-align: right;
-    letter-spacing: 0rem;
-    padding: 0px 5px 0px 5px; }
-  .large-replay .teams .team .teambuildings {
+  .large-replay .teams .team .teamstats {
     flex-shrink: 0;
     margin-left: auto;
     font-size: 14px;
@@ -1193,7 +1193,7 @@ a.playername:hover {
         padding-left: 5px;
         padding-right: 5px; }
       .large-replay .teams .team .player .details .gold {
-        color: #FFA600;
+        color: #ffcc44;
         text-align: right;
         padding-right: 0px; }
       .large-replay .teams .team .player .details .slash {
@@ -1211,33 +1211,22 @@ a.playername:hover {
           width: 14px;
           height: 14px;
           margin: 0 2px 0 7px; }
+      .large-replay .teams .team .player .details .extendeddetails {
+        font-size: 10px;
+        background-color: rgba(255, 255, 255, 0.05);
+        width: fit-content;
+        width: -moz-fit-content;
+        margin-top: 5px;
+        margin-left: 20px;
+        padding: 5px 20px 5px 20px; }
       .large-replay .teams .team .player .details .itemdetails {
-        font-size: 10px;
-        background-color: rgba(255, 255, 255, 0.05);
-        width: fit-content;
-        width: -moz-fit-content;
-        border-left: 5px #fff;
-        margin-top: 5px;
-        margin-left: 20px;
-        padding: 5px 20px 5px 20px; }
+        border-left: 1px #e1642a solid; }
       .large-replay .teams .team .player .details .unitdetails {
-        font-size: 10px;
-        background-color: rgba(255, 255, 255, 0.05);
-        width: fit-content;
-        width: -moz-fit-content;
-        border-left: 5px #fff;
-        margin-top: 5px;
-        margin-left: 20px;
-        padding: 5px 20px 5px 20px; }
+        border-left: 1px #00cddb solid; }
       .large-replay .teams .team .player .details .buildingdetails {
-        font-size: 10px;
-        background-color: rgba(255, 255, 255, 0.05);
-        width: fit-content;
-        width: -moz-fit-content;
-        border-left: 5px #fff;
-        margin-top: 5px;
-        margin-left: 20px;
-        padding: 5px 20px 5px 20px; }
+        border-left: 1px blue solid; }
+      .large-replay .teams .team .player .details .actiondetails {
+        border-left: 1px red solid; }
 
 .replay .details .team, .replay .details .teams, .replay .details .icon-name {
   display: inline-flex; }
@@ -1246,7 +1235,7 @@ a.playername:hover {
   padding-right: 8px; }
 
 .feeddetails .gold {
-  color: #FFA600; }
+  color: #ffcc44; }
 
 .feeddetails .lumber {
   color: #00910A; }
@@ -1580,13 +1569,10 @@ form.adminlogin {
     .hp-expand.size-ph,
     .hp-toggle.size-ph {
       display: none; } }
-.hp-controls {
-  cursor: pointer; }
-  .hp-controls:hover {
-    color: #FFF; }
-  @media (min-width: 550px) {
-    .hp-controls.size-ph {
-      display: none; } }
+@media (min-width: 550px) {
+  .hp-controls.size-ph {
+    display: none; } }
+
 .no-hover {
   color: #c4976f !important; }
 
