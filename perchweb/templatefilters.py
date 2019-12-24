@@ -23,6 +23,8 @@ chat_modes = {
 
 def chatmode(mode):
     """ Classic style chat mode """
+    if mode[:7] == 'PRIVATE':
+        return 'Private'
     return chat_modes[mode]
 
 
