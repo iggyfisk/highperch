@@ -65,7 +65,10 @@ class Player(dict):
             and doesn't detect shared heroes of the same race. Can be discussed."""
         # Screw you w3gjs and your partial 'E'->'N' renaming
         own_race = self['raceDetected'] if self['raceDetected'] != 'N' else 'E'
-        return [h for h in self['heroes'] if h['id'][0] == 'N' or h['id'][0] == own_race]
+        try:
+            return [h for h in self['heroes'] if h['id'][0] == 'N' or h['id'][0] == own_race]
+        except KeyError: # probably custom map
+            return []
 
     def net_feed(self):
         """ Net gold(0) and lumber(1) fed to allies this game """

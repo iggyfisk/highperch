@@ -58,7 +58,7 @@ def map_thumbnail(map_name):
         thumbnails[map_name] = f'/static/images/minimaps/{file_name}.jpg'
     else:
         # Todo: real placeholder
-        thumbnails[map_name] = f'/static/images/minimaps/fakethumbnail.jpg'
+        thumbnails[map_name] = f'/static/images/minimaps/unknownmap.png'
     return thumbnails[map_name]
 
 
