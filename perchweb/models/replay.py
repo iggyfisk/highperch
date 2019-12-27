@@ -49,6 +49,7 @@ class Replay(dict):
         # I'd like to turn all these cache values into @cached_property but that's Python >= 3.8
         self.arbitrary_scores = None
         self.formatted_chat = None
+        self.chat_actions = None
         self.teams_dict = None
 
         self.players = [Player(tradeEvents=args['tradeEvents'], **p)
@@ -151,6 +152,20 @@ class Replay(dict):
 
     # Minimum time between events to insert a space in the chatlog
     silence_period = 180000
+
+    def get_chat_actions(self):
+        if self.chat_actions is not None:
+            return self.chat_actions
+        chat_actions = {}
+        for p in self.players:
+            chat_actions[p['id']] = 0
+        for chat in self['chat']:
+            chat_actions[chat['playerId']] += (len(chat['message']) + 2)
+        self.chat_actions = chat_actions
+        return self.chat_actions
+
+    def loudest_player_id(self):
+        return sorted(self.get_chat_actions(), key=self.get_chat_actions().get, reverse=True)[0]
 
     def get_formatted_chat(self):
         """ Chatlog, pause, resume, player left, and markers for periods of silence (indicated by None)"""

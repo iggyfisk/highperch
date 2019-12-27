@@ -67,7 +67,7 @@ class Player(dict):
         own_race = self['raceDetected'] if self['raceDetected'] != 'N' else 'E'
         try:
             return [h for h in self['heroes'] if h['id'][0] == 'N' or h['id'][0] == own_race]
-        except KeyError: # probably custom map
+        except KeyError:  # probably custom map
             return []
 
     def net_feed(self):
@@ -307,5 +307,6 @@ class Player(dict):
         actions['Subgroup select'] = actions.pop('subgroup')
         actions['Select group'] = actions.pop('selecthotkey')
         actions['Esc'] = actions.pop('esc')
-        nonzero_actions = {action: count for action, count in actions.items() if count > 0}
-        return sorted(nonzero_actions.items(), key=lambda i: i[1], reverse=True)
+        nonzero_actions = {action: count for action,
+                           count in actions.items() if count > 0}
+        return list(nonzero_actions.items())

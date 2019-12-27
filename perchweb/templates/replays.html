@@ -88,15 +88,26 @@
                     style="color:{{ replay.player_colors[player['id']]|lighten }}"
                     href="{{ url_for('views.view_player', battletag=player['name']) }}">{{ player['name']|displayname }}</a>
                 {% if replay.official() and game_count %}
-                {% if game_count[player['name']] > 1 %}
-                {% if not player.official() %}
-                <span class="gamecount"><sup>({{ game_count[player['name']] }})</sup></span>
-                {% endif %}
-                {% endif %}
+                    {% if game_count[player['name']] > 1 %}
+                        {% if not player.official() %}
+                            <span class="gamecount"><sup>({{ game_count[player['name']] }})</sup></span>
+                        {% endif %}
+                    {% endif %}
                 {% endif %}:
                 <div class="summary">
-                    <span class="hp-toggle" data-group="pm"><b>{{ player['apm'] }}</b>&nbsp;APM</span>
-                    <span class="hp-toggle hidden"
+                    {% set chat_actions = replay.get_chat_actions()[player['id']] %}
+                    {% if chat_actions > 0 %}
+                        {% set chats_per_minute = (chat_actions / (player['currentTimePlayed'] / 1000 / 60))|round|int %}
+                        {% set inclusive_actions = player.action_count() + chat_actions %}
+                        {% set chat_percentage = (chat_actions / inclusive_actions * 100)|round|int %}
+                    {% else %}
+                        {% set chats_per_minute = 0 %}
+                        {% set inclusive_actions = player.action_count() %}
+                        {% set chat_percentage = 0 %}
+                    {% endif %}
+                    <span class="hp-toggle" title="Chat-inclusive: {{ player['apm'] + chats_per_minute }} APM" 
+                        data-group="pm"><b>{{ player['apm'] }}</b>&nbsp;APM</span>
+                    <span class="hp-toggle hidden" title="Chat-inclusive: {{ inclusive_actions }} actions, {{ chat_percentage }}% chat" 
                         data-group="pm"><b>{{ player.action_count() }}</b>&nbsp;actions</span>
                     {% if player.tower_count() %}
                     | <span class="hp-toggle" data-group="pm"><b>{{ player.tower_count() }}</b> towers</span>
@@ -199,14 +210,23 @@
                 </div>
                 <div class="extendeddetails actiondetails hp-controls hidden" data-group="actions">
                     {% set player_actions = player.parse_actions() %}
+                    {% if chat_actions > 0 %}
+                        {{ player_actions.append(('Chat', chat_actions))|default("", True) }}
+                    {% endif %}
                     {% if player.action_count() == 0 %}
                     <div class="building"><i>Zero actions performed!</i></div>
                     {% else %}
                     <table>
-                    {% for pa in player_actions %}
+                    {% for pa in player_actions|sort(attribute='1', reverse=True) %}
                     <tr>
                         <td class="name">{{ pa[0] }}</td>
-                        <td class="count">{{ pa[1] }}</td>
+                        <td class="count">{{ pa[1] }}
+                            {% if pa[0] == "Chat" %}
+                                {% if player['id'] == replay.loudest_player_id() %}
+                                <span class="award" title="Birdmouth">🗣️</span>
+                                {% endif %}
+                            {% endif %}
+                        </td>
                     </tr>
                     {% endfor %}
                     </table>
