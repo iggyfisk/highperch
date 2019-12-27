@@ -92,7 +92,7 @@ def list_player_replays(battletag, max_results=20):
     # Todo: combine key elements with list_replays
     rows = query('''
     SELECT ID, Name, TimeStamp, Official, HighQuality, GameType, Version, Length, Map, R.TowerCount, R.ChatMessageCount,
-        Towers, StartLocations, Players, Views
+        Towers, StartLocations, Players, Views, UploaderIP
     FROM Replays AS R
     INNER JOIN GamesPlayed ON ReplayID = ID
     WHERE PlayerTag = ?
