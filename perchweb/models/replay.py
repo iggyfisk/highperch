@@ -160,7 +160,10 @@ class Replay(dict):
         for p in self.players:
             chat_actions[p['id']] = 0
         for chat in self['chat']:
-            chat_actions[chat['playerId']] += (len(chat['message']) + 2)
+            try:
+                chat_actions[chat['playerId']] += (len(chat['message']) + 2)
+            except KeyError: # probably a desync message from "Blizzard" with a nonexistent playerId
+                pass
         self.chat_actions = chat_actions
         return self.chat_actions
 
