@@ -15,6 +15,16 @@ def gametime(milliseconds):
     return '{:01}:{:02}'.format(minutes, seconds)
 
 
+def gametime_for_computers(milliseconds):
+    """ Converts milliseconds to ISO8601 duration: PTPT1H4M20S
+    Carryover is permitted in the standard so we don't need to worry about >24H gametimes """
+    minutes, seconds = divmod(int(milliseconds / 1000), 60)
+    if minutes >= 60:
+        hours, minutes = divmod((minutes), 60)
+        return f'PT{hours}H{minutes}M{seconds}S'
+    return f'PT{minutes}M{seconds}S'
+
+
 chat_modes = {
     'ALL': 'All',
     'ALLY': 'Allies'
@@ -120,6 +130,7 @@ def make_country_embed(ip_addr):
 def register(jinja_environment):
     """ Register all filters to the given jinja environment """
     jinja_environment.filters['gametime'] = gametime
+    jinja_environment.filters['gametime_for_computers'] = gametime_for_computers
     jinja_environment.filters['chatmode'] = chatmode
     jinja_environment.filters['raceicon'] = race_icon
     jinja_environment.filters['heroname'] = hero_name

@@ -388,6 +388,9 @@ a.playername{
                         margin-top: 5px;
                         margin-left: 20px;
                         padding: 5px 20px 5px 20px;
+                        .birdmouth {
+                            cursor: default;
+                        }
                     }
                     .itemdetails{
                         border-left: 1px $item-color solid;

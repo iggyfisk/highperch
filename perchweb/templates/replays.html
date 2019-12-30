@@ -220,7 +220,7 @@
                     {% for pa in player_actions|sort(attribute='1', reverse=True) %}
                     <tr>
                         <td class="name">{{ pa[0] }}</td>
-                        <td class="count">{{ pa[1] }}{% if pa[0] == "Chat" %}{% if player['id'] == replay.loudest_player_id() %}<span class="award" title="Birdmouth">🗣️</span>{% endif %}{% endif %}</td>
+                        <td class="count">{{ pa[1] }}{% if pa[0] == "Chat" %}{% if player['id'] == replay.loudest_player_id() %} <span class="birdmouth" title="Boastful Knave">🗣️</span>{% endif %}{% endif %}</td>
                     </tr>
                     {% endfor %}
                     </table>

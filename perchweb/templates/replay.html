@@ -58,6 +58,26 @@
                         <p><b>{{ replay['duration']|gametime }}</b> long {{ replay['type'] }} game on <a href="{{ replay.map_name()|bigmapurl }}">{{ replay.map_name() }}</a></p>
                         <p>Saved by <a href="{{ url_for('views.view_player', battletag=replay.replay_saver()['name']) }}">{{ replay.replay_saver()['name']|displayname }}</a></p>
                     </div>
+                    <script type="application/ld+json">
+                        {
+                          "@context" : "http://schema.org",
+                          "@type" : "Event",
+                          "name" : "{{ listinfo['Name'] }}",
+                          "startDate" : "{{ listinfo.upload_date_for_computers() }}",
+                          "location" : {
+                            "@type" : "Place",
+                            "name" : "{{ replay.map_name() }}"
+                          },
+                          "maximumAttendeeCapacity": {{ replay['players']|length }}
+                          "duration": "{{ replay['duration']|gametime_for_computers }}",
+                          "image" : "https://highper.ch{{ replay.map_name()|mapthumbnail }}",
+                          "description" : "{{ replay['type'] }} game",
+                          "performer" : [{% for player in replay['players'] %}{
+                            "@type" : "Person",
+                            "name" : "{{ player['name'] }} [{{ player['race']|racetitle }}] : {{ player['apm'] }} APM, {{ player.tower_count() }} tower{% if player.tower_count() != 1%}s{% endif %}, {{ player['heroCount'] }} hero{% if player['heroCount'] != 1 %}es{% endif %}, {{ player.total_items_count() }} item{% if player.total_items_count() != 1 %}s{% endif %}"
+                          }{% if not loop.last %},{% endif %}{% endfor %}]
+                        }
+                    </script>
                 </div>
             </div>
 

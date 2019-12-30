@@ -30,6 +30,9 @@ class ReplayListInfo(dict):
         """ Replay upload timestamp as Python datetime """
         return datetime.fromtimestamp(self['TimeStamp'])
 
+    def upload_date_for_computers(self):
+        return datetime.fromtimestamp(self['TimeStamp']).strftime("%Y-%m-%dT%H:%M:%S")
+
     def get_drawmap(self, color_transform=lambda c: c):
         """ Map size coordinates and a list of towers per color and coordinate,
             for drawing on the minimap. """

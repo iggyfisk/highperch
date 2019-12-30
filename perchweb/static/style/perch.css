@@ -1219,6 +1219,8 @@ a.playername:hover {
         margin-top: 5px;
         margin-left: 20px;
         padding: 5px 20px 5px 20px; }
+        .large-replay .teams .team .player .details .extendeddetails .birdmouth {
+          cursor: default; }
       .large-replay .teams .team .player .details .itemdetails {
         border-left: 1px #e1642a solid; }
       .large-replay .teams .team .player .details .unitdetails {
