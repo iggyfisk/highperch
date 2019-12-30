@@ -23,7 +23,7 @@
         <meta name="twitter:url" value="{{ request.base_url }}" />
         {% for (teamId, players) in replay.teams().items() %}
         <meta name="twitter:label{{ teamId + 1 }}" value="Team {{ teamId + 1 }}" />
-        <meta name="twitter:data{{ teamId + 1 }}" value="{% for player in players %}{{ player['name'] }} [{{ player['race']|racetitle }} {{ player['apm'] }}APM]{% if not loop.last %}, {% endif %}{% endfor %}" />
+        <meta name="twitter:data{{ teamId + 1 }}" value="{% for player in players %}{{ player['name']|displayname }} [{{ player['race'] }}{% if player['race'] == 'R' %}⇛{{ player['raceDetected'] }}{% endif %} {{ player['apm'] }}apm]{% if not loop.last %}, {% endif %}{% endfor %}" />
         {% endfor %}
     {% endif %}
 </head>
