@@ -16,15 +16,13 @@
         <meta property="og:title" content="Replay: {{ listinfo['Name'] }}" />
         <meta property="og:description" content="{{ replay['duration']|gametime }} long {{ replay['type'] }} game on {{ replay.map_name() }} with {{ replay.tower_count() }} towers" />
         <meta property="og:image" content="https://highper.ch{{ replay.map_name()|mapthumbnail }}" />
-        <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:domain" value="highper.ch" />
         <meta name="twitter:title" value="Replay: {{ listinfo['Name'] }}" />
         <meta name="twitter:description" value="{{ replay['duration']|gametime }} long {{ replay['type'] }} game on {{ replay.map_name() }} with {{ replay.tower_count() }} towers" />
-        <meta name="twitter:image" content="https://highper.ch{{ replay.map_name()|mapthumbnail }}" />
         <meta name="twitter:url" value="{{ request.base_url }}" />
         {% for (teamId, players) in replay.teams().items() %}
-        <meta name="twitter:label{{ teamId }}" value="Team {{ teamId + 1 }}" />
-        <meta name="twitter:data{{ teamId }}" value="{% for player in players %}{{ player['name'] }} [{{ player['race']|racetitle }} {{ player['apm'] }}APM]{% if not loop.last %}, {% endif %}{% endfor %}" />
+        <meta name="twitter:label{{ teamId + 1 }}" value="Team {{ teamId + 1 }}" />
+        <meta name="twitter:data{{ teamId + 1 }}" value="{% for player in players %}{{ player['name'] }} [{{ player['race']|racetitle }} {{ player['apm'] }}APM]{% if not loop.last %}, {% endif %}{% endfor %}" />
         {% endfor %}
     {% endif %}
 </head>
