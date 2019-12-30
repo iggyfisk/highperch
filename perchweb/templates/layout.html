@@ -15,7 +15,7 @@
         <meta property="og:url" content="{{ request.base_url }}" />
         <meta property="og:title" content="Replay: {{ listinfo['Name'] }}" />
         <meta property="og:description" content="{{ replay['duration']|gametime }} long {{ replay['type'] }} game on {{ replay.map_name() }} with {{ replay.tower_count() }} towers" />
-        <meta property="og:image" content="https://highper.ch{{ replay.map_name()|mapthumbnail }}" />
+        <meta property="og:image" itemprop="image primaryImageOfPage" content="https://highper.ch{{ replay.map_name()|mapthumbnail }}" />
         <meta name="twitter:domain" value="highper.ch" />
         <meta name="twitter:title" value="Replay: {{ listinfo['Name'] }}" />
         <meta name="twitter:description" value="{{ replay['duration']|gametime }} long {{ replay['type'] }} game on {{ replay.map_name() }} with {{ replay.tower_count() }} towers" />
