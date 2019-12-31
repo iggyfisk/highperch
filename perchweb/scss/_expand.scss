@@ -1,7 +1,6 @@
 .hp-expand,
 .hp-toggle {
   cursor: pointer;
-  transition: color 200ms linear;
   &:hover {
       color: #FFF;
   }
@@ -30,7 +29,6 @@
     max-height: 0;
     &.visible {
       max-height: 100vh;
-      transition: max-height 300ms ease-out;
     }
     &.size-ph {
       @media (#{$bp-larger-than-phablet}) {
@@ -40,7 +38,6 @@
   }
 
   &.h {
-    transition: max-width 300ms ease-out;
     max-width: 0;
     &.visible {
       max-width: 100vh;

@@ -52,7 +52,7 @@
     <div class="team">
         {% if detailed %}
         <div class="teamhead">
-            <span class="{% if winnerId is not none %}hp-expand{% endif %}">Team {{ teamId }}</span>
+            <span class="{% if winnerId is not none %}hp-expand{% endif %} control" data-group="team{{ teamId }}spoilers">Team {{ teamId }}</span>
             {% if teamId == replay['winningTeamId'] %}
             <b class="result hp-hidden h">Winner{% if not replay['winningTeamConfirmed'] %}?{% else %}!{% endif %}</b>
             {% elif winnerId is not none %}
@@ -93,7 +93,8 @@
                             <span class="gamecount"><sup>({{ game_count[player['name']] }})</sup></span>
                         {% endif %}
                     {% endif %}
-                {% endif %}:
+                {% endif %}
+                <span class="hp-controls hidden" data-group="team{{ teamId }}spoilers">&nbsp;(<b>{{ player['currentTimePlayed']|gametime }}</b>)&nbsp;</span>:
                 <div class="summary">
                     {% set chat_actions = replay.get_chat_actions()[player['id']] %}
                     {% if chat_actions > 0 %}

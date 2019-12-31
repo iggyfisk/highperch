@@ -1562,8 +1562,7 @@ form.adminlogin {
         margin-right: 8px; } }
 .hp-expand,
 .hp-toggle {
-  cursor: pointer;
-  transition: color 200ms linear; }
+  cursor: pointer; }
   .hp-expand:hover,
   .hp-toggle:hover {
     color: #FFF; }
@@ -1583,13 +1582,11 @@ form.adminlogin {
   .hp-hidden.v {
     max-height: 0; }
     .hp-hidden.v.visible {
-      max-height: 100vh;
-      transition: max-height 300ms ease-out; }
+      max-height: 100vh; }
     @media (min-width: 550px) {
       .hp-hidden.v.size-ph {
         max-height: 100vh; } }
   .hp-hidden.h {
-    transition: max-width 300ms ease-out;
     max-width: 0; }
     .hp-hidden.h.visible {
       max-width: 100vh; }
