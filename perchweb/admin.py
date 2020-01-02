@@ -2,9 +2,10 @@
 
 from flask import Blueprint, url_for, request, redirect, flash, send_from_directory
 from werkzeug.utils import secure_filename
+from collections import defaultdict
 from auth import admin_only, logout as auth_logout
 from handler import admin_page
-from replaydb import save_chatlog, delete_replay as dbdelete_replay, edit_replay as dbedit_replay
+from replaydb import get_all_replays, get_all_uploader_ips, save_chatlog, delete_replay as dbdelete_replay, edit_replay as dbedit_replay
 from peep import save_pic
 
 routes = Blueprint('admin', __name__)
@@ -83,3 +84,17 @@ def analytics_report():
     """View goaccess report output"""
 
     return send_from_directory('resource', 'analytics.html')
+
+
+@routes.route('/admin')
+@admin_only
+def console():
+    """Control panel for bans, reparse, etc"""
+    replays = get_all_replays()
+    savers = defaultdict(int)
+    for replay in replays:
+        saver_id = replay['saverPlayerId']
+        savers[replay.player_names[saver_id]] += 1
+    uploader_ips = get_all_uploader_ips()
+    savers = sorted(savers.items(), key=lambda i: i[1], reverse=True)
+    return admin_page('admin.html', 'Admin console', nav='admin', replays=replays, uploader_ips=uploader_ips, savers=savers)

@@ -41,6 +41,9 @@
                 <ul>
                     {% if is_admin %}
                     <li class="admin">
+                        <a href="{{ url_for('admin.console') }}"><img src="/static/images/control-20x20.png" title="You're the boss"></a>
+                    </li>
+                    <li class="admin">
                         <a href="{{ url_for('admin.analytics_report') }}"><img src="/static/images/reveal-20x20.png" title="Spying"></a>
                     </li>
                     <li class="admin div">
@@ -83,7 +86,7 @@
         {% if chatlog %}
         <div class="chatlog">{{ chatlog['text'] }}</div>
         {% endif %}
-        <p>Copyright {% if not is_admin %}<a href="/admin" class="logout">{% endif %}&copy; {% if not is_admin %}</a>{% endif %} {{ year }} <a href="mailto:admin@highper.ch">Clan Towa</a></p>
+        <p>Copyright {% if not is_admin %}<a href="/login" class="logout">{% endif %}&copy; {% if not is_admin %}</a>{% endif %} {{ year }} <a href="mailto:admin@highper.ch">Clan Towa</a></p>
     </footer>
     <script src="/static/script/perch.js?h={{ config['STATIC_HASH'] }}"></script>
     {% block scripts %}{% endblock %}

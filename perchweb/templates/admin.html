@@ -1,17 +1,34 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<div class="row">
-    <div class="col-lg-9">
-        <div class="content">
-            <h2>Are you worthy of ascension?</h2>
-            <div class="cont text-center">
-                <form class="adminlogin" action="/login" method="POST" enctype="application/x-www-form-urlencoded">
-                    <div class="inputfields">
-                        <input type="password" name="token" maxlength="64" placeholder="admin token" required />
-                    </div>
-                     <input type="Submit" class="action" value="login" />        
-                 </form>
+<div class="console">
+    <div class="box">
+        <h2>Controls</h2>
+        <div class="inner">
+            You currently have no control over this situation
+        </div>
+    </div>
+    <span class="break"></span>
+    <div class="box">
+        <h2>Readout</h2>
+        <div class="inner">
+            <div class="statblock">{{ replays|length }} replays</div>
+            <div class="statblock">
+                <h3>Replay uploaders:</h3>
+                <div class="stats">
+                    <table>
+                    {% for ip, count in uploader_ips %}<tr><td>{{ ip }}</td><td>{{ ip|embed_country|safe }}</td> <td><b>{{ count }}</b></td>{% endfor %}
+                    </table>
+                </div>
+            </div>
+            <div class="statblock">
+                <h3>Replay savers:</h3>
+                <div class="stats">
+                    <table>
+                        {% for saver, count in savers %}<tr><td><a href="{{ url_for('views.view_player', battletag=saver) }}">
+                            {{ saver }}</a></td><td><b>{{ count }}</b></td>{% endfor %}
+                    </table>
+                </div>
             </div>
         </div>
     </div>

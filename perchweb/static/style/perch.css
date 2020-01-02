@@ -4316,3 +4316,47 @@ form.adminlogin {
   content: '\f235'; }
 
 /* '' */
+.console {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch; }
+  @media (min-width: 750px) {
+    .console {
+      flex-direction: row; } }
+  .console h2 {
+    display: flex; }
+  .console h3 {
+    font-size: 16px;
+    margin-bottom: 0;
+    padding: 8px;
+    letter-spacing: 0rem; }
+  .console .box {
+    flex: 1; }
+    .console .box:last-child {
+      margin-bottom: 16px; }
+    @media (min-width: 750px) {
+      .console .box {
+        margin-bottom: 16px; } }
+  .console .inner {
+    background-color: rgba(10, 5, 5, 0.75);
+    padding: 8px; }
+  .console .break {
+    padding: 50px; }
+  .console .statblock .stats {
+    font-size: 10px;
+    background-color: rgba(255, 255, 255, 0.05);
+    width: fit-content;
+    width: -moz-fit-content;
+    margin-top: 5px;
+    margin-left: 20px;
+    padding: 0px 10px 0px 10px; }
+    .console .statblock .stats table {
+      border-collapse: collapse;
+      margin-bottom: 0; }
+    .console .statblock .stats tr {
+      margin: 0px;
+      line-height: 10px; }
+    .console .statblock .stats td {
+      border: none;
+      text-align: right;
+      padding: 5px; }

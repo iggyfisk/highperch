@@ -138,16 +138,16 @@ def peep(pic_id):
                          perma=url_for('views.peep', pic_id=pic['id']))
 
 
-@routes.route('/admin')
-def admin():
+@routes.route('/login', methods=['GET'])
+def login_page():
     """ Admin login page, the only one admins can never see! """
     if check_if_admin(request.cookies):
         return redirect(url_for('views.index'))
-    return standard_page('admin.html', 'Admin login', nav='admin')
+    return standard_page('login.html', 'Log in', nav='admin')
 
 
 @routes.route('/login', methods=['POST'])
-def login():
+def login_post():
     """ Log in and redirect back to index, now as an authenticated admin """
     response = auth_login(request.form['token'], url_for('views.index'))
     if response:
@@ -161,4 +161,4 @@ def login():
     current_app.logger.error(error_string)
 
     flash('Invalid token')
-    return redirect(url_for('views.admin'))
+    return redirect(url_for('views.login_page'))

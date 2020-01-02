@@ -8,6 +8,7 @@ import glob
 from datetime import datetime
 from hashlib import sha256
 from flask import flash, g, current_app, request
+from collections import defaultdict
 from models.replay import Replay, ReplayListInfo
 from perchlogging import log_to_slack, format_ip_addr, format_traceback
 import filepaths
@@ -371,3 +372,14 @@ def save_chatlog(replay_id, chat):
     query('''
         INSERT INTO Chatlogs (ReplayID, ChatText)
         VALUES (?,?)''', (replay_id, chat))
+
+
+def get_all_uploader_ips():
+    rows = query(f'''
+    SELECT UploaderIP
+    FROM Replays
+    ''')
+    uploader_ips = defaultdict(int)
+    for row in rows:
+        uploader_ips[row[0]] += 1
+    return sorted(uploader_ips.items(), key=lambda i: i[1], reverse=True)
