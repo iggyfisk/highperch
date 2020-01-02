@@ -7,6 +7,7 @@ from lib.colors import lighten, scale
 from lib.wigcodes import race_titles, hero_names
 import geoip
 from urllib.parse import unquote
+from slugify import slugify
 
 
 def gametime(milliseconds):
@@ -127,6 +128,11 @@ def make_country_embed(ip_addr):
     return f"<img src='/static/images/flags/{country['code'].lower()}.png' title='{country['name']}' class='countryflag'>"
 
 
+def url_slug(title):
+    """ This will probably not end up living here. WIP """
+    return slugify(title, replacements=[["'", '']])
+
+
 def register(jinja_environment):
     """ Register all filters to the given jinja environment """
     jinja_environment.filters['gametime'] = gametime
@@ -142,3 +148,4 @@ def register(jinja_environment):
     jinja_environment.filters['scale'] = scale_color
     jinja_environment.filters['embed_country'] = make_country_embed
     jinja_environment.filters['thousands'] = thousands
+    jinja_environment.filters['slugify'] = url_slug

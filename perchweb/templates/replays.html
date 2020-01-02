@@ -106,8 +106,8 @@
                         {% set inclusive_actions = player.action_count() %}
                         {% set chat_percentage = 0 %}
                     {% endif %}
-                    <span class="hp-toggle" title="Chat-inclusive: {{ player['apm'] + chats_per_minute }} APM" 
-                        data-group="pm"><b>{{ player['apm'] }}</b>&nbsp;APM</span>
+                    <span class="hp-toggle" title="Chat-inclusive: {{ player.get_real_apm() + chats_per_minute }} APM"
+                        data-group="pm"><b>{{ player.get_real_apm() }}</b>&nbsp;APM</span>
                     <span class="hp-toggle hidden" title="Chat-inclusive: {{ inclusive_actions }} actions, {{ chat_percentage }}% chat" 
                         data-group="pm"><b>{{ player.action_count() }}</b>&nbsp;actions</span>
                     {% if player.tower_count() %}

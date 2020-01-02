@@ -74,7 +74,7 @@
                           "description" : "{{ replay['type'] }} game",
                           "performer" : [{% for player in replay['players'] %}{
                             "@type" : "Person",
-                            "name" : "{{ player['name'] }} [{{ player['race']|racetitle }}] : {{ player['apm'] }} APM, {{ player.tower_count() }} tower{% if player.tower_count() != 1%}s{% endif %}, {{ player['heroCount'] }} hero{% if player['heroCount'] != 1 %}es{% endif %}, {{ player.total_items_count() }} item{% if player.total_items_count() != 1 %}s{% endif %}"
+                            "name" : "{{ player['name'] }} [{{ player['race']|racetitle }}] : {{ player.get_real_apm() }} APM, {{ player.tower_count() }} tower{% if player.tower_count() != 1%}s{% endif %}, {{ player['heroCount'] }} hero{% if player['heroCount'] != 1 %}es{% endif %}, {{ player.total_items_count() }} item{% if player.total_items_count() != 1 %}s{% endif %}"
                           }{% if not loop.last %},{% endif %}{% endfor %}]
                         }
                     </script>

@@ -192,7 +192,7 @@ def save_game_played(replay_data, replay_id):
     for player in replay_data.players:
         name = player['name']
         race = (player['raceDetected'] or player['race'])
-        apm = player['apm']
+        apm = player.get_real_apm()
         win = player['teamid'] == replay_data['winningTeamId'] if replay_data['winningTeamConfirmed'] else None
         tower_count = player.tower_count()
         chat_count = sum(

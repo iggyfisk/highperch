@@ -50,6 +50,7 @@ class Player(dict):
                        for t in self['tradeEvents']
                        if t['playerId'] == args['id'] or t['recipientPlayerId'] == args['id']]
         del self['tradeEvents']
+        self.real_apm = None
 
     def official(self):
         """ Is this player an Officially Sanctioned player True/False """
@@ -98,8 +99,22 @@ class Player(dict):
     def action_count(self):
         return sum(self.get_action_types().values())
 
+    def get_real_apm(self):
+        """ Use currentTimePlayed to calculate total APM instead of replay length.
+            We can go back to using the parser output if w3gjs fixes this upstream
+            Todo: update the output of replaydb.save_game_played() so that player
+            APMs in database reflect this change """
+        if self.real_apm is not None:
+            return self.real_apm
+        if self.action_count() == 0:
+            self.real_apm = 0
+        else:
+            self.real_apm = round(
+                (self.action_count() / (self['currentTimePlayed'] / 1000 / 60)))
+        return self.real_apm
+
     def get_arbitrary_score(self, ally_names):
-        score = self['apm']
+        score = self.get_real_apm()
         score -= 40 if self['raceDetected'] == 'U' else 0
 
         heroes = self.real_heroes()
