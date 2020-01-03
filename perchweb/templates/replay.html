@@ -68,7 +68,7 @@
                             "@type" : "Place",
                             "name" : "{{ replay.map_name() }}"
                           },
-                          "maximumAttendeeCapacity": {{ replay['players']|length }}
+                          "maximumAttendeeCapacity": {{ replay['players']|length }},
                           "duration": "{{ replay['duration']|gametime_for_computers }}",
                           "image" : "https://highper.ch{{ replay.map_name()|mapthumbnail }}",
                           "description" : "{{ replay['type'] }} game",
