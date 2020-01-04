@@ -533,10 +533,11 @@ tier_upgrades = {
 map_info = None
 
 
-def get_map_size(map_name):
+def get_map_size(map_name, fp=None):
     global map_info
     if map_info is None:
-        with open(get_path('resource/mapinfo.json'), 'r') as f:
+        gp = fp.get_path if fp else get_path
+        with open(gp('resource/mapinfo.json'), 'r') as f:
             map_info = json.load(f)
 
     map_name = map_name.lower()
@@ -547,10 +548,11 @@ def get_map_size(map_name):
     return [x[0], x[1], y[0], y[1]]
 
 
-def get_starting_locations(map_name):
-    global map_info
+def get_starting_locations(map_name, fp=None):
+    global map_info    
     if map_info is None:
-        with open(get_path('resource/mapinfo.json'), 'r') as f:
+        gp = fp.get_path if fp else get_path
+        with open(gp('resource/mapinfo.json'), 'r') as f:
             map_info = json.load(f)
 
     map_name = map_name.lower()

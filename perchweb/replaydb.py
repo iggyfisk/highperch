@@ -7,8 +7,8 @@ import sqlite3
 import glob
 from datetime import datetime
 from hashlib import sha256
-from flask import flash, g, current_app, request
 from collections import defaultdict
+from flask import flash, g, current_app, request
 from models.replay import Replay, ReplayListInfo
 from perchlogging import log_to_slack, format_ip_addr, format_traceback
 import filepaths
@@ -181,13 +181,13 @@ def get_game_count(replay_id):
     return {r[0]: r[1] for r in result}
 
 
-def create_players(battletags):
+def create_players(battletags, query_fnc=query):
     """ Make sure all players in a replay have a player row """
     for tag in battletags:
-        query('INSERT OR IGNORE INTO Players(BattleTag) VALUES(?)', (tag,))
+        query_fnc('INSERT OR IGNORE INTO Players(BattleTag) VALUES(?)', (tag,))
 
 
-def save_game_played(replay_data, replay_id):
+def save_game_played(replay_data, replay_id, update=False, query_fnc=query):
     """ Record player participation in a replay """
     for player in replay_data.players:
         name = player['name']
@@ -202,7 +202,23 @@ def save_game_played(replay_data, replay_id):
         net_lumber = net_feed[1]
         first_share = player.first_share()
 
-        query('''
+        if update:
+            query_fnc('''
+                UPDATE GamesPlayed
+                SET
+                    Race = ?,
+                    APM = ?,
+                    Win = ?,
+                    TowerCount = ?,
+                    ChatMessageCount = ?,
+                    NetGoldFed = ?,
+                    NetLumberFed = ?,
+                    TimeToShare = ?
+                WHERE PlayerTag = ? AND ReplayID = ?''',
+                (race, apm, win, tower_count, chat_count, net_gold, net_lumber, first_share, name, replay_id))
+            continue
+        
+        query_fnc('''
             INSERT INTO GamesPlayed (PlayerTag, ReplayID, Race, APM, Win, TowerCount, ChatMessageCount, NetGoldFed, NetLumberFed, TimeToShare)
             VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''', (name, replay_id, race, apm, win, tower_count, chat_count, net_gold, net_lumber, first_share))
 
@@ -210,7 +226,7 @@ def save_game_played(replay_data, replay_id):
         if race != 'R':
             col = {'H': 'HUGames', 'O': 'ORGames',
                    'N': 'NEGames', 'U': 'UDGames'}[race]
-            query(
+            query_fnc(
                 f'UPDATE Players SET {col} = {col} + 1 WHERE BattleTag = ?', (name,))
 
 
@@ -310,6 +326,74 @@ def save_replay(replay, replay_name, uploader_ip):
         if os.path.isfile(temp_data_path):
             os.remove(temp_data_path)
 
+
+def reparse_replay(replay_id, query_fnc, fp):
+    """ Re-parse an existing replay, save the new data and update DB """
+    replay_path = fp.get_replay(f"{replay_id}.w3g")
+    temp_data_path = fp.get_temp(f'{replay_id}.json')
+
+    parse_result = subprocess.run(
+        ["node", fp.get_path("../parsereplay.js"), replay_path, temp_data_path], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    if parse_result.returncode > 0:
+        raise ReplayParsingException(parse_result.stderr.decode("utf-8"))
+
+    # From here on out we need to clean up if anything goes wrong
+    try:
+        with open(temp_data_path, encoding='utf8') as replay_json:
+            replay_data = Replay(**json.load(replay_json))
+
+        bnet_id = replay_data['id']
+        gametype = replay_data['type']
+        version = replay_data['version']
+        length = replay_data['duration']
+        map_name = replay_data.map_name()
+
+        players = [{'name': p['name'], 'teamid': p['teamid'], 'race': (p['raceDetected'] or p['race'])}
+                   for p in replay_data.players]
+        create_players([p['name'] for p in players], query_fnc)
+
+        official = 1 if replay_data.official() else 0
+        drawmap = replay_data.get_drawmap(force=True, fp=fp)
+        towers = drawmap['towers']
+        start_locations = drawmap['start_locations']
+        # concatenate one big string that can be searched through later
+        chat = '|'.join([c['message'] for c in replay_data['chat']])
+        tower_count = replay_data.tower_count()
+        chat_message_count = len(replay_data['chat'])
+        uploader_battletag = [
+            p['name'] for p in replay_data.players if p['id'] == replay_data['saverPlayerId']][0]
+
+        query_fnc('''
+            UPDATE Replays
+            SET 
+                BNETGameID = ?,
+                Official = ?,
+                GameType = ?,
+                Version = ?,
+                Length = ?,
+                Map = ?,
+                TowerCount = ?,
+                ChatMessageCount = ?,
+                Players = ?,
+                Towers = ?,
+                StartLocations = ?,
+                Chat = ?,
+                UploaderBattleTag = ?
+            WHERE ID = ?
+            ''', (bnet_id, official, gametype, version, length, map_name,
+                  tower_count, chat_message_count, json.dumps(players),
+                  json.dumps(towers), json.dumps(start_locations),
+                  chat, uploader_battletag, replay_id))
+
+        save_game_played(replay_data, replay_id, update=True, query_fnc=query_fnc)
+
+        data_path = fp.get_replay_data(f"{replay_id}.json")
+        if os.path.isfile(data_path):
+            os.remove(data_path)
+        os.rename(temp_data_path, data_path)
+    finally:
+        if os.path.isfile(temp_data_path):
+            os.remove(temp_data_path)
 
 def edit_replay(replay_id, name=None):
     """ Edit replay db entry """

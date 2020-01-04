@@ -207,12 +207,12 @@ class Replay(dict):
         """ Distance between 2 2d points, wow """
         return sqrt(((x0 - x1)**2) + ((y0 - y1)**2))
 
-    def get_drawmap(self, force=False, timestamp=False, color_transform=lambda c: c):
+    def get_drawmap(self, force=False, timestamp=False, color_transform=lambda c: c, fp=None):
         """ Map size coordinates and a list of towers per color and coordinate,
             for drawing on the minimap """
 
-        map_size = get_map_size(self.map_name())
-        start_locations = get_starting_locations(self.map_name())
+        map_size = get_map_size(self.map_name(), fp=fp)
+        start_locations = get_starting_locations(self.map_name(), fp=fp)
         towers = None
         player_start_locations = {}
 
