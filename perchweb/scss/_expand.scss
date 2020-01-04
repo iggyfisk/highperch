@@ -11,14 +11,6 @@
   }
 }
 
-.hp-controls {
-  &.size-ph {
-    @media (#{$bp-larger-than-phablet}) {
-      display: none;
-    }
-  }
-}
-
 .no-hover {
   color: $primary-color !important;
 }
@@ -51,10 +43,6 @@
 }
 
 .hp-toggle.hidden {
-  display: none;
-}
-
-.hp-controls.hidden {
   display: none;
 }
 

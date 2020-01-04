@@ -89,19 +89,10 @@
 		document.querySelectorAll('.hp-toggle').forEach(el => {
 			const { group } = el.dataset;
 			el.addEventListener('click', () => {
-				document.querySelectorAll(`.hp-toggle[data-group="${group}"]`).forEach(e => e.classList.toggle('hidden'));
-			});
-		});
-	});
-})();
-
-/* Replay detail controls */
-(() => {
-	document.addEventListener("DOMContentLoaded", () => {
-		document.querySelectorAll('.control').forEach(el => {
-			const { group } = el.dataset;
-			el.addEventListener('click', () => {
-				document.querySelectorAll(`.hp-controls[data-group="${group}"]`).forEach(e => e.classList.toggle('hidden'));
+				document.querySelectorAll(`.hp-toggle[data-group="${group}"]`).forEach(e => {
+					if (e.classList.contains('hp-control')) return;
+					e.classList.toggle('hidden');
+				});
 			});
 		});
 	});
