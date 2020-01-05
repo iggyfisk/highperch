@@ -54,35 +54,6 @@
 	});
 })();
 
-
-/* Towers/TPM visibility toggle */
-(() => {
-	document.addEventListener("DOMContentLoaded", () => {
-		const towerSpans = document.querySelectorAll('.towerdata');
-		const tpmSpans = document.querySelectorAll('.tpmdata');
-		towerSpans.forEach(item => {
-			item.addEventListener('click', event => {
-				towerSpans.forEach(ts => {
-					ts.style.display = 'none';
-				})
-				tpmSpans.forEach(ts => {
-					ts.style.display = 'inline';
-				})
-			});
-		});
-		tpmSpans.forEach(item => {
-			item.addEventListener('click', event => {
-				tpmSpans.forEach(ts => {
-					ts.style.display = 'none';
-				})
-				towerSpans.forEach(ts => {
-					ts.style.display = 'inline';
-				})
-			});
-		});
-	});
-})();
-
 /* hp-toggle */
 (() => {
 	document.addEventListener("DOMContentLoaded", () => {
@@ -102,19 +73,14 @@
 /* Inaccuracy warning toggle */
 (() => {
 	document.addEventListener("DOMContentLoaded", () => {
-		var inaccurateStatsOpen = 0;
-		document.querySelectorAll('.inaccurate-enable').forEach(el => {
+		let inaccurateStatsOpen = 0;
+		document.querySelectorAll('.inaccurate').forEach(el => {
+			const open = parseInt(el.dataset.inaccurate);
 			el.addEventListener('click', () => {
-				inaccurateStatsOpen++;
-				document.querySelectorAll('.statwarning').forEach(e => e.style.display = 'block');
-			});
-		});
-		document.querySelectorAll('.inaccurate-disable').forEach(el => {
-			el.addEventListener('click', () => {
-				inaccurateStatsOpen--;
-				if (inaccurateStatsOpen == 0) {
-					document.querySelectorAll('.statwarning').forEach(e => e.style.display = 'none');
-				}
+				inaccurateStatsOpen += open;
+				document.querySelectorAll('.statwarning').forEach(e =>
+					inaccurateStatsOpen ? e.classList.remove('hidden') : e.classList.add('hidden')
+				);
 			});
 		});
 	});
