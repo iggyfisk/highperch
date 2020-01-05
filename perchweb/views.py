@@ -12,6 +12,7 @@ from peep import get_pic
 from auth import login as auth_login, check_if_admin
 from perchlogging import log_to_slack, format_ip_addr
 from templatefilters import lighten_color
+from lib.wigcodes import get_goldmines, get_map_size
 
 routes = Blueprint('views', __name__)
 
@@ -83,6 +84,40 @@ def view_player(battletag):
         player['ORGames'] + player['NEGames'] + player['UDGames']
 
     return standard_page('player.html', f'{battletag} details', player=player, recent_replays=recent_replays)
+
+
+@routes.route('/map/<string:map_name>')
+def view_map(map_name):
+    """Map details"""
+    map_stats = replaydb.get_map(map_name)
+
+    if not map_stats:
+        current_app.logger.warning(f'404 on map "{map_name}"')
+        abort(404)
+
+    recent_replays = replaydb.list_map_replays(map_name)
+    # Todo: standardize drawmap
+    goldmines = get_goldmines(map_name)
+    map_size = get_map_size(map_name)
+
+    # A lot of these calculations are really just reversing the SQL but it was faster to type here
+    games = sum(gt['Games'] for gt in map_stats)
+    map_info = {
+        'name': map_name,
+        'gold': sum(m['g'] for m in goldmines) if goldmines else None,
+        'drawmap': {
+            'map_size': map_size,
+            'goldmines': [[m['x'], m['y']] for m in goldmines] if goldmines else None
+        } if map_size else None,
+        'games': games,
+        'avg_length': sum(gt['AvgLength'] * gt['Games'] for gt in map_stats) // games,
+        'avg_towers': sum(gt['AvgTowers'] * gt['Games'] for gt in map_stats) // games,
+        'max_length': max(gt['AvgLength'] for gt in map_stats),
+        'max_towers': max(gt['AvgTowers'] for gt in map_stats),
+        'stats': map_stats
+    }
+
+    return standard_page('map.html', f'{map_name} details', map=map_info, recent_replays=recent_replays)
 
 
 @routes.route('/upload', methods=['POST'])

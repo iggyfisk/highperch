@@ -1,14 +1,10 @@
 {% extends "layout.html" %}
 {% import "replays.html" as replaymacros %}
 {% import "races.html" as racemacros %}
+{% import "charts.html" as chartmacros %}
 
 {% macro racebar(games, totalGames, race) %}
-<div class="chartrow">
-    <div class="legend">{{ racemacros.icon(race) }}</div>
-    <div class="barcontainer">
-        <div class="bar {{ race }}" style="width:{{ (games*100)//totalGames }}%;"><span title="Games">{{ games }}</label></div>
-    </div>
-</div>
+{{ chartmacros.row(race, racemacros.icon(race), games, 'Games', (games * 100) // totalGames) }}
 {% endmacro %}
 
 
@@ -24,7 +20,7 @@
             {% if player['LumberSent'] != 0 %}<div><b>{{ player['LumberSent']|thousands }}</b> wood fed</div>{% endif %}
             <div><b>{{ player['ChatMessageCount'] }}</b> chirps</div>
         </div>
-        <div class="racechart">
+        <div class="chart race">
             {% if player['HUGames'] %}
             {{ racebar(player['HUGames'], player['total_games'], 'H') }}
             {% endif %}

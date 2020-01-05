@@ -1,0 +1,8 @@
+{% macro row(class, legend, value, valueTitle, width) %}
+<div class="chartrow">
+    <div class="legend">{{ legend }}</div>
+    <div class="barcontainer">
+        <div class="bar {{ class }}" style="width:{{ width }}%;"><span title="{{ valueTitle }}">{{ value }}</label></div>
+    </div>
+</div>
+{% endmacro %}

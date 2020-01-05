@@ -88,10 +88,11 @@
 	document.addEventListener("DOMContentLoaded", () => {
 		document.querySelectorAll('.hp-toggle').forEach(el => {
 			const { group } = el.dataset;
+			const toggleClass = el.dataset.class || 'hidden';
 			el.addEventListener('click', () => {
 				document.querySelectorAll(`.hp-toggle[data-group="${group}"]`).forEach(e => {
 					if (e.classList.contains('hp-control')) return;
-					e.classList.toggle('hidden');
+					e.classList.toggle(toggleClass);
 				});
 			});
 		});
@@ -149,9 +150,9 @@
 
 	document.addEventListener("DOMContentLoaded", () => {
 		document.body.querySelectorAll('.drawmap').forEach(cnv => {
-			const playerTowers = JSON.parse(cnv.dataset.towers);
-			const playerLocations = JSON.parse(cnv.dataset.startlocations);
 			const mapSize = JSON.parse(cnv.dataset.mapsize);
+			const playerTowers = JSON.parse(cnv.dataset.towers || '{}');
+			const playerLocations = JSON.parse(cnv.dataset.startlocations || '{}');
 			const goldMines = JSON.parse(cnv.dataset.mines || '[]');
 			// Tower and start location size
 			const ps = cnv.dataset.paintsize;
@@ -224,12 +225,12 @@
 					ctx.fillStyle = '#000C';
 					ctx.fillRect((mapImageSize / 2) - 30, (mapImageSize / 2) - 30, 60, 60);
 					ctx.drawImage(playImg, (mapImageSize / 2) - 25, (mapImageSize / 2) - 25, 50, 50);
-	
+
 					// Combine all players' towers and put them in order
 					const orderedTowers = Object.entries(playerTowers)
 						.map(([c, towers]) => towers.map(t => [...t, c]))
 						.flat(1).sort((a, b) => (a[2] - b[2]));
-	
+
 					cnv.addEventListener('click', () => animate(orderedTowers));
 				} else {
 					// Simple minimap

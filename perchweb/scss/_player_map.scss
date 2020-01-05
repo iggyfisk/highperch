@@ -1,0 +1,94 @@
+.player,
+.map {    
+    &.details {
+        margin-bottom: $padding * 2;
+    }
+    .stats {
+        display: flex;
+        flex-direction: column;
+        @media (#{$bp-larger-than-tablet}) {
+            flex-direction: row;
+        }
+        div {
+            flex: 1;
+        }
+    }
+    .chart {
+        display: flex;
+        flex-direction: column;
+        margin-right: $margin;
+        .chartrow {
+            display: flex;
+            flex: 1;
+            margin: 4px 0;
+            .legend {
+                display: flex;
+                align-self: center;
+            }
+            .barcontainer {
+                flex: 1;
+                .bar {
+                    text-align: center;
+                    border: 1px solid #000;
+                    border-radius: $global-radius;
+                    span {
+                        cursor: default;
+                        font-weight: bold;
+                        color: #FA6;
+                    }
+                }
+            }
+        }
+        &.race .bar {
+            &.H {
+                background: #0042ff;
+            }
+            &.O {
+                background: #006400;
+            }
+            &.N {
+                background: #540081;
+            }
+            &.U {
+                background: #959697;
+            }
+        }
+        &.map {
+            .legend {
+                padding-right: $padding;
+            }
+            .bar {
+                // Fallback for crazy FFAs etc
+                background: #5adbff;
+                // Todo: representative colors, add more game types
+                &.t1on1 {
+                    background: #094074;
+                }
+                &.t2on2 {
+                    background: #6b0f1a;
+                }
+                &.t3on3 {
+                    background: #414066;
+                }
+                &.t4on4 {
+                    background: #4d9078;
+                }
+            }
+        }
+    }
+    .bigmap-container {
+        display: flex;
+        justify-content: center;
+        margin-top: $margin;
+        margin-bottom: $margin;
+    }
+    .bigmap {
+        line-height: 0;
+        min-height: 200px;
+        min-width: 200px;
+        &.lesshuge {
+            max-height: 550px;
+            max-width: 550px;
+        }
+    }
+}

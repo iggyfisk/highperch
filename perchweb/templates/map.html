@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+{% import "replays.html" as replaymacros %}
+{% import "charts.html" as chartmacros %}
+
+{% macro racebar(games, totalGames, race) %}
+<div class="chartrow">
+    <div class="legend">{{ racemacros.icon(race) }}</div>
+    <div class="barcontainer">
+        <div class="bar {{ race }}" style="width:{{ (games*100)//totalGames }}%;"><span
+                title="Games">{{ games }}</label></div>
+    </div>
+</div>
+{% endmacro %}
+
+
+{% block content %}
+<div class="map details">
+    <h2>{{ map['name'] }} map information</h2>
+    <div class="content">
+        <div class="stats">
+            <div><b>{{ map['games'] }}</b> games played</div>
+            {% if map['gold'] is not none %}<div><b>{{ map['gold']|thousands }}</b> available gold</div>{% endif %}
+            <div><b>{{ map['avg_length']|gametime }}</b> average length</div>
+            <div><b>{{ map['avg_towers'] }}</b> average towers built</div>
+        </div>
+        <div class="bigmap-container">
+            <div class="bigmap lesshuge hp-toggle" data-class="lesshuge" data-group="bigmap">
+                <img src="{{ map['name']|bigmapurl }}" />
+                {% if map['drawmap'] %}
+                <canvas class="drawmap" data-mapsize='{{ map["drawmap"]["map_size"]|tojson|safe }}'
+                    data-mines='{{ map["drawmap"]["goldmines"]|tojson|safe }}' data-paintsize='6'></canvas>
+                {% endif %}
+            </div>
+        </div>
+        <div class="chart map">
+            <b>Games played</b>
+            {% for game_type in map['stats'] %}
+            {{ chartmacros.row('t' + game_type['GameType'], game_type['GameType'], game_type['Games'], 'Games', (game_type['Games'] * 100) // map['games']) }}
+            {% endfor %}
+            <b>Average length</b>
+            {% for game_type in map['stats'] %}
+            {{ chartmacros.row('t' + game_type['GameType'], game_type['GameType'], game_type['AvgLength']|gametime, 'Game length', (game_type['AvgLength'] * 100) // map['max_length']) }}
+            {% endfor %}
+            <b>Average tower count</b>
+            {% for game_type in map['stats'] %}
+            {{ chartmacros.row('t' + game_type['GameType'], game_type['GameType'], game_type['AvgTowers'], 'Towers built', (game_type['AvgTowers'] * 100) // map['max_towers']) }}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<div class="replays">
+    <h2>Latest replays</h2>
+    {% for replay in recent_replays %}
+    {{ replaymacros.card(replay, is_admin, lighten_color) }}
+    {% endfor %}
+</div>
+{% endblock %}

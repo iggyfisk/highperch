@@ -104,6 +104,21 @@ def list_player_replays(battletag, max_results=20):
     return [ReplayListInfo(**r) for r in rows]
 
 
+def list_map_replays(map_name, max_results=20):
+    """ Search for replays on a specific map """
+    # Todo: combine key elements with list_replays
+    rows = query('''
+    SELECT ID, Name, TimeStamp, Official, HighQuality, GameType, Version, Length, Map, TowerCount, ChatMessageCount,
+        Towers, StartLocations, Players, Views, UploaderIP
+    FROM Replays
+    WHERE Map = ?
+    ORDER BY ID DESC
+    LIMIT ?
+    ''', (map_name, max_results))
+
+    return [ReplayListInfo(**r) for r in rows]
+
+
 def get_replay_listinfo(replay_id, inc_views=False, inc_downloads=False):
     """ Load the highper.ch info for a single replay from DB (name, views etc) """
     if inc_views:
@@ -171,6 +186,17 @@ def get_player(battletag):
     return dict(**player_row, **aggregate_row)
 
 
+def get_map(map_name):
+    """ Load some aggregated info for a specific map """
+
+    return query('''
+        SELECT GameType, Count(*) AS Games, CAST(AVG(Length) AS INT) AS AvgLength, CAST(AVG(TowerCount) AS INT) AS AvgTowers
+        FROM Replays
+        WHERE Map = ?
+        GROUP BY GameType
+        ''', (map_name,))
+
+
 def get_game_count(replay_id):
     """ Get total games played for all players in a replay """
     result = query('''
@@ -215,9 +241,9 @@ def save_game_played(replay_data, replay_id, update=False, query_fnc=query):
                     NetLumberFed = ?,
                     TimeToShare = ?
                 WHERE PlayerTag = ? AND ReplayID = ?''',
-                (race, apm, win, tower_count, chat_count, net_gold, net_lumber, first_share, name, replay_id))
+                      (race, apm, win, tower_count, chat_count, net_gold, net_lumber, first_share, name, replay_id))
             continue
-        
+
         query_fnc('''
             INSERT INTO GamesPlayed (PlayerTag, ReplayID, Race, APM, Win, TowerCount, ChatMessageCount, NetGoldFed, NetLumberFed, TimeToShare)
             VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''', (name, replay_id, race, apm, win, tower_count, chat_count, net_gold, net_lumber, first_share))
@@ -385,7 +411,8 @@ def reparse_replay(replay_id, query_fnc, fp):
                   json.dumps(towers), json.dumps(start_locations),
                   chat, uploader_battletag, replay_id))
 
-        save_game_played(replay_data, replay_id, update=True, query_fnc=query_fnc)
+        save_game_played(replay_data, replay_id,
+                         update=True, query_fnc=query_fnc)
 
         data_path = fp.get_replay_data(f"{replay_id}.json")
         if os.path.isfile(data_path):
@@ -394,6 +421,7 @@ def reparse_replay(replay_id, query_fnc, fp):
     finally:
         if os.path.isfile(temp_data_path):
             os.remove(temp_data_path)
+
 
 def edit_replay(replay_id, name=None):
     """ Edit replay db entry """

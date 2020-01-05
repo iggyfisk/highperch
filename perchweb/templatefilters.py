@@ -88,7 +88,8 @@ def player_display_name(player_name):
 
 def thousands(amount):
     """ Big number go down """
-    return f'{round(amount / 1000, 1)}k'
+    amount = round(amount / 1000, 1)
+    return f'{amount if amount % 1 else int(amount)}k'
 
 
 lightened_colors = {

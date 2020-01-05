@@ -1175,16 +1175,16 @@ footer .logout {
   cursor: inherit;
 }
 
-.minimap {
+.minimap, .bigmap {
   font-size: 9px;
   border: 1px solid black;
   position: relative;
 }
-.minimap img {
+.minimap img, .bigmap img {
   max-width: 100%;
   max-height: 100%;
 }
-.minimap .drawmap {
+.minimap .drawmap, .bigmap .drawmap {
   position: absolute;
   top: 0;
   left: 0;
@@ -1667,58 +1667,115 @@ a.playername:hover {
   color: #FFF;
 }
 
-.player.details {
+.player.details,
+.map.details {
   margin-bottom: 16px;
 }
-.player .stats {
+.player .stats,
+.map .stats {
   display: flex;
   flex-direction: column;
 }
 @media (min-width: 750px) {
-  .player .stats {
+  .player .stats,
+.map .stats {
     flex-direction: row;
   }
 }
-.player .stats div {
+.player .stats div,
+.map .stats div {
   flex: 1;
 }
-.player .racechart {
+.player .chart,
+.map .chart {
   display: flex;
   flex-direction: column;
   margin-right: 16px;
 }
-.player .racechart .chartrow {
+.player .chart .chartrow,
+.map .chart .chartrow {
   display: flex;
   flex: 1;
   margin: 4px 0;
 }
-.player .racechart .chartrow .legend {
+.player .chart .chartrow .legend,
+.map .chart .chartrow .legend {
   display: flex;
   align-self: center;
 }
-.player .racechart .chartrow .barcontainer {
+.player .chart .chartrow .barcontainer,
+.map .chart .chartrow .barcontainer {
   flex: 1;
 }
-.player .racechart .chartrow .barcontainer .bar {
+.player .chart .chartrow .barcontainer .bar,
+.map .chart .chartrow .barcontainer .bar {
   text-align: center;
   border: 1px solid #000;
   border-radius: 4px;
 }
-.player .racechart .chartrow .barcontainer .bar.H {
-  background: #0042ff;
-}
-.player .racechart .chartrow .barcontainer .bar.O {
-  background: #006400;
-}
-.player .racechart .chartrow .barcontainer .bar.N {
-  background: #540081;
-}
-.player .racechart .chartrow .barcontainer .bar.U {
-  background: #959697;
-}
-.player .racechart .chartrow .barcontainer .bar span {
+.player .chart .chartrow .barcontainer .bar span,
+.map .chart .chartrow .barcontainer .bar span {
   cursor: default;
   font-weight: bold;
+  color: #FA6;
+}
+.player .chart.race .bar.H,
+.map .chart.race .bar.H {
+  background: #0042ff;
+}
+.player .chart.race .bar.O,
+.map .chart.race .bar.O {
+  background: #006400;
+}
+.player .chart.race .bar.N,
+.map .chart.race .bar.N {
+  background: #540081;
+}
+.player .chart.race .bar.U,
+.map .chart.race .bar.U {
+  background: #959697;
+}
+.player .chart.map .legend,
+.map .chart.map .legend {
+  padding-right: 8px;
+}
+.player .chart.map .bar,
+.map .chart.map .bar {
+  background: #5adbff;
+}
+.player .chart.map .bar.t1on1,
+.map .chart.map .bar.t1on1 {
+  background: #094074;
+}
+.player .chart.map .bar.t2on2,
+.map .chart.map .bar.t2on2 {
+  background: #6b0f1a;
+}
+.player .chart.map .bar.t3on3,
+.map .chart.map .bar.t3on3 {
+  background: #414066;
+}
+.player .chart.map .bar.t4on4,
+.map .chart.map .bar.t4on4 {
+  background: #4d9078;
+}
+.player .bigmap-container,
+.map .bigmap-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+.player .bigmap,
+.map .bigmap {
+  line-height: 0;
+  min-height: 200px;
+  min-width: 200px;
+}
+.player .bigmap.lesshuge,
+.map .bigmap.lesshuge {
+  max-height: 550px;
+  max-width: 550px;
 }
 
 .fexp {
