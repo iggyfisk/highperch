@@ -144,16 +144,16 @@
 			const ctx = cnv.getContext('2d');
 
 			const drawBase = () => {
+				goldMines.forEach(m => {
+					const c = getCoords(m);
+					ctx.drawImage(goldImg, c[0] - go, c[1] - go, gs, gs);
+				});
+				
 				for (let [color, start] of Object.entries(playerLocations)) {
 					ctx.fillStyle = color;
 					const c = getCoords(start);
 					ctx.fillRect(c[0] - ps, c[1] - ps, ps * 2, ps * 2);
 				}
-
-				goldMines.forEach(m => {
-					const c = getCoords(m);
-					ctx.drawImage(goldImg, c[0] - go, c[1] - go, gs, gs);
-				});
 			}
 
 			// Animate will fire for each click so maintain queue in the outer scope
