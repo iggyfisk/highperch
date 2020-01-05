@@ -121,13 +121,44 @@
 
 /* Minimap drawings */
 (() => {
+	// Loads the image files even if they don't need to be drawn,
+	// but on the other hand it starts loading and caching immediately.
+	const goldImg = new Image();;
+	goldImg.src = '/static/images/drawmap_mine.png';
+	const playImg = new Image();
+	playImg.src = '/static/images/drawmap_play.png';
+
+	// There's a race condition where it will draw transparent images
+	// if they're not loaded before drawing
+	const imagesReady = () => {
+		if (goldImg.complete && playImg.complete) {
+			return Promise.resolve();
+		}
+
+		return new Promise(resolve => {
+			goldImg.addEventListener('error', resolve);
+			goldImg.addEventListener('load', () => {
+				if (playImg.complete) resolve();
+			});
+			playImg.addEventListener('error', resolve);
+			playImg.addEventListener('load', () => {
+				if (goldImg.complete) resolve();
+			});
+		});
+	};
+
 	document.addEventListener("DOMContentLoaded", () => {
 		document.body.querySelectorAll('.drawmap').forEach(cnv => {
 			const playerTowers = JSON.parse(cnv.dataset.towers);
 			const playerLocations = JSON.parse(cnv.dataset.startlocations);
 			const mapSize = JSON.parse(cnv.dataset.mapsize);
+			const goldMines = JSON.parse(cnv.dataset.mines || '[]');
+			// Tower and start location size
 			const ps = cnv.dataset.paintsize;
 			const po = ps / 2;
+			// Goldmine size
+			const gs = ps * 4;
+			const go = gs / 2;
 
 			const mapImageSize = cnv.clientWidth;
 			const xSize = mapSize[1] - mapSize[0];
@@ -145,14 +176,20 @@
 			cnv.height = cnv.width = mapImageSize;
 			const ctx = cnv.getContext('2d');
 
-			const drawStarts = () => {
+			const drawBase = () => {
 				for (let [color, start] of Object.entries(playerLocations)) {
 					ctx.fillStyle = color;
 					const c = getCoords(start);
 					ctx.fillRect(c[0] - ps, c[1] - ps, ps * 2, ps * 2);
 				}
+
+				goldMines.forEach(m => {
+					const c = getCoords(m);
+					ctx.drawImage(goldImg, c[0] - go, c[1] - go, gs, gs);
+				});
 			}
 
+			// Animate will fire for each click so maintain queue in the outer scope
 			let queue = false;
 			const animate = towers => {
 				if (queue) return;
@@ -160,7 +197,7 @@
 
 				cnv.classList.toggle('anim');
 				ctx.clearRect(0, 0, cnv.width, cnv.height);
-				drawStarts();
+				drawBase();
 
 				// Fixed delay between each paint, but adjusted per replay, 15 - 250ms;
 				const frameDelay = Math.round(Math.max(Math.min(10000 / towers.length, 250), 15));
@@ -179,24 +216,29 @@
 				setTimeout(drawNext.bind(this, 0), 1);
 			}
 
-			drawStarts();
-			if (cnv.classList.contains('anim')) {
-				// Will have to bite the bullet and add something to the DOM instead
-				ctx.font = "40px sans";
-				ctx.fillText("▶️", (mapImageSize / 2) - 25, (mapImageSize / 2) + 15);
-
-				// Combine all players' towers and put them in order
-				const orderedTowers = Object.entries(playerTowers)
-					.map(([c, towers]) => towers.map(t => [...t, c]))
-					.flat(1).sort((a, b) => (a[2] - b[2]));
-
-				cnv.addEventListener('click', () => animate(orderedTowers));
-			} else {
-				for (let [color, towers] of Object.entries(playerTowers)) {
-					ctx.fillStyle = color;
-					towers.map(getCoords).forEach(c => { ctx.fillRect(c[0] - po, c[1] - po, ps, ps) });
+			// Wait for images to load before drawing anything anywhere;
+			imagesReady().then(() => {
+				drawBase();
+				if (cnv.classList.contains('anim')) {
+					// Animated minimap
+					ctx.fillStyle = '#000C';
+					ctx.fillRect((mapImageSize / 2) - 30, (mapImageSize / 2) - 30, 60, 60);
+					ctx.drawImage(playImg, (mapImageSize / 2) - 25, (mapImageSize / 2) - 25, 50, 50);
+	
+					// Combine all players' towers and put them in order
+					const orderedTowers = Object.entries(playerTowers)
+						.map(([c, towers]) => towers.map(t => [...t, c]))
+						.flat(1).sort((a, b) => (a[2] - b[2]));
+	
+					cnv.addEventListener('click', () => animate(orderedTowers));
+				} else {
+					// Simple minimap
+					for (let [color, towers] of Object.entries(playerTowers)) {
+						ctx.fillStyle = color;
+						towers.map(getCoords).forEach(c => { ctx.fillRect(c[0] - po, c[1] - po, ps, ps) });
+					}
 				}
-			}
+			});
 		});
 	});
 })();

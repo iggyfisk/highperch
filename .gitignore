@@ -24,8 +24,6 @@ perchweb/logging.cfg
 
 # Content, default paths
 replaydata/*.json
-# /static/replays No longer standard, downloads through Flask route
-perchweb/static/replays/*.w3g
 replays/*.w3g
 perchweb/static/images/peep/*
 !perchweb/static/images/peep/README.md
@@ -36,3 +34,5 @@ temp/*
 wig.db
 wig.db-journal
 streams.db
+# Working copy, the web reads from resource
+mapextract/mapinfo.json

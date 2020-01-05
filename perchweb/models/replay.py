@@ -6,7 +6,7 @@ import json
 from collections import defaultdict
 from datetime import datetime
 from math import sqrt
-from lib.wigcodes import is_tower, get_map_size, get_starting_locations
+from lib.wigcodes import is_tower, get_map_size, get_starting_locations, get_goldmines
 from models.player import Player
 
 
@@ -213,6 +213,7 @@ class Replay(dict):
 
         map_size = get_map_size(self.map_name(), fp=fp)
         start_locations = get_starting_locations(self.map_name(), fp=fp)
+        goldmines = get_goldmines(self.map_name(), fp=fp)
         towers = None
         player_start_locations = {}
 
@@ -234,4 +235,8 @@ class Replay(dict):
                     color_transform(self.player_colors[p['id']])] = sorted(start_locations,
                                                                            key=lambda l: Replay.pyth_distance(l[0], x, l[1], y))[0]
 
-        return {'map_size': map_size, 'towers': towers, 'start_locations': player_start_locations}
+        if goldmines is not None:
+            goldmines = [[m['x'], m['y']] for m in goldmines]
+
+        return {'map_size': map_size, 'towers': towers, 'start_locations': player_start_locations, 'goldmines': goldmines}
+    
