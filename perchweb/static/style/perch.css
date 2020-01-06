@@ -1769,6 +1769,8 @@ a.playername:hover {
 .player .bigmap,
 .map .bigmap {
   line-height: 0;
+  height: 100%;
+  width: 100%;
   min-height: 200px;
   min-width: 200px;
 }
