@@ -127,7 +127,7 @@
 			const ps = cnv.dataset.paintsize;
 			const po = ps / 2;
 			// Goldmine size
-			const gs = ps * 4;
+			const gs = ps * 3;
 			const go = gs / 2;
 
 			// Turn camera bounds into minimap bounds
