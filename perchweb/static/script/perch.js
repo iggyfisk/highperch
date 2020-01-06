@@ -120,12 +120,19 @@
 			const playerTowers = JSON.parse(cnv.dataset.towers || '{}');
 			const playerLocations = JSON.parse(cnv.dataset.startlocations || '{}');
 			const goldMines = JSON.parse(cnv.dataset.mines || '[]');
+
 			// Tower and start location size
 			const ps = cnv.dataset.paintsize;
 			const po = ps / 2;
 			// Goldmine size
 			const gs = ps * 4;
 			const go = gs / 2;
+
+			// Turn camera bounds into minimap bounds
+			mapSize[0] -= 504;
+			mapSize[1] += 504;
+			mapSize[2] -= 248;
+			mapSize[3] += 248;
 
 			const mapImageSize = cnv.clientWidth;
 			const xSize = mapSize[1] - mapSize[0];
