@@ -565,7 +565,7 @@ def get_starting_locations(map_name, fp=None):
 
 def get_goldmines(map_name, fp=None):
     map_info = get_mapinfo(map_name, fp)
-    if not map_info:
+    if not map_info or 'mines' not in map_info:
         return None
 
     return map_info['mines']
