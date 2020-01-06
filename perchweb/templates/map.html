@@ -27,7 +27,7 @@
             <div class="bigmap lesshuge hp-toggle" data-class="lesshuge" data-group="bigmap">
                 <img src="{{ map['name']|bigmapurl }}" />
                 {% if map['drawmap'] %}
-                <canvas class="drawmap" data-mapsize='{{ map["drawmap"]["map_size"]|tojson|safe }}'
+                <canvas class="drawmap delay" data-mapsize='{{ map["drawmap"]["map_size"]|tojson|safe }}'
                     data-mines='{{ map["drawmap"]["goldmines"]|tojson|safe }}' data-paintsize='6'></canvas>
                 {% endif %}
             </div>

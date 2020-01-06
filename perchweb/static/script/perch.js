@@ -97,29 +97,30 @@
 
 	// There's a race condition where it will draw transparent images
 	// if they're not loaded before drawing
-	const imagesReady = () => {
-		if (goldImg.complete && playImg.complete) {
-			return Promise.resolve();
-		}
+	const imagesReady = (mapImg = { complete: true, addEventListener: () => {} }) => {
+		const images = [ goldImg, playImg, mapImg];
+		if (images.every(i => i.complete)) return Promise.resolve();
 
 		return new Promise(resolve => {
-			goldImg.addEventListener('error', resolve);
-			goldImg.addEventListener('load', () => {
-				if (playImg.complete) resolve();
-			});
-			playImg.addEventListener('error', resolve);
-			playImg.addEventListener('load', () => {
-				if (goldImg.complete) resolve();
+			images.forEach(img => {				
+				img.addEventListener('error', resolve);
+				img.addEventListener('load', () => {
+					if (images.every(i => i.complete)) resolve();
+				});
 			});
 		});
 	};
 
 	document.addEventListener("DOMContentLoaded", () => {
-		document.body.querySelectorAll('.drawmap').forEach(cnv => {
+		document.body.querySelectorAll('.drawmap').forEach(async cnv => {
 			const mapSize = JSON.parse(cnv.dataset.mapsize);
 			const playerTowers = JSON.parse(cnv.dataset.towers || '{}');
 			const playerLocations = JSON.parse(cnv.dataset.startlocations || '{}');
 			const goldMines = JSON.parse(cnv.dataset.mines || '[]');
+			const delayed = cnv.classList.contains('delay');
+			const mapImg = delayed
+				? cnv.parentNode.querySelector('img')
+				: undefined;
 
 			// Tower and start location size
 			const ps = cnv.dataset.paintsize;
@@ -133,6 +134,9 @@
 			mapSize[1] += 504;
 			mapSize[2] -= 248;
 			mapSize[3] += 248;
+
+			// Wait for map image to load and grow to real size when necessary
+			if (delayed) await imagesReady();
 
 			const mapImageSize = cnv.clientWidth;
 			const xSize = mapSize[1] - mapSize[0];
@@ -190,29 +194,30 @@
 				setTimeout(drawNext.bind(this, 0), 1);
 			}
 
-			// Wait for images to load before drawing anything anywhere;
-			imagesReady().then(() => {
-				drawBase();
-				if (cnv.classList.contains('anim')) {
-					// Animated minimap
-					ctx.fillStyle = '#000C';
-					ctx.fillRect((mapImageSize / 2) - 30, (mapImageSize / 2) - 30, 60, 60);
-					ctx.drawImage(playImg, (mapImageSize / 2) - 25, (mapImageSize / 2) - 25, 50, 50);
+			// Always wait for asset images to load before drawing anything anywhere,
+			// also wait for the map image to load when necessary
+			await imagesReady(mapImg);
 
-					// Combine all players' towers and put them in order
-					const orderedTowers = Object.entries(playerTowers)
-						.map(([c, towers]) => towers.map(t => [...t, c]))
-						.flat(1).sort((a, b) => (a[2] - b[2]));
+			drawBase();
+			if (cnv.classList.contains('anim')) {
+				// Animated minimap
+				ctx.fillStyle = '#000C';
+				ctx.fillRect((mapImageSize / 2) - 30, (mapImageSize / 2) - 30, 60, 60);
+				ctx.drawImage(playImg, (mapImageSize / 2) - 25, (mapImageSize / 2) - 25, 50, 50);
 
-					cnv.addEventListener('click', () => animate(orderedTowers));
-				} else {
-					// Simple minimap
-					for (let [color, towers] of Object.entries(playerTowers)) {
-						ctx.fillStyle = color;
-						towers.map(getCoords).forEach(c => { ctx.fillRect(c[0] - po, c[1] - po, ps, ps) });
-					}
+				// Combine all players' towers and put them in order
+				const orderedTowers = Object.entries(playerTowers)
+					.map(([c, towers]) => towers.map(t => [...t, c]))
+					.flat(1).sort((a, b) => (a[2] - b[2]));
+
+				cnv.addEventListener('click', () => animate(orderedTowers));
+			} else {
+				// Simple minimap
+				for (let [color, towers] of Object.entries(playerTowers)) {
+					ctx.fillStyle = color;
+					towers.map(getCoords).forEach(c => { ctx.fillRect(c[0] - po, c[1] - po, ps, ps) });
 				}
-			});
+			}
 		});
 	});
 })();
