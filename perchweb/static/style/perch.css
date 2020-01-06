@@ -1762,21 +1762,19 @@ a.playername:hover {
 .player .bigmap-container,
 .map .bigmap-container {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   margin-top: 16px;
   margin-bottom: 16px;
 }
 .player .bigmap,
 .map .bigmap {
   line-height: 0;
-  height: 100%;
-  width: 100%;
-  min-height: 200px;
+  max-width: 100%;
   min-width: 200px;
 }
 .player .bigmap.lesshuge,
 .map .bigmap.lesshuge {
-  max-height: 550px;
   max-width: 550px;
 }
 
