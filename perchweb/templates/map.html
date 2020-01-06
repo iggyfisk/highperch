@@ -41,10 +41,12 @@
             {% for game_type in map['stats'] %}
             {{ chartmacros.row('t' + game_type['GameType'], game_type['GameType'], game_type['AvgLength']|gametime, 'Game length', (game_type['AvgLength'] * 100) // map['max_length']) }}
             {% endfor %}
+            {% if map['max_towers'] %}
             <b>Average tower count</b>
             {% for game_type in map['stats'] %}
             {{ chartmacros.row('t' + game_type['GameType'], game_type['GameType'], game_type['AvgTowers'], 'Towers built', (game_type['AvgTowers'] * 100) // map['max_towers']) }}
             {% endfor %}
+            {% endif %}
         </div>
     </div>
 </div>
