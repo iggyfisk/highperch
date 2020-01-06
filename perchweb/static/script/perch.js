@@ -117,6 +117,7 @@
 			const playerTowers = JSON.parse(cnv.dataset.towers || '{}');
 			const playerLocations = JSON.parse(cnv.dataset.startlocations || '{}');
 			const goldMines = JSON.parse(cnv.dataset.mines || '[]');
+			const animated = cnv.classList.contains('anim');
 			const delayed = cnv.classList.contains('delay');
 			const mapImg = delayed
 				? cnv.parentNode.querySelector('img')
@@ -136,7 +137,7 @@
 			mapSize[3] += 248;
 
 			// Wait for map image to load and grow to real size when necessary
-			if (delayed) await imagesReady();
+			if (delayed) await imagesReady(mapImg);
 
 			const mapImageSize = cnv.clientWidth;
 			const xSize = mapSize[1] - mapSize[0];
@@ -167,13 +168,10 @@
 				}
 			}
 
-			// Animate will fire for each click so maintain queue in the outer scope
-			let queue = false;
 			const animate = towers => {
-				if (queue) return;
-				queue = true;
+				if (!cnv.classList.contains('anim')) return;
+				cnv.classList.remove('anim');
 
-				cnv.classList.toggle('anim');
 				ctx.clearRect(0, 0, cnv.width, cnv.height);
 				drawBase();
 
@@ -187,19 +185,18 @@
 					if (i < towers.length) {
 						setTimeout(drawNext.bind(this, i), frameDelay);
 					} else {
-						queue = false;
-						cnv.classList.toggle('anim');
+						cnv.classList.add('anim');
 					}
 				}
 				setTimeout(drawNext.bind(this, 0), 1);
 			}
 
-			// Always wait for asset images to load before drawing anything anywhere,
+			// Always wait for asset images to load before drawing them,
 			// also wait for the map image to load when necessary
-			await imagesReady(mapImg);
+			if (animated || delayed) await imagesReady(mapImg);
 
 			drawBase();
-			if (cnv.classList.contains('anim')) {
+			if (animated) {
 				// Animated minimap
 				ctx.fillStyle = '#000C';
 				ctx.fillRect((mapImageSize / 2) - 30, (mapImageSize / 2) - 30, 60, 60);
