@@ -1,12 +1,18 @@
 """ Administration routes and utilities """
 
-from flask import Blueprint, url_for, request, redirect, flash, send_from_directory
-from werkzeug.utils import secure_filename
 from collections import defaultdict
+from datetime import datetime
+from zipfile import ZipFile, ZIP_DEFLATED
+from os import path, remove
+from glob import glob
+from flask import Blueprint, url_for, request, redirect, flash, send_from_directory, send_file
+from werkzeug.utils import secure_filename
 from auth import admin_only, logout as auth_logout
 from handler import admin_page
-from replaydb import get_all_replays, get_all_uploader_ips, save_chatlog, delete_replay as dbdelete_replay, edit_replay as dbedit_replay
+from replaydb import get_all_replays, get_all_uploader_ips, save_chatlog, \
+    delete_replay as dbdelete_replay, edit_replay as dbedit_replay
 from peep import save_pic
+from filepaths import get_db, get_temp, get_replay_data
 
 routes = Blueprint('admin', __name__)
 
@@ -98,3 +104,29 @@ def console():
     uploader_ips = get_all_uploader_ips()
     savers = sorted(savers.items(), key=lambda i: i[1], reverse=True)
     return admin_page('admin.html', 'Admin console', nav='admin', replays=replays, uploader_ips=uploader_ips, savers=savers)
+
+
+@routes.route('/admin/wig.db')
+@admin_only
+def download_replay_db():
+    """Replay database download"""
+
+    filename = f'wig.{datetime.utcnow().replace(microsecond=0).isoformat()}.db'
+    return send_file(get_db('wig.db'), attachment_filename=filename, as_attachment=True, cache_timeout=-1)
+
+
+@routes.route('/admin/replaydata.zip')
+@admin_only
+def download_replay_data():
+    """Replay data .JSON download"""
+
+    archive_path = get_temp('replaydata.zip')
+    if path.isfile(archive_path):
+        remove(archive_path)
+
+    with ZipFile(archive_path, "w", ZIP_DEFLATED) as archive:
+        for data_file in glob(get_replay_data('*.json')):
+            archive.write(data_file, path.basename(data_file))
+
+    filename = f'replaydata.{datetime.utcnow().replace(microsecond=0).isoformat()}.zip'
+    return send_file(archive_path, attachment_filename=filename, as_attachment=True, cache_timeout=-1)
