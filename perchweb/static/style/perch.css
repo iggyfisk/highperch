@@ -1201,7 +1201,7 @@ a.playername:hover {
       .large-replay .teams .team .player .details .slash {
         color: #c4976f;
         text-align: center;
-        padding: 2px; }
+        padding: 0px 2px 0px 2px; }
       .large-replay .teams .team .player .details .wood {
         color: #00910A;
         text-align: left;
