@@ -18,15 +18,16 @@ const parseInfo = () => {
   const data = fs.readFileSync(infoFile);
   var infoResult = new Translator.Info.warToJson(data).json;
   return {
+    editorVersion: infoResult.editorVersion,
     x: [infoResult.camera.bounds[0], infoResult.camera.bounds[2]],
     y: [infoResult.camera.bounds[1], infoResult.camera.bounds[3]],
     start: infoResult.players.map(p => [p.startingPos.x, p.startingPos.y])
   };
 }
 
-const parseUnits = () => {
+const parseUnits = editorVersion => {
   const data = fs.readFileSync(unitsFile);
-  var unitsResult = new Translator.Units.warToJson(data).json;
+  var unitsResult = new Translator.Units.warToJson(data, editorVersion).json;
   const goldMines = [];
 
   unitsResult.forEach(u => {
@@ -56,7 +57,9 @@ const parseMap = mapPath => {
   
   try {
     const info = parseInfo();
-    const units = parseUnits();
+    const units = parseUnits(info.editorVersion);
+
+    delete info.editorVersion;
     return [name, { ...info, ...units }];
   } catch {
     return null;

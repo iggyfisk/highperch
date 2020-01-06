@@ -71,9 +71,9 @@ round-to@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/round-to/-/round-to-3.0.0.tgz#f457177d68e5a1d9d55796528cd03daea0bb4fb9"
 
-"wc3maptranslator@https://github.com/iggyfisk/WC3MapTranslator#8d52e2c":
+"wc3maptranslator@https://github.com/iggyfisk/WC3MapTranslator#3578ae1":
   version "2.0.0"
-  resolved "https://github.com/iggyfisk/WC3MapTranslator#8d52e2c285eba00dbcaaf30016cf199850b5ee44"
+  resolved "https://github.com/iggyfisk/WC3MapTranslator#3578ae16531822f4d4d78c483037de5e94a0ff74"
   dependencies:
     ieee754 "^1.1.8"
     intn "^1.0.0"
