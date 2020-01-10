@@ -510,6 +510,41 @@ building_codes = {
     "uzg2": {'name': 'Nerubian Tower', 'race': 'U', 'gold': 100, 'wood': 20, 'tier': 1, 'upgrade': True, 'tower': True}
 }
 
+color_names = {
+    '#ff0303': 'red',
+    '#0042ff': 'blue',
+    '#1ce6b9': 'teal',
+    '#540081': 'purple',
+    '#fffc00': 'yellow',
+    '#fe8a0e': 'orange',
+    '#20c000': 'green',
+    '#e55bb0': 'pink',
+    '#959697': 'gray',
+    '#7ebff1': 'light blue',
+    '#106246': 'dark green',
+    '#4a2a04': 'brown',
+    '#9b0000': 'maroon',
+    '#0000c3': 'navy',
+    '#00eaff': 'turquoise',
+    '#be00fe': 'violet',
+    '#ebcd87': 'wheat',
+    '#f8a48b': 'peach',
+    '#bfff80': 'mint',
+    '#dcb9eb': 'lavender',
+    '#282828': 'coal',
+    '#ebf0ff': 'snow',
+    '#00781e': 'emerald',
+    '#a46f33': 'peanut'
+}
+
+build_versions = {
+    '6102': '1.32.0.5', # 2020-01-09, adds classic gfx
+    '6098': '1.32.0.4', # 2019-12-09, adds customs and mappool
+    '6094': '1.32.0.3', # 2019-11-20, adds NE/random. same buildNo as 1.32.0.3.1 (2019-12-03, adds collections)
+    '6092': '1.32.0.2', # 2019-11-05, adds UD. same buildNo as 1.32.0.2.1 (2019-11-13, adds 3s/4s/ffa)
+    '6091': '1.32.0.1'  # 2019-10-29, first beta build
+}
+
 is_tower = {'hwtw', 'owtw', 'etrp'}
 
 is_tower_upgrade = {'hgtw', 'hatw', 'hctw', 'uzg1', 'uzg2'}

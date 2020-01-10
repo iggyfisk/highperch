@@ -86,7 +86,7 @@
             <div class="icon-name">
                 {{ racemacros.icon(player['race'], player['raceDetected']) }}<a class="playername"
                     style="color:{{ replay.player_colors[player['id']]|lighten }}"
-                    href="{{ url_for('views.view_player', battletag=player['name']) }}">{{ player['name']|displayname }}</a>
+                    href="{{ url_for('views.view_player', battletag=player['name']) }}" title="{{ replay.player_colors[player['id']]|color_name }}">{{ player['name']|displayname }}</a>
                 {% if replay.official() and game_count %}
                     {% if game_count[player['name']] > 1 %}
                         {% if not player.official() %}

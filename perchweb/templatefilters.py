@@ -4,7 +4,7 @@ from re import compile as re_compile
 from re import sub as re_sub
 from filepaths import get_path
 from lib.colors import lighten, scale
-from lib.wigcodes import race_titles, hero_names
+from lib.wigcodes import race_titles, hero_names, color_names, build_versions
 import geoip
 from urllib.parse import unquote
 from slugify import slugify
@@ -152,6 +152,17 @@ def map_proper_name(filename):
     return re_sub(r'([a-z])([A-Z])', r'\1 \2', re_sub(r'\(\d\)', '', filename).replace('_', ' '))
 
 
+def color_name(color_hex):
+    return color_names[color_hex]
+
+
+def exact_version(build):
+    if str(build) in build_versions:
+        return build_versions[str(build)]
+    else:
+        return None
+
+
 def register(jinja_environment):
     """ Register all filters to the given jinja environment """
     jinja_environment.filters['gametime'] = gametime
@@ -171,3 +182,5 @@ def register(jinja_environment):
     jinja_environment.filters['goldmine_sum'] = goldmine_sum
     jinja_environment.filters['map_size'] = map_size
     jinja_environment.filters['map_proper_name'] = map_proper_name
+    jinja_environment.filters['color_name'] = color_name
+    jinja_environment.filters['exact_version'] = exact_version
