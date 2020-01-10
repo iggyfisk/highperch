@@ -1028,6 +1028,16 @@ a.playername:hover {
   margin-bottom: 16px; }
   .large-replay .details h2 {
     display: flex; }
+    .large-replay .details h2 a {
+      text-decoration: none; }
+    .large-replay .details h2 .arrow {
+      margin-top: auto;
+      margin-bottom: auto;
+      font-size: 12px; }
+    .large-replay .details h2 .navprev {
+      margin-right: 10px; }
+    .large-replay .details h2 .navnext {
+      margin-left: auto; }
   .large-replay .details .edit {
     display: inline-block;
     margin: 0 0 0 16px;

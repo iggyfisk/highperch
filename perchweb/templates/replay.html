@@ -9,6 +9,7 @@
         <div class="large-replay">
             <div class="details">
                 <h2>
+                    <span class="arrow navprev">{% if prev_id %}<a href="{{ url_for('views.view_replay', replay_id=prev_id) }}">«</a>{% else %}&nbsp;&nbsp;{% endif %}</span>
                     <span class="{% if is_admin %}hp-expand{% endif %}">{{ listinfo['Name'] }}</span>
                     {% if is_admin %}
                     <form
@@ -26,6 +27,7 @@
                         {{ tagmacros.tag('Official') }}
                         {% endif %}
                     </div>
+                    <span class="arrow navnext">{% if next_id %}<a href="{{ url_for('views.view_replay', replay_id=next_id )}}">»</a>{% endif %}</span>
                 </h2>
                 <div class="content">
                     {% if is_admin %}

@@ -504,3 +504,27 @@ def get_all_maps():
         GROUP BY Map
         ''')
     return [{'name': map_name, 'replay_count': count, 'avg_length': avg_length, 'avg_towers': avg_towers} for map_name, count, avg_length, avg_towers in rows]
+
+
+def get_next_replay(this_id):
+    next_id = query('''
+            SELECT ID
+            FROM Replays
+            WHERE ID > ?
+            ORDER BY ID
+            LIMIT 1''', (this_id,), one=True)
+    if next_id == None:
+        return None
+    return next_id[0]
+
+
+def get_previous_replay(this_id):
+    prev_id = query('''
+            SELECT ID
+            FROM Replays
+            WHERE ID < ?
+            ORDER BY ID DESC
+            LIMIT 1''', (this_id,), one=True)
+    if prev_id == None:
+        return None
+    return prev_id[0]

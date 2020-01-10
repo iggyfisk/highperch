@@ -149,6 +149,20 @@ a.playername{
     .details {
         h2 {
             display: flex;
+            a {
+                text-decoration: none;
+            }
+            .arrow {
+                margin-top: auto;
+                margin-bottom: auto;
+                font-size: 12px;
+            }
+            .navprev {
+                margin-right: 10px;
+            }
+            .navnext {
+                margin-left: auto;
+            }
         }
         .edit {
             display: inline-block;
