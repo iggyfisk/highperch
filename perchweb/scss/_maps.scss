@@ -1,0 +1,83 @@
+.maps {
+    border-bottom:1px solid black;
+    align-items: center;
+    width: 100%;
+    table {
+        // max-width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 0px;
+        table-layout: fixed;
+    }
+    th {
+        font-weight: normal;
+        font-size: 12px;
+        padding: 5px;
+        border: none;
+        text-align: center;
+        cursor: pointer;
+        background: $card-alt-background-color;
+    }
+    th:hover {
+        color: white;
+    }
+    tr {
+        background: $card-background-color;;
+        &:nth-child(even) {
+            background: $card-alt-background-color;
+        }
+    }
+    td {
+        border-bottom: none;
+        padding: 0px;
+        text-align: center;
+    }
+    .optional {
+        display: none;
+        @media (#{$bp-larger-than-tablet}) {
+            display: table-cell;
+        }
+    }
+    .thumbcol {
+        text-align: left;;
+    }
+    .thumb {
+        max-height: 50px;
+        vertical-align: middle;
+        padding-right: 5px;
+    }
+    a {
+        font-weight: bold;
+        text-decoration: none;
+        padding: 0px;
+    }
+    
+    th[role=columnheader]:not(.no-sort) {
+        cursor: pointer;
+    }
+
+    th[role=columnheader]:not(.no-sort):after {
+        content: '';
+        float: right;
+        margin-top: 7px;
+        border-width: 4px 4px 0;
+        border-style: solid;
+        border-color: $primary-color transparent;
+        visibility: hidden;
+        opacity: 0;
+        user-select: none;
+    }
+    
+    th[aria-sort=ascending]:not(.no-sort):after {
+        border-width: 0 4px 4px;
+    }
+    
+    th[aria-sort]:not(.no-sort):after {
+        visibility: visible;
+        opacity: 0.4;
+    }
+    
+    th[role=columnheader]:not(.no-sort):hover:after {
+        visibility: visible;
+        opacity: 1;
+    }
+}

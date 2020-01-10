@@ -12,7 +12,7 @@ from peep import get_pic
 from auth import login as auth_login, check_if_admin
 from perchlogging import log_to_slack, format_ip_addr
 from templatefilters import lighten_color
-from lib.wigcodes import get_goldmines, get_map_size
+from lib.wigcodes import get_goldmines, get_map_size, get_mapinfo
 
 routes = Blueprint('views', __name__)
 
@@ -119,6 +119,18 @@ def view_map(map_name):
 
     return standard_page('map.html', f'{map_name} details', map=map_info, recent_replays=recent_replays)
 
+
+@routes.route('/maps')
+def map_list():
+    all_maps = replaydb.get_all_maps()
+    interesting_maps = []
+    for m in all_maps:
+        info = get_mapinfo(m['name'])
+        if info:
+            if 'mines' in info:
+                m.update(info)
+                interesting_maps.append(m)
+    return standard_page('maps.html', 'Maps', maps=sorted(interesting_maps, key=lambda i: i['replay_count'], reverse=True)) 
 
 @routes.route('/upload', methods=['POST'])
 def upload_replay():

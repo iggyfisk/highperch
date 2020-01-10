@@ -495,3 +495,12 @@ def get_all_uploader_ips():
     for row in rows:
         uploader_ips[row[0]] += 1
     return sorted(uploader_ips.items(), key=lambda i: i[1], reverse=True)
+
+
+def get_all_maps():
+    rows = query('''
+        SELECT Map, Count(*) AS Games, CAST(AVG(Length) AS INT) AS AvgLength, CAST(AVG(TowerCount) AS INT) AS AvgTowers
+        FROM Replays
+        GROUP BY Map
+        ''')
+    return [{'name': map_name, 'replay_count': count, 'avg_length': avg_length, 'avg_towers': avg_towers} for map_name, count, avg_length, avg_towers in rows]

@@ -551,7 +551,7 @@ def get_map_size(map_name, fp=None):
     map_info = get_mapinfo(map_name, fp)
     if not map_info:
         return None
-
+        
     x = map_info['x']
     y = map_info['y']
     return [x[0], x[1], y[0], y[1]]

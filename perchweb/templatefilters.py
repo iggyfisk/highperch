@@ -18,7 +18,7 @@ def gametime(milliseconds):
 
 def gametime_for_computers(milliseconds):
     """ Converts milliseconds to ISO8601 duration: PTPT1H4M20S
-    Carryover is permitted in the standard so we don't need to worry about >24H gametimes """
+        Carryover is permitted in the standard so we don't need to worry about >24H gametimes """
     minutes, seconds = divmod(int(milliseconds / 1000), 60)
     if minutes >= 60:
         hours, minutes = divmod((minutes), 60)
@@ -134,6 +134,24 @@ def url_slug(title):
     return slugify(title, replacements=[["'", '']])
 
 
+def goldmine_sum(mines):
+    return sum(mine['g'] for mine in mines)
+
+
+def map_size(bounds):
+    """ Convert a map's camera bounds into its size in building units. 
+        A scout tower is 2x2 building units, and one building unit is 64 camera units. """
+    x = (abs(bounds[0][0]) + abs(bounds[0][1])) // 64
+    y = (abs(bounds[1][0]) + abs(bounds[1][1])) // 64
+    return (x, y)
+
+
+def map_proper_name(filename):
+    """ This is a hack, but I'm not sure if the "real" proper name is exposed anywhere.
+        Maybe in the actual map file via the translator """
+    return re_sub(r'([a-z])([A-Z])', r'\1 \2', re_sub(r'\(\d\)', '', filename).replace('_', ' '))
+
+
 def register(jinja_environment):
     """ Register all filters to the given jinja environment """
     jinja_environment.filters['gametime'] = gametime
@@ -150,3 +168,6 @@ def register(jinja_environment):
     jinja_environment.filters['embed_country'] = make_country_embed
     jinja_environment.filters['thousands'] = thousands
     jinja_environment.filters['slugify'] = url_slug
+    jinja_environment.filters['goldmine_sum'] = goldmine_sum
+    jinja_environment.filters['map_size'] = map_size
+    jinja_environment.filters['map_proper_name'] = map_proper_name

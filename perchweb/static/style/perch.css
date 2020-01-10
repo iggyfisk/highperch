@@ -4405,3 +4405,65 @@ form.adminlogin {
       border: none;
       text-align: right;
       padding: 5px; }
+
+.maps {
+  border-bottom: 1px solid black;
+  align-items: center;
+  width: 100%; }
+  .maps table {
+    border-collapse: collapse;
+    margin-bottom: 0px;
+    table-layout: fixed; }
+  .maps th {
+    font-weight: normal;
+    font-size: 12px;
+    padding: 5px;
+    border: none;
+    text-align: center;
+    cursor: pointer;
+    background: rgba(1, 1, 1, 0.9); }
+  .maps th:hover {
+    color: white; }
+  .maps tr {
+    background: rgba(10, 5, 5, 0.75); }
+    .maps tr:nth-child(even) {
+      background: rgba(1, 1, 1, 0.9); }
+  .maps td {
+    border-bottom: none;
+    padding: 0px;
+    text-align: center; }
+  .maps .optional {
+    display: none; }
+    @media (min-width: 750px) {
+      .maps .optional {
+        display: table-cell; } }
+  .maps .thumbcol {
+    text-align: left; }
+  .maps .thumb {
+    max-height: 50px;
+    vertical-align: middle;
+    padding-right: 5px; }
+  .maps a {
+    font-weight: bold;
+    text-decoration: none;
+    padding: 0px; }
+  .maps th[role=columnheader]:not(.no-sort) {
+    cursor: pointer; }
+  .maps th[role=columnheader]:not(.no-sort):after {
+    content: '';
+    float: right;
+    margin-top: 7px;
+    border-width: 4px 4px 0;
+    border-style: solid;
+    border-color: #c4976f transparent;
+    visibility: hidden;
+    opacity: 0;
+    user-select: none; }
+  .maps th[aria-sort=ascending]:not(.no-sort):after {
+    border-width: 0 4px 4px; }
+  .maps th[aria-sort]:not(.no-sort):after {
+    visibility: visible;
+    opacity: 0.4; }
+  .maps th[role=columnheader]:not(.no-sort):hover:after {
+    visibility: visible;
+    opacity: 1; }

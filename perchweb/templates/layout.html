@@ -34,6 +34,7 @@
             <div class="row">
                 <div class="views">
                     <a href="{{ url_for('views.index') }}" class="{% if nav == 'index' %}active{% endif %}"><span class="name">Replays</span><span class="shortname">Reps</span></a>
+                    <a href="{{ url_for('views.map_list') }}" class="{% if nav == 'maps' %}active{% endif %}"><span class="name">Maps</span><span class="shortname">Maps</span></a>
                     <a href="{{ url_for('views.peep') }}" class="{% if nav == 'peep' %}active{% endif %}"><span class="name">Pictures</span><span class="shortname">Pics</span></a>
                     <a href="{{ url_for('views.guide') }}" class="{% if nav == 'guide' %}active{% endif %}"><span class="name">Documentation</span><span class="shortname">Docs</span></a>
                     <a href="https://classic.highper.ch" target="_blank"><span class="name">Archives</span><span class="shortname">Old</span></a>
@@ -89,6 +90,10 @@
         <p>Copyright {% if not is_admin %}<a href="/login" class="logout">{% endif %}&copy; {% if not is_admin %}</a>{% endif %} {{ year }} <a href="mailto:admin@highper.ch">Clan Towa</a></p>
     </footer>
     <script src="/static/script/perch.js?h={{ config['STATIC_HASH'] }}"></script>
+    {% if maps %}
+    <script src="/static/script/tablesort.js?h={{ config['STATIC_HASH'] }}"></script>
+    <script src="/static/script/tablesort.number.js?h={{ config['STATIC_HASH'] }}"></script>
+    {% endif %}
     {% block scripts %}{% endblock %}
 </body>
 </html>

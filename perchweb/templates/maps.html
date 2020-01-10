@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+{% import "charts.html" as chartmacros %}
+
+{% block content %}
+<script>
+(() => {
+	document.addEventListener("DOMContentLoaded", () => {
+        new Tablesort(document.getElementById('maptable'), { descending: true });
+	});
+})();
+</script>
+<div class="container">
+    <h2>Showing {{ maps|length }} analyzed maps</h2>
+    <table class="maps" id="maptable">
+        <thead>
+            <tr>
+                <th class="optional" data-sort-method="none"></th>
+                <th>Map</th>
+                <th>Positions</th>
+                <th class="optional">Size</th>
+                <th class="optional">Mines</th class="optional">
+                <th class="optional">Gold</th class="optional">
+                <th>Avg. length</th>
+                <th>Avg. towers</th>
+                <th data-sort-default>Replays</th>
+            </tr>
+        </thead>
+    {% for map in maps %}
+    {% set map_xy = (map['x'], map['y'])|map_size %}
+        <tr>
+            <td class="optional thumbcol"><a href="{{ url_for('views.view_map', map_name=map['name']) }}"><img src="{{ map['name']|mapthumbnail }}" class="thumb"></a></td>
+            <td><a href="{{ url_for('views.view_map', map_name=map['name']) }}">{{ map['name']|map_proper_name }}</a></td>
+            <td data-sort-method="number">{{ map['start']|length }}</td>
+            <td class="optional" data-sort-method="number" data-sort="{{ map_xy[0] * map_xy[1] }}"><span class="hp-toggle" data-group="dimensions">{{ map_xy[0] }} x {{ map_xy[1] }}</span><span class="hp-toggle hidden" data-group="dimensions">{{ map_xy[0] * map_xy[1] }}</span></td>
+            <td class="optional">{{ map['mines']|length }}</td class="optional">
+            <td class="optional" data-sort-method="number">{{ map['mines']|goldmine_sum }}</td class="optional">
+            <td>{{ map['avg_length']|gametime }}</td>
+            <td data-sort-method="number">{{ map['avg_towers'] }}</td>
+            <td data-sort-method="number">{{ map['replay_count'] }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+</div>
+{% endblock %}
