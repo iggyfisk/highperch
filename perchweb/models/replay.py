@@ -173,6 +173,14 @@ class Replay(dict):
     def loudest_player_id(self):
         return sorted(self.get_chat_actions(), key=self.get_chat_actions().get, reverse=True)[0]
 
+    def game_host_type(self):
+        if self['gamename'] == "BNet" and self['creator'] == "Battle.net" and self['privateString'] == '':
+            return "ladder"
+        elif self['privateString'] == 'hunter2': # this might change? someday?
+            return "private"
+        else:
+            return "custom"
+
     def get_formatted_chat(self):
         """ Chatlog, pause, resume, player left, and markers for periods of silence (indicated by None)"""
         if self.formatted_chat is not None:
