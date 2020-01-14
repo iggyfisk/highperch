@@ -45,7 +45,7 @@
 		if (!replayUploader || !replayTitle) return;
 		replayUploader.addEventListener('change', () => {
 			const fileName = replayUploader.files[0].name;
-			if (!fileName.match(/^Replay_\d{4}_/g)) {
+			if (!fileName.match(/^Replay_\d{4}_/g) && fileName.slice(0, -4).length >= 6) {
 				replayTitle.value = fileName.slice(0, -4).slice(0, 50);
 			}
 			replayTitle.focus();
