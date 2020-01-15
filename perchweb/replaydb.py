@@ -425,14 +425,20 @@ def reparse_replay(replay_id, query_fnc, fp):
 
 def edit_replay(replay_id, name=None):
     """ Edit replay db entry """
+    previous_name = query(
+        'SELECT Name FROM Replays WHERE ID = ?', (replay_id,), one=True)[0]
     query('UPDATE Replays SET Name = CASE WHEN ? IS NOT NULL THEN ? ELSE NAME END WHERE ID = ?',
           (name, name, replay_id,))
+    error_string = f'Replay ID {replay_id} ("{previous_name}") renamed to "{name}" by {format_ip_addr(request.remote_addr)}'
+    log_to_slack('WARNING', error_string)
+    current_app.logger.warning(error_string)
     return True
 
 
 def delete_replay(replay_id):
     """ Deletes a replay from disk and db, returns True on success """
-
+    previous_name = query(
+        'SELECT Name FROM Replays WHERE ID = ?', (replay_id,), one=True)[0]
     replay_path = filepaths.get_replay(f"{replay_id}.w3g")
     data_path = filepaths.get_replay_data(f"{replay_id}.json")
     try:
@@ -466,6 +472,9 @@ def delete_replay(replay_id):
         os.remove(replay_path)
         os.remove(data_path)
         flash('Replay deleted')
+        error_string = f'Replay ID {replay_id} ("{previous_name}") deleted by {format_ip_addr(request.remote_addr)}'
+        log_to_slack('WARNING', error_string)
+        current_app.logger.warning(error_string)
         return True
     except Exception as e:
         error_string = f'Failed deletion from {format_ip_addr(request.remote_addr)}: ID {replay_id}"\nError follows:\n{format_traceback(e)}'

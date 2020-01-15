@@ -146,6 +146,8 @@ const leaveLength = leaveEvents.length;
 let replaySaverPlayerId;
 if (!leaveLength) {
   replaySaverPlayerId = null;
+} else if (leaveLength === 1) {
+  replaySaverPlayerId = leaveEvents[0].playerId;
 } else if (leaveEvents[leaveLength - 1].ms !== leaveEvents[leaveLength - 2].ms) {
   replaySaverPlayerId = leaveEvents[leaveLength - 1].playerId;
 } else {
