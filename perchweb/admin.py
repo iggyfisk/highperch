@@ -12,7 +12,7 @@ from handler import admin_page
 from replaydb import get_all_replays, get_all_uploader_ips, save_chatlog, \
     delete_replay as dbdelete_replay, edit_replay as dbedit_replay
 from peep import save_pic
-from filepaths import get_db, get_temp, get_replay_data
+from filepaths import get_db, get_temp, get_replay, get_replay_data
 
 routes = Blueprint('admin', __name__)
 
@@ -130,3 +130,21 @@ def download_replay_data():
 
     filename = f'replaydata.{datetime.utcnow().replace(microsecond=0).isoformat()}.zip'
     return send_file(archive_path, attachment_filename=filename, as_attachment=True, cache_timeout=-1)
+
+
+@routes.route('/admin/replayfiles.zip')
+@admin_only
+def download_replay_files():
+    """.w3g file download"""
+
+    archive_path = get_temp('replayfiles.zip')
+    if path.isfile(archive_path):
+        remove(archive_path)
+
+    with ZipFile(archive_path, "w", ZIP_DEFLATED) as archive:
+        for data_file in glob(get_replay('*.w3g')):
+            archive.write(data_file, path.basename(data_file))
+
+    filename = f'replayfiles.{datetime.utcnow().replace(microsecond=0).isoformat()}.zip'
+    return send_file(archive_path, attachment_filename=filename, as_attachment=True, cache_timeout=-1)
+
