@@ -7,20 +7,17 @@ function drawApmSeries() {
         bottom: 20,
         left: 35
     },
-
         width = elem.width - margin.left - margin.right,
         height = 250 - margin.top - margin.bottom;
 
     var x = d3.scaleLinear()
         .range([0, width]);
-
     var y = d3.scaleLinear()
         .range([height, 0]);
 
     var color = d3.scaleOrdinal(player_colors);
 
     var xAxis = d3.axisBottom(x);
-
     var yAxis = d3.axisLeft(y);
 
     var line = d3.line()
@@ -41,14 +38,6 @@ function drawApmSeries() {
         .classed("graph", true)
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-    function onResize() {
-        var newElem = d3.select('.apmseries').node().getBoundingClientRect();
-        width = newElem.width - margin.left - margin.right,
-            series
-                .attr("width", width);
-        console.log("resize", width);
-    }
 
     color.domain(d3.keys(apm_data[0]).filter(function (key) {
         return key !== "minute";
@@ -146,7 +135,6 @@ function drawApmSeries() {
         .attr("class", function (d) {
             return "line " + d.name.replace('#', '');
         });
-    // .classed("battetag hp-toggle", true);
 
     var mouseG = series.append("g")
         .attr("class", "mouse-over-effects");
@@ -163,7 +151,6 @@ function drawApmSeries() {
         .data(players)
         .enter()
         .append("g")
-        // .attr("class", "mouse-per-line");
         .attr("class", function (d) {
             return "mouse-per-line " + d.name.replace('#', '');
         });
@@ -173,7 +160,6 @@ function drawApmSeries() {
         .style("fill", function (d) {
             return color(d.name);
         })
-        // .style("fill", "none")
         .style("stroke-width", "1px")
         .style("opacity", "0");
 

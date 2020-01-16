@@ -191,7 +191,6 @@ class Replay(dict):
             leave_event = next((leave for leave in self['leaveEvents'] if leave['playerId'] == p['id']), None)
             if leave_event:
                 leave_minute = int((leave_event['ms'] / 1000) // 60)
-                print(p['name'], leave_minute)
             else:
                 leave_minute = len(self.players[0]['actions']['timed'])
             for minute, actions in enumerate(p['actions']['timed']):

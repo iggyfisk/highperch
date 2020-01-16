@@ -48,6 +48,7 @@ item_codes = {
     "pman": {"name": "Potion of Mana", "table": "shop", "shop": "race_all", "price": 200},
 
     "ofir": {"name": "Orb of Fire", "table": "shop", "shop": "race_H", "price": 325},
+    "ofr2": {"name": "Orb of Fire", "table": "shop", "shop": "race_H", "price": 325},
     "tsct": {"name": "Ivory Tower", "table": "shop", "shop": "race_H", "price": 40},
     "mcri": {"name": "Mechanical Critter", "table": "shop", "shop": "race_H", "price": 50},
     "sreg": {"name": "Scroll of Regeneration", "table": "shop", "shop": "race_H", "price": 100},
