@@ -451,6 +451,7 @@ a.playername{
 .chatlog {
     background-color: $card-background-color;
     padding: $padding;
+    margin-bottom: $padding * 2;
     //display:inline-grid;
     grid-template-columns:auto 99%;
     .silence {
@@ -534,5 +535,26 @@ a.playername{
     }
 }
 
-
-
+.apmseries {
+    background-color: $card-background-color;
+    .graph {
+        .axis path,
+        .axis line {
+          fill: none;
+          stroke: $primary-color;
+          shape-rendering: crispEdges;
+        }
+    
+        .line {
+          fill: none;
+          stroke-width: 1.5px;
+        }
+        .battletag {
+            fill: $primary-color;
+            font-size: 10px;
+        }
+        .cursortext {
+            fill: $primary-color;
+        }
+    }
+}

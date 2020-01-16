@@ -94,6 +94,10 @@
     <script src="/static/script/tablesort.js?h={{ config['STATIC_HASH'] }}"></script>
     <script src="/static/script/tablesort.number.js?h={{ config['STATIC_HASH'] }}"></script>
     {% endif %}
+    {% if replay_id %}
+    <script src="/static/script/d3.v5.min.js"></script>
+    <script src="/static/script/apmseries.js"></script>
+    {% endif %}
     {% block scripts %}{% endblock %}
 </body>
 </html>

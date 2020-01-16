@@ -6,6 +6,7 @@ import json
 from collections import defaultdict
 from datetime import datetime
 from math import sqrt
+from templatefilters import lighten_color
 from lib.wigcodes import is_tower, get_map_size, get_starting_locations, get_goldmines
 from models.player import Player
 
@@ -180,6 +181,27 @@ class Replay(dict):
             return "private"
         else:
             return "custom"
+
+    def get_apm_data(self):
+        apm_data = []
+        for minute in range(len(self.players[0]['actions']['timed'])):
+            apm_data.append({'minute': minute + 1})
+
+        for p in self.players:
+            leave_event = next((leave for leave in self['leaveEvents'] if leave['playerId'] == p['id']), None)
+            if leave_event:
+                leave_minute = int((leave_event['ms'] / 1000) // 60)
+                print(p['name'], leave_minute)
+            else:
+                leave_minute = len(self.players[0]['actions']['timed'])
+            for minute, actions in enumerate(p['actions']['timed']):
+                if minute <= leave_minute:
+                    apm_data[minute][p['name']] = actions
+
+        return json.dumps(apm_data)
+
+    def get_color_codes(self):
+        return json.dumps([lighten_color(p['color']) for p in self.players])
 
     def get_formatted_chat(self):
         """ Chatlog, pause, resume, player left, and markers for periods of silence (indicated by None)"""

@@ -32,6 +32,10 @@
 
 {% macro teams(replay, detailed=False, game_count=None) %}
 {% if detailed %}
+<script>
+    var player_colors = {{ replay.get_color_codes()|safe }};
+    var apm_data = {{ replay.get_apm_data()|safe }};
+</script>
 <div class="controls">
     <span class="hp-toggle" data-group="items"><img class="controlshow" src="/static/images/townportal.gif" title="Show item details"></span>
     <span class="hp-toggle hidden" data-group="items"><img class="itemhide" src="/static/images/townportal.gif" title="Hide item details"></span>
