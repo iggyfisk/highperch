@@ -4,7 +4,7 @@
 {% macro card(replay, is_admin, lighten) %}
 <div class="replay card">
     <div class="minimap">
-        <a href="{{ url_for('views.view_replay', replay_id=replay['ID']) }}">
+        <a href="{{ url_for('views.view_replay_slug', replay_id=replay['ID'], replay_slug=replay['Name']|slugify) }}">
             <img src="{{replay['Map']|mapthumbnail}}" title="{{ replay['Map'] }}" />
             {% with drawmap = replay.get_drawmap(color_transform=lighten) %}
             {% if drawmap['map_size'] %}
@@ -17,7 +17,7 @@
     </div>
     <div class="details">
         <div class="header">
-            <a class="title" href="{{ url_for('views.view_replay', replay_id=replay['ID']) }}">{{ replay['Name'] }}</a>
+            <a class="title" href="{{ url_for('views.view_replay_slug', replay_id=replay['ID'], replay_slug=replay['Name']|slugify) }}">{{ replay['Name'] }}</a>
         </div>
         <p><a href="/replay/{{ replay['ID'] }}/download" title="Download replay"><i class="icon-download-alt"></i></a> |
             {{ replay['Length']|gametime }} | {{ replay['GameType'] }} | <a class="minorlink" href="{{ url_for('views.view_map', map_name=replay['Map']) }}">{{ replay['Map'] }}</a> |

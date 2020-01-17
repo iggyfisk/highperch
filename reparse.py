@@ -44,11 +44,12 @@ if __name__ == '__main__':
     fp.config = config
     fp.script = True
 
-    replays = query('SELECT ID FROM Replays')
+    replays = query('SELECT ID FROM Replays ORDER BY ID ASC')
+    final_id = query('SELECT ID FROM Replays ORDER BY ID DESC LIMIT 1')[0][0]
 
     for r in replays:
         replay_id = r[0]
-        print(f'Re-parsing replay with ID {replay_id}')
+        print(f'Re-parsing replay with ID {replay_id} / {final_id}')
         reparse_replay(replay_id, query, fp)
 
     commit()

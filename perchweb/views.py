@@ -11,7 +11,7 @@ from filepaths import get_replay
 from peep import get_pic
 from auth import login as auth_login, check_if_admin
 from perchlogging import log_to_slack, format_ip_addr
-from templatefilters import lighten_color
+from templatefilters import lighten_color, url_slug
 from lib.wigcodes import get_goldmines, get_map_size, get_mapinfo
 
 routes = Blueprint('views', __name__)
@@ -36,9 +36,23 @@ def index():
 
 @routes.route('/replay/<int:replay_id>')
 def view_replay(replay_id):
+    """Redirect to slugged URL"""
+    replay_listinfo = replaydb.get_replay_listinfo(replay_id, inc_views=True)
+    replay_slug = url_slug(replay_listinfo['Name'])
+
+    return redirect(url_for('views.view_replay_slug', replay_id=replay_id, replay_slug=replay_slug))
+
+
+@routes.route('/replay/<int:replay_id>-<string:replay_slug>')
+def view_replay_slug(replay_id, replay_slug):
     """Replay details"""
+
     replay_listinfo = replaydb.get_replay_listinfo(replay_id, inc_views=True)
     replay = replaydb.get_replay(replay_id)
+    real_slug = url_slug(replay_listinfo['Name'])
+
+    if replay_slug != real_slug:    # so we don't have badmanners making functioning links like /replay/123-unflattering-fake-text
+        return redirect(url_for('views.view_replay_slug', replay_id=replay_id, replay_slug=real_slug))
 
     if replay_listinfo is None or replay is None:
         current_app.logger.warning(f'404 on replay view, ID: {replay_id}')
@@ -131,7 +145,8 @@ def map_list():
             if 'mines' in info:
                 m.update(info)
                 interesting_maps.append(m)
-    return standard_page('maps.html', 'Maps', maps=sorted(interesting_maps, key=lambda i: i['replay_count'], reverse=True)) 
+    return standard_page('maps.html', 'Maps', maps=sorted(interesting_maps, key=lambda i: i['replay_count'], reverse=True))
+
 
 @routes.route('/upload', methods=['POST'])
 def upload_replay():
@@ -166,8 +181,8 @@ def upload_replay():
     # Todo: Validation here, filesize etc
 
     replay_id = replaydb.save_replay(replay, replay_name, uploader_ip)
-    url = url_for('views.view_replay',
-                  replay_id=replay_id) if replay_id is not None else url_for('views.index')
+    url = url_for('views.view_replay_slug',
+                  replay_id=replay_id, replay_slug=url_slug(replay_name)) if replay_id is not None else url_for('views.index')
     return redirect(url)
 
 
