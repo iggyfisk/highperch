@@ -55,11 +55,17 @@
 })();
 
 /* hp-toggle */
+/* relevant classes:
+	.hp-toggle: master class
+	.hp-highlight: give it cursor and link-style mouseover color
+	.hp-control: this is a control button so never hide it
+	.hp-display: this is the actual info display so don't give it an onclick to hide itself */
 (() => {
 	document.addEventListener("DOMContentLoaded", () => {
 		document.querySelectorAll('.hp-toggle').forEach(el => {
 			const { group } = el.dataset;
 			const toggleClass = el.dataset.class || 'hidden';
+			if (el.classList.contains('hp-display')) return;
 			el.addEventListener('click', () => {
 				document.querySelectorAll(`.hp-toggle[data-group="${group}"]`).forEach(e => {
 					if (e.classList.contains('hp-control')) return;

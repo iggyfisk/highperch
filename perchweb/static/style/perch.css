@@ -1117,6 +1117,9 @@ a.playername:hover {
   .large-replay .controls .actionhide {
     outline: 3px red solid;
     outline-offset: -3px; }
+  .large-replay .controls .apmhide {
+    outline: 3px #2e2e2e solid;
+    outline-offset: -3px; }
 
 .large-replay .statwarning {
   width: fit-content;
@@ -1322,20 +1325,21 @@ a.playername:hover {
   .chatlog .leave, .chatlog .pause {
     color: #FFF; }
 
-.apmseries {
-  background-color: rgba(10, 5, 5, 0.75); }
-  .apmseries .graph .axis path,
-  .apmseries .graph .axis line {
+.apmcontainer .apmseries {
+  background-color: rgba(10, 5, 5, 0.75);
+  margin-bottom: 16px; }
+  .apmcontainer .apmseries .graph .axis path,
+  .apmcontainer .apmseries .graph .axis line {
     fill: none;
     stroke: #c4976f;
     shape-rendering: crispEdges; }
-  .apmseries .graph .line {
+  .apmcontainer .apmseries .graph .line {
     fill: none;
     stroke-width: 1.5px; }
-  .apmseries .graph .battletag {
+  .apmcontainer .apmseries .graph .battletag {
     fill: #c4976f;
     font-size: 10px; }
-  .apmseries .graph .cursortext {
+  .apmcontainer .apmseries .graph .cursortext {
     fill: #c4976f; }
 
 .player.details,
@@ -1640,14 +1644,14 @@ form.adminlogin {
       form.adminlogin input[type=submit] {
         margin-right: 8px; } }
 .hp-expand,
-.hp-toggle {
+.hp-highlight {
   cursor: pointer; }
   .hp-expand:hover,
-  .hp-toggle:hover {
+  .hp-highlight:hover {
     color: #FFF; }
   @media (min-width: 550px) {
     .hp-expand.size-ph,
-    .hp-toggle.size-ph {
+    .hp-highlight.size-ph {
       display: none; } }
 .no-hover {
   color: #c4976f !important; }

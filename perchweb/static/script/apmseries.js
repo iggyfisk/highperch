@@ -1,5 +1,5 @@
 function drawApmSeries() {
-    var elem = d3.select('.apmseries').node().getBoundingClientRect();
+    var elem = d3.select('.apmcontainer').node().getBoundingClientRect();
 
     var margin = {
         top: 20,
@@ -79,9 +79,9 @@ function drawApmSeries() {
         .attr('class', 'legend');
 
     legend.append('rect') // color sample in legend
-        .attr('x', width + 14)
+        .attr('x', width + 10)
         .attr('y', function (d, i) {
-            return i * 18 - 7;
+            return i * 18 - 7.5;
         })
         .attr('width', 8)
         .attr('height', 8)
@@ -90,7 +90,7 @@ function drawApmSeries() {
         });
 
     legend.append('text') // battletags in legend
-        .attr('x', width + 25)
+        .attr('x', width + 20)
         .attr('y', function (d, i) {
             return (i * 18);
         })

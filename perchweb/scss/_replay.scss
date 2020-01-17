@@ -266,6 +266,10 @@ a.playername{
             outline: $outline-size $action-color solid;
             outline-offset: -$outline-size;
         }
+        .apmhide {
+            outline: $outline-size rgb(46, 46, 46) solid;
+            outline-offset: -$outline-size;
+        }
     }
     .statwarning {
         width: fit-content;
@@ -535,26 +539,29 @@ a.playername{
     }
 }
 
-.apmseries {
-    background-color: $card-background-color;
-    .graph {
-        .axis path,
-        .axis line {
-          fill: none;
-          stroke: $primary-color;
-          shape-rendering: crispEdges;
-        }
-    
-        .line {
-          fill: none;
-          stroke-width: 1.5px;
-        }
-        .battletag {
-            fill: $primary-color;
-            font-size: 10px;
-        }
-        .cursortext {
-            fill: $primary-color;
+.apmcontainer {
+    .apmseries {
+        background-color: $card-background-color;
+        margin-bottom: $padding * 2;
+        .graph {
+            .axis path,
+            .axis line {
+            fill: none;
+            stroke: $primary-color;
+            shape-rendering: crispEdges;
+            }
+        
+            .line {
+            fill: none;
+            stroke-width: 1.5px;
+            }
+            .battletag {
+                fill: $primary-color;
+                font-size: 10px;
+            }
+            .cursortext {
+                fill: $primary-color;
+            }
         }
     }
 }

@@ -37,46 +37,54 @@
     var apm_data = {{ replay.get_apm_data()|safe }};
 </script>
 <div class="controls">
-    <span class="hp-toggle" data-group="items"><img class="controlshow" src="/static/images/townportal.gif" title="Show item details"></span>
-    <span class="hp-toggle hidden" data-group="items"><img class="itemhide" src="/static/images/townportal.gif" title="Hide item details"></span>
-    <span class="hp-toggle inaccurate" data-group="units" data-inaccurate="1"><img class="controlshow" src="/static/images/peasant.gif" title="Show unit details"></span>
-    <span class="hp-toggle inaccurate hidden" data-group="units" data-inaccurate="-1"><img class="unithide" src="/static/images/peasant.gif" title="Hide unit details"></span>
-    <span class="hp-toggle inaccurate" data-group="buildings" data-inaccurate="1"><img class="controlshow" src="/static/images/castle.gif" title="Show building details"></span>
-    <span class="hp-toggle inaccurate hidden" data-group="buildings" data-inaccurate="-1"><img class="buildinghide" src="/static/images/castle.gif" title="Hide building details"></span>
-    <span class="hp-toggle" data-group="actions"><img class="controlshow" src="/static/images/move.gif" title="Show action details"></span>
-    <span class="hp-toggle hidden" data-group="actions"><img class="actionhide" src="/static/images/move.gif" title="Hide action details"></span>
+    <span class="hp-toggle hp-highlight" data-group="items"><img class="controlshow" src="/static/images/townportal.gif" title="Show item details"></span>
+    <span class="hp-toggle hp-highlight hidden" data-group="items"><img class="itemhide" src="/static/images/townportal.gif" title="Hide item details"></span>
+    <span class="hp-toggle hp-highlight inaccurate" data-group="units" data-inaccurate="1"><img class="controlshow" src="/static/images/peasant.gif" title="Show unit details"></span>
+    <span class="hp-toggle hp-highlight inaccurate hidden" data-group="units" data-inaccurate="-1"><img class="unithide" src="/static/images/peasant.gif" title="Hide unit details"></span>
+    <span class="hp-toggle hp-highlight inaccurate" data-group="buildings" data-inaccurate="1"><img class="controlshow" src="/static/images/castle.gif" title="Show building details"></span>
+    <span class="hp-toggle hp-highlight inaccurate hidden" data-group="buildings" data-inaccurate="-1"><img class="buildinghide" src="/static/images/castle.gif" title="Hide building details"></span>
+    <span class="hp-toggle hp-highlight" data-group="actions"><img class="controlshow" src="/static/images/move.gif" title="Show action details"></span>
+    <span class="hp-toggle hp-highlight hidden" data-group="actions"><img class="actionhide" src="/static/images/move.gif" title="Hide action details"></span>
+    <span class="hp-toggle hp-highlight" data-group="apmseries"><img class="controlshow" src="/static/images/stasistrap.png" title="Show APM graph"></span>
+    <span class="hp-toggle hp-highlight hidden" data-group="apmseries"><img class="apmhide" src="/static/images/stasistrap.png" title="Hide APM graph"></span>
 </div>
 <div class="statwarning hidden">
     N.B. unit and building counts are inaccurate - canceled construction and products of multiple building select are
     not tracked.
 </div>
 {% endif %}
+
+<div class="apmcontainer">
+    <h2 class="hp-toggle hp-display hidden" data-group="apmseries">Actions per minute</h2>
+    <div class="apmseries hp-toggle hp-display hidden" data-group="apmseries">
+    </div>
+</div>
 <div class="teams">
     {% for (teamId, players) in replay.teams().items() %}
     <div class="team">
         {% if detailed %}
         <div class="teamhead">
-            <span class="{% if winnerId is not none %}hp-expand{% endif %} hp-toggle hp-control" data-group="team{{ teamId }}spoilers">Team {{ teamId }}</span>
+            <span class="{% if winnerId is not none %}hp-expand{% endif %} hp-toggle hp-control hp-highlight" data-group="team{{ teamId }}spoilers">Team {{ teamId }}</span>
             {% if teamId == replay['winningTeamId'] %}
             <b class="result hp-hidden h">Winner{% if not replay['winningTeamConfirmed'] %}?{% else %}!{% endif %}</b>
             {% elif winnerId is not none %}
             <b class="result hp-hidden h">Loser{% if not replay['winningTeamConfirmed'] %}?{% else %}!{% endif %}</b>
             {% endif %}
             {% if replay.team_item_count(teamId) > 0 %}
-            <span class="hp-toggle hidden teamstats" data-group="items">
+            <span class="hp-toggle hp-display hidden teamstats" data-group="items">
                 <span class="teamcount">{{ replay.team_item_count(teamId) }}</span> items @ <span
                     class="teamgold">{{ replay.team_item_cost(teamId)|thousands }} <img src="/static/images/gold-sm.gif"></span>
             </span>
             {% endif %}
             {% if replay.team_unit_count(teamId) > 0 %}
-            <span class="hp-toggle hidden teamstats" data-group="units">
+            <span class="hp-toggle hp-display hidden teamstats" data-group="units">
                 <span class="teamcount">{{ replay.team_unit_count(teamId) }}</span> units @ <span
                     class="teamgold">{{ replay.team_unit_cost(teamId)[0]|thousands }} <img src="/static/images/gold-sm.gif"></span> / <span
                     class="teamwood">{{ replay.team_unit_cost(teamId)[1]|thousands }} <img src="/static/images/lumber-sm.gif"></span>
             </span>
             {% endif %}
             {% if replay.team_building_count(teamId) > 0 %}
-            <span class="hp-toggle hidden teamstats" data-group="buildings">
+            <span class="hp-toggle hp-display hidden teamstats" data-group="buildings">
                 <span class="teamcount">{{ replay.team_building_count(teamId) }}</span> buildings @ <span
                     class="teamgold">{{ replay.team_building_cost(teamId)[0]|thousands }} <img src="/static/images/gold-sm.gif"></span> / <span
                     class="teamwood">{{ replay.team_building_cost(teamId)[1]|thousands }} <img src="/static/images/lumber-sm.gif"></span>
@@ -98,7 +106,7 @@
                         {% endif %}
                     {% endif %}
                 {% endif %}
-                <span class="hp-toggle hidden" data-group="team{{ teamId }}spoilers">&nbsp;(<b>{{ player['currentTimePlayed']|gametime }}</b>)&nbsp;</span>:
+                <span class="hp-toggle hp-highlight hidden" data-group="team{{ teamId }}spoilers">&nbsp;(<b>{{ player['currentTimePlayed']|gametime }}</b>)&nbsp;</span>:
                 <div class="summary">
                     {% set chat_actions = replay.get_chat_actions()[player['id']] %}
                     {% if chat_actions > 0 %}
@@ -110,21 +118,21 @@
                         {% set inclusive_actions = player.action_count() %}
                         {% set chat_percentage = 0 %}
                     {% endif %}
-                    <span class="hp-toggle" title="Chat-inclusive: {{ player.get_real_apm() + chats_per_minute }} APM"
-                        data-group="pm"><b>{{ player.get_real_apm() }}</b>&nbsp;APM</span>
-                    <span class="hp-toggle hidden" title="Chat-inclusive: {{ inclusive_actions }} actions, {{ chat_percentage }}% chat" 
-                        data-group="pm"><b>{{ player.action_count() }}</b>&nbsp;actions</span>
+                    <span class="hp-toggle hp-highlight" title="Chat-inclusive: {{ player.get_real_apm() + chats_per_minute }} APM"
+                        data-group="apm"><b>{{ player.get_real_apm() }}</b>&nbsp;APM</span>
+                    <span class="hp-toggle hp-highlight hidden" title="Chat-inclusive: {{ inclusive_actions }} actions, {{ chat_percentage }}% chat" 
+                        data-group="apm"><b>{{ player.action_count() }}</b>&nbsp;actions</span>
                     {% if player.tower_count() %}
-                    | <span class="hp-toggle" data-group="pm"><b>{{ player.tower_count() }}</b> towers</span>
-                    <span class="hp-toggle hidden"
-                        data-group="pm"><b>{{ player.towers_per_minute() }}</b>&nbsp;TPM</span>
+                    | <span class="hp-toggle hp-highlight" data-group="tpm"><b>{{ player.tower_count() }}</b> towers</span>
+                    <span class="hp-toggle hp-highlight hidden"
+                        data-group="tpm"><b>{{ player.towers_per_minute() }}</b>&nbsp;TPM</span>
                     {% endif %}
                     {% if player.net_feed()[0] + player.net_feed()[1] > 0 %}
-                    <span class="hp-toggle" data-group="feed"><span class="no-hover">|</span>
+                    <span class="hp-toggle hp-highlight " data-group="feed"><span class="no-hover">|</span>
                         <b>{{ (player.net_feed()[0] + player.net_feed()[1])|thousands }}</b> sources fed</span>
                     {% endif %}
                     {% if player.net_feed()[0] != 0 or player.net_feed()[1] != 0 %}
-                    <span class="feeddetails hp-toggle hidden" data-group="feed"><span class="no-hover">|</span> <b
+                    <span class="feeddetails hp-toggle hp-highlight hidden" data-group="feed"><span class="no-hover">|</span> <b
                             class="gold">{{ player.net_feed()[0] }}</b> / <b
                             class="lumber">{{ player.net_feed()[1] }}</b> fed</span>
                     {% endif %}
@@ -143,7 +151,7 @@
                     {% endfor %}
                 </div>
                 {% set player_items = player.decode_items() %}
-                <div class="extendeddetails itemdetails hp-toggle hidden" data-group="items">
+                <div class="extendeddetails itemdetails hp-toggle hp-display hidden" data-group="items">
                     {% if player_items|length == 0 %}
                     <div class="item"><i>Zero items purchased!</i></div>
                     {% else %}
@@ -164,7 +172,7 @@
                     {% endif %}
                 </div>
                 {% set player_units = player.decode_units() %}
-                <div class="extendeddetails unitdetails hp-toggle hidden" data-group="units">
+                <div class="extendeddetails unitdetails hp-toggle hp-display hidden" data-group="units">
                     {% if player_units|length == 0 %}
                     <div class="unit"><i>Zero units created!</i></div>
                     {% else %}
@@ -189,7 +197,7 @@
                     {% endif %}
                 </div>
                 {% set player_buildings = player.decode_buildings() %}
-                <div class="extendeddetails buildingdetails hp-toggle hidden" data-group="buildings">
+                <div class="extendeddetails buildingdetails hp-toggle hp-display hidden" data-group="buildings">
                     {% if player_buildings|length == 0 %}
                     <div class="building"><i>Zero buildings constructed!</i></div>
                     {% else %}
@@ -213,7 +221,7 @@
                     </table>
                     {% endif %}
                 </div>
-                <div class="extendeddetails actiondetails hp-toggle hidden" data-group="actions">
+                <div class="extendeddetails actiondetails hp-toggle hp-display hidden" data-group="actions">
                     {% set player_actions = player.parse_actions() %}
                     {% if chat_actions > 0 %}
                         {{ player_actions.append(('Chat', chat_actions))|default("", True) }}
