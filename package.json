@@ -8,6 +8,6 @@
   "license": "Excessively proprietary",
   "private": true,
   "dependencies": {
-    "w3gjs": "https://github.com/iggyfisk/w3gjs#b6e4fa5"
+    "w3gjs": "https://github.com/iggyfisk/w3gjs#f83bbbe"
   }
 }
