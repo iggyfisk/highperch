@@ -4,7 +4,7 @@ from re import compile as re_compile
 from re import sub as re_sub
 from filepaths import get_path
 from lib.colors import lighten, scale
-from lib.wigcodes import race_titles, hero_names, color_names, build_versions
+from lib.wigcodes import race_titles, hero_names, color_names, build_versions, ability_codes
 import geoip
 from urllib.parse import unquote
 from slugify import slugify
@@ -52,6 +52,18 @@ def race_title(race):
 def hero_name(hero_id):
     """ Translates a 4 letter hero ID to glorious full name """
     return hero_names[hero_id]
+
+
+def ability_name(ability_id):
+    return ability_codes[ability_id]['name']
+
+
+def ability_image_file(ability_id):
+    return ability_name(ability_id).lower().replace(' ', '')
+
+
+def is_ultimate(ability_id):
+    return ability_codes[ability_id]['ult']
 
 
 thumbnails = {}
@@ -170,6 +182,9 @@ def register(jinja_environment):
     jinja_environment.filters['chatmode'] = chatmode
     jinja_environment.filters['raceicon'] = race_icon
     jinja_environment.filters['heroname'] = hero_name
+    jinja_environment.filters['abilityname'] = ability_name
+    jinja_environment.filters['abilityimg'] = ability_image_file
+    jinja_environment.filters['isultimate'] = is_ultimate
     jinja_environment.filters['racetitle'] = race_title
     jinja_environment.filters['mapthumbnail'] = map_thumbnail
     jinja_environment.filters['bigmapurl'] = map_biglink

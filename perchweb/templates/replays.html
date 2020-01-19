@@ -144,10 +144,26 @@
                 </div>
             </div>
             <div class="details">
-                <div class="herodetails">
+                <div class="herodetails hp-toggle" data-group="heroes-{{ player['id'] }}">
                     {% for h in player.real_heroes() %}
-                    <img class="hero" src="/static/images/game/heroes/{{ h['id'] }}.gif"
-                        title="{{ h['id']|heroname }}" /><b>{{ h['level'] }}</b>
+                    <img class="heropic" src="/static/images/game/heroes/{{ h['id'] }}.gif"
+                        title="{{ h['id']|heroname }}" /><div class="level">{{ h['level'] }}</div>
+                    {% endfor %}
+                </div>
+                <div class="heroabilities hp-toggle hidden" data-group="heroes-{{ player['id'] }}">
+                    {% set ha = player.hero_abilities() %}
+                    {% for h in ha %}
+                    <div class="hero"><img class="heropic" src="/static/images/game/heroes/{{ h }}.gif">
+                        <div class="herotext">{{ h|heroname }}</div>
+                        {% if ha[h]['retrains'] > 0 %}<div class="retrains">(<img src="/static/images/tomeofretraining.gif" title="Retrain"> x{{ ha[h]['retrains'] }})</div>{% endif %}
+                        {% for abil, count in ha[h]['skills'].items() %}
+                        <div class="ability">
+                            <img class="abilitypic" src="/static/images/game/abilities/{{ abil|abilityimg }}.gif">
+                            <div class="abilitytext{% if abil|isultimate %} ultimate{% endif %}">
+                                {{ abil|abilityname }}{% if not abil|isultimate %}: <b>{{ count }}</b>{% endif %}
+                            </div>
+                        </div>{% endfor %}
+                    </div>
                     {% endfor %}
                 </div>
                 {% set player_items = player.decode_items() %}

@@ -43,7 +43,7 @@
 }
 
 .hp-toggle.hidden {
-  display: none;
+  display: none !important;
 }
 
 .statwarning.hidden {

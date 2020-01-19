@@ -1,6 +1,7 @@
 """ Could do some data crunching here, count towers, calculate hero levels etc """
 from copy import deepcopy
-from lib.wigcodes import is_tower, is_tower_upgrade, is_worker, tier_upgrades, item_codes, unit_codes, building_codes
+from collections import defaultdict
+from lib.wigcodes import is_tower, is_tower_upgrade, is_worker, tier_upgrades, item_codes, unit_codes, building_codes, hero_names
 
 
 arbitrary_item_scores = {
@@ -70,6 +71,22 @@ class Player(dict):
             return [h for h in self['heroes'] if h['id'][0] == 'N' or h['id'][0] == own_race]
         except KeyError:  # probably custom map
             return []
+
+    def hero_abilities(self):
+        heroes = {}
+        for h in self['heroes']:
+            if not 'id' in h or h['id'] not in hero_names:
+                return {}
+            heroes[h['id']] = {}
+            heroes[h['id']]['skills'] = defaultdict(int)
+            heroes[h['id']]['retrains'] = 0
+            for a in h['abilityOrder']:
+                if a['type'] == 'retraining':
+                    heroes[h['id']]['retrains'] += 1
+                    heroes[h['id']]['skills'] = defaultdict(int)
+                else:
+                    heroes[h['id']]['skills'][a['value']] += 1
+        return heroes
 
     def net_feed(self):
         """ Net gold(0) and lumber(1) fed to allies this game """

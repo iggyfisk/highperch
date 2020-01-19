@@ -1219,13 +1219,54 @@ a.playername:hover {
         color: #00910A;
         text-align: left;
         padding-left: 0px; }
+      .large-replay .teams .team .player .details .heropic {
+        width: 16px;
+        height: 16px;
+        margin-right: 2px; }
+      .large-replay .teams .team .player .details .level {
+        display: inline-block;
+        font-weight: bold;
+        color: #FA6;
+        margin-right: 5px; }
       .large-replay .teams .team .player .details .herodetails {
         display: flex;
-        align-items: center; }
-        .large-replay .teams .team .player .details .herodetails .hero {
-          width: 14px;
-          height: 14px;
-          margin: 0 2px 0 7px; }
+        margin-left: 8px;
+        align-items: center;
+        cursor: pointer; }
+      .large-replay .teams .team .player .details .heroabilities {
+        font-size: 10px;
+        margin-top: 3px;
+        margin-left: 8px;
+        align-items: center;
+        width: fit-content;
+        width: -moz-fit-content;
+        cursor: pointer; }
+        .large-replay .teams .team .player .details .heroabilities .hero {
+          display: inline; }
+          .large-replay .teams .team .player .details .heroabilities .hero .herotext {
+            display: inline-block;
+            vertical-align: super; }
+          .large-replay .teams .team .player .details .heroabilities .hero .retrains {
+            display: inline-block;
+            vertical-align: super; }
+            .large-replay .teams .team .player .details .heroabilities .hero .retrains img {
+              width: 16px;
+              height: 16px;
+              vertical-align: top; }
+          .large-replay .teams .team .player .details .heroabilities .hero .abilitytext {
+            display: inline-block;
+            vertical-align: super; }
+          .large-replay .teams .team .player .details .heroabilities .hero .ultimate {
+            color: #e8faff; }
+          .large-replay .teams .team .player .details .heroabilities .hero .ability {
+            margin: 0 0 0 20px;
+            font-size: 10px;
+            vertical-align: top; }
+          .large-replay .teams .team .player .details .heroabilities .hero .abilitypic {
+            width: 14px;
+            height: 14px;
+            margin: 2px 2px 0 2px;
+            vertical-align: top; }
       .large-replay .teams .team .player .details .extendeddetails {
         font-size: 10px;
         background-color: rgba(255, 255, 255, 0.05);
@@ -1673,7 +1714,7 @@ form.adminlogin {
       .hp-hidden.h.size-ph {
         max-width: 100vh; } }
 .hp-toggle.hidden {
-  display: none; }
+  display: none !important; }
 
 .statwarning.hidden {
   display: none; }

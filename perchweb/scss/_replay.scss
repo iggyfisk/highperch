@@ -17,8 +17,8 @@
 .minimap, .download {
     flex: none;
     margin-right: $padding;
-    height:80px;
-    width:80px;
+    height: 80px;
+    width: 80px;
 }
 
 .adminonly {
@@ -391,14 +391,64 @@ a.playername{
                         text-align: left;
                         padding-left: 0px;
                     }
-
-                    .herodetails{
+                    .heropic {
+                        width: 16px;
+                        height: 16px;
+                        margin-right: 2px;
+                    }
+                    .level {
+                        display: inline-block;
+                        font-weight: bold;
+                        color: #FA6;
+                        margin-right: 5px;
+                    }
+                    .herodetails    {
                         display: flex;
+                        margin-left: $padding;
                         align-items: center;
+                        cursor: pointer;
+                    }
+                    .heroabilities {
+                        font-size: 10px;
+                        margin-top: 3px;
+                        margin-left: $padding;
+                        align-items: center;
+                        width: fit-content;
+                        width: -moz-fit-content;
+                        cursor: pointer;
                         .hero {
-                            width: 14px;
-                            height: 14px;
-                            margin: 0 2px 0 7px;
+                            display: inline;
+                            .herotext {
+                                display: inline-block;
+                                vertical-align: super;
+                            }
+                            .retrains {
+                                display: inline-block;
+                                vertical-align: super;
+                                img {
+                                    width: 16px;
+                                    height: 16px;
+                                    vertical-align: top;
+                                }
+                            }
+                            .abilitytext {
+                                display: inline-block;
+                                vertical-align: super;
+                            }
+                            .ultimate {
+                                color: rgb(232, 250, 255);
+                            }
+                            .ability {
+                                margin: 0 0 0 20px;
+                                font-size: 10px;
+                                vertical-align: top;
+                            }
+                            .abilitypic {
+                                width: 14px;
+                                height: 14px;
+                                margin: 2px 2px 0 2px;
+                                vertical-align: top;
+                            }
                         }
                     }
                     .extendeddetails {

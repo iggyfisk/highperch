@@ -92,6 +92,25 @@
 	});
 })();
 
+/* Replay view navkeys (square brackets for prev/next) */
+(() => {
+	document.addEventListener("DOMContentLoaded", () => {
+		var backElem = document.getElementById("prevReep");
+		var forwardElem = document.getElementById("nextReep");
+		document.onkeyup = function (e) {
+			if (e.which == 219) {
+				if (backElem) {
+					window.location = backElem.href;
+				}
+			} else if (e.which == 221) {
+				if (forwardElem) {
+					window.location = forwardElem.href;
+				}
+			}
+		};
+	});
+})();
+
 /* Minimap drawings */
 (() => {
 	// Loads the image files even if they don't need to be drawn,
@@ -103,12 +122,12 @@
 
 	// There's a race condition where it will draw transparent images
 	// if they're not loaded before drawing
-	const imagesReady = (mapImg = { complete: true, addEventListener: () => {} }) => {
-		const images = [ goldImg, playImg, mapImg];
+	const imagesReady = (mapImg = { complete: true, addEventListener: () => { } }) => {
+		const images = [goldImg, playImg, mapImg];
 		if (images.every(i => i.complete)) return Promise.resolve();
 
 		return new Promise(resolve => {
-			images.forEach(img => {				
+			images.forEach(img => {
 				img.addEventListener('error', resolve);
 				img.addEventListener('load', () => {
 					if (images.every(i => i.complete)) resolve();
@@ -166,7 +185,7 @@
 					const c = getCoords(m);
 					ctx.drawImage(goldImg, c[0] - go, c[1] - go, gs, gs);
 				});
-				
+
 				for (let [color, start] of Object.entries(playerLocations)) {
 					ctx.fillStyle = color;
 					const c = getCoords(start);
