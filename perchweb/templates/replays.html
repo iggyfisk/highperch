@@ -52,13 +52,13 @@
     N.B. unit and building counts are inaccurate - canceled construction and products of multiple building select are
     not tracked.
 </div>
-{% endif %}
-
 <div class="apmcontainer">
     <h2 class="hp-toggle hp-display hidden" data-group="apmseries">Actions per minute</h2>
     <div class="apmseries hp-toggle hp-display hidden" data-group="apmseries">
     </div>
 </div>
+{% endif %}
+
 <div class="teams">
     {% for (teamId, players) in replay.teams().items() %}
     <div class="team">
@@ -258,7 +258,7 @@
             </div>
             {% else %}
             <div class="icon-name">
-                {{ racemacros.icon(player['race'], player['raceDetected']) }}<a class="playername"
+                {{ racemacros.icon(player['race'], player['raceDetected']) }}<a class="playername{% if player['name'] == replay['UploaderBattleTag'] %} listsaver{% endif %}"
                     href="{{ url_for('views.view_player', battletag=player['name']) }}">{{ player['name']|displayname }}</a>
             </div>
             {% endif %}

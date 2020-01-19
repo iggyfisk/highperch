@@ -486,6 +486,13 @@ a.playername{
     .details {
         .team, .teams, .icon-name {
             display: inline-flex;
+            .listsaver {
+                // Todo: enable ONE of these or something like it whenever more people are uploading replays
+                // (right now it'll just look like we're only highlighting "BEARAND")
+                // color: white;
+                // font-style: italic;
+                // filter: brightness(120%);
+            }
         }
         .player, .vs {
             padding-right:$padding;

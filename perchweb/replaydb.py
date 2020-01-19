@@ -75,7 +75,7 @@ def list_replays(search_filter):
     # once we get to 100k replays, ideally only the active filters would be in the query text
     rows = query(f'''
     SELECT ID, Name, TimeStamp, Official, HighQuality, GameType, Version, Length, Map, TowerCount, ChatMessageCount,
-        Towers, StartLocations, Players, Views, UploaderIP
+        Towers, StartLocations, Players, Views, UploaderIP, UploaderBattleTag
     FROM Replays
     WHERE 
         (? = 0 OR Official = 1) AND
