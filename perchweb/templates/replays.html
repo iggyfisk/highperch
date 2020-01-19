@@ -145,16 +145,19 @@
             </div>
             <div class="details">
                 <div class="herodetails hp-toggle" data-group="heroes-{{ player['id'] }}">
-                    {% for h in player.real_heroes() %}
-                    <img class="heropic" src="/static/images/game/heroes/{{ h['id'] }}.gif"
-                        title="{{ h['id']|heroname }}" /><div class="level">{{ h['level'] }}</div>
+                    {% set rh = player.real_hero_ids() %}
+                    {% set ha = player.hero_abilities() %}
+                    {% for h in ha %}
+                    {% if h in rh %}
+                    <img class="heropic" src="/static/images/game/heroes/{{ h }}.gif"
+                        title="{{ h|heroname }}" /><div class="level">{{ ha[h]['level'] }}</div>
+                    {% endif %}
                     {% endfor %}
                 </div>
                 <div class="heroabilities hp-toggle hidden" data-group="heroes-{{ player['id'] }}">
-                    {% set ha = player.hero_abilities() %}
                     {% for h in ha %}
                     <div class="hero"><img class="heropic" src="/static/images/game/heroes/{{ h }}.gif">
-                        <div class="herotext">{{ h|heroname }}</div>
+                        <div class="herotext{% if not h in rh %} alienhero" title="Shared control teammate skillup{% endif %}">{{ h|heroname }}</div>
                         {% if ha[h]['retrains'] > 0 %}<div class="retrains">(<img src="/static/images/tomeofretraining.gif" title="Retrain"> x{{ ha[h]['retrains'] }})</div>{% endif %}
                         {% for abil, count in ha[h]['skills'].items() %}
                         <div class="ability">

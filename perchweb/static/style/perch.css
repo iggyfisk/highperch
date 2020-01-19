@@ -1246,6 +1246,8 @@ a.playername:hover {
           .large-replay .teams .team .player .details .heroabilities .hero .herotext {
             display: inline-block;
             vertical-align: super; }
+          .large-replay .teams .team .player .details .heroabilities .hero .alienhero {
+            color: violet; }
           .large-replay .teams .team .player .details .heroabilities .hero .retrains {
             display: inline-block;
             vertical-align: super; }

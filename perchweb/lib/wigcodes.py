@@ -29,7 +29,7 @@ hero_names = {
     "Nplh": "Pit Lord",
     "Ntin": "Tinker",
     "Obla": "Blademaster",
-    "Ofar": "Farseer",
+    "Ofar": "Far Seer",
     "Oshd": "Shadow Hunter",
     "Otch": "Tauren Chieftain",
     "Ucrl": "Crypt Lord",

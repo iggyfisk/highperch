@@ -1,7 +1,7 @@
 """ Could do some data crunching here, count towers, calculate hero levels etc """
 from copy import deepcopy
 from collections import defaultdict
-from lib.wigcodes import is_tower, is_tower_upgrade, is_worker, tier_upgrades, item_codes, unit_codes, building_codes, hero_names
+from lib.wigcodes import is_tower, is_tower_upgrade, is_worker, tier_upgrades, item_codes, unit_codes, building_codes, hero_names, ability_codes
 
 
 arbitrary_item_scores = {
@@ -72,20 +72,38 @@ class Player(dict):
         except KeyError:  # probably custom map
             return []
 
+    def real_hero_ids(self):
+        return [hero['id'] for hero in self.real_heroes()]
+
     def hero_abilities(self):
+        skillup_lag_window_ms = 155 # negotiable, this just fixes both cases in replayID 285. 155ms interval = 387apm
         heroes = {}
         for h in self['heroes']:
             if not 'id' in h or h['id'] not in hero_names:
-                return {}
+                return {}   #   probably custom map
             heroes[h['id']] = {}
             heroes[h['id']]['skills'] = defaultdict(int)
             heroes[h['id']]['retrains'] = 0
+            heroes[h['id']]['level'] = 0
+            last_skillup = ''
+            last_skillup_ms = 0
             for a in h['abilityOrder']:
                 if a['type'] == 'retraining':
                     heroes[h['id']]['retrains'] += 1
+                    heroes[h['id']]['level'] = 0
                     heroes[h['id']]['skills'] = defaultdict(int)
                 else:
+                    if a['time'] - last_skillup_ms <= skillup_lag_window_ms and a['value'] == last_skillup:
+                        continue    # they leveled up suspiciously fast, discard
+                    if heroes[h['id']]['skills'][a['value']] == 3:
+                        continue    # impossible (in melee) to skill past 3, discard
+                    if ability_codes[a['value']]['ult'] and heroes[h['id']]['skills'][a['value']] == 1:
+                        continue    # impossible (in melee) to multi-level ultimate, discard
                     heroes[h['id']]['skills'][a['value']] += 1
+                    heroes[h['id']]['level'] += 1
+                    last_skillup = a['value']
+                last_skillup_ms = a['time']
+
         return heroes
 
     def net_feed(self):
