@@ -75,7 +75,7 @@ def list_replays(search_filter):
     # once we get to 100k replays, ideally only the active filters would be in the query text
     rows = query(f'''
     SELECT ID, Name, TimeStamp, Official, HighQuality, GameType, Version, Length, Map, TowerCount, ChatMessageCount,
-        Towers, StartLocations, Players, Views, UploaderIP, UploaderBattleTag
+        Towers, StartLocations, Players, Views, UploaderIP, UploaderBattleTag, VODURL
     FROM Replays
     WHERE 
         (? = 0 OR Official = 1) AND
@@ -93,7 +93,7 @@ def list_player_replays(battletag, max_results=20):
     # Todo: combine key elements with list_replays
     rows = query('''
     SELECT ID, Name, TimeStamp, Official, HighQuality, GameType, Version, Length, Map, R.TowerCount, R.ChatMessageCount,
-        Towers, StartLocations, Players, Views, UploaderIP
+        Towers, StartLocations, Players, Views, UploaderIP, VODURL
     FROM Replays AS R
     INNER JOIN GamesPlayed ON ReplayID = ID
     WHERE PlayerTag = ?
@@ -109,7 +109,7 @@ def list_map_replays(map_name, max_results=20):
     # Todo: combine key elements with list_replays
     rows = query('''
     SELECT ID, Name, TimeStamp, Official, HighQuality, GameType, Version, Length, Map, TowerCount, ChatMessageCount,
-        Towers, StartLocations, Players, Views, UploaderIP
+        Towers, StartLocations, Players, Views, UploaderIP, VODURL
     FROM Replays
     WHERE Map = ?
     ORDER BY ID DESC

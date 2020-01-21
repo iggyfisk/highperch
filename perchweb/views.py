@@ -8,7 +8,7 @@ from werkzeug.utils import secure_filename
 from handler import standard_page
 import replaydb
 from filepaths import get_replay
-from peep import get_pic
+from peep import get_max_id, get_pic, superlative
 from auth import login as auth_login, check_if_admin
 from perchlogging import log_to_slack, format_ip_addr
 from templatefilters import lighten_color, url_slug
@@ -196,9 +196,16 @@ def guide():
 @routes.route('/peep/<int:pic_id>')
 def peep(pic_id):
     """Sometimes random pictures"""
+    if (pic_id and pic_id > get_max_id()) or pic_id == 0:   # invalid pic ID
+        return redirect(url_for('views.peep'))
     pic = get_pic(pic_id)
+    replay_name = None
+    if pic['replay_id']:
+        replay_name = replaydb.get_replay_listinfo(pic['replay_id'])['Name']
     return standard_page('peep.html', 'Peep a pic', nav='peep', pic=pic,
-                         perma=url_for('views.peep', pic_id=pic['id']))
+                         perma=url_for('views.peep', pic_id=pic['id']), 
+                         replay_id=pic['replay_id'], replay_name=replay_name,
+                         superlative=superlative)
 
 
 @routes.route('/login', methods=['GET'])

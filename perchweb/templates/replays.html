@@ -22,8 +22,7 @@
         <p><a href="/replay/{{ replay['ID'] }}/download" title="Download replay"><i class="icon-download-alt"></i></a> |
             {{ replay['Length']|gametime }} | {{ replay['GameType'] }} | <a class="minorlink" href="{{ url_for('views.view_map', map_name=replay['Map']) }}">{{ replay['Map'] }}</a> |
             {{ replay['TowerCount'] }} towers | {{ replay.upload_date() }} {% if replay['Official'] %}|
-            {{ tagmacros.tag('Official') }}{% endif %}{% if is_admin %}| <span
-                class="adminonly">{{ replay['UploaderIP'] }} {{ replay['UploaderIP']|embed_country|safe }}{% endif %}
+            {{ tagmacros.tag('Official') }}{% endif %}{% if replay['VODURL'] %}| <a href="{{ replay['VODURL'] }}"><i class="icon-youtube-play" title="VOD"></i></a> {% endif %}{% if is_admin %}| <span class="adminonly">{{ replay['UploaderIP'] }} {{ replay['UploaderIP']|embed_country|safe }}{% endif %}
         </p>
         {{ teams(replay) }}
     </div>

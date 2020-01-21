@@ -9,12 +9,17 @@ from filepaths import get_temp, get_peep
 random.seed()
 
 
+def get_max_id():
+    max_id_row = query(
+        'SELECT ID FROM Pics ORDER BY ID DESC LIMIT 1', one=True)
+    max_id = (max_id_row or [1])[0]
+    return max_id
+
+
 def get_pic(pic_id=None):
     """ Returns a pic for peeping, random if no pic_id is specified """
-    if pic_id is None:
-        max_id_row = query(
-            'SELECT ID FROM Pics ORDER BY ID DESC LIMIT 1', one=True)
-        max_id = (max_id_row or [1])[0]
+    max_id = get_max_id()
+    if pic_id is None or pic_id > max_id:
         pic_id = random.randint(1, max_id)
 
     row = query(
@@ -57,3 +62,9 @@ def save_pic(pic, filename, replay_id=None):
     finally:
         if os.path.isfile(temp_pic_path):
             os.remove(temp_pic_path)
+
+def superlative():
+    words = ['very cool', 'wonderful', 'gnarly', 'nearly perfect', 'classic',
+             'friendly', 'smile-inducing', 'piece of history', 'seminal', 'unforgettable',
+             'wigworthy', 'ahead-of-its-time', 'essential']
+    return random.choice(words)

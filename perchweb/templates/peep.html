@@ -15,6 +15,7 @@
     <div class="col-lg-3">
         <div class="blend">
             <div class="cont">
+                {% if replay_id %}From the {{ superlative() }} <i><a href="{{ url_for('views.view_replay_slug', replay_id=replay_id, replay_slug=replay_name|slugify) }}">{{ replay_name }}</a></i>{% endif %}
                 <p>This picature was forged in the heat of battle and can forever be accessed using the <a href="{{perma}}">permalink</a></p>
             </div>
         </div>
