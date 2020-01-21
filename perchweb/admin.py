@@ -9,7 +9,7 @@ from flask import Blueprint, url_for, request, redirect, flash, send_from_direct
 from werkzeug.utils import secure_filename
 from auth import admin_only, logout as auth_logout
 from handler import admin_page
-from replaydb import get_all_replays, get_all_uploader_ips, save_chatlog, \
+from replaydb import get_all_replays, get_all_uploader_ips, save_chatlog, save_vod_url,\
     delete_replay as dbdelete_replay, edit_replay as dbedit_replay
 from peep import save_pic
 from filepaths import get_db, get_temp, get_replay, get_replay_data
@@ -33,6 +33,16 @@ def add_footer(replay_id):
 
     return redirect(url_for('views.view_replay', replay_id=replay_id))
 
+
+@routes.route('/replay/<int:replay_id>/vodurl', methods=['POST'])
+@admin_only
+def add_vod_url(replay_id):
+    """ Add a VOD link """
+    vod_url = request.form['vodurl'].strip()
+    save_vod_url(replay_id, vod_url)
+    flash('VOD URL saved')
+
+    return redirect(url_for('views.view_replay', replay_id=replay_id))
 
 @routes.route('/replay/<int:replay_id>/delete', methods=['POST'])
 @admin_only

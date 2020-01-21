@@ -495,6 +495,11 @@ def save_chatlog(replay_id, chat):
         VALUES (?,?)''', (replay_id, chat))
 
 
+def save_vod_url(replay_id, vod_url):
+    """ Add a VOD URL to the database """
+    query('''UPDATE Replays SET VODURL = ? WHERE ID = ?''', (vod_url, replay_id))
+
+
 def get_all_uploader_ips():
     rows = query(f'''
     SELECT UploaderIP

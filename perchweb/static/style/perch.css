@@ -1075,6 +1075,31 @@ a.playername:hover {
           height: 300px; } }
       .large-replay .details .content .minimap .drawmap.anim {
         cursor: pointer; }
+    .large-replay .details .content .adminicon {
+      color: #33ccff; }
+    .large-replay .details .content .addvod .content {
+      width: 30vw;
+      background: #33ccff99;
+      padding: 10px;
+      border-radius: 4px; }
+      .large-replay .details .content .addvod .content h2 {
+        background: none;
+        color: #fff;
+        text-shadow: 1px 1px 1px #000; }
+      .large-replay .details .content .addvod .content form {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 0;
+        width: 300px; }
+      .large-replay .details .content .addvod .content textarea {
+        color: #222;
+        width: 100%;
+        height: 20px;
+        resize: vertical;
+        border: 1px solid #000; }
+      .large-replay .details .content .addvod .content input[type="submit"] {
+        background: #EEE;
+        align-self: flex-end; }
     .large-replay .details .content .admin {
       position: absolute;
       top: 0;

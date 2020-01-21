@@ -61,6 +61,23 @@
                         <p>Game version {% if version %}{{ replay['buildNo']|exact_version }}{% else %}{{ replay['version'] }} ({{ replay['buildNo'] }}){% endif %}</p>
                         <p><b>{{ replay['duration']|gametime }}</b> long {{ replay['type'] }} {{ replay.game_host_type() }} game on <a href="{{ url_for('views.view_map', map_name=replay.map_name()) }}">{{ replay.map_name() }}</a></p>
                         <p>Saved by <a href="{{ url_for('views.view_player', battletag=replay.replay_saver()['name']) }}">{{ replay.replay_saver()['name']|displayname }}</a></p>
+                        <p>{% if listinfo['VODURL'] %}<a href="{{ listinfo['VODURL'] }}"><i class="icon-youtube-play" title="VOD"></i></a>{% endif %}
+                        {% if is_admin %}<span class="adminicon hp-expand"><i class="icon-pencil"></i></span>
+                        <div class="addvod hp-hidden v">
+                            <div class="content">
+                                <h2>Add/edit VOD URL</h2>
+                                <form action="/replay/{{ replay_id }}/vodurl" method="POST">
+                                    <textarea
+                                        name="vodurl"
+                                        placeholder="Paste full URL here."
+                                        minlength="20"
+                                        required></textarea>
+                                    <input type="submit" value="Save" />
+                                </form>
+                            </div>
+                        </div>
+                        {% endif %}
+                        </p>
                     </div>
                     <script type="application/ld+json">
                         {
