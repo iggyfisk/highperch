@@ -410,6 +410,8 @@ class Player(dict):
 
         if len(self['heroes']) > 0:
             for hero in self['heroes']:
+                if not 'id' in hero or hero['id'] not in hero_names:
+                    continue    # non-melee hero from custom map
                 for ability in hero['abilityOrder']:
                     if ability['type'] == 'retraining':
                         built.append({'type': 'skillup', 'id': 'tret', 'name': 'Retrain Hero',
