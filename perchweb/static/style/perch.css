@@ -849,8 +849,11 @@ nav ul {
     margin-bottom: 0;
     line-height: 1; }
     nav ul li.admin img, nav ul li.background-picker img {
-      margin: 4px;
+      margin: 1px;
       border: 1px solid rgba(0, 0, 0, 0); }
+      @media (min-width: 550px) {
+        nav ul li.admin img, nav ul li.background-picker img {
+          margin-right: 4px; } }
       nav ul li.admin img:hover, nav ul li.background-picker img:hover {
         border: 1px solid #c4976f; }
     nav ul li.admin a, nav ul li.background-picker a {
@@ -1103,6 +1106,13 @@ a.playername:hover {
   text-align: center;
   background-color: rgba(10, 5, 5, 0.75);
   margin-bottom: 15px; }
+  .large-replay .controls img {
+    width: 32px;
+    height: 32px; }
+    @media (min-width: 750px) {
+      .large-replay .controls img {
+        width: 64px;
+        height: 64px; } }
   .large-replay .controls .controlshow {
     outline: 3px rgba(0, 0, 0, 0) solid; }
   .large-replay .controls .itemhide {

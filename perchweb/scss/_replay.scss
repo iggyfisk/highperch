@@ -248,6 +248,14 @@ a.playername{
         background-color: $card-background-color;
         margin-bottom: 15px;
         $outline-size: 3px;
+        img {
+            width: 32px;
+            height: 32px;
+            @media (#{$bp-larger-than-tablet}) {
+                width: 64px;
+                height: 64px;
+            }
+        }
         .controlshow {
             outline: $outline-size rgba(0,0,0,0.0) solid;
         }

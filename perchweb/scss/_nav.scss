@@ -116,7 +116,10 @@ nav {
             &.admin,
             &.background-picker {
                 img {
-                    margin:$padding/2;
+                    margin: 1px;
+                    @media (#{$bp-larger-than-phablet}) {
+                        margin-right: $padding / 2;
+                    }
                     border:1px solid rgba(0,0,0,0);
                     &:hover{
                         border:1px solid $primary-color;
