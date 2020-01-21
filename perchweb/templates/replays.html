@@ -43,6 +43,8 @@
     <span class="hp-toggle hp-highlight inaccurate hidden" data-group="units" data-inaccurate="-1"><img class="unithide" src="/static/images/peasant.gif" title="Hide unit details"></span>
     <span class="hp-toggle hp-highlight inaccurate" data-group="buildings" data-inaccurate="1"><img class="controlshow" src="/static/images/castle.gif" title="Show building details"></span>
     <span class="hp-toggle hp-highlight inaccurate hidden" data-group="buildings" data-inaccurate="-1"><img class="buildinghide" src="/static/images/castle.gif" title="Hide building details"></span>
+    <span class="hp-toggle hp-highlight inaccurate" data-group="buildorder" data-inaccurate="1"><img class="controlshow" src="/static/images/humanbuild.png" title="Show build order"></span>
+    <span class="hp-toggle hp-highlight inaccurate hidden" data-group="buildorder" data-inaccurate="-1"><img class="buildorderhide" src="/static/images/humanbuild.png" title="Hide build order"></span>
     <span class="hp-toggle hp-highlight" data-group="actions"><img class="controlshow" src="/static/images/move.gif" title="Show action details"></span>
     <span class="hp-toggle hp-highlight hidden" data-group="actions"><img class="actionhide" src="/static/images/move.gif" title="Hide action details"></span>
     <span class="hp-toggle hp-highlight" data-group="apmseries"><img class="controlshow" src="/static/images/stasistrap.png" title="Show APM graph"></span>
@@ -237,6 +239,21 @@
                             <td class="slash"> / </td>
                             <td class="wood">{{ player.total_buildings_cost()[1] }}w</td>
                         </tr>
+                    </table>
+                    {% endif %}
+                </div>
+                <div class="extendeddetails buildorder hp-toggle hp-display hidden" data-group="buildorder">
+                    {% set bo = player.build_order() %}
+                    {% if bo|length == 0 %}
+                    <div class="built"><i>Absolutely nothing!</i></div>
+                    {% else %}
+                    <table>
+                        {% for b in bo %}
+                        <tr class="built">
+                            <td class="time">{{ b['ms']|gametime }}</td>
+                            <td class="name">{{ b['name'] }}</td>
+                        </tr>
+                        {% endfor %}
                     </table>
                     {% endif %}
                 </div>

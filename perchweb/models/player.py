@@ -1,7 +1,7 @@
 """ Could do some data crunching here, count towers, calculate hero levels etc """
 from copy import deepcopy
 from collections import defaultdict
-from lib.wigcodes import is_tower, is_tower_upgrade, is_worker, tier_upgrades, item_codes, unit_codes, building_codes, hero_names, ability_codes
+from lib.wigcodes import is_tower, is_tower_upgrade, is_worker, tier_upgrades, item_codes, unit_codes, building_codes, hero_names, ability_codes, upgrade_codes
 
 
 arbitrary_item_scores = {
@@ -76,11 +76,12 @@ class Player(dict):
         return [hero['id'] for hero in self.real_heroes()]
 
     def hero_abilities(self):
-        skillup_lag_window_ms = 155 # negotiable, this just fixes both cases in replayID 285. 155ms interval = 387apm
+        # negotiable, this just fixes both cases in replayID 285. 155ms interval = 387apm
+        skillup_lag_window_ms = 155
         heroes = {}
         for h in self['heroes']:
             if not 'id' in h or h['id'] not in hero_names:
-                return {}   #   probably custom map
+                return {}  # probably custom map
             heroes[h['id']] = {}
             heroes[h['id']]['skills'] = defaultdict(int)
             heroes[h['id']]['retrains'] = 0
@@ -96,9 +97,11 @@ class Player(dict):
                     if a['time'] - last_skillup_ms <= skillup_lag_window_ms and a['value'] == last_skillup:
                         continue    # they leveled up suspiciously fast, discard
                     if heroes[h['id']]['skills'][a['value']] == 3:
-                        continue    # impossible (in melee) to skill past 3, discard
+                        # impossible (in melee) to skill past 3, discard
+                        continue
                     if ability_codes[a['value']]['ult'] and heroes[h['id']]['skills'][a['value']] == 1:
-                        continue    # impossible (in melee) to multi-level ultimate, discard
+                        # impossible (in melee) to multi-level ultimate, discard
+                        continue
                     heroes[h['id']]['skills'][a['value']] += 1
                     heroes[h['id']]['level'] += 1
                     last_skillup = a['value']
@@ -360,3 +363,64 @@ class Player(dict):
         nonzero_actions = {action: count for action,
                            count in actions.items() if count > 0}
         return list(nonzero_actions.items())
+
+    def build_order(self):
+        built = []
+
+        last_build_id = ''
+        last_build_ms = 0
+        build_lag_window_ms = 155
+
+        if len(self['units']['order']) > 0:
+            for unit in self['units']['order']:
+                if unit['id'] in building_codes:    # building upgrades are in the units array
+                    if unit['id'] == last_build_id and unit['ms'] - last_build_ms <= build_lag_window_ms * 2:
+                        continue
+                    built.append(
+                        {'type': 'building', 'id': unit['id'],
+                         'name': building_codes[unit['id']]['name'], 'ms': unit['ms']})
+                else:
+                    built.append({'type': 'unit', 'id': unit['id'],
+                                  'name': unit_codes[unit['id']]['name'], 'ms': unit['ms']})
+                last_build_id = unit['id']
+                last_build_ms = unit['ms']
+
+        if 'order' in self['buildings']:
+            [built.append({'type': 'building', 'id': building['id'], 'name': building_codes[building['id']]
+                           ['name'], 'ms': building['ms']}) for building in self['buildings']['order']]
+
+        upgrade_level = defaultdict(int)
+
+        if len(self['upgrades']['order']) > 0:
+            for upgrade in self['upgrades']['order']:
+                if upgrade['id'] == last_build_id and upgrade['ms'] - last_build_ms <= build_lag_window_ms:
+                    continue    # lag click
+                if (upgrade_level[upgrade['id']] + 1) > len(upgrade_codes[upgrade['id']]['levels']):
+                    continue    # impossible upgrade, probably due to previous cancelation or lag click
+                built.append({'type': 'upgrade', 'id': upgrade['id'],
+                              'name': upgrade_codes[upgrade['id']]['levels'][upgrade_level[upgrade['id']]]['name'],
+                              'ms': upgrade['ms']})
+                upgrade_level[upgrade['id']] += 1
+                last_build_id = upgrade['id']
+                last_build_ms = upgrade['ms']
+
+        if len(self['items']['order']) > 0:
+            [built.append({'type': 'item', 'id': item['id'], 'name': item_codes[item['id']]
+                           ['name'], 'ms': item['ms']}) for item in self['items']['order']]
+
+        if len(self['heroes']) > 0:
+            for hero in self['heroes']:
+                for ability in hero['abilityOrder']:
+                    if ability['type'] == 'retraining':
+                        built.append({'type': 'skillup', 'id': 'tret', 'name': 'Retrain Hero',
+                                  'ms': ability['time']})
+                        continue
+                    if ability['value'] == last_build_id and ability['time'] - last_build_ms <= build_lag_window_ms:
+                        continue    # lag click
+                    built.append({'type': 'skillup', 'id': ability['value'],
+                                  'name': ability_codes[ability['value']]['name'],
+                                  'ms': ability['time']})
+                    last_build_id = ability['value']
+                    last_build_ms = ability['time']
+
+        return sorted(built, key=lambda i: i['ms'])

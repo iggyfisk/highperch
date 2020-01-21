@@ -1114,6 +1114,9 @@ a.playername:hover {
   .large-replay .controls .buildinghide {
     outline: 3px blue solid;
     outline-offset: -3px; }
+  .large-replay .controls .buildorderhide {
+    outline: 3px violet solid;
+    outline-offset: -3px; }
   .large-replay .controls .actionhide {
     outline: 3px red solid;
     outline-offset: -3px; }
@@ -1285,6 +1288,10 @@ a.playername:hover {
         border-left: 1px #00cddb solid; }
       .large-replay .teams .team .player .details .buildingdetails {
         border-left: 1px blue solid; }
+      .large-replay .teams .team .player .details .buildorder {
+        border-left: 1px violet solid; }
+        .large-replay .teams .team .player .details .buildorder .built .time {
+          text-align: right; }
       .large-replay .teams .team .player .details .actiondetails {
         border-left: 1px red solid; }
 

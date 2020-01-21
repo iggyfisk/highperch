@@ -145,6 +145,7 @@ a.playername{
     $item-color: #e1642a;
     $unit-color: #00cddb;
     $building-color: blue;
+    $buildorder-color: violet;
     $action-color: red;
     .details {
         h2 {
@@ -260,6 +261,10 @@ a.playername{
         }
         .buildinghide {
             outline: $outline-size $building-color solid;
+            outline-offset: -$outline-size;
+        }
+        .buildorderhide {
+            outline: $outline-size $buildorder-color solid;
             outline-offset: -$outline-size;
         }
         .actionhide {
@@ -466,16 +471,24 @@ a.playername{
                             cursor: default;
                         }
                     }
-                    .itemdetails{
+                    .itemdetails {
                         border-left: 1px $item-color solid;
                     }
-                    .unitdetails{
+                    .unitdetails {
                         border-left: 1px $unit-color solid;
                     }
-                    .buildingdetails{
+                    .buildingdetails {
                         border-left: 1px $building-color solid;
                     }
-                    .actiondetails{
+                    .buildorder {
+                        border-left: 1px $buildorder-color solid;
+                        .built {
+                            .time {
+                                text-align: right;
+                            }
+                        }
+                    }
+                    .actiondetails {
                         border-left: 1px $action-color solid;
                     }
                 }
