@@ -85,7 +85,7 @@
     </div>
     <footer>
         {% if chatlog %}
-        <div class="chatlog">{{ chatlog['text'] }}</div>
+        <div class="chatlog">{% if chatlog['replay_id'] %}<a href="{{ url_for('views.view_replay_slug', replay_id=chatlog['replay_id'], replay_slug=chatlog['replay_name']|slugify) }}">{% endif %}{{ chatlog['text'] }}{% if chatlog['replay_id'] %}</a>{% endif %}</div>
         {% endif %}
         <p>Copyright {% if not is_admin %}<a href="/login" class="logout">{% endif %}&copy; {% if not is_admin %}</a>{% endif %} {{ year }} <a href="mailto:admin@highper.ch">Clan Towa</a></p>
     </footer>

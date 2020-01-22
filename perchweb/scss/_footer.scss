@@ -18,6 +18,10 @@ footer {
         font-style: italic;
         font-size: 12px;
         text-shadow: 1px 1px 0 #333;
+        a {
+            text-decoration: none;
+            color: #ddd !important;
+        }
     }
 
     .logout {
