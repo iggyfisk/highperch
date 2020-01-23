@@ -37,7 +37,9 @@ def validate_subnet(subnet, addr):
 
 
 def validate_battletag(battletag):
-    if match(r'\w+#\d+$', battletag):
+    # starts with a non-number, 3 to 12 chars + # + 1 to 6 (?) digits
+    # accented latin chars (U00C0-U017F) permitted
+    if match(r'[a-zA-Z\u00C0-\u017F][0-9a-zA-Z\u00C0-\u017F]{2,11}#\d{1,6}$', battletag):
         return True
     return False
 
