@@ -60,24 +60,75 @@
                         {% set version = replay['buildNo']|exact_version %}
                         <p>Game version {% if version %}{{ replay['buildNo']|exact_version }}{% else %}{{ replay['version'] }} ({{ replay['buildNo'] }}){% endif %}</p>
                         <p><b>{{ replay['duration']|gametime }}</b> long {{ replay['type'] }} {{ replay.game_host_type() }} game on <a href="{{ url_for('views.view_map', map_name=replay.map_name()) }}">{{ replay.map_name() }}</a></p>
-                        <p>Saved by <a href="{{ url_for('views.view_player', battletag=replay.replay_saver()['name']) }}">{{ replay.replay_saver()['name']|displayname }}</a></p>
-                        <p>{% if listinfo['VODURL'] %}<a href="{{ listinfo['VODURL'] }}"><i class="icon-youtube-play" title="VOD"></i></a>{% endif %}
-                        {% if is_admin %}<span class="adminicon hp-expand"><i class="icon-pencil"></i></span>
-                        <div class="addvod hp-hidden v">
-                            <div class="content">
-                                <h2>Add/edit VOD URL</h2>
-                                <form action="/replay/{{ replay_id }}/vodurl" method="POST">
-                                    <textarea
-                                        name="vodurl"
-                                        placeholder="Paste full URL here."
-                                        minlength="20"
-                                        required></textarea>
-                                    <input type="submit" value="Save" />
-                                </form>
+                        <div class="saver">Saved by <a href="{{ url_for('views.view_player', battletag=replay.replay_saver()['name']) }}">{{ replay.replay_saver()['name']|displayname }}</a>
+                        {% if is_admin %}
+                        <div class="bancontainer adminonly"><span class="adminicon hp-expand"><i class="icon-user-times"></i></span>
+                            <div class="ban hp-hidden v">
+                                <div class="content">
+                                    <h2>Ban Battletag</h2>
+                                    <form action="/replay/{{ replay_id }}/banaccount" method="POST">
+                                        <input
+                                            name="battletag"
+                                            value="{{ replay.replay_saver()['name'] }}"
+                                            minlength="10"
+                                            required />
+                                        <textarea
+                                            name="reason"
+                                            placeholder="Ban reason"
+                                            minlength="5"
+                                            required></textarea>
+                                        <input type="submit" value="Ban" />
+                                    </form>
+                                </div>
                             </div>
                         </div>
                         {% endif %}
-                        </p>
+                        </div>
+                        {% if is_admin %}
+                            <div class="bancontainer adminonly">{{ listinfo['UploaderIP'] }} {{ listinfo['UploaderIP']|embed_country|safe }} <span class="adminicon hp-expand"><i class="icon-user-times"></i></span>
+                                <div class="ban hp-hidden v">
+                                    <div class="content">
+                                        <h2>Ban subnet</h2>
+                                        <form action="/replay/{{ replay_id }}/bansubnet" method="POST">
+                                            <input
+                                                name="subnet"
+                                                value="{{ listinfo['UploaderIP']|slash24 }}"
+                                                minlength="10"
+                                                required />
+                                            <input
+                                                name="ipaddr"
+                                                value="{{ listinfo['UploaderIP'] }}"
+                                                minlength="7"
+                                                required />
+                                            <textarea
+                                                name="reason"
+                                                placeholder="Ban reason"
+                                                minlength="5"
+                                                required></textarea>
+                                            <input type="submit" value="Ban" />
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                        <div class="vodcontainer">{% if listinfo['VODURL'] %}<a href="{{ listinfo['VODURL'] }}"><i class="icon-youtube-play" title="VOD"></i></a>{% endif %}
+                        {% if is_admin %}
+                        {% if not listinfo['VODURL'] %}<i class="adminonly">no VOD</i>{% endif %}<span class="adminicon hp-expand"><i class="icon-pencil"></i></span>
+                            <div class="addvod hp-hidden v">
+                                <div class="content">
+                                    <h2>Add/edit VOD URL</h2>
+                                    <form action="/replay/{{ replay_id }}/vodurl" method="POST">
+                                        <textarea
+                                            name="vodurl"
+                                            placeholder="Paste full URL here."
+                                            minlength="20"
+                                            required></textarea>
+                                        <input type="submit" value="Save" />
+                                    </form>
+                                </div>
+                            </div>
+                        {% endif %}
+                        </div>
                     </div>
                     <script type="application/ld+json">
                         {

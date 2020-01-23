@@ -212,9 +212,44 @@ a.playername{
             .adminicon {
                 color: $admin-color;
             }
-            .addvod {
+            .vodcontainer {
+                .addvod {
+                    .content {
+                        width: 30vw;
+                        background: $admin-bg;
+                        padding: 10px;
+                        border-radius: $global-radius;
+                        h2 {
+                            background: none;
+                            color: #fff;
+                            text-shadow: 1px 1px 1px #000;
+                        }
+                        form {
+                            display: flex;
+                            flex-direction: column;
+                            margin-bottom: 0;
+                            width: 300px;
+                        }
+                        textarea {
+                            color: $font-color;
+                            width: 100%;
+                            height: 20px;
+                            resize: vertical;
+                            border: 1px solid #000;
+                        }
+                        input[type="submit"] {
+                            background: #EEE;
+                            align-self: flex-end;
+                        }
+                    }
+                }
+            }
+            .bancontainer {
+                display: inline;
+            }
+            .ban {
                 .content {
-                    width: 30vw;
+                    width: 20vw;
                     background: $admin-bg;
                     padding: 10px;
                     border-radius: $global-radius;
@@ -229,7 +264,7 @@ a.playername{
                         margin-bottom: 0;
                         width: 300px;
                     }
-                    textarea {
+                    textarea, input {
                         color: $font-color;
                         width: 100%;
                         height: 20px;
@@ -237,8 +272,12 @@ a.playername{
                         border: 1px solid #000;
                     }
                     input[type="submit"] {
-                        background: #EEE;
+                        background: red;
+                        width: 50%;
+                        height: 40px;
                         align-self: flex-end;
+                        color: white;
+                        font-size: 20px;
                     }
                 }
             }

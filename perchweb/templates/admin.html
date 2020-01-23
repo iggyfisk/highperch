@@ -3,16 +3,73 @@
 {% block content %}
 <div class="console">
     <div class="box">
-        <h2>Controls</h2>
+        <h2>Ban Control - {{ banned_subnets|length + banned_accounts|length }} bans</h2>
         <div class="inner">
-            You currently have no control over this situation
+            <div class="statblock">
+                <div class="bans">
+                    <table>
+                        {% if banned_subnets|length == 0 %}
+                            <tr>
+                                <td>No banned subnets</td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <th>Subnet</th>
+                                <th>Offender</th>
+                                <th>Reason</th>
+                                <th class="wide">Timestamp</th>
+                                <th></th>
+                            </tr>
+                        {% endif %}
+                        {% for subnet in banned_subnets %}
+                            <tr>
+                                <td>{{ subnet['Subnet'] }}</td>
+                                <td>{{ subnet['OriginalIP'] }}</td>
+                                <td>{{ subnet['Reason'] }}</td>
+                                <td>{{ subnet['Timestamp']|epochtoiso }}</td>
+                                <td><form action="/admin/unbansubnet" method="POST" onsubmit="return confirm('Really unban {{ subnet['Subnet'] }}?');">
+                                    <input name="subnet" value="{{ subnet['Subnet'] }}" hidden />
+                                    <button type="submit" class="unban"><b>UNBAN</b></button></form></td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                <hr>
+                <div class="bans">
+                    <table>
+                        {% if banned_accounts|length == 0 %}
+                            <tr>
+                                <td>No banned BattleTags</td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <th>BattleTag</th>
+                                <th></th>
+                                <th>Reason</th>
+                                <th class="wide">Timestamp</th>
+                                <th></th>
+                            </tr>
+                        {% endif %}
+                        {% for account in banned_accounts %}
+                            <tr>
+                                <td>{{ account['BattleTag'] }}</td>
+                                <td></td>
+                                <td>{{ account['Reason'] }}</td>
+                                <td>{{ account['Timestamp']|epochtoiso }}</td>
+                                <td><form action="/admin/unbanaccount" method="POST" onsubmit="return confirm('Really unban {{ account['BattleTag'] }}?');">
+                                    <input name="battletag" value="{{ account['BattleTag'] }}" hidden />
+                                    <button type="submit" class="unban"><b>UNBAN</b></button></form></td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
     <span class="break"></span>
     <div class="box">
-        <h2>Readout</h2>
+        <h2>Readout - {{ replays|length }} replays</h2>
         <div class="inner">
-            <div class="statblock">{{ replays|length }} replays</div>
             <div class="statblock">
                 <h3>Replay uploaders:</h3>
                 <div class="stats">
@@ -21,6 +78,7 @@
                     </table>
                 </div>
             </div>
+            <hr>
             <div class="statblock">
                 <h3>Replay savers:</h3>
                 <div class="stats">
@@ -30,6 +88,7 @@
                     </table>
                 </div>
             </div>
+            <hr>
             <div class="statblock">
                 <p><a href="/admin/wig.db">Database<i class="icon-download-alt"></i></a></p>
                 <p><a href="/admin/replaydata.zip">Replay data<i class="icon-download-alt"></i></a></p>

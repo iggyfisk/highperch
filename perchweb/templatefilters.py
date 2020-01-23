@@ -2,6 +2,7 @@
 from os.path import isfile, join
 from re import compile as re_compile
 from re import sub as re_sub
+from datetime import datetime
 from filepaths import get_path
 from lib.colors import lighten, scale
 from lib.wigcodes import race_titles, hero_names, color_names, build_versions, ability_codes
@@ -24,6 +25,10 @@ def gametime_for_computers(milliseconds):
         hours, minutes = divmod((minutes), 60)
         return f'PT{hours}H{minutes}M{seconds}S'
     return f'PT{minutes}M{seconds}S'
+
+
+def epoch_to_iso(timestamp):
+    return datetime.fromtimestamp(timestamp)
 
 
 chat_modes = {
@@ -175,10 +180,15 @@ def exact_version(build):
         return None
 
 
+def make_slash_24(ip_addr):
+    return '.'.join(ip_addr.split('.')[0:3]) + '.0/24'
+
+
 def register(jinja_environment):
     """ Register all filters to the given jinja environment """
     jinja_environment.filters['gametime'] = gametime
     jinja_environment.filters['gametime_for_computers'] = gametime_for_computers
+    jinja_environment.filters['epochtoiso'] = epoch_to_iso
     jinja_environment.filters['chatmode'] = chatmode
     jinja_environment.filters['raceicon'] = race_icon
     jinja_environment.filters['heroname'] = hero_name
@@ -199,3 +209,4 @@ def register(jinja_environment):
     jinja_environment.filters['map_proper_name'] = map_proper_name
     jinja_environment.filters['color_name'] = color_name
     jinja_environment.filters['exact_version'] = exact_version
+    jinja_environment.filters['slash24'] = make_slash_24

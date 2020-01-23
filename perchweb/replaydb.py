@@ -8,6 +8,7 @@ import glob
 from datetime import datetime
 from hashlib import sha256
 from collections import defaultdict
+from ipaddress import ip_address, ip_network
 from flask import flash, g, current_app, request
 from models.replay import Replay, ReplayListInfo
 from perchlogging import log_to_slack, format_ip_addr, format_traceback
@@ -266,6 +267,13 @@ def save_replay(replay, replay_name, uploader_ip):
 
     # From here on out we need to clean up if anything goes wrong
     try:
+        if is_ip_banned(request.remote_addr):
+            error_string = f'Attempted upload from banned IP {format_ip_addr(request.remote_addr)}: "{replay_name}"'
+            log_to_slack('WARNING', error_string)
+            current_app.logger.warning(error_string)
+            raise ReplayParsingException(
+                f"Upload declined: you have been banned! Email admin@highper.ch to discuss the terms")
+
         with open(temp_replay_path, 'rb') as replay_bytes:
             file_hash = sha256(replay_bytes.read()).hexdigest()
 
@@ -293,8 +301,7 @@ def save_replay(replay, replay_name, uploader_ip):
         with open(temp_data_path, encoding='utf8') as replay_json:
             replay_data = Replay(**json.load(replay_json))
 
-        # Todo: more validation, like gametype and version,
-        # maybe the battletag that saved the replay is banned
+        # Todo: more validation, like gametype and version
 
         # Not the best connection to the ReplayListInfo class
         bnet_id = replay_data['id']
@@ -317,7 +324,12 @@ def save_replay(replay, replay_name, uploader_ip):
         chat_message_count = len(replay_data['chat'])
         uploader_battletag = [
             p['name'] for p in replay_data.players if p['id'] == replay_data['saverPlayerId']][0]
-
+        if is_battletag_banned(uploader_battletag):
+            error_string = f'Attempted upload with banned saver BattleTag {uploader_battletag} from {format_ip_addr(request.remote_addr)}: "{replay_name}"'
+            log_to_slack('WARNING', error_string)
+            current_app.logger.warning(error_string)
+            raise ReplayParsingException(
+                f"We have declined to handle this replay. Email admin@highper.ch to discuss the terms")
         query('''
             INSERT INTO Replays(BNetGameID, Name, TimeStamp, Official, GameType, Version, Length, Map,
             TowerCount, ChatMessageCount, Players, Towers, StartLocations, Chat, UploaderBattleTag, UploaderIP, FileHash)
@@ -542,3 +554,69 @@ def get_previous_replay(this_id):
     if prev_id == None:
         return None
     return prev_id[0]
+
+
+def save_banned_subnet(subnet, ip_addr, reason):
+    timestamp = int(datetime.now().timestamp())
+    query('''
+        INSERT INTO BannedIPs (Subnet, OriginalIP, Reason, Timestamp)
+        VALUES (?,?,?,?)''', (subnet, ip_addr, reason, timestamp))
+    error_string = f'New ban by {format_ip_addr(request.remote_addr)}: {subnet} ({ip_addr}): "{reason}"'
+    log_to_slack('WARNING', error_string)
+    current_app.logger.warning(error_string)
+
+
+def save_banned_account(battletag, reason):
+    timestamp = int(datetime.now().timestamp())
+    query('''
+        INSERT INTO BannedAccounts (BattleTag, Reason, Timestamp)
+        VALUES (?,?,?)''', (battletag, reason, timestamp))
+    error_string = f'New ban by {format_ip_addr(request.remote_addr)}: {battletag}: "{reason}"'
+    log_to_slack('WARNING', error_string)
+    current_app.logger.warning(error_string)
+
+
+def delete_subnet_ban(subnet):
+    row = query(
+        'SELECT OriginalIP, Reason from BannedIPs WHERE Subnet = ?', (subnet,), one=True)
+    original_ip, reason = row[0], row[1]
+    query('DELETE FROM BannedIPs WHERE Subnet = ?', (subnet,))
+    error_string = f'Subnet ban on {subnet} ({original_ip}, {reason}) removed by {format_ip_addr(request.remote_addr)}'
+    log_to_slack('WARNING', error_string)
+    current_app.logger.warning(error_string)
+
+
+def delete_account_ban(battletag):
+    reason = query(
+        'SELECT Reason FROM BannedAccounts WHERE BattleTag = ?', (battletag,), one=True)[0]
+    query('DELETE FROM BannedAccounts WHERE BattleTag = ?', (battletag,))
+    error_string = f'BattleTag ban on {battletag} ({reason}) removed by {format_ip_addr(request.remote_addr)}'
+    log_to_slack('WARNING', error_string)
+    current_app.logger.warning(error_string)
+
+
+def get_banned_subnets():
+    rows = query(
+        '''SELECT Subnet, OriginalIP, Reason, Timestamp FROM BannedIPs ORDER BY Timestamp DESC''')
+    return [dict(row) for row in rows]
+
+
+def get_banned_accounts():
+    rows = query(
+        '''SELECT BattleTag, Reason, Timestamp FROM BannedAccounts ORDER BY Timestamp DESC''')
+    return [dict(row) for row in rows]
+
+
+def is_ip_banned(ip_addr):
+    check_address = ip_address(ip_addr)
+    subnets = [ip_network(entry['Subnet']) for entry in get_banned_subnets()]
+    for subnet in subnets:
+        if check_address in subnet:
+            return True
+    return False
+
+
+def is_battletag_banned(battletag):
+    if battletag in [entry['BattleTag'] for entry in get_banned_accounts()]:
+        return True
+    return False

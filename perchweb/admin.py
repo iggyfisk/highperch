@@ -5,16 +5,41 @@ from datetime import datetime
 from zipfile import ZipFile, ZIP_DEFLATED
 from os import path, remove
 from glob import glob
+from re import match
+from ipaddress import ip_address, ip_network
 from flask import Blueprint, url_for, request, redirect, flash, send_from_directory, send_file
 from werkzeug.utils import secure_filename
 from auth import admin_only, logout as auth_logout
 from handler import admin_page
-from replaydb import get_all_replays, get_all_uploader_ips, save_chatlog, save_vod_url,\
-    delete_replay as dbdelete_replay, edit_replay as dbedit_replay
+from replaydb import query, get_all_replays, get_all_uploader_ips, save_chatlog,\
+    save_vod_url, delete_replay as dbdelete_replay, edit_replay as dbedit_replay,\
+    save_banned_subnet, save_banned_account, get_banned_subnets, get_banned_accounts,\
+    delete_subnet_ban, delete_account_ban, is_ip_banned, is_battletag_banned
 from peep import save_pic
 from filepaths import get_db, get_temp, get_replay, get_replay_data
 
+
 routes = Blueprint('admin', __name__)
+
+
+def validate_subnet(subnet, addr):
+    try:
+        ip_subnet = ip_network(subnet)
+    except ValueError:  # not a real subnet
+        return False
+    try:
+        ip_addr = ip_address(addr)
+    except ValueError:  # not a real IP address
+        return False
+    if ip_addr in ip_subnet:
+        return True
+    return False
+
+
+def validate_battletag(battletag):
+    if match(r'\w+#\d+$', battletag):
+        return True
+    return False
 
 
 @routes.route('/logout')
@@ -43,6 +68,7 @@ def add_vod_url(replay_id):
     flash('VOD URL saved')
 
     return redirect(url_for('views.view_replay', replay_id=replay_id))
+
 
 @routes.route('/replay/<int:replay_id>/delete', methods=['POST'])
 @admin_only
@@ -113,7 +139,8 @@ def console():
         savers[replay.player_names[saver_id]] += 1
     uploader_ips = get_all_uploader_ips()
     savers = sorted(savers.items(), key=lambda i: i[1], reverse=True)
-    return admin_page('admin.html', 'Admin console', nav='admin', replays=replays, uploader_ips=uploader_ips, savers=savers)
+    return admin_page('admin.html', 'Admin console', nav='admin', replays=replays, uploader_ips=uploader_ips, savers=savers,
+                      banned_subnets=get_banned_subnets(), banned_accounts=get_banned_accounts())
 
 
 @routes.route('/admin/wig.db')
@@ -158,3 +185,69 @@ def download_replay_files():
     filename = f'replayfiles.{datetime.utcnow().replace(microsecond=0).isoformat()}.zip'
     return send_file(archive_path, attachment_filename=filename, as_attachment=True, cache_timeout=-1)
 
+
+@routes.route('/replay/<int:replay_id>/bansubnet', methods=['POST'])
+@admin_only
+def ban_subnet(replay_id):
+    """ Save a subnet to the BannedIPs table """
+    subnet = request.form['subnet'].strip()
+    ip_addr = request.form['ipaddr'].strip()
+    reason = request.form['reason']
+
+    if not validate_subnet(subnet, ip_addr):
+        flash('Invalid subnet and/or IP address')
+        return redirect(url_for('views.view_replay', replay_id=replay_id))
+
+    if is_ip_banned(ip_addr) or subnet in get_banned_subnets():
+        flash(f'{ip_addr} is already banned!')
+        return redirect(url_for('views.view_replay', replay_id=replay_id))
+
+    save_banned_subnet(subnet, ip_addr, reason)
+    flash(f'Banned {subnet}')
+
+    return redirect(url_for('views.view_replay', replay_id=replay_id))
+
+
+@routes.route('/replay/<int:replay_id>/banaccount', methods=['POST'])
+@admin_only
+def ban_account(replay_id):
+    """ Save a BattleTag to the BannedAccounts table """
+    battletag = request.form['battletag'].strip()
+    reason = request.form['reason']
+
+    if not validate_battletag(battletag):
+        flash('Invalid BattleTag')
+        return redirect(url_for('views.view_replay', replay_id=replay_id))
+
+    if is_battletag_banned(battletag):
+        flash(f'{battletag} is already banned!')
+        return redirect(url_for('views.view_replay', replay_id=replay_id))
+
+    save_banned_account(battletag, reason)
+    flash(f'Banned {battletag}')
+
+    return redirect(url_for('views.view_replay', replay_id=replay_id))
+
+
+@routes.route('/admin/unbansubnet', methods=['POST'])
+@admin_only
+def unban_subnet():
+    """ Deletes the specified subnet from BannedIPs """
+    subnet = request.form['subnet']
+    delete_subnet_ban(subnet)
+
+    flash(f'Unbanned {subnet}')
+
+    return redirect(url_for('admin.console'))
+
+
+@routes.route('/admin/unbanaccount', methods=['POST'])
+@admin_only
+def unban_account():
+    """ Deletes the specified subnet from BannedIPs """
+    battletag = request.form['battletag']
+    delete_account_ban(battletag)
+
+    flash(f'Unbanned {battletag}')
+
+    return redirect(url_for('admin.console'))

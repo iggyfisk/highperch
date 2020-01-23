@@ -1080,29 +1080,58 @@ a.playername:hover {
         cursor: pointer; }
     .large-replay .details .content .adminicon {
       color: #33ccff; }
-    .large-replay .details .content .addvod .content {
+    .large-replay .details .content .vodcontainer .addvod .content {
       width: 30vw;
       background: #33ccff99;
       padding: 10px;
       border-radius: 4px; }
-      .large-replay .details .content .addvod .content h2 {
+      .large-replay .details .content .vodcontainer .addvod .content h2 {
         background: none;
         color: #fff;
         text-shadow: 1px 1px 1px #000; }
-      .large-replay .details .content .addvod .content form {
+      .large-replay .details .content .vodcontainer .addvod .content form {
         display: flex;
         flex-direction: column;
         margin-bottom: 0;
         width: 300px; }
-      .large-replay .details .content .addvod .content textarea {
+      .large-replay .details .content .vodcontainer .addvod .content textarea {
         color: #222;
         width: 100%;
         height: 20px;
         resize: vertical;
         border: 1px solid #000; }
-      .large-replay .details .content .addvod .content input[type="submit"] {
+      .large-replay .details .content .vodcontainer .addvod .content input[type="submit"] {
         background: #EEE;
         align-self: flex-end; }
+    .large-replay .details .content .bancontainer {
+      display: inline; }
+    .large-replay .details .content .ban .content {
+      width: 20vw;
+      background: #33ccff99;
+      padding: 10px;
+      border-radius: 4px; }
+      .large-replay .details .content .ban .content h2 {
+        background: none;
+        color: #fff;
+        text-shadow: 1px 1px 1px #000; }
+      .large-replay .details .content .ban .content form {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 0;
+        width: 300px; }
+      .large-replay .details .content .ban .content textarea, .large-replay .details .content .ban .content input {
+        color: #222;
+        width: 100%;
+        height: 20px;
+        resize: vertical;
+        border: 1px solid #000; }
+      .large-replay .details .content .ban .content input[type="submit"] {
+        background: red;
+        width: 50%;
+        height: 40px;
+        align-self: flex-end;
+        color: white;
+        font-size: 20px; }
     .large-replay .details .content .admin {
       position: absolute;
       top: 0;
@@ -4484,6 +4513,9 @@ form.adminlogin {
   display: flex;
   flex-direction: column;
   align-items: stretch; }
+  .console hr {
+    border-top: 1px solid #c4976f;
+    margin: 20px 5% 20px 5%; }
   @media (min-width: 750px) {
     .console {
       flex-direction: row; } }
@@ -4503,9 +4535,11 @@ form.adminlogin {
         margin-bottom: 16px; } }
   .console .inner {
     background-color: rgba(10, 5, 5, 0.75);
-    padding: 8px; }
+    padding: 16px; }
   .console .break {
     padding: 50px; }
+  .console .statblock p {
+    margin-bottom: 0px; }
   .console .statblock .stats {
     font-size: 10px;
     background-color: rgba(255, 255, 255, 0.05);
@@ -4514,8 +4548,9 @@ form.adminlogin {
     margin-top: 5px;
     margin-left: 20px;
     padding: 0px 10px 0px 10px; }
-    .console .statblock .stats table {
+    .console .statblock .stats table, .console .statblock .stats th {
       border-collapse: collapse;
+      border-bottom: none;
       margin-bottom: 0; }
     .console .statblock .stats tr {
       margin: 0px;
@@ -4524,6 +4559,41 @@ form.adminlogin {
       border: none;
       text-align: right;
       padding: 5px; }
+  .console .statblock .bans {
+    font-size: 12px;
+    background-color: rgba(255, 255, 255, 0.05);
+    line-height: 1rem; }
+    .console .statblock .bans table, .console .statblock .bans th {
+      border-collapse: collapse;
+      border-bottom: none;
+      margin-bottom: 0;
+      padding: 8px;
+      width: 100%;
+      table-layout: fixed; }
+      .console .statblock .bans table .wide, .console .statblock .bans th .wide {
+        width: 150%; }
+    .console .statblock .bans tr {
+      margin: 0px; }
+    .console .statblock .bans td, .console .statblock .bans th {
+      border: none;
+      text-align: left;
+      padding: 4px 12px 4px 12px;
+      line-height: 1.3; }
+    .console .statblock .bans form {
+      margin: 0px; }
+    .console .statblock .bans .unban {
+      font-weight: bold;
+      color: #c4976f;
+      font-size: 12px;
+      border: none;
+      padding: 0px;
+      margin: 0px;
+      letter-spacing: normal; }
+    .console .statblock .bans .edit input {
+      height: 16px; }
+    .console .statblock .bans .edit input[type="submit"] {
+      background: #EEE;
+      align-self: flex-end; }
 
 .maps {
   border-bottom: 1px solid black;

@@ -1,4 +1,8 @@
 .console {
+    hr {
+        border-top: 1px solid $primary-color;
+        margin: 20px 5% 20px 5%;
+    }
     display: flex;
     flex-direction: column;
     align-items: stretch;
@@ -25,12 +29,15 @@
     }
     .inner {
         background-color: $card-background-color;
-        padding: $padding;
+        padding: $padding * 2;
     }
     .break {
         padding: 50px;
     }
     .statblock {
+        p {
+            margin-bottom: 0px;
+        }
         .stats {
             font-size: 10px;
             background-color: rgba(255,255,255,0.05);
@@ -39,9 +46,10 @@
             margin-top: 5px;
             margin-left: 20px;
             padding: 0px 10px 0px 10px;
-            table {
+            table, th {
                 border-collapse: collapse;
-                margin-bottom: 0
+                border-bottom: none;
+                margin-bottom: 0;;
             }
             tr {
                 margin: 0px;
@@ -51,6 +59,43 @@
                 border: none;
                 text-align: right;
                 padding: 5px;
+            }
+        }
+        .bans {
+            font-size: 12px;
+            background-color: rgba(255,255,255,0.05);
+            line-height: 1rem;
+            table, th {
+                border-collapse: collapse;
+                border-bottom: none;
+                margin-bottom: 0;
+                padding: $padding;
+                width: 100%;
+                table-layout: fixed;
+                .wide {
+                    width: 150%;
+                }
+            }
+            tr {
+                margin: 0px;
+            }
+            td, th {
+                border: none;
+                text-align: left;
+                padding: 4px 12px 4px 12px;
+                line-height: 1.3;
+            }
+            form {
+                margin: 0px;
+            }
+            .unban {
+                font-weight: bold;
+                color: $primary-color;
+                font-size: 12px;
+                border: none;
+                padding: 0px;
+                margin: 0px;
+                letter-spacing: normal;
             }
         }
     }
