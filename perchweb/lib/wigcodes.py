@@ -652,6 +652,18 @@ ability_codes = {
     'ANtm': {'hero': 'Nalc', 'name': 'Transmute', 'ult': True}
 }
 
+tinker_dupes = {
+    'ANc1': 'ANcs',
+    'ANc2': 'ANcs',
+    'ANc3': 'ANcs',
+    'ANs1': 'ANsy',
+    'ANs2': 'ANsy',
+    'ANs3': 'ANsy',
+    'ANg1': 'ANrg',
+    'ANg2': 'ANrg',
+    'ANg3': 'ANrg'
+}
+
 upgrade_codes = {
     'Rhss': {'name': 'Control Magic', 'race': 'H', 'levels':  [{'level': 1, 'name': 'Control Magic', 'gold': 75, 'wood': 75}]},
     'Rhme': {'name': 'Human Melee Attack', 'race': 'H', 'levels':  [{'level': 1, 'name': 'Iron Forged Swords', 'gold': 100, 'wood': 50}, {'level': 2, 'name': 'Steel Forged Swords', 'gold': 175, 'wood': 175}, {'level': 3, 'name': 'Mithril Forged Swords', 'gold': 250, 'wood': 300}]},

@@ -1,7 +1,9 @@
 """ Could do some data crunching here, count towers, calculate hero levels etc """
 from copy import deepcopy
 from collections import defaultdict
-from lib.wigcodes import is_tower, is_tower_upgrade, is_worker, tier_upgrades, item_codes, unit_codes, building_codes, hero_names, ability_codes, upgrade_codes
+from lib.wigcodes import is_tower, is_tower_upgrade, is_worker, tier_upgrades,\
+    item_codes, unit_codes, building_codes, hero_names,\
+    ability_codes, upgrade_codes, tinker_dupes
 
 
 arbitrary_item_scores = {
@@ -94,8 +96,13 @@ class Player(dict):
                     heroes[h['id']]['level'] = 0
                     heroes[h['id']]['skills'] = defaultdict(int)
                 else:
+                    # tinker ability IDs change with engineering upgrades
+                    if a['value'] in tinker_dupes:
+                        # set all occurrences of a tinker skill to the root skill ID
+                        a['value'] = tinker_dupes[a['value']]
                     if a['time'] - last_skillup_ms <= skillup_lag_window_ms and a['value'] == last_skillup:
-                        continue    # they leveled up suspiciously fast, discard
+                        # they leveled up suspiciously fast, discard
+                        continue
                     if heroes[h['id']]['skills'][a['value']] == 3:
                         # impossible (in melee) to skill past 3, discard
                         continue
@@ -415,7 +422,7 @@ class Player(dict):
                 for ability in hero['abilityOrder']:
                     if ability['type'] == 'retraining':
                         built.append({'type': 'skillup', 'id': 'tret', 'name': 'Retrain Hero',
-                                  'ms': ability['time']})
+                                      'ms': ability['time']})
                         continue
                     if ability['value'] == last_build_id and ability['time'] - last_build_ms <= build_lag_window_ms:
                         continue    # lag click
