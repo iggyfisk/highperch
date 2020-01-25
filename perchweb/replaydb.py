@@ -12,6 +12,7 @@ from ipaddress import ip_address, ip_network
 from flask import flash, g, current_app, request
 from models.replay import Replay, ReplayListInfo
 from perchlogging import log_to_slack, format_ip_addr, format_traceback
+from lib.wigcodes import get_map_canonical_name
 import filepaths
 
 
@@ -112,7 +113,7 @@ def list_map_replays(map_name, max_results=20):
     SELECT ID, Name, TimeStamp, Official, HighQuality, GameType, Version, Length, Map, TowerCount, ChatMessageCount,
         Towers, StartLocations, Players, Views, UploaderIP, VODURL
     FROM Replays
-    WHERE Map = ?
+    WHERE Map = ? COLLATE NOCASE
     ORDER BY ID DESC
     LIMIT ?
     ''', (map_name, max_results))
@@ -193,7 +194,7 @@ def get_map(map_name):
     return query('''
         SELECT GameType, Count(*) AS Games, CAST(AVG(Length) AS INT) AS AvgLength, CAST(AVG(TowerCount) AS INT) AS AvgTowers
         FROM Replays
-        WHERE Map = ?
+        WHERE Map = ? COLLATE NOCASE
         GROUP BY GameType
         ''', (map_name,))
 
@@ -524,12 +525,26 @@ def get_all_uploader_ips():
 
 
 def get_all_maps():
+    maps = defaultdict(dict)
     rows = query('''
         SELECT Map, Count(*) AS Games, CAST(AVG(Length) AS INT) AS AvgLength, CAST(AVG(TowerCount) AS INT) AS AvgTowers
         FROM Replays
         GROUP BY Map
         ''')
-    return [{'name': map_name, 'replay_count': count, 'avg_length': avg_length, 'avg_towers': avg_towers} for map_name, count, avg_length, avg_towers in rows]
+    for map_name, count, avg_length, avg_towers in rows:
+        canonical_name = get_map_canonical_name(map_name)
+        if canonical_name in maps:
+            current_count = maps[canonical_name]['count']
+            maps[canonical_name]['count'] += count
+            maps[canonical_name]['avg_length'] = (
+                (maps[canonical_name]['avg_length'] * current_count) + (avg_length * count)) // maps[canonical_name]['count']
+            maps[canonical_name]['avg_towers'] = (
+                (maps[canonical_name]['avg_towers'] * current_count) + (avg_towers * count)) // maps[canonical_name]['count']
+        else:
+            maps[canonical_name]['count'] = count
+            maps[canonical_name]['avg_length'] = avg_length
+            maps[canonical_name]['avg_towers'] = avg_towers
+    return [{'name': m, 'replay_count': maps[m]['count'], 'avg_length': maps[m]['avg_length'], 'avg_towers': maps[m]['avg_towers']} for m in maps]
 
 
 def get_next_replay(this_id):

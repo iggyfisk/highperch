@@ -4,7 +4,7 @@ const fs = require('fs');
 const { execSync } = require('child_process');
 
 // Edit mapsDir to match your user folder
-const mapsDir = 'C:\\Users\\sverr\\Documents\\Warcraft III Beta\\Maps\\Download';
+const mapsDir = 'C:\\Users\\tkerr\\Documents\\Warcraft III Beta\\Maps\\to-parse';
 const infoFile = 'war3map.w3i';
 const unitsFile = 'war3mapunits.doo';
 const mapInfoFile = 'mapinfo.json';
@@ -28,18 +28,85 @@ const parseInfo = () => {
 const parseUnits = editorVersion => {
   const data = fs.readFileSync(unitsFile);
   var unitsResult = new Translator.Units.warToJson(data, editorVersion).json;
+  // https://gist.github.com/tylerkerr/de9464dd81988a8fed4c894f2b79f2b1
   const goldMines = [];
+  const neutralBuildings = [];
 
   unitsResult.forEach(u => {
     switch (u.type) {
-      case 'ngol':
-        goldMines.push({ x: u.position[0], y: u.position[1], g: u.gold });
-        break;
+      case 'ngol':  // goldmine
+        {
+          goldMines.push({ id: u.type, x: u.position[0], y: u.position[1], g: u.gold });
+          break;
+        }
+      case 'ntav':  // tavern
+        {
+          neutralBuildings.push({ id: u.type, x: u.position[0], y: u.position[1], });
+          break;
+        }
+      case 'ngme':  // goblin merchant, aka shop
+        {
+          neutralBuildings.push({ id: u.type, x: u.position[0], y: u.position[1] });
+          break;
+        }
+      case 'ngad':  // goblin laboratory
+        {
+          neutralBuildings.push({ id: u.type, x: u.position[0], y: u.position[1] });
+          break;
+        }
+      case 'nmer':  // merc camp: lordaeron summer
+      case 'nmr0':  // village, village fall
+      case 'nmr2':  // lordaeron fall
+      case 'nmr3':  // lordaeron winter
+      case 'nmr4':  // barrens
+      case 'nmr5':  // ashenvale
+      case 'nmr6':  // felwood
+      case 'nmr7':  // northrend
+      case 'nmr8':  // cityscape
+      case 'nmr9':  // dalaran, dalaran ruins
+      case 'nmra':  // dungeon
+      case 'nmrb':  // underground
+      case 'nmrc':  // sunken ruins
+      case 'nmrd':  // icecrown glacier
+      case 'nmre':  // outland
+      case 'nmrf':  // black citadel
+        {
+          neutralBuildings.push({ id: u.type, x: u.position[0], y: u.position[1] });
+          break;
+        }
+      case 'ndrk':  // dragon roost: black
+      case 'ndru':  // blue
+      case 'ndrz':  // bronze
+      case 'ndrg':  // green
+      case 'ndro':  // nether
+      case 'ndrr':  // red
+        {
+          neutralBuildings.push({ id: u.type, x: u.position[0], y: u.position[1] });
+          break;
+        }
+      case 'nmrk':  // marketplace
+        {
+          neutralBuildings.push({ id: u.type, x: u.position[0], y: u.position[1] });
+          break;
+        }
+      case 'nfoh':  // fountain of health
+      case 'nmoo':  // fountain of mana
+      case 'bDNR':  // bDNR is the code for any random building! so this could break if there's ever a non-fountain random building in a map we care about
+        {
+          neutralBuildings.push({ id: u.type, x: u.position[0], y: u.position[1] });
+          break;
+        }
+      case 'nwgt':  // way gate
+        {
+          neutralBuildings.push({ id: u.type, x: u.position[0], y: u.position[1] });
+          break;
+        }
     }
   });
 
   return {
     mines: goldMines,
+    neutralBuildings: neutralBuildings
   };
 }
 
@@ -50,11 +117,10 @@ const parseMap = mapPath => {
     console.log('Ladder map name not found, skipping', mapPath);
     return null;
   }
-  const name = nameMatch[1].toLowerCase();
+  const name = nameMatch[1];
 
   extractFile(infoFile, mapPath);
   extractFile(unitsFile, mapPath);
-  
   try {
     const info = parseInfo();
     const units = parseUnits(info.editorVersion);
@@ -71,7 +137,7 @@ if (fs.existsSync(mapInfoFile)) {
   mapInfo = JSON.parse(fs.readFileSync(mapInfoFile));
 }
 
-glob(mapsDir + '/**/*.w3x', null, function (err, files) {
+glob(mapsDir + '/*.w3x', null, function (err, files) {
   if (err) throw err;
   files.forEach(path => {
 

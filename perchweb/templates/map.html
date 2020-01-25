@@ -17,6 +17,7 @@
 <div class="map details">
     <h2>{{ map['name'] }} map details</h2>
     <div class="content">
+        {{ map['fountains'] }}
         <div class="stats">
             <div><b>{{ map['games'] }}</b> games played</div>
             {% if map['gold'] is not none %}<div><b>{{ map['gold']|thousands }}</b> available gold</div>{% endif %}
@@ -28,7 +29,7 @@
                 <img src="{{ map['name']|bigmapurl }}" />
                 {% if map['drawmap'] %}
                 <canvas class="drawmap delay" data-mapsize='{{ map["drawmap"]["map_size"]|tojson|safe }}'
-                    data-mines='{{ map["drawmap"]["goldmines"]|tojson|safe }}' data-paintsize='6'></canvas>
+                    data-mines='{{ map["drawmap"]["goldmines"]|tojson|safe }}' data-paintsize='6' {% if map["drawmap"]["neutralbuildings"] %}data-neutrals='{{ map["drawmap"]["neutralbuildings"]|tojson|safe }}'{% endif %}></canvas>
                 {% endif %}
             </div>
         </div>

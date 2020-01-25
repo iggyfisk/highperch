@@ -784,18 +784,20 @@ tier_upgrades = {
 all_map_info = None
 
 
-def get_mapinfo(map_name, fp=None):
+def get_all_mapinfo(fp=None):
     global all_map_info
     if all_map_info is None:
         gp = fp.get_path if fp else get_path
         with open(gp('resource/mapinfo.json'), 'r') as f:
             all_map_info = json.load(f)
+    return all_map_info
 
-    map_name = map_name.lower()
-    if map_name not in all_map_info:
+
+def get_mapinfo(map_name, fp=None):
+    mapinfo = get_all_mapinfo(fp)
+    if map_name not in mapinfo:
         return None
-
-    return all_map_info[map_name]
+    return mapinfo[map_name]
 
 
 def get_map_size(map_name, fp=None):
@@ -820,3 +822,21 @@ def get_goldmines(map_name, fp=None):
         return None
 
     return map_info['mines']
+
+
+def get_neutral_buildings(map_name, fp=None):
+    map_info = get_mapinfo(map_name, fp)
+    if not map_info or 'neutralBuildings' not in map_info:
+        return None
+
+    return map_info['neutralBuildings']
+
+
+def get_map_canonical_name(map_name):
+    canonical_names = get_all_mapinfo().keys()
+    if map_name in canonical_names:
+        return map_name
+    for canonical in canonical_names:
+        if map_name.lower() == canonical.lower():
+            return canonical
+    return False

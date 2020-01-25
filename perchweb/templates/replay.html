@@ -59,7 +59,7 @@
                         <p>Uploaded {{ listinfo.upload_date() }}</p>
                         {% set version = replay['buildNo']|exact_version %}
                         <p>Game version {% if version %}{{ replay['buildNo']|exact_version }}{% else %}{{ replay['version'] }} ({{ replay['buildNo'] }}){% endif %}</p>
-                        <p><b>{{ replay['duration']|gametime }}</b> long {{ replay['type'] }} {{ replay.game_host_type() }} game on <a href="{{ url_for('views.view_map', map_name=replay.map_name()) }}">{{ replay.map_name() }}</a></p>
+                        <p><b>{{ replay['duration']|gametime }}</b> long {{ replay['type'] }} {{ replay.game_host_type() }} game on <a href="{{ url_for('views.view_map', map_name=replay.map_name()|canonicalname) }}">{{ replay.map_name() }}</a></p>
                         <div class="saver">Saved by <a href="{{ url_for('views.view_player', battletag=replay.replay_saver()['name']) }}">{{ replay.replay_saver()['name']|displayname }}</a>
                         {% if is_admin %}
                         <div class="bancontainer adminonly"><span class="adminicon hp-expand"><i class="icon-user-times"></i></span>

@@ -115,26 +115,10 @@
 (() => {
 	// Loads the image files even if they don't need to be drawn,
 	// but on the other hand it starts loading and caching immediately.
-	const goldImg = new Image();;
+	const goldImg = new Image();
 	goldImg.src = '/static/images/drawmap_mine.png';
 	const playImg = new Image();
 	playImg.src = '/static/images/drawmap_play.png';
-
-	// There's a race condition where it will draw transparent images
-	// if they're not loaded before drawing
-	const imagesReady = (mapImg = { complete: true, addEventListener: () => { } }) => {
-		const images = [goldImg, playImg, mapImg];
-		if (images.every(i => i.complete)) return Promise.resolve();
-
-		return new Promise(resolve => {
-			images.forEach(img => {
-				img.addEventListener('error', resolve);
-				img.addEventListener('load', () => {
-					if (images.every(i => i.complete)) resolve();
-				});
-			});
-		});
-	};
 
 	document.addEventListener("DOMContentLoaded", () => {
 		document.body.querySelectorAll('.drawmap').forEach(async cnv => {
@@ -142,11 +126,38 @@
 			const playerTowers = JSON.parse(cnv.dataset.towers || '{}');
 			const playerLocations = JSON.parse(cnv.dataset.startlocations || '{}');
 			const goldMines = JSON.parse(cnv.dataset.mines || '[]');
+			const neutralBuildings = JSON.parse(cnv.dataset.neutrals || '[]');
 			const animated = cnv.classList.contains('anim');
 			const delayed = cnv.classList.contains('delay');
 			const mapImg = delayed
 				? cnv.parentNode.querySelector('img')
 				: undefined;
+
+			let images = {};
+			images['ngol'] = goldImg;
+			images['play'] = playImg;
+			images['map'] = mapImg;
+			neutralBuildings.forEach(b => {
+				if (!(b[2] in images)) {
+					img = new Image();
+					img.src = '/static/images/game/neutrals/' + b[2] + '.png';
+					images[b[2]] = img;
+				}
+			});
+
+			// There's a race condition where it will draw transparent images
+			// if they're not loaded before drawing
+			const imagesReady = (mapImg = { complete: true, addEventListener: () => { } }) => {
+				if (Object.values(images).every(i => i.complete)) return Promise.resolve();
+				return new Promise(resolve => {
+					Object.values(images).forEach(img => {
+						img.addEventListener('error', resolve);
+						img.addEventListener('load', () => {
+							if (Object.values(images).every(i => i.complete)) resolve();
+						});
+					});
+				});
+			};
 
 			// Tower and start location size
 			const ps = cnv.dataset.paintsize;
@@ -154,6 +165,9 @@
 			// Goldmine size
 			const gs = ps * 3;
 			const go = gs / 2;
+			// Neutral size
+			const ns = ps * 6;
+			const no = ns / 2
 
 			// Turn camera bounds into minimap bounds
 			mapSize[0] -= 504;
@@ -184,6 +198,11 @@
 				goldMines.forEach(m => {
 					const c = getCoords(m);
 					ctx.drawImage(goldImg, c[0] - go, c[1] - go, gs, gs);
+				});
+
+				neutralBuildings.forEach(b => {
+					const c = getCoords(b);
+					ctx.drawImage(images[b[2]], c[0] - no, c[1] - no, ns, ns);
 				});
 
 				for (let [color, start] of Object.entries(playerLocations)) {

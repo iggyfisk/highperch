@@ -12,7 +12,7 @@ from peep import get_max_id, get_pic, superlative
 from auth import login as auth_login, check_if_admin
 from perchlogging import log_to_slack, format_ip_addr
 from templatefilters import lighten_color, url_slug
-from lib.wigcodes import get_goldmines, get_map_size, get_mapinfo
+from lib.wigcodes import get_goldmines, get_neutral_buildings, get_map_size, get_mapinfo, get_map_canonical_name
 
 routes = Blueprint('views', __name__)
 
@@ -104,6 +104,10 @@ def view_player(battletag):
 @routes.route('/map/<string:map_name>')
 def view_map(map_name):
     """Map details"""
+    canonical_name = get_map_canonical_name(map_name)
+    if canonical_name:
+        map_name = canonical_name
+
     map_stats = replaydb.get_map(map_name)
 
     if not map_stats:
@@ -114,6 +118,7 @@ def view_map(map_name):
     # Todo: standardize drawmap
     goldmines = get_goldmines(map_name)
     map_size = get_map_size(map_name)
+    neutral_buildings = get_neutral_buildings(map_name)
 
     # A lot of these calculations are really just reversing the SQL but it was faster to type here
     games = sum(gt['Games'] for gt in map_stats)
@@ -122,7 +127,8 @@ def view_map(map_name):
         'gold': sum(m['g'] for m in goldmines) if goldmines else None,
         'drawmap': {
             'map_size': map_size,
-            'goldmines': [[m['x'], m['y']] for m in goldmines] if goldmines else None
+            'goldmines': [[m['x'], m['y']] for m in goldmines] if goldmines else None,
+            'neutralbuildings': [[b['x'], b['y'], b['id']] for b in neutral_buildings] if neutral_buildings else None,
         } if map_size else None,
         'games': games,
         'avg_length': sum(gt['AvgLength'] * gt['Games'] for gt in map_stats) // games,
@@ -138,14 +144,13 @@ def view_map(map_name):
 @routes.route('/maps')
 def map_list():
     all_maps = replaydb.get_all_maps()
-    interesting_maps = []
+    maps_with_info = []
     for m in all_maps:
         info = get_mapinfo(m['name'])
         if info:
-            if 'mines' in info:
-                m.update(info)
-                interesting_maps.append(m)
-    return standard_page('maps.html', 'Maps', maps=sorted(interesting_maps, key=lambda i: i['replay_count'], reverse=True))
+            m.update(info)
+            maps_with_info.append(m)
+    return standard_page('maps.html', 'Maps', maps=sorted(maps_with_info, key=lambda i: i['replay_count'], reverse=True))
 
 
 @routes.route('/upload', methods=['POST'])
@@ -203,7 +208,7 @@ def peep(pic_id):
     if pic['replay_id']:
         replay_name = replaydb.get_replay_listinfo(pic['replay_id'])['Name']
     return standard_page('peep.html', 'Peep a pic', nav='peep', pic=pic,
-                         perma=url_for('views.peep', pic_id=pic['id']), 
+                         perma=url_for('views.peep', pic_id=pic['id']),
                          replay_id=pic['replay_id'], replay_name=replay_name,
                          superlative=superlative)
 

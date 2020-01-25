@@ -5,7 +5,7 @@ from re import sub as re_sub
 from datetime import datetime
 from filepaths import get_path
 from lib.colors import lighten, scale
-from lib.wigcodes import race_titles, hero_names, color_names, build_versions, ability_codes
+from lib.wigcodes import race_titles, hero_names, color_names, build_versions, ability_codes, get_map_canonical_name
 import geoip
 from urllib.parse import unquote
 from slugify import slugify
@@ -75,23 +75,40 @@ thumbnails = {}
 mapsize = re_compile('^\\(\\d\\)$')
 
 
+def map_filename(map_name):
+    file_name = map_name[:-3] if map_name[-3:] == '_LV' else map_name
+    file_name = file_name[3:] if mapsize.match(file_name[:3]) else file_name
+    file_name = file_name.lower()
+    return file_name
+
+
 def map_thumbnail(map_name):
     """ Map image src for a given map name, placeholder thumbnail if a real one can't be found """
     if map_name in thumbnails:
         return thumbnails[map_name]
-    file_name = map_name[:-3] if map_name[-3:] == '_LV' else map_name
-    file_name = file_name[3:] if mapsize.match(file_name[:3]) else file_name
-    file_name = file_name.lower()
+    file_name = map_filename(map_name)
     if isfile(get_path(join('static', 'images', 'minimaps', f'{file_name}.jpg'))):
         thumbnails[map_name] = f'/static/images/minimaps/{file_name}.jpg'
     else:
-        # Todo: real placeholder
         thumbnails[map_name] = f'/static/images/minimaps/unknownmap.png'
     return thumbnails[map_name]
 
 
+bigmaps = {}
+
+
 def map_biglink(map_name):
-    return re_sub('minimaps', 'bigmaps', map_thumbnail(map_name))
+    if map_name in bigmaps:
+        return bigmaps[map_name]
+    file_name = map_filename(map_name)
+    if isfile(get_path(join('static', 'images', 'bigmaps', f'{file_name}.jpg'))):
+        bigmaps[map_name] = f'/static/images/bigmaps/{file_name}.jpg'
+    elif isfile(get_path(join('static', 'images', 'minimaps', f'{file_name}.jpg'))):
+        # Todo: correct for this fallback in the css
+        bigmaps[map_name] = f'/static/images/minimaps/{file_name}.jpg'
+    else:
+        bigmaps[map_name] = f'/static/images/minimaps/unknownmap.png'
+    return bigmaps[map_name]
 
 
 tag_matcher = re_compile('^([^#]+)')
@@ -184,6 +201,13 @@ def make_slash_24(ip_addr):
     return '.'.join(ip_addr.split('.')[0:3]) + '.0/24'
 
 
+def try_canonical_name(map_name):
+    canonical_name = get_map_canonical_name(map_name)
+    if canonical_name:
+        return canonical_name
+    return map_name
+
+
 def register(jinja_environment):
     """ Register all filters to the given jinja environment """
     jinja_environment.filters['gametime'] = gametime
@@ -210,3 +234,4 @@ def register(jinja_environment):
     jinja_environment.filters['color_name'] = color_name
     jinja_environment.filters['exact_version'] = exact_version
     jinja_environment.filters['slash24'] = make_slash_24
+    jinja_environment.filters['canonicalname'] = try_canonical_name
