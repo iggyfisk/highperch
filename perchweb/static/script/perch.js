@@ -134,9 +134,7 @@
 				: undefined;
 
 			let images = {};
-			images['ngol'] = goldImg;
-			images['play'] = playImg;
-			images['map'] = mapImg;
+
 			neutralBuildings.forEach(b => {
 				if (!(b[2] in images)) {
 					img = new Image();
@@ -148,6 +146,9 @@
 			// There's a race condition where it will draw transparent images
 			// if they're not loaded before drawing
 			const imagesReady = (mapImg = { complete: true, addEventListener: () => { } }) => {
+				images['ngol'] = goldImg;
+				images['play'] = playImg;
+				images['map'] = mapImg;
 				if (Object.values(images).every(i => i.complete)) return Promise.resolve();
 				return new Promise(resolve => {
 					Object.values(images).forEach(img => {
