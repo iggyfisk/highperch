@@ -57,6 +57,9 @@ Highlighting. I'm sure the rest can be configured if you install enough plugins.
 ### Replay data
 Look at `test/Reforged1Pretty.json` and `test/Reforged2Pretty.json` for a human readable glance of the parsed format.
 
+### CSS
+Since we're writing styles in SCSS, whenever changes are made we'll need to compile the SCSS to plain CSS. `pip install libsass` gives you the library you need to run `build.py` in `/perchweb/static/scss/`.
+
 ## Production deployment
 * ssh to production server
 * `sudo -u www-data git pull`
