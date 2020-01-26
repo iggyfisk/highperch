@@ -17,16 +17,18 @@
 <div class="map details">
     <h2>{{ map['name'] }} map details</h2>
     <div class="content">
-        {% set mapinfo = map['info']|neutralinfo %}
         <div class="stats">
             <div><b>{{ map['games'] }}</b> games played</div>
             {% if map['gold'] is not none %}<div><b>{{ map['gold']|thousands }}</b> available gold</div>{% endif %}
             <div><b>{{ map['avg_length']|gametime }}</b> average length</div>
             <div><b>{{ map['avg_towers'] }}</b> average towers built</div>
         </div>
+        {% if map['info'] %}
+        {% set mapinfo = map['info']|neutralinfo %}
         <div class="neutrals">
             {{ mapinfo['summary']|boldnumbers|safe }}
         </div>
+        {% endif %}
         <div class="bigmap-container">
             <div class="bigmap lesshuge hp-toggle" data-class="lesshuge" data-group="bigmap">
                 <img src="{{ map['name']|bigmapurl }}" />
