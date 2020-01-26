@@ -219,15 +219,6 @@ def neutral_info(map_info):
     info = {}
     info['buildings'] = defaultdict(int)
     for building in buildings:
-        if building['id'] == 'ntav':
-            info['buildings'][building['id']] += 1
-            continue
-        if building['id'] == 'ngme':
-            info['buildings'][building['id']] += 1
-            continue
-        if building['id'] == 'ngad':
-            info['buildings'][building['id']] += 1
-            continue
         if building['id'] in merc_ids:
             info['buildings']['merc'] += 1
             info['merc_id'] = building['id']
@@ -236,21 +227,8 @@ def neutral_info(map_info):
             info['buildings']['roost'] += 1
             info['roost_id'] = building['id']
             continue
-        if building['id'] == 'nmrk':
+        else:
             info['buildings'][building['id']] += 1
-            continue
-        if building['id'] == 'nfoh':
-            info['buildings'][building['id']] += 1
-            continue
-        if building['id'] == 'nmoo':
-            info['buildings'][building['id']] += 1
-            continue
-        if building['id'] == 'bDNR':
-            info['buildings'][building['id']] += 1
-            continue
-        if building['id'] == 'nwgt':
-            info['buildings'][building['id']] += 1
-            continue
     summary = ''
     for b in info['buildings']:
         if b == 'merc':
