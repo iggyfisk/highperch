@@ -243,8 +243,8 @@
 			drawBase();
 			if (animated) {
 				// Animated minimap
-				ctx.fillStyle = '#000C';
-				ctx.fillRect((mapImageSize / 2) - 30, (mapImageSize / 2) - 30, 60, 60);
+				// ctx.fillStyle = '#000C';
+				// ctx.fillRect((mapImageSize / 2) - 30, (mapImageSize / 2) - 30, 60, 60);
 				ctx.drawImage(playImg, (mapImageSize / 2) - 25, (mapImageSize / 2) - 25, 50, 50);
 
 				// Combine all players' towers and put them in order

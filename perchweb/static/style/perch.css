@@ -1475,6 +1475,11 @@ a.playername:hover {
   .map .stats div {
     flex: 1; }
 
+.player .neutrals,
+.map .neutrals {
+  text-align: center;
+  margin-top: 20px; }
+
 .player .chart,
 .map .chart {
   display: flex;
@@ -1544,8 +1549,7 @@ a.playername:hover {
 .player .bigmap,
 .map .bigmap {
   line-height: 0;
-  max-width: 100%;
-  min-width: 200px; }
+  max-width: 100%; }
   .player .bigmap.lesshuge,
   .map .bigmap.lesshuge {
     max-width: 550px; }
@@ -4589,16 +4593,13 @@ form.adminlogin {
       padding: 0px;
       margin: 0px;
       letter-spacing: normal; }
-    .console .statblock .bans .edit input {
-      height: 16px; }
-    .console .statblock .bans .edit input[type="submit"] {
-      background: #EEE;
-      align-self: flex-end; }
 
 .maps {
   border-bottom: 1px solid black;
   align-items: center;
   width: 100%; }
+  .maps .neutral {
+    width: 30px; }
   .maps table {
     border-collapse: collapse;
     margin-bottom: 0px;

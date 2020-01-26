@@ -13,6 +13,10 @@
             flex: 1;
         }
     }
+    .neutrals {
+        text-align: center;
+        margin-top: 20px;
+    }
     .chart {
         display: flex;
         flex-direction: column;
@@ -86,7 +90,7 @@
     .bigmap {
         line-height: 0;
         max-width: 100%;
-        min-width: 200px;
+        // min-width: 200px;
         &.lesshuge {
             max-width: 550px;
         }

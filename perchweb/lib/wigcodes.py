@@ -752,6 +752,40 @@ upgrade_codes = {
     'Rupm': {'name': 'Backpack', 'race': 'U', 'levels': [{'level': 1, 'name': '', 'gold': 50, 'wood': 25}]}
 }
 
+neutral_codes = {
+    'ngol': 'Gold Mine',
+    'ntav': 'Tavern',
+    'ngme': 'Goblin Merchant',
+    'ngad': 'Goblin Laboratory',
+    'nmer': 'Mercenary Camp (Lordaeron Summer)',
+    'nmr0': 'Mercenary Camp (Village)',
+    'nmr2': 'Mercenary Camp (Lordaeron Fall)',
+    'nmr3': 'Mercenary Camp (Lordaeron Winter)',
+    'nmr4': 'Mercenary Camp (Barrens)',
+    'nmr5': 'Mercenary Camp (Ashenvale)',
+    'nmr6': 'Mercenary Camp (Felwood)',
+    'nmr7': 'Mercenary Camp (Northrend)',
+    'nmr8': 'Mercenary Camp (Cityscape)',
+    'nmr9': 'Mercenary Camp (Dalaran)',
+    'nmra': 'Mercenary Camp (Dungeon)',
+    'nmrb': 'Mercenary Camp (Underground)',
+    'nmrc': 'Mercenary Camp (Sunken Ruins)',
+    'nmrd': 'Mercenary Camp (Icecrown Glacier)',
+    'nmre': 'Mercenary Camp (Outland)',
+    'nmrf': 'Mercenary Camp (Black Citadel)',
+    'ndrk': 'Black Dragon Roost',
+    'ndru': 'Blue Dragon Roost',
+    'ndrz': 'Bronze Dragon Roost',
+    'ndrg': 'Green Dragon Roost',
+    'ndro': 'Nether Dragon Roost',
+    'ndrr': 'Red Dragon Roost',
+    'nmrk': 'Marketplace',
+    'nfoh': 'Fountain of Health',
+    'nmoo': 'Fountain of Mana',
+    'bDNR': 'Random Fountain',
+    'nwgt': 'Way Gate'
+}
+
 build_versions = {
     '6103': '1.32.0.6', # 2020-01-17, classic camera fix
     '6102': '1.32.0.5', # 2020-01-09, adds classic gfx

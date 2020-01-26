@@ -3,9 +3,10 @@ from os.path import isfile, join
 from re import compile as re_compile
 from re import sub as re_sub
 from datetime import datetime
+from collections import defaultdict
 from filepaths import get_path
 from lib.colors import lighten, scale
-from lib.wigcodes import race_titles, hero_names, color_names, build_versions, ability_codes, get_map_canonical_name
+from lib.wigcodes import race_titles, hero_names, color_names, build_versions, ability_codes, neutral_codes, get_map_canonical_name
 import geoip
 from urllib.parse import unquote
 from slugify import slugify
@@ -208,6 +209,79 @@ def try_canonical_name(map_name):
     return map_name
 
 
+shop_ids = ['ngme', 'nmkt', 'ngad']
+roost_ids = ['ndrk', 'ndru', 'ndrz', 'ndrg', 'ndro', 'ndrr']
+merc_ids = ['nmer', 'nmr0', 'nmr2', 'nmr3', 'nmr4', 'nmr5', 'nmr6', 'nmr7', 'nmr8', 'nmr9', 'nmra', 'nmrb', 'nmrc', 'nmrd', 'nmre', 'nmrf']
+
+
+def neutral_info(map_info):
+    buildings = map_info['neutralBuildings']
+    info = {}
+    info['buildings'] = defaultdict(int)
+    for building in buildings:
+        if building['id'] == 'ntav':
+            info['buildings'][building['id']] += 1
+            continue
+        if building['id'] == 'ngme':
+            info['buildings'][building['id']] += 1
+            continue
+        if building['id'] == 'ngad':
+            info['buildings'][building['id']] += 1
+            continue
+        if building['id'] in merc_ids:
+            info['buildings']['merc'] += 1
+            info['merc_id'] = building['id']
+            continue
+        if building['id'] in roost_ids:
+            info['buildings']['roost'] += 1
+            info['roost_id'] = building['id']
+            continue
+        if building['id'] == 'nmrk':
+            info['buildings'][building['id']] += 1
+            continue
+        if building['id'] == 'nfoh':
+            info['buildings'][building['id']] += 1
+            continue
+        if building['id'] == 'nmoo':
+            info['buildings'][building['id']] += 1
+            continue
+        if building['id'] == 'bDNR':
+            info['buildings'][building['id']] += 1
+            continue
+        if building['id'] == 'nwgt':
+            info['buildings'][building['id']] += 1
+            continue
+    summary = ''
+    for b in info['buildings']:
+        if b == 'merc':
+            new_text = f'{info["buildings"][b]} {neutral_codes[info["merc_id"]]}'
+        elif b == 'roost':
+            new_text = f'{info["buildings"][b]} {neutral_codes[info["roost_id"]]}'
+        else:
+            new_text = f'{info["buildings"][b]} {neutral_codes[b]}'
+        if info['buildings'][b] > 1:
+            if new_text[-1] == 'y':
+                new_text = new_text[:-1] + 'ies'
+            elif new_text[-1] == ')':
+                new_text = re_sub(r' \(', 's (', new_text)
+            elif 'Fountain' in new_text:
+                new_text = re_sub(r'Fountain', 'Fountains', new_text)
+            else:
+                new_text += 's'
+        summary += new_text + ', '
+    info['summary'] = summary[:-2]
+    info['total'] = len(buildings)
+    return info
+
+
+def bold_numbers(text):
+    return re_sub(r'(\d+)', r'<b>\1</b>', text)
+
+
+def neutral_name(unit_id):
+    return neutral_codes[unit_id]
+
+
 def register(jinja_environment):
     """ Register all filters to the given jinja environment """
     jinja_environment.filters['gametime'] = gametime
@@ -235,3 +309,6 @@ def register(jinja_environment):
     jinja_environment.filters['exact_version'] = exact_version
     jinja_environment.filters['slash24'] = make_slash_24
     jinja_environment.filters['canonicalname'] = try_canonical_name
+    jinja_environment.filters['neutralinfo'] = neutral_info
+    jinja_environment.filters['neutralname'] = neutral_name
+    jinja_environment.filters['boldnumbers'] = bold_numbers

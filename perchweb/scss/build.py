@@ -4,5 +4,5 @@ import sass
 # npm install -g sass
 # sass --watch scss:static/style
 
-with open("perchweb/static/style/perch.css", mode='w') as cssfile:
+with open("perchweb/static/style/perch.css", mode='w', encoding='utf-8') as cssfile:
     cssfile.write(sass.compile(filename="perchweb/scss/perch.scss"))

@@ -135,7 +135,8 @@ def view_map(map_name):
         'avg_towers': sum(gt['AvgTowers'] * gt['Games'] for gt in map_stats) // games,
         'max_length': max(gt['AvgLength'] for gt in map_stats),
         'max_towers': max(gt['AvgTowers'] for gt in map_stats),
-        'stats': map_stats
+        'stats': map_stats,             # replay stats from database
+        'info': get_mapinfo(map_name)   # map info from parsemaps
     }
 
     return standard_page('map.html', f'{map_name} details', map=map_info, recent_replays=recent_replays)
