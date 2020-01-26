@@ -20,8 +20,7 @@ const parseInfo = () => {
   return {
     editorVersion: infoResult.editorVersion,
     x: [infoResult.camera.bounds[0], infoResult.camera.bounds[2]],
-    y: [infoResult.camera.bounds[1], infoResult.camera.bounds[3]],
-    start: infoResult.players.map(p => [p.startingPos.x, p.startingPos.y])
+    y: [infoResult.camera.bounds[1], infoResult.camera.bounds[3]]
   };
 }
 
@@ -29,11 +28,17 @@ const parseUnits = editorVersion => {
   const data = fs.readFileSync(unitsFile);
   var unitsResult = new Translator.Units.warToJson(data, editorVersion).json;
   // https://gist.github.com/tylerkerr/de9464dd81988a8fed4c894f2b79f2b1
+  const startingLocations = [];
   const goldMines = [];
   const neutralBuildings = [];
 
   unitsResult.forEach(u => {
     switch (u.type) {
+      case 'sloc':  // starting location
+        {
+          startingLocations.push({ x: u.position[0], y: u.position[1], player: u.player });
+          break;
+        }
       case 'ngol':  // goldmine
         {
           goldMines.push({ id: u.type, x: u.position[0], y: u.position[1], g: u.gold });
@@ -105,8 +110,9 @@ const parseUnits = editorVersion => {
   });
 
   return {
+    starts: startingLocations,
     mines: goldMines,
-    neutralBuildings: neutralBuildings
+    neutral_buildings: neutralBuildings
   };
 }
 
