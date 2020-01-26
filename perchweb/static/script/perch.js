@@ -115,6 +115,8 @@
 (() => {
 	// Loads the image files even if they don't need to be drawn,
 	// but on the other hand it starts loading and caching immediately.
+	const startImg = new Image();
+	startImg.src = '/static/images/drawmap_sloc.png';
 	const goldImg = new Image();
 	goldImg.src = '/static/images/drawmap_mine.png';
 	const playImg = new Image();
@@ -124,7 +126,8 @@
 		document.body.querySelectorAll('.drawmap').forEach(async cnv => {
 			const mapSize = JSON.parse(cnv.dataset.mapsize);
 			const playerTowers = JSON.parse(cnv.dataset.towers || '{}');
-			const playerLocations = JSON.parse(cnv.dataset.startlocations || '{}');
+			const playerStartLocations = JSON.parse(cnv.dataset.playerstarts || '{}');	// player starting locations for tower drawings
+			const mapStartLocations = JSON.parse(cnv.dataset.mapstarts || '[]');		// generic starting locations for map details
 			const goldMines = JSON.parse(cnv.dataset.mines || '[]');
 			const neutralBuildings = JSON.parse(cnv.dataset.neutrals || '[]');
 			const animated = cnv.classList.contains('anim');
@@ -146,6 +149,7 @@
 			// There's a race condition where it will draw transparent images
 			// if they're not loaded before drawing
 			const imagesReady = (mapImg = { complete: true, addEventListener: () => { } }) => {
+				images['start'] = startImg;
 				images['ngol'] = goldImg;
 				images['play'] = playImg;
 				images['map'] = mapImg;
@@ -160,10 +164,10 @@
 				});
 			};
 
-			// Tower and start location size
+			// Tower and player start location size
 			const ps = cnv.dataset.paintsize;
 			const po = ps / 2;
-			// Goldmine size
+			// Goldmine and map start location size
 			const gs = ps * 3;
 			const go = gs / 2;
 			// Neutral size
@@ -196,6 +200,15 @@
 			const ctx = cnv.getContext('2d');
 
 			const drawBase = () => {
+				mapStartLocations.forEach(s => {
+					const c = getCoords(s);
+					ctx.drawImage(startImg, c[0] - go, c[1] - go, gs, gs);
+					ctx.globalCompositeOperation = "source-atop";
+					ctx.fillStyle = s[2];
+					ctx.fillRect(c[0] - go, c[1] - go, gs, gs);
+					ctx.globalCompositeOperation = "source-over";
+				});
+
 				goldMines.forEach(m => {
 					const c = getCoords(m);
 					ctx.drawImage(goldImg, c[0] - go, c[1] - go, gs, gs);
@@ -206,7 +219,7 @@
 					ctx.drawImage(images[b[2]], c[0] - no, c[1] - no, ns, ns);
 				});
 
-				for (let [color, start] of Object.entries(playerLocations)) {
+				for (let [color, start] of Object.entries(playerStartLocations)) {
 					ctx.fillStyle = color;
 					const c = getCoords(start);
 					ctx.fillRect(c[0] - ps, c[1] - ps, ps * 2, ps * 2);

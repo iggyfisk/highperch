@@ -217,7 +217,7 @@ merc_ids = ['nmer', 'nmr0', 'nmr2', 'nmr3', 'nmr4', 'nmr5', 'nmr6', 'nmr7', 'nmr
 def neutral_info(map_info):
     if not map_info:
         return None
-    buildings = map_info['neutralBuildings']
+    buildings = map_info['neutral_buildings']
     info = {}
     info['buildings'] = defaultdict(int)
     for building in buildings:

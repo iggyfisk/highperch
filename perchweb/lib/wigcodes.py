@@ -812,6 +812,33 @@ tier_upgrades = {
     'unp2'
 }
 
+player_colors = {
+    0: '#ff0303',
+    1: '#0042ff',
+    2: '#1ce6b9',
+    3: '#540081',
+    4: '#fffc00',
+    5: '#fe8a0e',
+    6: '#20c000',
+    7: '#e55bb0',
+    8: '#959697',
+    9: '#7ebff1',
+    10: '#106246',
+    11: '#4a2a04',
+    12: '#9b0000',
+    13: '#0000c3',
+    14: '#00eaff',
+    15: '#be00fe',
+    16: '#ebcd87',
+    17: '#f8a48b',
+    18: '#bfff80',
+    19: '#dcb9eb',
+    20: '#282828',
+    21: '#ebf0ff',
+    22: '#00781e',
+    23: '#a46f33'
+}
+
 
 # Todo: move to a models/map when we create the map details
 
@@ -844,10 +871,13 @@ def get_map_size(map_name, fp=None):
     return [x[0], x[1], y[0], y[1]]
 
 
-def get_starting_locations(map_name, fp=None):
+def get_starting_locations(map_name, fp=None, simple=True):
     map_info = get_mapinfo(map_name, fp)
-
-    return map_info['start'] if map_info else None
+    if not map_info:
+        return None
+    if simple:
+        return [[location['x'], location['y']] for location in map_info['starts']]
+    return map_info['starts']
 
 
 def get_goldmines(map_name, fp=None):
@@ -860,10 +890,10 @@ def get_goldmines(map_name, fp=None):
 
 def get_neutral_buildings(map_name, fp=None):
     map_info = get_mapinfo(map_name, fp)
-    if not map_info or 'neutralBuildings' not in map_info:
+    if not map_info or 'neutral_buildings' not in map_info:
         return None
 
-    return map_info['neutralBuildings']
+    return map_info['neutral_buildings']
 
 
 def get_map_canonical_name(map_name):

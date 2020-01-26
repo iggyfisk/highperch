@@ -48,7 +48,7 @@
                             class="drawmap anim"
                             data-towers='{{ drawmap["towers"]|tojson|safe }}'
                             data-mapsize='{{ drawmap["map_size"]|tojson|safe }}'
-                            data-startlocations='{{ drawmap["start_locations"]|tojson|safe }}'
+                            data-playerstarts='{{ drawmap["start_locations"]|tojson|safe }}'
                             data-mines='{{ drawmap["goldmines"]|tojson|safe }}'
                             data-paintsize='4'></canvas>
                         {% endif %}
