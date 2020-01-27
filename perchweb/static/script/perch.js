@@ -162,6 +162,8 @@ const neutralBuildingCodes = {
 		ySize = mapSize[3] - mapSize[2];
 		maxSize = Math.max(xSize, ySize);
 		scale = mapImageSize / maxSize;
+		xStart = -(xSize / maxSize * mapImageSize - mapImageSize) / 2;
+		yStart = -(ySize / maxSize * mapImageSize - mapImageSize) / 2;
 	}
 
 	document.addEventListener("DOMContentLoaded", () => {
@@ -228,8 +230,7 @@ const neutralBuildingCodes = {
 
 			setupMap(cnv, mapSize);
 
-			const xStart = -(xSize / maxSize * mapImageSize - mapImageSize) / 2;
-			const yStart = -(ySize / maxSize * mapImageSize - mapImageSize) / 2;
+
 
 			const getCoords = t => ([
 				Math.round((t[0] - mapSize[0]) * scale + xStart),
