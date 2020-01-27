@@ -129,7 +129,7 @@ def view_map(map_name):
         'gold': sum(m['g'] for m in goldmines) if goldmines else None,
         'drawmap': {
             'map_size': map_size,
-            'goldmines': [[m['x'], m['y']] for m in goldmines] if goldmines else None,
+            'goldmines': [[m['x'], m['y'], m['g']] for m in goldmines] if goldmines else None,
             'neutralbuildings': [[b['x'], b['y'], b['id']] for b in neutral_buildings] if neutral_buildings else None,
             'starts': [[s['x'], s['y'], player_colors[int(s['player'])]] for s in start_locations]
         } if map_size else None,

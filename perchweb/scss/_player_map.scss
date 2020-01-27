@@ -90,9 +90,22 @@
     .bigmap {
         line-height: 0;
         max-width: 100%;
-        // min-width: 200px;
         &.lesshuge {
             max-width: 550px;
+        }
+    }
+    #maptip {
+        display: none;
+        position: absolute;
+        padding: 10px;
+        border: 1px black solid;
+        background-color: rgba(0,0,0,0.8);
+        .tiptext {
+            margin: 5px;
+            text-align: center;
+            color: $primary-color;
+            font-size: 15px;
+            white-space: nowrap;
         }
     }
 }

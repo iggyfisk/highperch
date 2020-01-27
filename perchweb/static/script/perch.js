@@ -1,3 +1,37 @@
+const neutralBuildingCodes = {
+	'ngol': 'Gold Mine',
+	'ntav': 'Tavern',
+	'ngme': 'Goblin Merchant',
+	'ngad': 'Goblin Laboratory',
+	'nmer': 'Mercenary Camp (Lordaeron Summer)',
+	'nmr0': 'Mercenary Camp (Village)',
+	'nmr2': 'Mercenary Camp (Lordaeron Fall)',
+	'nmr3': 'Mercenary Camp (Lordaeron Winter)',
+	'nmr4': 'Mercenary Camp (Barrens)',
+	'nmr5': 'Mercenary Camp (Ashenvale)',
+	'nmr6': 'Mercenary Camp (Felwood)',
+	'nmr7': 'Mercenary Camp (Northrend)',
+	'nmr8': 'Mercenary Camp (Cityscape)',
+	'nmr9': 'Mercenary Camp (Dalaran)',
+	'nmra': 'Mercenary Camp (Dungeon)',
+	'nmrb': 'Mercenary Camp (Underground)',
+	'nmrc': 'Mercenary Camp (Sunken Ruins)',
+	'nmrd': 'Mercenary Camp (Icecrown Glacier)',
+	'nmre': 'Mercenary Camp (Outland)',
+	'nmrf': 'Mercenary Camp (Black Citadel)',
+	'ndrk': 'Black Dragon Roost',
+	'ndru': 'Blue Dragon Roost',
+	'ndrz': 'Bronze Dragon Roost',
+	'ndrg': 'Green Dragon Roost',
+	'ndro': 'Nether Dragon Roost',
+	'ndrr': 'Red Dragon Roost',
+	'nmrk': 'Marketplace',
+	'nfoh': 'Fountain of Health',
+	'nmoo': 'Fountain of Mana',
+	'bDNR': 'Random Fountain',
+	'nwgt': 'Way Gate'
+};
+
 /* hp-expand */
 (() => {
 	document.addEventListener("DOMContentLoaded", () => {
@@ -122,6 +156,14 @@
 	const playImg = new Image();
 	playImg.src = '/static/images/drawmap_play.png';
 
+	const setupMap = (cnv, mapSize) => {
+		mapImageSize = cnv.clientWidth;
+		xSize = mapSize[1] - mapSize[0];
+		ySize = mapSize[3] - mapSize[2];
+		maxSize = Math.max(xSize, ySize);
+		scale = mapImageSize / maxSize;
+	}
+
 	document.addEventListener("DOMContentLoaded", () => {
 		document.body.querySelectorAll('.drawmap').forEach(async cnv => {
 			const mapSize = JSON.parse(cnv.dataset.mapsize);
@@ -132,6 +174,7 @@
 			const neutralBuildings = JSON.parse(cnv.dataset.neutrals || '[]');
 			const animated = cnv.classList.contains('anim');
 			const delayed = cnv.classList.contains('delay');
+			const detailed = (typeof cnv.dataset.neutrals !== 'undefined');
 			const mapImg = delayed
 				? cnv.parentNode.querySelector('img')
 				: undefined;
@@ -183,11 +226,7 @@
 			// Wait for map image to load and grow to real size when necessary
 			if (delayed) await imagesReady(mapImg);
 
-			const mapImageSize = cnv.clientWidth;
-			const xSize = mapSize[1] - mapSize[0];
-			const ySize = mapSize[3] - mapSize[2];
-			const maxSize = Math.max(xSize, ySize);
-			const scale = mapImageSize / maxSize;
+			setupMap(cnv, mapSize);
 
 			const xStart = -(xSize / maxSize * mapImageSize - mapImageSize) / 2;
 			const yStart = -(ySize / maxSize * mapImageSize - mapImageSize) / 2;
@@ -196,8 +235,9 @@
 				Math.round((t[0] - mapSize[0]) * scale + xStart),
 				Math.round(mapImageSize - ((t[1] - mapSize[2]) * scale + yStart))]);
 
-			cnv.height = cnv.width = mapImageSize;
+			cnv.height = cnv.width = mapImageSize * 2;	// draw at triple resolution so the expanded image isn't upscaled and blurry
 			const ctx = cnv.getContext('2d');
+			ctx.scale(2, 2);
 
 			const drawBase = () => {
 				mapStartLocations.forEach(s => {
@@ -208,23 +248,99 @@
 					ctx.fillRect(c[0] - go, c[1] - go, gs, gs);
 					ctx.globalCompositeOperation = "source-over";
 				});
-
 				goldMines.forEach(m => {
 					const c = getCoords(m);
 					ctx.drawImage(goldImg, c[0] - go, c[1] - go, gs, gs);
 				});
-
 				neutralBuildings.forEach(b => {
 					const c = getCoords(b);
 					ctx.drawImage(images[b[2]], c[0] - no, c[1] - no, ns, ns);
 				});
-
 				for (let [color, start] of Object.entries(playerStartLocations)) {
 					ctx.fillStyle = color;
 					const c = getCoords(start);
 					ctx.fillRect(c[0] - ps, c[1] - ps, ps * 2, ps * 2);
 				}
 			}
+
+			let mineRects = [];
+			let neutralRects = [];
+
+			const setupAreas = (scaleFactor) => {
+				mineRects = [];
+				goldMines.forEach(m => {
+					const c = getCoords(m);
+					let x1 = c[0] - go * scaleFactor;
+					let y1 = c[1] - go * scaleFactor;
+					let x2 = x1 + gs * scaleFactor;
+					let y2 = y1 + gs * scaleFactor;
+					mineRects.push([x1, y1, x2, y2, m[2]])
+				});
+				scaleFactor = scaleFactor * 0.8		// The neutralBuilding image size is a little too large
+				neutralRects = [];
+				neutralBuildings.forEach(b => {
+					const c = getCoords(b);
+					let x1 = c[0] - no * scaleFactor;
+					let y1 = c[1] - no * scaleFactor;
+					let x2 = x1 + ns * scaleFactor;
+					let y2 = y1 + ns * scaleFactor;
+					neutralRects.push([x1, y1, x2, y2, b[2]]);
+				});
+			}
+
+			const isInRect = (click, rect) => (click[0] >= rect[0] && click[0] <= rect[2] && click[1] >= rect[1] && click[1] <= rect[3]);
+
+			const handleMove = (e) => {
+				offsetLeft = Math.round(cnv.getBoundingClientRect().left);
+				offsetTop = Math.round(cnv.getBoundingClientRect().top);
+				const mousePos = [e.clientX - offsetLeft, e.clientY - offsetTop];
+				const maptip = document.getElementById('maptip');
+				let tipVisible = 0;
+				mineRects.forEach(r => {
+					if (isInRect(mousePos, r)) {
+						tipVisible = 1;
+						tipText = `<b>${r[4]}</b> gold`;
+					}
+				})
+				neutralRects.forEach(r => {
+					if (isInRect(mousePos, r)) {
+						tipVisible = 1;
+						tipText = neutralBuildingCodes[r[4]]
+					}
+				})
+				if (tipVisible === 1) {
+					maptip.style.display = 'block';
+					maptip.style.top = (mousePos[1]) + 'px';
+					maptip.style.left = (mousePos[0] + 20) + 'px';
+					maptip.childNodes[0].innerHTML = tipText;
+				}
+				if (tipVisible === 0) {
+					maptip.style.display = 'none';
+				}
+			}
+
+			cnv.addEventListener('mousemove', (e) => {
+				if (detailed) {
+					handleMove(e);
+				}
+			});
+
+			// I think this is good enough for mobile...
+			cnv.addEventListener('touchend', (e) => {
+				if (detailed) {
+					handleMove(e);
+				}
+			});
+
+			// Enter bigmode
+			cnv.addEventListener('click', () => {
+				if (detailed) {
+					let parent = event.target.parentNode;
+					parent.classList.toggle('lesshuge');
+					setupMap(cnv, mapSize);
+					setupAreas(mapImageSize / 550);
+				}
+			});
 
 			const animate = towers => {
 				if (!cnv.classList.contains('anim')) return;
@@ -249,10 +365,19 @@
 				setTimeout(drawNext.bind(this, 0), 1);
 			}
 
+			// If we don't redo the mouseover areas on window resize in bigmode they'll be bungled
+			const handleResize = () => {
+				setupMap(cnv, mapSize);
+				setupAreas(mapImageSize / 550);
+			}
+
 			// Always wait for asset images to load before drawing them,
 			// also wait for the map image to load when necessary
 			if (animated || delayed) await imagesReady(mapImg);
-
+			if (detailed) {
+				window.addEventListener('resize', handleResize);
+				setupAreas(1);
+			}
 			drawBase();
 			if (animated) {
 				// Animated minimap

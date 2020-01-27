@@ -1554,6 +1554,21 @@ a.playername:hover {
   .map .bigmap.lesshuge {
     max-width: 550px; }
 
+.player #maptip,
+.map #maptip {
+  display: none;
+  position: absolute;
+  padding: 10px;
+  border: 1px black solid;
+  background-color: rgba(0, 0, 0, 0.8); }
+  .player #maptip .tiptext,
+  .map #maptip .tiptext {
+    margin: 5px;
+    text-align: center;
+    color: #c4976f;
+    font-size: 15px;
+    white-space: nowrap; }
+
 .fexp {
   float: right;
   margin-right: 8px;
