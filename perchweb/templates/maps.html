@@ -31,7 +31,7 @@
     <tr>
         <td class="optional thumbcol"><a href="{{ url_for('views.view_map', map_name=map['name']) }}"><img src="{{ map['name']|mapthumbnail }}" class="thumb"></a></td>
         <td><a href="{{ url_for('views.view_map', map_name=map['name']) }}">{{ map['name']|map_proper_name }}</a></td>
-        <td data-sort-method="number">{{ map['start']|length }}</td>
+        <td data-sort-method="number">{{ map['starts']|length }}</td>
         <td class="optional" data-sort-method="number" data-sort="{{ map_xy[0] * map_xy[1] }}"><span class="hp-toggle" data-group="dimensions">{{ map_xy[0] }} x {{ map_xy[1] }}</span><span class="hp-toggle hidden" data-group="dimensions">{{ map_xy[0] * map_xy[1] }}</span></td>
         <td class="optional">{{ map['mines']|length }}</td>
         <td class="optional" data-sort-method="number" data-sort="{{ map['mines']|goldmine_sum }}">{{ map['mines']|goldmine_sum|thousands }}</td>
