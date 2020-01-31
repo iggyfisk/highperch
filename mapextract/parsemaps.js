@@ -246,7 +246,7 @@ const creepsToCamps = creeps => {
     camp['y'] = Math.round(arrayMean(allY));
     camp['level'] += mapCodes.creepCodes[creep['id']]['level'];
     const creepDupeIdx = camp['creeps'].findIndex((c => c['id'] === creep['id'] && c['drops'].length === 0))
-    if (creepDupeIdx !== -1) {
+    if (creepDupeIdx !== -1 && creep['drops'].length === 0) {
       camp['creeps'][creepDupeIdx]['count'] += 1;
     } else {
       camp['creeps'].push(creep);

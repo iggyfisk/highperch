@@ -303,13 +303,13 @@
 
 			const getDotColor = camp => {
 				if (camp['level'] < 10) {
-					dotColor = 'rgba(55, 126, 34, 0.8)';
+					dotColor = 'rgba(55, 170, 34, 0.8)';
 				}
 				else if (camp['level'] >= 10 && camp['level'] < 20) {
-					dotColor = 'rgba(255, 118, 5, 0.8)';
+					dotColor = 'rgba(255, 106, 0, 0.8)';
 				}
 				else if (camp['level'] >= 20) {
-					dotColor = 'rgba(127, 42, 33, 0.9)';
+					dotColor = 'rgba(227, 0, 0, 0.7)';
 				}
 				return dotColor;
 			}
@@ -337,9 +337,18 @@
 
 					creepCamps.forEach(camp => {
 						c = getCoords([camp['x'], camp['y']])
+						const radius = getDotSize(camp);
+						const color = getDotColor(camp);
 						ctx.beginPath();
-						ctx.arc(c[0], c[1], getDotSize(camp), 0, 2 * Math.PI, false);
-						ctx.fillStyle = getDotColor(camp);
+						ctx.arc(c[0], c[1], radius, 0, 2 * Math.PI, false);
+						ctx.fillStyle = color;
+						ctx.fill();
+						ctx.arc(c[0], c[1], radius, 0, 2 * Math.PI);
+						const gradient = ctx.createRadialGradient(c[0], c[1], 0, c[0], c[1], radius);
+						if (radius === 7) { gradient.addColorStop(0, 'rgba(100, 100, 100, 0.1)'); }	// orange dots need a different gradient
+						else { gradient.addColorStop(0, 'rgba(50, 50, 50, 0.3)'); }
+						gradient.addColorStop(1, color);
+						ctx.fillStyle = gradient;
 						ctx.fill();
 						ctx.lineWidth = 1;
 						ctx.strokeStyle = '#003300';
