@@ -287,7 +287,7 @@
 			const ns = ps * 6;
 			const no = ns / 2
 			// Critter icon size
-			const crs = ps * 4
+			const crs = ps * 4.5
 			const cro = crs / 2
 
 			// Turn camera bounds into minimap bounds
@@ -301,7 +301,7 @@
 
 			setupMap(cnv, mapSize, initialSize);
 
-			const upResFactor = 3;
+			const upResFactor = 2.5;
 
 			const getCoords = t => {
 				return [precisionRound(((t[0] - mapSize[0]) * scale + xStart), 3) / currentZoom,
