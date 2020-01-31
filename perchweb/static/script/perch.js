@@ -239,6 +239,7 @@
 				: undefined;
 			let initialSize = 0;
 			if (detailed) { initialSize = 550; }	// Todo: pull these values from getComputedStyle instead of hardcoding
+			else if (animated) { initialSize = 300; }
 			else { initialSize = 80; }
 
 			let images = {};
