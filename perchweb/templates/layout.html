@@ -98,6 +98,9 @@
     <script src="/static/script/d3.v5.min.js?h={{ config['STATIC_HASH'] }}"></script>
     <script src="/static/script/apmseries.js?h={{ config['STATIC_HASH'] }}"></script>
     {% endif %}
+    {% if map %}
+    <script src="/static/script/maplib.js?h={{ config['STATIC_HASH'] }}"></script>
+    {% endif %}
     {% block scripts %}{% endblock %}
 </body>
 </html>

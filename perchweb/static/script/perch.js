@@ -1,37 +1,3 @@
-const neutralBuildingCodes = {
-	'ngol': 'Gold Mine',
-	'ntav': 'Tavern',
-	'ngme': 'Goblin Merchant',
-	'ngad': 'Goblin Laboratory',
-	'nmer': 'Mercenary Camp (Lordaeron Summer)',
-	'nmr0': 'Mercenary Camp (Village)',
-	'nmr2': 'Mercenary Camp (Lordaeron Fall)',
-	'nmr3': 'Mercenary Camp (Lordaeron Winter)',
-	'nmr4': 'Mercenary Camp (Barrens)',
-	'nmr5': 'Mercenary Camp (Ashenvale)',
-	'nmr6': 'Mercenary Camp (Felwood)',
-	'nmr7': 'Mercenary Camp (Northrend)',
-	'nmr8': 'Mercenary Camp (Cityscape)',
-	'nmr9': 'Mercenary Camp (Dalaran)',
-	'nmra': 'Mercenary Camp (Dungeon)',
-	'nmrb': 'Mercenary Camp (Underground)',
-	'nmrc': 'Mercenary Camp (Sunken Ruins)',
-	'nmrd': 'Mercenary Camp (Icecrown Glacier)',
-	'nmre': 'Mercenary Camp (Outland)',
-	'nmrf': 'Mercenary Camp (Black Citadel)',
-	'ndrk': 'Black Dragon Roost',
-	'ndru': 'Blue Dragon Roost',
-	'ndrz': 'Bronze Dragon Roost',
-	'ndrg': 'Green Dragon Roost',
-	'ndro': 'Nether Dragon Roost',
-	'ndrr': 'Red Dragon Roost',
-	'nmrk': 'Marketplace',
-	'nfoh': 'Fountain of Health',
-	'nmoo': 'Fountain of Mana',
-	'bDNR': 'Random Fountain',
-	'nwgt': 'Way Gate'
-};
-
 /* hp-expand */
 (() => {
 	document.addEventListener("DOMContentLoaded", () => {
@@ -129,8 +95,8 @@ const neutralBuildingCodes = {
 /* Replay view navkeys (square brackets for prev/next) */
 (() => {
 	document.addEventListener("DOMContentLoaded", () => {
-		var backElem = document.getElementById("prevReep");
-		var forwardElem = document.getElementById("nextReep");
+		const backElem = document.getElementById("prevReep");
+		const forwardElem = document.getElementById("nextReep");
 		document.onkeyup = function (e) {
 			if (e.which == 219) {
 				if (backElem) {
@@ -156,6 +122,14 @@ const neutralBuildingCodes = {
 	const playImg = new Image();
 	playImg.src = '/static/images/drawmap_play.png';
 
+	let mapImageSize
+		, xSize
+		, ySize
+		, maxSize
+		, scale
+		, xStart
+		, yStart;
+
 	const setupMap = (cnv, mapSize) => {
 		mapImageSize = cnv.clientWidth;
 		xSize = mapSize[1] - mapSize[0];
@@ -166,6 +140,81 @@ const neutralBuildingCodes = {
 		yStart = -(ySize / maxSize * mapImageSize - mapImageSize) / 2;
 	}
 
+	const makeCreepTable = camp => {
+		const creepTable = document.createElement("table");
+		let totalExp = 0;
+		camp['creeps'].forEach(creep => {
+			const creepRow = creepTable.insertRow();
+			creepRow.className = 'creeprow';
+			const countCell = creepRow.insertCell();
+			if (creep['count'] > 1) { countCell.append(document.createTextNode(creep['count'] + ' ⨯')); }
+			countCell.className = 'count';
+			const iconCell = creepRow.insertCell();
+			const iconImg = new Image();
+			iconImg.src = `/static/images/game/creeps/${creep['id']}.png`;
+			iconCell.append(iconImg);
+			iconCell.className = 'creepicon';
+			const nameCell = creepRow.insertCell();
+			nameCell.append(document.createTextNode(creepCodes[creep['id']]['name']));
+			nameCell.className = 'creepname';
+			const levelCell = creepRow.insertCell();
+			levelCell.append(document.createTextNode(creepCodes[creep['id']]['level']));
+			levelCell.className = 'level';
+			const expCell = creepRow.insertCell();
+			expCell.className = 'exp';
+			const rowExp = levelExp[creepCodes[creep['id']]['level']] * creep['count'];
+			totalExp += rowExp;
+			expCell.append(document.createTextNode(rowExp));
+			const dropCell = creepRow.insertCell();
+			dropCell.className = 'drops';
+			creep['drops'].forEach(drop => {
+				const dropDiv = document.createElement("div");
+				dropDiv.className = 'drop';
+				if (Array.isArray(drop)) {
+					if (drop.length > 0) {
+						dropDiv.className += ' droptable';
+						drop.forEach(item => {
+							const itemImg = new Image();
+							itemImg.src = `/static/images/game/items/${item}.png`;
+							itemImg.title = itemCodes[item]['name'];
+							dropDiv.appendChild(itemImg);
+						})
+					}
+				} else {
+					const itemImg = new Image();
+					itemImg.src = `/static/images/game/items/${drop}.png`;
+					itemImg.title = itemCodes[drop]['name'];
+					dropDiv.appendChild(itemImg);
+				}
+				dropCell.appendChild(dropDiv);
+			})
+		});
+
+		const totalRow = creepTable.insertRow();
+		totalRow.className = 'total';
+		let countCell = totalRow.insertCell();
+		let iconCell = totalRow.insertCell();
+		let nameCell = totalRow.insertCell();
+		nameCell.append(document.createTextNode('total'));
+		let levelCell = totalRow.insertCell();
+		levelCell.append(document.createTextNode(camp['level']));
+		let expCell = totalRow.insertCell();
+		expCell.className = 'exp totalexp';
+		expCell.append(document.createTextNode(totalExp));
+		let dropCell = totalRow.insertCell();
+
+		const tableCols = ['', '', '', 'level', 'exp', ''];
+		const tableHeader = creepTable.createTHead();
+		const tableHeadRow = tableHeader.insertRow();
+		tableCols.forEach(col => {
+			const th = document.createElement("th");
+			th.appendChild(document.createTextNode(col));
+			tableHeadRow.appendChild(th);
+		});
+
+		return creepTable;
+	}
+
 	document.addEventListener("DOMContentLoaded", () => {
 		document.body.querySelectorAll('.drawmap').forEach(async cnv => {
 			const mapSize = JSON.parse(cnv.dataset.mapsize);
@@ -174,6 +223,7 @@ const neutralBuildingCodes = {
 			const mapStartLocations = JSON.parse(cnv.dataset.mapstarts || '[]');		// generic starting locations for map details
 			const goldMines = JSON.parse(cnv.dataset.mines || '[]');
 			const neutralBuildings = JSON.parse(cnv.dataset.neutrals || '[]');
+			const creepCamps = JSON.parse(cnv.dataset.creepcamps || '[]');
 			const animated = cnv.classList.contains('anim');
 			const delayed = cnv.classList.contains('delay');
 			const detailed = (typeof cnv.dataset.neutrals !== 'undefined');
@@ -185,7 +235,7 @@ const neutralBuildingCodes = {
 
 			neutralBuildings.forEach(b => {
 				if (!(b[2] in images)) {
-					img = new Image();
+					const img = new Image();
 					img.src = '/static/images/game/neutrals/' + b[2] + '.png';
 					images[b[2]] = img;
 				}
@@ -230,8 +280,6 @@ const neutralBuildingCodes = {
 
 			setupMap(cnv, mapSize);
 
-
-
 			const getCoords = t => ([
 				Math.round((t[0] - mapSize[0]) * scale + xStart),
 				Math.round(mapImageSize - ((t[1] - mapSize[2]) * scale + yStart))]);
@@ -240,23 +288,65 @@ const neutralBuildingCodes = {
 			const ctx = cnv.getContext('2d');
 			ctx.scale(2, 2);
 
+			const getDotSize = camp => {
+				if (camp['level'] < 10) {
+					dotSize = 6;
+				}
+				else if (camp['level'] >= 10 && camp['level'] < 20) {
+					dotSize = 7;
+				}
+				else if (camp['level'] >= 20) {
+					dotSize = 8;
+				}
+				return dotSize;
+			}
+
+			const getDotColor = camp => {
+				if (camp['level'] < 10) {
+					dotColor = 'rgba(55, 126, 34, 0.8)';
+				}
+				else if (camp['level'] >= 10 && camp['level'] < 20) {
+					dotColor = 'rgba(255, 118, 5, 0.8)';
+				}
+				else if (camp['level'] >= 20) {
+					dotColor = 'rgba(127, 42, 33, 0.9)';
+				}
+				return dotColor;
+			}
+
 			const drawBase = () => {
-				mapStartLocations.forEach(s => {
-					const c = getCoords(s);
-					ctx.drawImage(startImg, c[0] - go, c[1] - go, gs, gs);
-					ctx.globalCompositeOperation = "source-atop";
-					ctx.fillStyle = s[2];
-					ctx.fillRect(c[0] - go, c[1] - go, gs, gs);
-					ctx.globalCompositeOperation = "source-over";
-				});
-				goldMines.forEach(m => {
-					const c = getCoords(m);
-					ctx.drawImage(goldImg, c[0] - go, c[1] - go, gs, gs);
-				});
-				neutralBuildings.forEach(b => {
-					const c = getCoords(b);
-					ctx.drawImage(images[b[2]], c[0] - no, c[1] - no, ns, ns);
-				});
+				if (detailed) {
+					mapStartLocations.forEach(s => {
+						const c = getCoords(s);
+						ctx.drawImage(startImg, c[0] - go, c[1] - go, gs, gs);
+						ctx.globalCompositeOperation = "source-atop";
+						ctx.fillStyle = s[2];
+						ctx.fillRect(c[0] - go, c[1] - go, gs, gs);
+						ctx.globalCompositeOperation = "source-over";
+					});
+
+					goldMines.forEach(m => {
+						const c = getCoords(m);
+						ctx.drawImage(goldImg, c[0] - go, c[1] - go, gs, gs);
+					});
+
+					neutralBuildings.forEach(b => {
+						const c = getCoords(b);
+						ctx.drawImage(images[b[2]], c[0] - no, c[1] - no, ns, ns);
+					});
+
+					creepCamps.forEach(camp => {
+						c = getCoords([camp['x'], camp['y']])
+						ctx.beginPath();
+						ctx.arc(c[0], c[1], getDotSize(camp), 0, 2 * Math.PI, false);
+						ctx.fillStyle = getDotColor(camp);
+						ctx.fill();
+						ctx.lineWidth = 1;
+						ctx.strokeStyle = '#003300';
+						ctx.stroke();
+					})
+				}
+
 				for (let [color, start] of Object.entries(playerStartLocations)) {
 					ctx.fillStyle = color;
 					const c = getCoords(start);
@@ -266,6 +356,7 @@ const neutralBuildingCodes = {
 
 			let mineRects = [];
 			let neutralRects = [];
+			let creepRects = [];
 
 			const setupAreas = (scaleFactor) => {
 				mineRects = [];
@@ -276,6 +367,17 @@ const neutralBuildingCodes = {
 					let x2 = x1 + gs * scaleFactor;
 					let y2 = y1 + gs * scaleFactor;
 					mineRects.push([x1, y1, x2, y2, m[2]])
+				});
+				creepRects = [];
+				creepCamps.forEach(camp => {
+					cs = getDotSize(camp) * 3	// dotSize is a radius, and we want it a bit bigger than the actual dot
+					co = cs / 2
+					const c = getCoords([camp['x'], camp['y']]);
+					let x1 = c[0] - co * scaleFactor;
+					let y1 = c[1] - co * scaleFactor;
+					let x2 = x1 + cs * scaleFactor;
+					let y2 = y1 + cs * scaleFactor;
+					creepRects.push([x1, y1, x2, y2, camp])
 				});
 				scaleFactor = scaleFactor * 0.8		// The neutralBuilding image size is a little too large
 				neutralRects = [];
@@ -291,57 +393,100 @@ const neutralBuildingCodes = {
 
 			const isInRect = (click, rect) => (click[0] >= rect[0] && click[0] <= rect[2] && click[1] >= rect[1] && click[1] <= rect[3]);
 
+			let camp = {}
+
 			const handleMove = (e) => {
 				offsetLeft = Math.round(cnv.getBoundingClientRect().left);
 				offsetTop = Math.round(cnv.getBoundingClientRect().top);
 				const mousePos = [e.clientX - offsetLeft, e.clientY - offsetTop];
-				const maptip = document.getElementById('maptip');
-				let tipVisible = 0;
+				const neutralTip = document.getElementById('neutraltip');
+				let neutralVisible = 0;
+				neutralText = '';
 				mineRects.forEach(r => {
 					if (isInRect(mousePos, r)) {
-						tipVisible = 1;
-						tipText = `<b>${r[4]}</b> gold`;
+						neutralVisible = 1;
+						neutralText = `<b>${r[4]}</b> gold`;
 					}
 				})
 				neutralRects.forEach(r => {
 					if (isInRect(mousePos, r)) {
-						tipVisible = 1;
-						tipText = neutralBuildingCodes[r[4]]
+						neutralVisible = 1;
+						neutralText = neutralBuildingCodes[r[4]]
 					}
 				})
-				if (tipVisible === 1) {
-					maptip.style.display = 'block';
-					maptip.style.top = (mousePos[1]) + 'px';
-					maptip.style.left = (mousePos[0] + 20) + 'px';
-					maptip.childNodes[0].innerHTML = tipText;
-				}
-				if (tipVisible === 0) {
-					maptip.style.display = 'none';
+
+				// Todo: highlight the creep camp dots on mouseover.
+				// Since we're baking this all into one canvas, 
+				// we'll probably need a separate canvas on top for this
+
+				if (neutralVisible === 1) {
+					neutralTip.style.top = (mousePos[1] - 50) + 'px';
+					neutralTip.style.left = (mousePos[0] - (neutralText.length ** 1.1 * 3)) + 'px';
+					neutralTip.childNodes[0].innerHTML = neutralText;
+					neutralTip.style.display = 'block';
+				} else {
+					neutralTip.style.display = 'none';
 				}
 			}
 
-			cnv.addEventListener('mousemove', (e) => {
-				if (detailed) {
-					handleMove(e);
-				}
-			});
+			if (detailed) {
+				let campVisible = 0;
 
-			// I think this is good enough for mobile...
-			cnv.addEventListener('touchend', (e) => {
-				if (detailed) {
-					handleMove(e);
-				}
-			});
+				document.querySelectorAll('.mapzoom').forEach(zoomControl => {
+					zoomControl.addEventListener('click', event => {
+						event.target.classList.toggle('zoomenabled');
+						mapImg.parentNode.classList.toggle('lesshuge');
+						const campTip = document.getElementById('creeptip');
+						campTip.style.display = 'none';
+						campVisible = 0;
+						setupMap(cnv, mapSize);
+						setupAreas(mapImageSize / 550);
+					});
+				});
 
-			// Enter bigmode
-			cnv.addEventListener('click', () => {
-				if (detailed) {
-					let parent = event.target.parentNode;
-					parent.classList.toggle('lesshuge');
-					setupMap(cnv, mapSize);
-					setupAreas(mapImageSize / 550);
-				}
-			});
+				cnv.addEventListener('click', (e) => {
+					offsetLeft = Math.round(cnv.getBoundingClientRect().left);
+					offsetTop = Math.round(cnv.getBoundingClientRect().top);
+					const mousePos = [e.clientX - offsetLeft, e.clientY - offsetTop];
+					const campTip = document.getElementById('creeptip');
+
+					let creepClicked = 0;
+
+					creepRects.forEach(r => {
+						if (isInRect(mousePos, r)) {
+							creepClicked = 1;
+							if (campVisible === 1 && r[4] === camp) {
+								campTip.style.display = 'none';
+								campVisible = 0;
+							} else {
+								campTip.innerHTML = '';
+								camp = r[4];
+								campVisible = 1;
+								creepList = camp['creeps'];
+								creepList.sort((a, b) => (creepCodes[b['id']]['level'] - creepCodes[a['id']]['level']))
+								const creepDiv = makeCreepTable(camp);
+								campTip.append(creepDiv);
+								campTip.style.top = (mousePos[1]) + 'px';
+								campTip.style.left = (mousePos[0] + 20) + 'px';
+								campTip.style.display = 'inline';
+								campVisible = 1;
+							}
+						}
+					})
+					if (creepClicked === 0) {
+						campTip.style.display = 'none';
+					}
+				});
+
+				cnv.addEventListener('mousemove', (e) => {
+					handleMove(e);
+				});
+
+				// I think this is good enough for mobile...
+				cnv.addEventListener('touchend', (e) => {
+					handleMove(e);
+				});
+			}
 
 			const animate = towers => {
 				if (!cnv.classList.contains('anim')) return;
@@ -402,5 +547,3 @@ const neutralBuildingCodes = {
 		});
 	});
 })();
-
-

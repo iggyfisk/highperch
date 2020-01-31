@@ -1459,6 +1459,29 @@ a.playername:hover {
   .apmcontainer .apmseries .graph .cursortext {
     fill: #c4976f; }
 
+.controls {
+  width: fit-content;
+  width: -moz-fit-content;
+  font-size: 12px;
+  padding: 5px 5px 5px 5px;
+  margin: auto;
+  margin-top: 20px;
+  text-align: center;
+  background-color: rgba(10, 5, 5, 0.75);
+  margin-bottom: 15px; }
+  .controls img {
+    width: 32px;
+    height: 32px; }
+    @media (min-width: 750px) {
+      .controls img {
+        width: 64px;
+        height: 64px; } }
+  .controls .mapzoom {
+    display: block; }
+  .controls .zoomenabled {
+    outline: 3px #6a8d91 solid;
+    outline-offset: -3px; }
+
 .player.details,
 .map.details {
   margin-bottom: 16px; }
@@ -1548,26 +1571,119 @@ a.playername:hover {
 
 .player .bigmap,
 .map .bigmap {
+  user-select: none;
   line-height: 0;
   max-width: 100%; }
   .player .bigmap.lesshuge,
   .map .bigmap.lesshuge {
     max-width: 550px; }
 
-.player #maptip,
-.map #maptip {
+.player #neutraltip,
+.map #neutraltip {
+  user-select: none;
   display: none;
   position: absolute;
-  padding: 10px;
+  padding: 7px;
   border: 1px black solid;
   background-color: rgba(0, 0, 0, 0.8); }
-  .player #maptip .tiptext,
-  .map #maptip .tiptext {
+  .player #neutraltip .tiptext,
+  .map #neutraltip .tiptext {
     margin: 5px;
     text-align: center;
     color: #c4976f;
     font-size: 15px;
+    white-space: nowrap;
+    line-height: 1rem; }
+    .player #neutraltip .tiptext .creeplevel,
+    .map #neutraltip .tiptext .creeplevel {
+      font-style: italic;
+      font-size: 12px;
+      margin-bottom: 0; }
+
+.player #creeptip,
+.map #creeptip {
+  display: none;
+  position: absolute;
+  padding: 7px;
+  border: 1px black solid;
+  background-color: rgba(0, 0, 0, 0.8);
+  overflow: visible; }
+  .player #creeptip table,
+  .map #creeptip table {
+    border-collapse: collapse;
+    margin-bottom: 0px; }
+  .player #creeptip th,
+  .map #creeptip th {
+    border-bottom: none;
+    padding: 0px;
+    text-align: center; }
+  .player #creeptip tr,
+  .map #creeptip tr {
+    border-collapse: collapse;
+    border-bottom: none;
+    padding: 5px;
+    user-select: text; }
+  .player #creeptip td,
+  .map #creeptip td {
+    border-bottom: none;
+    border-top: none;
+    padding: 5px; }
+  .player #creeptip .creeprow,
+  .map #creeptip .creeprow {
+    border-bottom: none; }
+  .player #creeptip .count,
+  .map #creeptip .count {
+    font-size: 16px;
+    padding-right: 5px;
     white-space: nowrap; }
+    .player #creeptip .count .times,
+    .map #creeptip .count .times {
+      vertical-align: center; }
+  .player #creeptip .creepicon,
+  .map #creeptip .creepicon {
+    padding-left: 0px;
+    padding-right: 0px; }
+    .player #creeptip .creepicon img,
+    .map #creeptip .creepicon img {
+      width: 32px;
+      height: 32px;
+      min-width: 32px;
+      min-height: 32px; }
+  .player #creeptip .creepname,
+  .map #creeptip .creepname {
+    white-space: nowrap;
+    padding-left: 5px;
+    font-size: 12px; }
+  .player #creeptip .level,
+  .map #creeptip .level {
+    font-size: 12px;
+    text-align: center; }
+  .player #creeptip .exp,
+  .map #creeptip .exp {
+    font-size: 12px;
+    color: #00c5c5;
+    text-align: center; }
+  .player #creeptip .drops .drop,
+  .map #creeptip .drops .drop {
+    padding: 5px;
+    margin: 2px;
+    white-space: nowrap; }
+    .player #creeptip .drops .drop img,
+    .map #creeptip .drops .drop img {
+      width: 24px;
+      height: 24px;
+      min-width: 24px;
+      min-height: 24px; }
+  .player #creeptip .drops .droptable,
+  .map #creeptip .drops .droptable {
+    border: 1px dashed gray;
+    border-radius: 3px; }
+  .player #creeptip .total,
+  .map #creeptip .total {
+    font-style: italic; }
+  .player #creeptip .totalexp,
+  .map #creeptip .totalexp {
+    font-size: 9px; }
 
 .fexp {
   float: right;

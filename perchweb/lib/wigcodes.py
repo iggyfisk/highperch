@@ -896,7 +896,18 @@ def get_neutral_buildings(map_name, fp=None):
     return map_info['neutral_buildings']
 
 
+def get_map_creep_camps(map_name, fp=None):
+    map_info = get_mapinfo(map_name, fp)
+    if not map_info or 'creepCamps' not in map_info:
+        return None
+
+    return map_info['creepCamps']
+
+
 def get_map_canonical_name(map_name):
+    """The canonical map filename, e.g. '(6)Highperch'
+       This is mostly to help with custom-hosted game replays
+       lowercasing the map filenames for some reason"""
     canonical_names = get_all_mapinfo().keys()
     if map_name in canonical_names:
         return map_name
@@ -904,3 +915,10 @@ def get_map_canonical_name(map_name):
         if map_name.lower() == canonical.lower():
             return canonical
     return False
+
+
+def get_map_title(map_name):
+    """The map's title as chosen by the map creator
+       and saved in the info file inside the map archive
+       e.g. 'Terenas Stand LV' """
+    return get_mapinfo(map_name)['mapTitle']

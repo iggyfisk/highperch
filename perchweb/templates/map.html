@@ -29,13 +29,17 @@
             {{ mapinfo['summary']|boldnumbers|safe }}
         </div>
         {% endif %}
+        <div class="controls">
+            <img class="controlshow mapzoom" src='/static/images/expandedview.png'>
+        </div>
         <div class="bigmap-container">
             <div class="bigmap lesshuge">
                 <img src="{{ map['name']|bigmapurl }}" />
                 {% if map['drawmap'] %}
                 <canvas class="drawmap delay" data-mapsize='{{ map["drawmap"]["map_size"]|tojson|safe }}'
-                    data-mines='{{ map["drawmap"]["goldmines"]|tojson|safe }}' data-paintsize='6'{% if map["drawmap"]["neutralbuildings"] %} data-neutrals='{{ map["drawmap"]["neutralbuildings"]|tojson|safe }}'{% endif %} data-mapstarts='{{ map["drawmap"]["starts"]|tojson|safe }}'></canvas>
-                <div id="maptip"><div class="tiptext"></div></div>
+                    data-mines='{{ map["drawmap"]["goldmines"]|tojson|safe }}' data-paintsize='6'{% if map["drawmap"]["neutralbuildings"] %} data-neutrals='{{ map["drawmap"]["neutralbuildings"]|tojson|safe }}'{% endif %} data-mapstarts='{{ map["drawmap"]["starts"]|tojson|safe }}'{% if map["drawmap"]["creepcamps"] %} data-creepcamps='{{ map["drawmap"]["creepcamps"]|tojson|safe }}'{% endif %}></canvas>
+                <div id="neutraltip"><div class="tiptext"></div></div>
+                <div id="creeptip"></div>
                 {% endif %}
             </div>
         </div>

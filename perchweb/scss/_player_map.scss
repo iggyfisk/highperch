@@ -1,3 +1,32 @@
+.controls {
+    width: fit-content;
+    width: -moz-fit-content;
+    font-size: 12px;
+    padding: 5px 5px 5px 5px;
+    margin: auto;
+    margin-top: 20px;
+    text-align: center;
+    background-color: $card-background-color;
+    margin-bottom: 15px;
+    $outline-size: 3px;
+    img {
+        width: 32px;
+        height: 32px;
+        @media (#{$bp-larger-than-tablet}) {
+            width: 64px;
+            height: 64px;
+        }
+    }
+    .mapzoom {
+        display: block;
+        // outline: $outline-size rgba(0,0,0,0.0) solid;
+    }
+
+    .zoomenabled {
+        outline: $outline-size #6a8d91 solid;
+        outline-offset: -$outline-size;
+    }
+}
 .player,
 .map {    
     &.details {
@@ -88,16 +117,18 @@
         margin-bottom: $margin;
     }
     .bigmap {
+        user-select: none;
         line-height: 0;
         max-width: 100%;
         &.lesshuge {
             max-width: 550px;
         }
     }
-    #maptip {
+    #neutraltip {
+        user-select: none;
         display: none;
         position: absolute;
-        padding: 10px;
+        padding: 7px;
         border: 1px black solid;
         background-color: rgba(0,0,0,0.8);
         .tiptext {
@@ -106,6 +137,105 @@
             color: $primary-color;
             font-size: 15px;
             white-space: nowrap;
+            line-height: 1rem;
+            .creeplevel {
+                font-style: italic;
+                font-size: 12px;
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    #creeptip {
+        display: none;
+        position: absolute;
+        padding: 7px;
+        border: 1px black solid;
+        background-color: rgba(0,0,0,0.8);
+        overflow: visible;
+        table {
+            border-collapse: collapse;
+            margin-bottom: 0px;
+        }
+        th {
+            border-bottom: none;
+            padding: 0px;
+            text-align: center;
+        }
+
+        tr {
+            border-collapse: collapse;
+            border-bottom: none;
+            padding: 5px;
+            user-select: text;
+        }
+
+        td {
+            border-bottom: none;
+            border-top: none;
+            padding: 5px;
+        }
+        .creeprow {
+            // border-bottom: 1px dashed grey;
+            border-bottom: none;
+        }
+        .count {
+            // font-weight: bold;
+            font-size: 16px;
+            padding-right: 5px;
+            white-space: nowrap;
+            .times {
+                vertical-align: center;
+            }
+        }
+        .creepicon {
+            img {
+                width: 32px;
+                height: 32px;
+                min-width: 32px;
+                min-height: 32px;
+            }
+            padding-left: 0px;
+            padding-right: 0px;
+        }
+        .creepname {
+            white-space: nowrap;
+            padding-left: 5px;
+            font-size: 12px;
+        }
+        .level {
+            font-size: 12px;
+            text-align: center;
+        }
+        .exp {
+            font-size: 12px;
+            color: rgb(0, 197, 197);
+            text-align: center;
+        }
+        .drops {
+            // padding: 5px;
+            .drop {
+                padding: 5px;
+                margin: 2px;
+                white-space: nowrap;
+                // width: fit-content;
+                img {
+                    width: 24px;
+                    height: 24px;
+                    min-width: 24px;
+                    min-height: 24px;
+                }
+            }
+            .droptable {
+                border: 1px dashed gray;
+                border-radius: 3px;
+            }
+        }
+        .total {
+            font-style: italic;
+        }
+        .totalexp {
+            font-size: 9px;
         }
     }
 }
