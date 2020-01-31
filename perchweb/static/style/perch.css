@@ -1667,7 +1667,9 @@ a.playername:hover {
   .map #creeptip .drops .drop {
     padding: 5px;
     margin: 2px;
-    white-space: nowrap; }
+    white-space: nowrap;
+    width: fit-content;
+    width: -moz-fit-content; }
     .player #creeptip .drops .drop img,
     .map #creeptip .drops .drop img {
       width: 24px;
