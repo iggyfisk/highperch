@@ -904,6 +904,14 @@ def get_map_creep_camps(map_name, fp=None):
     return map_info['creepCamps']
 
 
+def get_map_critters(map_name, fp=None):
+    map_info = get_mapinfo(map_name, fp)
+    if not map_info or 'critters' not in map_info:
+        return None
+
+    return map_info['critters']
+
+
 def get_map_canonical_name(map_name):
     """The canonical map filename, e.g. '(6)Highperch'
        This is mostly to help with custom-hosted game replays

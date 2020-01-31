@@ -14,7 +14,7 @@ from perchlogging import log_to_slack, format_ip_addr
 from templatefilters import lighten_color, url_slug
 from lib.wigcodes import get_goldmines, get_neutral_buildings, get_starting_locations,\
                          get_map_size, get_mapinfo, get_map_creep_camps, \
-                         get_map_canonical_name, player_colors
+                         get_map_critters, get_map_canonical_name, player_colors
 
 routes = Blueprint('views', __name__)
 
@@ -123,6 +123,7 @@ def view_map(map_name):
     neutral_buildings = get_neutral_buildings(map_name)
     start_locations = get_starting_locations(map_name, simple=False)
     creep_camps = get_map_creep_camps(map_name)
+    critters = get_map_critters(map_name)
 
     # A lot of these calculations are really just reversing the SQL but it was faster to type here
     games = sum(gt['Games'] for gt in map_stats)
@@ -134,7 +135,8 @@ def view_map(map_name):
             'goldmines': [[m['x'], m['y'], m['g']] for m in goldmines] if goldmines else None,
             'neutralbuildings': [[b['x'], b['y'], b['id']] for b in neutral_buildings] if neutral_buildings else None,
             'starts': [[s['x'], s['y'], player_colors[int(s['player'])]] for s in start_locations] if start_locations else None,
-            'creepcamps': creep_camps if creep_camps else None
+            'creepcamps': creep_camps if creep_camps else None,
+            'critters': critters if critters else None
         } if map_size else None,
         'games': games,
         'avg_length': sum(gt['AvgLength'] * gt['Games'] for gt in map_stats) // games,

@@ -2,28 +2,30 @@
     width: fit-content;
     width: -moz-fit-content;
     font-size: 12px;
-    padding: 5px 5px 5px 5px;
+    padding: 5px 5px 0px 5px;
     margin: auto;
     margin-top: 20px;
     text-align: center;
     background-color: $card-background-color;
     margin-bottom: 15px;
     $outline-size: 3px;
-    img {
-        width: 32px;
-        height: 32px;
-        @media (#{$bp-larger-than-tablet}) {
-            width: 64px;
-            height: 64px;
+    .controlshow {
+        display: inline;
+        img {
+            width: 32px;
+            height: 32px;
+            @media (#{$bp-larger-than-tablet}) {
+                width: 64px;
+                height: 64px;
+            }
         }
     }
-    .mapzoom {
-        display: block;
-        // outline: $outline-size rgba(0,0,0,0.0) solid;
-    }
-
     .zoomenabled {
         outline: $outline-size #6a8d91 solid;
+        outline-offset: -$outline-size;
+    }
+    .crittersenabled {
+        outline: $outline-size #c2ec56 solid;
         outline-offset: -$outline-size;
     }
 }

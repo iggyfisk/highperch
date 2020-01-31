@@ -128,9 +128,14 @@
 		, maxSize
 		, scale
 		, xStart
-		, yStart;
+		, yStart
+		, currentZoom;
 
-	const setupMap = (cnv, mapSize) => {
+	const precisionRound = (number, precision) => {
+		return Math.round(number * (10 ** (precision - 1))) / (10 ** (precision - 1))
+	}
+
+	const setupMap = (cnv, mapSize, initialSize) => {
 		mapImageSize = cnv.clientWidth;
 		xSize = mapSize[1] - mapSize[0];
 		ySize = mapSize[3] - mapSize[2];
@@ -138,6 +143,7 @@
 		scale = mapImageSize / maxSize;
 		xStart = -(xSize / maxSize * mapImageSize - mapImageSize) / 2;
 		yStart = -(ySize / maxSize * mapImageSize - mapImageSize) / 2;
+		currentZoom = mapImageSize / initialSize;
 	}
 
 	const makeCreepTable = camp => {
@@ -224,12 +230,16 @@
 			const goldMines = JSON.parse(cnv.dataset.mines || '[]');
 			const neutralBuildings = JSON.parse(cnv.dataset.neutrals || '[]');
 			const creepCamps = JSON.parse(cnv.dataset.creepcamps || '[]');
+			const critters = JSON.parse(cnv.dataset.critters || '[]');
 			const animated = cnv.classList.contains('anim');
 			const delayed = cnv.classList.contains('delay');
 			const detailed = (typeof cnv.dataset.neutrals !== 'undefined');
 			const mapImg = delayed
 				? cnv.parentNode.querySelector('img')
 				: undefined;
+			let initialSize = 0;
+			if (detailed) { initialSize = 550; }	// Todo: pull these values from getComputedStyle instead of hardcoding
+			else { initialSize = 80; }
 
 			let images = {};
 
@@ -238,6 +248,14 @@
 					const img = new Image();
 					img.src = '/static/images/game/neutrals/' + b[2] + '.png';
 					images[b[2]] = img;
+				}
+			});
+
+			critters.forEach(c => {
+				if (!(c['id'] in images)) {
+					const img = new Image();
+					img.src = '/static/images/game/critters/' + c['id'] + '.png';
+					images[c['id']] = img;
 				}
 			});
 
@@ -268,6 +286,9 @@
 			// Neutral size
 			const ns = ps * 6;
 			const no = ns / 2
+			// Critter icon size
+			const crs = ps * 4
+			const cro = crs / 2
 
 			// Turn camera bounds into minimap bounds
 			mapSize[0] -= 504;
@@ -278,15 +299,18 @@
 			// Wait for map image to load and grow to real size when necessary
 			if (delayed) await imagesReady(mapImg);
 
-			setupMap(cnv, mapSize);
+			setupMap(cnv, mapSize, initialSize);
 
-			const getCoords = t => ([
-				Math.round((t[0] - mapSize[0]) * scale + xStart),
-				Math.round(mapImageSize - ((t[1] - mapSize[2]) * scale + yStart))]);
+			const upResFactor = 3;
 
-			cnv.height = cnv.width = mapImageSize * 2;	// draw at triple resolution so the expanded image isn't upscaled and blurry
+			const getCoords = t => {
+				return [precisionRound(((t[0] - mapSize[0]) * scale + xStart), 3) / currentZoom,
+				precisionRound((mapImageSize - ((t[1] - mapSize[2]) * scale + yStart)), 3) / currentZoom];
+			}
+
+			cnv.height = cnv.width = mapImageSize * upResFactor;	// draw at double resolution so the expanded image isn't upscaled and blurry
 			const ctx = cnv.getContext('2d');
-			ctx.scale(2, 2);
+			ctx.scale(upResFactor, upResFactor);
 
 			const getDotSize = camp => {
 				if (camp['level'] < 10) {
@@ -312,6 +336,13 @@
 					dotColor = 'rgba(227, 0, 0, 0.7)';
 				}
 				return dotColor;
+			}
+
+			const drawCritters = () => {
+				critters.forEach(critter => {
+					const c = getCoords([critter['x'], critter['y']]);
+					ctx.drawImage(images[critter['id']], c[0] - cro, c[1] - cro, crs / currentZoom, crs / currentZoom);
+				});
 			}
 
 			const drawBase = () => {
@@ -440,6 +471,7 @@
 
 			if (detailed) {
 				let campVisible = 0;
+				let crittersVisible = 0;
 
 				document.querySelectorAll('.mapzoom').forEach(zoomControl => {
 					zoomControl.addEventListener('click', event => {
@@ -448,8 +480,28 @@
 						const campTip = document.getElementById('creeptip');
 						campTip.style.display = 'none';
 						campVisible = 0;
-						setupMap(cnv, mapSize);
+						setupMap(cnv, mapSize, initialSize);
 						setupAreas(mapImageSize / 550);
+						ctx.clearRect(0, 0, cnv.width, cnv.height);
+						drawBase();
+						if (crittersVisible === 1) {
+							drawCritters();
+						}
+					});
+				});
+
+				document.querySelectorAll('.drawcritters').forEach(zoomControl => {
+					zoomControl.addEventListener('click', event => {
+						event.target.classList.toggle('crittersenabled');
+						if (crittersVisible === 0) {
+							drawCritters();
+							crittersVisible = 1;
+						}
+						else {
+							ctx.clearRect(0, 0, cnv.width, cnv.height);
+							drawBase();
+							crittersVisible = 0;
+						}
 					});
 				});
 
@@ -522,7 +574,7 @@
 
 			// If we don't redo the mouseover areas on window resize in bigmode they'll be bungled
 			const handleResize = () => {
-				setupMap(cnv, mapSize);
+				setupMap(cnv, mapSize, initialSize);
 				setupAreas(mapImageSize / 550);
 			}
 

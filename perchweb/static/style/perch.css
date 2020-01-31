@@ -1463,23 +1463,26 @@ a.playername:hover {
   width: fit-content;
   width: -moz-fit-content;
   font-size: 12px;
-  padding: 5px 5px 5px 5px;
+  padding: 5px 5px 0px 5px;
   margin: auto;
   margin-top: 20px;
   text-align: center;
   background-color: rgba(10, 5, 5, 0.75);
   margin-bottom: 15px; }
-  .controls img {
-    width: 32px;
-    height: 32px; }
-    @media (min-width: 750px) {
-      .controls img {
-        width: 64px;
-        height: 64px; } }
-  .controls .mapzoom {
-    display: block; }
+  .controls .controlshow {
+    display: inline; }
+    .controls .controlshow img {
+      width: 32px;
+      height: 32px; }
+      @media (min-width: 750px) {
+        .controls .controlshow img {
+          width: 64px;
+          height: 64px; } }
   .controls .zoomenabled {
     outline: 3px #6a8d91 solid;
+    outline-offset: -3px; }
+  .controls .crittersenabled {
+    outline: 3px #c2ec56 solid;
     outline-offset: -3px; }
 
 .player.details,
