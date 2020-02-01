@@ -40,6 +40,9 @@ def index():
 def view_replay(replay_id):
     """Redirect to slugged URL"""
     replay_listinfo = replaydb.get_replay_listinfo(replay_id, inc_views=True)
+    if replay_listinfo is None:
+        current_app.logger.warning(f'404 on replay view, ID: {replay_id}')
+        abort(404)
     replay_slug = url_slug(replay_listinfo['Name'])
 
     return redirect(url_for('views.view_replay_slug', replay_id=replay_id, replay_slug=replay_slug))
