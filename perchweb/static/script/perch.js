@@ -403,8 +403,8 @@
 				mineRects = [];
 				goldMines.forEach(m => {
 					const c = getCoords(m);
-					let x1 = c[0] - go * scaleFactor;
-					let y1 = c[1] - go * scaleFactor;
+					let x1 = c[0] * scaleFactor - go * scaleFactor;
+					let y1 = c[1] * scaleFactor - go * scaleFactor;
 					let x2 = x1 + gs * scaleFactor;
 					let y2 = y1 + gs * scaleFactor;
 					mineRects.push([x1, y1, x2, y2, m[2]])
@@ -414,20 +414,20 @@
 					cs = getDotSize(camp) * 3	// dotSize is a radius, and we want it a bit bigger than the actual dot
 					co = cs / 2
 					const c = getCoords([camp['x'], camp['y']]);
-					let x1 = c[0] - co * scaleFactor;
-					let y1 = c[1] - co * scaleFactor;
+					let x1 = c[0] * scaleFactor - co * scaleFactor;
+					let y1 = c[1] * scaleFactor - co * scaleFactor;
 					let x2 = x1 + cs * scaleFactor;
 					let y2 = y1 + cs * scaleFactor;
 					creepRects.push([x1, y1, x2, y2, camp])
 				});
-				scaleFactor = scaleFactor * 0.8		// The neutralBuilding image size is a little too large
+				neutralRectShrink = 0.8		// The neutralBuilding image size is a little too large
 				neutralRects = [];
 				neutralBuildings.forEach(b => {
 					const c = getCoords(b);
-					let x1 = c[0] - no * scaleFactor;
-					let y1 = c[1] - no * scaleFactor;
-					let x2 = x1 + ns * scaleFactor;
-					let y2 = y1 + ns * scaleFactor;
+					let x1 = c[0] * scaleFactor - no * scaleFactor * neutralRectShrink;
+					let y1 = c[1] * scaleFactor - no * scaleFactor * neutralRectShrink;
+					let x2 = x1 + ns * scaleFactor * neutralRectShrink;
+					let y2 = y1 + ns * scaleFactor * neutralRectShrink;
 					neutralRects.push([x1, y1, x2, y2, b[2]]);
 				});
 			}
@@ -482,7 +482,7 @@
 						campTip.style.display = 'none';
 						campVisible = 0;
 						setupMap(cnv, mapSize, initialSize);
-						setupAreas(mapImageSize / 550);
+						setupAreas(currentZoom);
 						ctx.clearRect(0, 0, cnv.width, cnv.height);
 						drawBase();
 						if (crittersVisible === 1) {
@@ -576,7 +576,7 @@
 			// If we don't redo the mouseover areas on window resize in bigmode they'll be bungled
 			const handleResize = () => {
 				setupMap(cnv, mapSize, initialSize);
-				setupAreas(mapImageSize / 550);
+				setupAreas(currentZoom);
 			}
 
 			// Always wait for asset images to load before drawing them,
