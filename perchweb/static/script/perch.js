@@ -237,10 +237,7 @@
 			const mapImg = delayed
 				? cnv.parentNode.querySelector('img')
 				: undefined;
-			let initialSize = 0;
-			if (detailed) { initialSize = 550; }	// Todo: pull these values from getComputedStyle instead of hardcoding
-			else if (animated) { initialSize = 300; }
-			else { initialSize = 80; }
+			const initialSize = parseInt(getComputedStyle(cnv)['width'].slice(0, -2));
 
 			let images = {};
 
