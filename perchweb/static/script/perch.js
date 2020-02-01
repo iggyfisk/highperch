@@ -237,7 +237,6 @@
 			const mapImg = delayed
 				? cnv.parentNode.querySelector('img')
 				: undefined;
-			const initialSize = parseInt(getComputedStyle(cnv)['width'].slice(0, -2));
 
 			let images = {};
 
@@ -297,6 +296,7 @@
 			// Wait for map image to load and grow to real size when necessary
 			if (delayed) await imagesReady(mapImg);
 
+			const initialSize = cnv.clientWidth;
 			setupMap(cnv, mapSize, initialSize);
 
 			const upResFactor = 2.5;
