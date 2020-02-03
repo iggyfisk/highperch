@@ -42,15 +42,24 @@ const parseUnits = editorVersion => {
   unitsResult.forEach(u => {
     const drops = [];
     if (u.droppable.length > 0) {
+      customDrop = [];
       u.droppable.forEach(drop => {
-        if (mapCodes.dropTableCodes[drop[0]]) {
+        if (mapCodes.dropTableCodes[drop[0]]) {   // Melee drop table, e.g. "Level 4 Permanent"
           drops.push(mapCodes.dropTableCodes[drop[0]]['items']);
         }
         else {
-          drops.push(drop[0]);
+          if (drop[1] === 100) {                  // Guaranteed single drop, e.g. Rune of the Watcher on TR
+            drops.push(drop[0]);
+          } else {                                // Chance drop, e.g. "community" maps with Wand of Lightning Shield removed
+            customDrop.push(drop[0])
+          }
         }
       });
+      if (customDrop.length > 0) {
+        drops.push(customDrop);
+      }
     }
+
     switch (u.type) {
       case 'sloc':  // starting location
         {
@@ -63,20 +72,8 @@ const parseUnits = editorVersion => {
           break;
         }
       case 'ntav':  // tavern
-        {
-          neutralBuildings.push({ id: u.type, x: u.position[0], y: u.position[1], });
-          break;
-        }
       case 'ngme':  // goblin merchant, aka shop
-        {
-          neutralBuildings.push({ id: u.type, x: u.position[0], y: u.position[1] });
-          break;
-        }
       case 'ngad':  // goblin laboratory
-        {
-          neutralBuildings.push({ id: u.type, x: u.position[0], y: u.position[1] });
-          break;
-        }
       case 'nmer':  // merc camp: lordaeron summer
       case 'nmr0':  // village, village fall
       case 'nmr2':  // lordaeron fall
@@ -93,42 +90,22 @@ const parseUnits = editorVersion => {
       case 'nmrd':  // icecrown glacier
       case 'nmre':  // outland
       case 'nmrf':  // black citadel
-        {
-          neutralBuildings.push({ id: u.type, x: u.position[0], y: u.position[1] });
-          break;
-        }
       case 'ndrk':  // dragon roost: black
       case 'ndru':  // blue
       case 'ndrz':  // bronze
       case 'ndrg':  // green
       case 'ndro':  // nether
       case 'ndrr':  // red
-        {
-          neutralBuildings.push({ id: u.type, x: u.position[0], y: u.position[1] });
-          break;
-        }
       case 'nmrk':  // marketplace
-        {
-          neutralBuildings.push({ id: u.type, x: u.position[0], y: u.position[1] });
-          break;
-        }
       case 'nfoh':  // fountain of health
       case 'nmoo':  // fountain of mana
       case 'bDNR':  // bDNR is the code for any random building! so this could break if there's ever a non-fountain random building in a map we care about
+      case 'nwgt':  // way gate
+      case 'nshp':  // Goblin Shipyard on (4)Islands.w3x. Todo: assets etc.
         {
           neutralBuildings.push({ id: u.type, x: u.position[0], y: u.position[1] });
           break;
         }
-      case 'nwgt':  // way gate
-      {
-        neutralBuildings.push({ id: u.type, x: u.position[0], y: u.position[1] });
-        break;
-      }
-      case 'nshp':  // Goblin Shipyard on (4)Islands.w3x. Todo: assets etc.
-      {
-        neutralBuildings.push({ id: u.type, x: u.position[0], y: u.position[1] });
-        break;
-      }
       case 'nshe':  // sheep
       case 'necr':  // rabbit
       case 'nfro':  // frog
@@ -328,7 +305,7 @@ const parseMap = mapPath => {
     delete info.editorVersion;
     delete info.titleStringIndex;
     delete units.creeps;
-    return [name, {'mapTitle': mapTitle, 'totalCreeps': totalCreeps, ...info, ...units, 'creepCamps': creepCamps }];
+    return [name, { 'mapTitle': mapTitle, 'totalCreeps': totalCreeps, ...info, ...units, 'creepCamps': creepCamps }];
   } catch {
     return null;
   }
