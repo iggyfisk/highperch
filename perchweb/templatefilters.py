@@ -16,7 +16,7 @@ from slugify import slugify
 def gametime(milliseconds):
     """ Convert milliseconds to readable timestamp, like 34:04 """
     minutes, seconds = divmod(int(milliseconds / 1000), 60)
-    return '{:01}:{:02}'.format(minutes, seconds)
+    return f'{minutes}:{seconds}'
 
 
 def gametime_for_computers(milliseconds):
