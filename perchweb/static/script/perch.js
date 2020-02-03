@@ -542,7 +542,6 @@
 							} else {
 								campTip.innerHTML = '';
 								camp = r[4];
-								campVisible = 1;
 								creepList = camp['creeps'];
 								creepList.sort((a, b) => (creepCodes[b['id']]['level'] - creepCodes[a['id']]['level']))
 								const creepDiv = makeCreepTable(camp);
@@ -556,6 +555,7 @@
 					})
 					if (creepClicked === 0) {
 						campTip.style.display = 'none';
+						campVisible = 0;
 					}
 				});
 

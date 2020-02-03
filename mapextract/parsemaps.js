@@ -250,9 +250,10 @@ const creepsToCamps = creeps => {
     return creepCamps.filter(camp => camp['id'] != id);
   }
 
-  // this seems to work, but may need tuning for maps not in the launch rotation
-  // 500 is too low, 1200 is too high
-  const campMaxDistance = 700;
+  // Gameplay constant "CreepCampPathingCellDistance" is set to 26 for melee maps
+  // A "building square" (1/4 of a tower) is 2x2 "pathing cells"
+  // A "pathing cell" is 32 coordinate units, so we know this value exactly
+  const campMaxDistance = 832;
 
   let creepCamps = [];
   let totalCreeps = 0;
@@ -293,7 +294,6 @@ const parseMap = mapPath => {
   extractFile(stringsFile, mapPath);
 
   // console.log('[-] parsing', name);
-
 
   try {
     const info = parseInfo();
