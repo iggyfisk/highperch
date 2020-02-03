@@ -380,7 +380,7 @@
 						ctx.fillStyle = gradient;
 						ctx.fill();
 						ctx.lineWidth = 1;
-						ctx.strokeStyle = '#003300';
+						ctx.strokeStyle = 'rgba(10, 10, 10, 0.8)';
 						ctx.stroke();
 					})
 				}
