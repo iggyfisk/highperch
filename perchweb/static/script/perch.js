@@ -439,23 +439,35 @@
 				const mousePos = [e.clientX - offsetLeft, e.clientY - offsetTop];
 				const neutralTip = document.getElementById('neutraltip');
 				let neutralVisible = 0;
-				neutralText = '';
+				let neutralText = '';
+
+				const highlightCnv = document.getElementById('highlights');
+				highlightCnv.height = highlightCnv.width = mapImageSize * upResFactor;
+				const highlightCtx = highlightCnv.getContext('2d');
+				highlightCtx.scale(upResFactor, upResFactor);
+				let campHighlighted = 0;
+				let campCoords = [];
+				let campSize = 0;
+
 				mineRects.forEach(r => {
 					if (isInRect(mousePos, r)) {
 						neutralVisible = 1;
 						neutralText = `<b>${r[4]}</b> gold`;
 					}
-				})
+				});
 				neutralRects.forEach(r => {
 					if (isInRect(mousePos, r)) {
 						neutralVisible = 1;
 						neutralText = neutralBuildingCodes[r[4]]
 					}
-				})
-
-				// Todo: highlight the creep camp dots on mouseover.
-				// Since we're baking this all into one canvas, 
-				// we'll probably need a separate canvas on top for this
+				});
+				creepRects.forEach(r => {
+					if (isInRect(mousePos, r)) {
+						campHighlighted = 1;
+						campCoords = [((r[0] + r[2]) / 2), (r[1] + r[3]) / 2];
+						campSize = getDotSize(r[4]) * currentZoom;
+					}
+				});
 
 				if (neutralVisible === 1) {
 					neutralTip.style.top = (mousePos[1] - 50) + 'px';
@@ -464,6 +476,16 @@
 					neutralTip.style.display = 'block';
 				} else {
 					neutralTip.style.display = 'none';
+				}
+
+				if (campHighlighted === 1) {
+					highlightCtx.beginPath();
+					highlightCtx.arc(campCoords[0], campCoords[1], campSize + 1, 0, 2 * Math.PI, false);
+					highlightCtx.lineWidth = 1 * currentZoom;
+					highlightCtx.strokeStyle = 'rgba(255,255,255,0.6)';
+					highlightCtx.stroke();
+				} else {
+					highlightCtx.clearRect(0, 0, highlightCtx.width, highlightCtx.height);
 				}
 			}
 

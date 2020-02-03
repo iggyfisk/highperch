@@ -127,6 +127,7 @@
         }
     }
     #neutraltip {
+        z-index: 2;
         user-select: none;
         display: none;
         position: absolute;
@@ -149,6 +150,7 @@
     }
 
     #creeptip {
+        z-index: 2;
         display: none;
         position: absolute;
         padding: 7px;

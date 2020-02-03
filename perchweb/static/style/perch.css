@@ -938,6 +938,15 @@ footer {
     max-width: 100%;
     max-height: 100%; }
   .minimap .drawmap, .bigmap .drawmap {
+    z-index: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%; }
+  .minimap #highlights, .bigmap #highlights {
+    z-index: 1;
+    pointer-events: none;
     position: absolute;
     top: 0;
     left: 0;
@@ -1583,6 +1592,7 @@ a.playername:hover {
 
 .player #neutraltip,
 .map #neutraltip {
+  z-index: 2;
   user-select: none;
   display: none;
   position: absolute;
@@ -1605,6 +1615,7 @@ a.playername:hover {
 
 .player #creeptip,
 .map #creeptip {
+  z-index: 2;
   display: none;
   position: absolute;
   padding: 7px;

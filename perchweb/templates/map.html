@@ -38,6 +38,7 @@
             <div class="bigmap lesshuge">
                 <img src="{{ map['name']|bigmapurl }}" />
                 {% if map['drawmap'] %}
+                <canvas id="highlights"></canvas>
                 <canvas class="drawmap delay" data-mapsize='{{ map["drawmap"]["map_size"]|tojson|safe }}'
                     data-mines='{{ map["drawmap"]["goldmines"]|tojson|safe }}' data-paintsize='6'{% if map["drawmap"]["neutralbuildings"] %} data-neutrals='{{ map["drawmap"]["neutralbuildings"]|tojson|safe }}'{% endif %} data-mapstarts='{{ map["drawmap"]["starts"]|tojson|safe }}'{% if map["drawmap"]["creepcamps"] %} data-creepcamps='{{ map["drawmap"]["creepcamps"]|tojson|safe }}'{% endif %}{% if map["drawmap"]["critters"] %} data-critters='{{ map["drawmap"]["critters"]|tojson|safe }}'{% endif %}></canvas>
                 <div id="neutraltip"><div class="tiptext"></div></div>
