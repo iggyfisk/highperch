@@ -184,6 +184,7 @@ class Replay(dict):
 
     def get_apm_data(self):
         apm_data = []
+        final_minute = len(self.players[0]['actions']['timed'])
         for minute in range(len(self.players[0]['actions']['timed'])):
             apm_data.append({'minute': minute + 1})
 
@@ -194,8 +195,11 @@ class Replay(dict):
             else:
                 leave_minute = len(self.players[0]['actions']['timed'])
             for minute, actions in enumerate(p['actions']['timed']):
+                apm_mult = 1
+                if minute + 1 == final_minute:
+                    apm_mult = 60 // ((self['duration'] // 1000) % 60)
                 if minute <= leave_minute:
-                    apm_data[minute][p['name']] = actions
+                    apm_data[minute][p['name']] = actions * apm_mult
 
         return json.dumps(apm_data)
 
