@@ -13,8 +13,9 @@ from auth import login as auth_login, check_if_admin
 from perchlogging import log_to_slack, format_ip_addr
 from templatefilters import lighten_color, url_slug
 from lib.wigcodes import get_goldmines, get_neutral_buildings, get_starting_locations,\
-                         get_map_size, get_mapinfo, get_map_creep_camps, \
-                         get_map_critters, get_map_canonical_name, player_colors
+                         get_map_size, get_mapinfo, get_map_creep_camps,\
+                         get_map_critters, get_map_canonical_name, player_colors,\
+                         get_map_creep_totals
 
 routes = Blueprint('views', __name__)
 
@@ -126,6 +127,7 @@ def view_map(map_name):
     neutral_buildings = get_neutral_buildings(map_name)
     start_locations = get_starting_locations(map_name, simple=False)
     creep_camps = get_map_creep_camps(map_name)
+    creep_totals = get_map_creep_totals(map_name)
     critters = get_map_critters(map_name)
 
     # A lot of these calculations are really just reversing the SQL but it was faster to type here
@@ -146,6 +148,7 @@ def view_map(map_name):
         'avg_towers': sum(gt['AvgTowers'] * gt['Games'] for gt in map_stats) // games,
         'max_length': max(gt['AvgLength'] for gt in map_stats),
         'max_towers': max(gt['AvgTowers'] for gt in map_stats),
+        'creep_totals': creep_totals,
         'stats': map_stats,             # replay stats from database
         'info': get_mapinfo(map_name)   # map info from parsemaps
     }

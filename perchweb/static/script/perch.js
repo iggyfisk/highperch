@@ -344,21 +344,20 @@
 			}
 
 			const drawBase = () => {
+				mapStartLocations.forEach(s => {
+					const c = getCoords(s);
+					ctx.drawImage(startImg, c[0] - go, c[1] - go, gs, gs);
+					ctx.globalCompositeOperation = "source-atop";
+					ctx.fillStyle = s[2];
+					ctx.fillRect(c[0] - go, c[1] - go, gs, gs);
+					ctx.globalCompositeOperation = "source-over";
+				});
+
+				goldMines.forEach(m => {
+					const c = getCoords(m);
+					ctx.drawImage(goldImg, c[0] - go, c[1] - go, gs, gs);
+				});
 				if (detailed) {
-					mapStartLocations.forEach(s => {
-						const c = getCoords(s);
-						ctx.drawImage(startImg, c[0] - go, c[1] - go, gs, gs);
-						ctx.globalCompositeOperation = "source-atop";
-						ctx.fillStyle = s[2];
-						ctx.fillRect(c[0] - go, c[1] - go, gs, gs);
-						ctx.globalCompositeOperation = "source-over";
-					});
-
-					goldMines.forEach(m => {
-						const c = getCoords(m);
-						ctx.drawImage(goldImg, c[0] - go, c[1] - go, gs, gs);
-					});
-
 					neutralBuildings.forEach(b => {
 						const c = getCoords(b);
 						ctx.drawImage(images[b[2]], c[0] - no, c[1] - no, ns, ns);
