@@ -47,6 +47,9 @@ if __name__ == '__main__':
     replays = query('SELECT ID FROM Replays ORDER BY ID ASC')
     final_id = query('SELECT ID FROM Replays ORDER BY ID DESC LIMIT 1')[0][0]
 
+    query('DELETE FROM GamesPlayed')
+    query('DELETE FROM Players')
+
     for r in replays:
         replay_id = r[0]
         print(f'Re-parsing replay with ID {replay_id} / {final_id}')

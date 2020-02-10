@@ -424,8 +424,7 @@ def reparse_replay(replay_id, query_fnc, fp):
                   json.dumps(towers), json.dumps(start_locations),
                   chat, uploader_battletag, replay_id))
 
-        save_game_played(replay_data, replay_id,
-                         update=True, query_fnc=query_fnc)
+        save_game_played(replay_data, replay_id, query_fnc=query_fnc)
 
         data_path = fp.get_replay_data(f"{replay_id}.json")
         if os.path.isfile(data_path):
