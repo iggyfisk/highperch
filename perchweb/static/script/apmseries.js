@@ -59,12 +59,7 @@ function drawApmSeries() {
         return d.minute;
     }));
 
-    y.domain([
-        d3.min(players, function (c) {
-            return d3.min(c.values, function (v) {
-                return v.actions;
-            });
-        }),
+    y.domain([0,
         d3.max(players, function (c) {
             return d3.max(c.values, function (v) {
                 return v.actions;
