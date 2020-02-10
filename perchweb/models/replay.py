@@ -196,8 +196,8 @@ class Replay(dict):
                 leave_minute = len(self.players[0]['actions']['timed'])
             for minute, actions in enumerate(p['actions']['timed']):
                 apm_mult = 1
-                if minute + 1 == final_minute and (self['duration'] // 1000) % 60:
-                    apm_mult = 60 // ((self['duration'] // 1000) % 60)
+                if leave_event and minute + 1 == final_minute and ((leave_event['ms']) // 1000) % 60:
+                    apm_mult = 60 // ((leave_event['ms'] // 1000) % 60)
                 if minute <= leave_minute:
                     apm_data[minute][p['name']] = actions * apm_mult
 
