@@ -1701,6 +1701,7 @@ const itemCodes = {
     "rre1": { "name": "Rune of Lesser Resurrection", "type": "Power Up", "level": 0 },
     "rre2": { "name": "Rune of Greater Resurrection", "type": "Power Up", "level": 0 },
     "rwat": { "name": "Rune of the Watcher", "type": "Power Up", "level": 0 },
+    "rspd": { "name": "Rune of Speed", "type": "Power Up", "level": 0 },
     "manh": { "name": "Manual of Health", "type": "Power Up", "level": 1 },
     "tstr": { "name": "Tome of Strength", "type": "Power Up", "level": 1 },
     "tint": { "name": "Tome of Intelligence", "type": "Power Up", "level": 1 },
