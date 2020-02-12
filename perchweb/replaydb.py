@@ -281,7 +281,7 @@ def save_replay(replay, replay_name, uploader_ip):
         dupe_check = query(
             'SELECT Name FROM Replays WHERE FileHash=?;', (file_hash,), one=True)
         if dupe_check:
-            error_string = f'Attempted duplicate upload from {format_ip_addr(request.remote_addr)}: "{replay_name}", aka "{dupe_check[0]}""'
+            error_string = f'Attempted duplicate upload from {format_ip_addr(request.remote_addr)}: "{replay_name}", aka "{dupe_check[0]}"'
             log_to_slack('WARNING', error_string)
             current_app.logger.warning(error_string)
             raise ReplayParsingException(
