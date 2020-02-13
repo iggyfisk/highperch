@@ -131,7 +131,7 @@ def thousands(amount):
 lightened_colors = {}
 
 
-def lighten_color(hex_color, amount=0.00):
+def lighten_color(hex_color, amount=0.05):
     """ Increases the light of a hex color by a factor of 0-1.0 """
     key = (hex_color, amount)
     if key not in lightened_colors:
