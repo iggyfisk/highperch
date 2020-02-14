@@ -128,7 +128,9 @@ def thousands(amount):
     return f'{amount if amount % 1 else int(amount)}k'
 
 
-lightened_colors = {}
+lightened_colors = {
+    ('#20c000', 0.05): '#20c000'    # Green doesn't need lightening
+}
 
 
 def lighten_color(hex_color, amount=0.05):

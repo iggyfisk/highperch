@@ -32,12 +32,14 @@ arbitrary_building_scores = {
 }
 
 official_names = {
-    "iggythefisk#236",
+    "iggythefisk#236",  # legacy format clipping
+    "iggythefisk#2369",
     "Mata#2275",
     "Blinn#2885",
     "BEARAND#1604",
     "TIMG4STRok#1212",
-    "IcebergSlim#145"
+    "IcebergSlim#145",  # legacy format clipping
+    "IcebergSlim#1452"
 }
 
 

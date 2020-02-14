@@ -323,6 +323,13 @@ def save_replay(replay, replay_name, uploader_ip):
         chat = '|'.join([c['message'] for c in replay_data['chat']])
         tower_count = replay_data.tower_count()
         chat_message_count = len(replay_data['chat'])
+        # check for header-only replays, such as from alt-f4 during loadscreen
+        if len(replay_data['leaveEvents']) == 0:
+            error_string = f'Blocked upload of an apparently empty replay from {format_ip_addr(request.remote_addr)}: "{replay_name}"'
+            log_to_slack('WARNING', error_string)
+            current_app.logger.warning(error_string)
+            raise ReplayParsingException(
+                f"This looks like an empty replay! If it's actually a real one, let us know: admin@highper.ch")
         uploader_battletag = [
             p['name'] for p in replay_data.players if p['id'] == replay_data['saverPlayerId']][0]
         if is_battletag_banned(uploader_battletag):
