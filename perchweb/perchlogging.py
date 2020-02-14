@@ -43,7 +43,7 @@ def upload_to_slack(replay_name, file_bytes):
         payload = {
             "filename": filename,
             "token": bot_token,
-            "channels": ['#test'],
+            "channels": ['#highperch-alerts'],
             "title": replay_name
         }
         post("https://slack.com/api/files.upload", params=payload, files=file_obj)
