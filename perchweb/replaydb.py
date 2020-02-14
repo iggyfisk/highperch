@@ -11,7 +11,7 @@ from collections import defaultdict
 from ipaddress import ip_address, ip_network
 from flask import flash, g, current_app, request
 from models.replay import Replay, ReplayListInfo
-from perchlogging import log_to_slack, format_ip_addr, format_traceback
+from perchlogging import log_to_slack, upload_to_slack, format_ip_addr, format_traceback
 from lib.wigcodes import get_map_canonical_name
 import filepaths
 
@@ -351,12 +351,16 @@ def save_replay(replay, replay_name, uploader_ip):
         flash('Replay uploaded')
         return replay_id
     except ReplayParsingException as err:
+        with open(temp_replay_path, 'rb') as replay_bytes:
+            upload_to_slack(replay_name, replay_bytes.read())
         flash(str(err))
         setattr(g, context_rollback_key, True)
     except Exception as e:
         error_string = f'Failed upload from {format_ip_addr(request.remote_addr)}: "{replay_name}"\nError follows:\n{format_traceback(e)}'
         log_to_slack('WARNING', error_string)
         current_app.logger.warning(error_string)
+        with open(temp_replay_path, 'rb') as replay_bytes:
+            upload_to_slack(replay_name, replay_bytes.read())
         flash("Looks like a legit replay but something broke, we'll look into it.")
         setattr(g, context_rollback_key, True)
     finally:
