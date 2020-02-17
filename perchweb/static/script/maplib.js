@@ -1792,6 +1792,11 @@ const dropTableCodes = {
         "type": "Power Up",
         "level": 2,
         "items": ["tpow", "tst2", "tin2", "tdx2"]
+    },
+    "YkI3": {
+        "type": "Power Up",
+        "level": 3,
+        "items": [] // another empty table, mistakenly (?) used on (6)Timbermaw Hold
     }
 }
 

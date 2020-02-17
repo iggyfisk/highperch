@@ -1090,6 +1090,7 @@ level_exp = {
 }
 
 build_versions = {
+    '6105': '1.32',     # 2020-01-28, launch version. same buildNo as 1.32.1 (2020-02-06, minor bugfixes)
     '6103': '1.32.0.6', # 2020-01-17, classic camera fix
     '6102': '1.32.0.5', # 2020-01-09, adds classic gfx
     '6098': '1.32.0.4', # 2019-12-09, adds customs and mappool
