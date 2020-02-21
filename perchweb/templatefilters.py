@@ -78,7 +78,7 @@ mapsize = re_compile('^\\(\\d\\)$')
 
 
 def map_filename(map_name):
-    file_name = map_name[:-3] if map_name[-3:] == '_LV' else map_name
+    file_name = map_name[:-3] if map_name[-3:].lower() == '_lv' else map_name
     file_name = file_name[3:] if mapsize.match(file_name[:3]) else file_name
     file_name = file_name.lower()
     return file_name

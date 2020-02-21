@@ -330,8 +330,11 @@ def save_replay(replay, replay_name, uploader_ip):
             current_app.logger.warning(error_string)
             raise ReplayParsingException(
                 f"This looks like an empty replay! If it's actually a real one, let us know: admin@highper.ch")
-        uploader_battletag = [
-            p['name'] for p in replay_data.players if p['id'] == replay_data['saverPlayerId']][0]
+        if replay_data['saverPlayerId'] == -1:
+            uploader_battletag = 'Unknown#0'
+        else:
+            uploader_battletag = [
+                p['name'] for p in replay_data.players if p['id'] == replay_data['saverPlayerId']][0]
         if is_battletag_banned(uploader_battletag):
             error_string = f'Attempted upload with banned saver BattleTag {uploader_battletag} from {format_ip_addr(request.remote_addr)}: "{replay_name}"'
             log_to_slack('WARNING', error_string)
@@ -410,8 +413,11 @@ def reparse_replay(replay_id, query_fnc, fp):
         chat = '|'.join([c['message'] for c in replay_data['chat']])
         tower_count = replay_data.tower_count()
         chat_message_count = len(replay_data['chat'])
-        uploader_battletag = [
-            p['name'] for p in replay_data.players if p['id'] == replay_data['saverPlayerId']][0]
+        if replay_data['saverPlayerId'] == -1:
+            uploader_battletag = 'Unknown#0'
+        else:
+            uploader_battletag = [
+                p['name'] for p in replay_data.players if p['id'] == replay_data['saverPlayerId']][0]
 
         query_fnc('''
             UPDATE Replays

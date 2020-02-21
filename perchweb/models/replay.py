@@ -38,7 +38,7 @@ class ReplayListInfo(dict):
     def get_drawmap(self, color_transform=lambda c: c):
         """ Map size coordinates and a list of towers per color and coordinate,
             for drawing on the minimap. """
-        map_size = get_map_size(self['Map'])
+        map_size = get_map_size(get_map_canonical_name(self['Map']))
         recolored_start_locations = json.dumps({color_transform(color): coords for (
             color, coords) in json.loads(self['StartLocations']).items()})
         recolored_towers = json.dumps({color_transform(color): coords for (
@@ -132,6 +132,8 @@ class Replay(dict):
 
     def replay_saver(self):
         """ Returns the player that saved this replay """
+        if self['saverPlayerId'] == -1: # Saver unknown, very rare edge case
+            return {'id': self['saverPlayerId'], 'name': 'Unknown#0'}
         for p in self.players:
             if p['id'] == self['saverPlayerId']:
                 return p
@@ -140,6 +142,8 @@ class Replay(dict):
     def official(self):
         """ Returns True if an officially sanctioned replay else False """
         saver = self.replay_saver()
+        if saver['id'] == -1:   # Saver unknown, very rare edge case
+            return False
         return saver.official() if saver is not None else False
 
     def get_arbitrary_scores(self):

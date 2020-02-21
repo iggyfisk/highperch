@@ -160,7 +160,11 @@ if (!leaveLength) {
   replaySaverPlayerId = leaveEvents[leaveLength - 1].playerId;
 } else {
   const selfQuit = leaveEvents.filter(l => l.reason == 'left');
-  replaySaverPlayerId = selfQuit[selfQuit.length - 1].playerId;
+  if (selfQuit.length === 0) {
+    replaySaverPlayerId = -1;   // Edge case: nobody left the game. Server kicked everyone?
+  } else {
+    replaySaverPlayerId = selfQuit[selfQuit.length - 1].playerId;
+  }
 }
 
 // Try do determine game winner
