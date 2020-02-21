@@ -332,6 +332,9 @@ def save_replay(replay, replay_name, uploader_ip):
                 f"This looks like an empty replay! If it's actually a real one, let us know: admin@highper.ch")
         if replay_data['saverPlayerId'] == -1:
             uploader_battletag = 'Unknown#0'
+            error_string = f'Replay with unknown saver uploaded by {format_ip_addr(request.remote_addr)}: "{replay_name}"'
+            log_to_slack('WARNING', error_string)
+            current_app.logger.warning(error_string)
         else:
             uploader_battletag = [
                 p['name'] for p in replay_data.players if p['id'] == replay_data['saverPlayerId']][0]
