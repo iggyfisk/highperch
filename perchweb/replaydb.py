@@ -369,7 +369,7 @@ def save_replay(replay, replay_name, uploader_ip):
         flash(str(err))
         setattr(g, context_rollback_key, True)
     except Exception as e:
-        error_string = f'Failed upload from {format_ip_addr(request.remote_addr)}: "{replay_name}"\nError follows:\n{format_traceback(e)}'
+        error_string = f'Failed upload from {format_ip_addr(request.remote_addr)}: "{replay_name}"\nError follows:\n[{e.__class__.__name__}]\n{format_traceback(e)}'
         log_to_slack('WARNING', error_string)
         current_app.logger.warning(error_string)
         with open(temp_replay_path, 'rb') as replay_bytes:
