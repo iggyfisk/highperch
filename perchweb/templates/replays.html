@@ -48,6 +48,11 @@
     <span class="hp-toggle hp-highlight hidden" data-group="actions"><img class="actionhide" src="/static/images/move.gif" title="Hide action details"></span>
     <span class="hp-toggle hp-highlight" data-group="apmseries"><img class="controlshow" src="/static/images/stasistrap.png" title="Show APM graph"></span>
     <span class="hp-toggle hp-highlight hidden" data-group="apmseries"><img class="apmhide" src="/static/images/stasistrap.png" title="Hide APM graph"></span>
+    {% if replay.get_ally_events()|length > 0 or replay['tradeEvents']|length > 0 %}<span class="hp-toggle hp-highlight" data-group="allyevents"><img class="controlshow" src="/static/images/resource-trade.png" title="Show shares and feeds in chatlog"></span>
+    <span class="hp-toggle hp-highlight hidden" data-group="allyevents"><img class="allyhide" src="/static/images/resource-trade.png" title="Hide shares and feeds in chatlog"></span>
+    {% else %}
+    <span class=""><img class="controlshow" src="/static/images/resource-trade-disabled.png" title="No shares or feeds in this game!"></span>
+    {% endif %}
 </div>
 <div class="statwarning hidden">
     N.B. unit and building counts are inaccurate - canceled construction and products of multiple building select are not tracked.
@@ -132,7 +137,7 @@
                         <b>{{ (player.net_feed()[0] + player.net_feed()[1])|thousands }}</b> sources fed</span>
                     {% endif %}
                     {% if player.net_feed()[0] != 0 or player.net_feed()[1] != 0 %}
-                    <span class="feeddetails hp-toggle hp-highlight hidden" data-group="feed"><span class="no-hover">|</span> <b
+                    <span class="hp-toggle hp-highlight hidden" data-group="feed"><span class="no-hover">|</span> <b
                             class="gold">{{ player.net_feed()[0] }}</b> / <b
                             class="lumber">{{ player.net_feed()[1] }}</b> fed</span>
                     {% endif %}

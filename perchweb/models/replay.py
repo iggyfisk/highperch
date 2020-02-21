@@ -7,7 +7,8 @@ from collections import defaultdict
 from datetime import datetime
 from math import sqrt
 from templatefilters import lighten_color
-from lib.wigcodes import is_tower, get_map_size, get_starting_locations, get_goldmines
+from lib.wigcodes import is_tower, get_map_size, get_starting_locations,\
+                         get_goldmines, ally_event_codes, get_map_canonical_name
 from models.player import Player
 
 
@@ -206,6 +207,42 @@ class Replay(dict):
     def get_color_codes(self):
         return json.dumps([lighten_color(p['color']) for p in self.players])
 
+    def get_ally_events(self):
+        """ This only works accurately on changes to the shared control flag.
+            Changes to shared vision and alliance aren't fully handled.
+            We could be more precise about specific bitwise changes,
+            but since only changes to shared control occur in ladder games I haven't bothered.
+            I think the groupby performed here will also inaccurately collapse opposite
+            state changes performed in the same gametick, e.g. changing from
+            Ally A unshared/Ally B shared to the inverse in one shot.
+            See lib/wigcodes.py for the breakdown of implemented flags"""
+        ally_events = []
+
+        for p in self.players:
+            player_events = {}
+            for event in p['allyOptions']:
+                if 'playerId' in event:     # some custom games have targetless flags changes?
+                    if not event['ms'] in player_events:
+                        player_events[event['ms']] = {
+                            'playerId': p['id'],
+                            'recipientPlayerId': [event['playerId']],
+                            'event': ally_event_codes[event['flags']],
+                        }
+                    else:
+                        player_events[event['ms']]['recipientPlayerId'].append(event['playerId'])
+
+            for event in player_events:
+                merged_event = player_events[event]
+                merged_event['ms'] = event
+                ally_events.append(merged_event)
+
+        return ally_events
+
+    def get_team_size(self, player_id):
+        team_id = next(p['teamid'] for p in self.players if p['id'] == player_id)
+        size = next((len(self.teams()[team]) for team in self.teams() if team == team_id), None)
+        return size
+
     def get_formatted_chat(self):
         """ Chatlog, pause, resume, player left, and markers for periods of silence (indicated by None)"""
         if self.formatted_chat is not None:
@@ -213,24 +250,31 @@ class Replay(dict):
 
         merged_chat = self['chat'] + \
             [l for l in self['leaveEvents'] if l['reason'] != 'gameEnd'] + \
-            self['pauseEvents']
+            self['pauseEvents'] + self['tradeEvents'] + self.get_ally_events()
         merged_chat.sort(key=lambda c: c['ms'])
 
         formatted_chat = []
         last_message_ms = 0
+        last_message_realchat = True
         for c in merged_chat:
             ms = c['ms']
-            if len(formatted_chat) > 0 and (ms - last_message_ms) > Replay.silence_period:
+            if len(formatted_chat) > 0 and (ms - last_message_ms) > Replay.silence_period and last_message_realchat:
                 formatted_chat.append(None)
 
             c['mode'] = 'ALL' if 'mode' not in c else c['mode']
+            if 'event' in c:
+                c['mode'] = 'ALLY'
             c['player'] = self.player_names[c['playerId']
                                             ] if 'player' not in c else c['player']
-            if 'message' not in c and 'pause' not in c:
+            if 'reason' in c:
                 c['leave'] = True
 
             formatted_chat.append(c)
             last_message_ms = c['ms']
+            if 'event' in c or 'gold' in c:
+                last_message_realchat = False
+            else:
+                last_message_realchat = True
 
         self.formatted_chat = formatted_chat
         return self.formatted_chat
@@ -244,9 +288,11 @@ class Replay(dict):
         """ Map size coordinates and a list of towers per color and coordinate,
             for drawing on the minimap """
 
-        map_size = get_map_size(self.map_name(), fp=fp)
-        start_locations = get_starting_locations(self.map_name(), fp=fp)
-        goldmines = get_goldmines(self.map_name(), fp=fp)
+        canonical_name = get_map_canonical_name(self.map_name())
+
+        map_size = get_map_size(canonical_name, fp=fp)
+        start_locations = get_starting_locations(canonical_name, fp=fp)
+        goldmines = get_goldmines(canonical_name, fp=fp)
         towers = None
         player_start_locations = {}
 

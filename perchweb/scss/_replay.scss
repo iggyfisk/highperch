@@ -365,6 +365,10 @@ a.playername{
             outline: $outline-size rgb(46, 46, 46) solid;
             outline-offset: -$outline-size;
         }
+        .allyhide {
+            outline: $outline-size #ffcc44 solid;
+            outline-offset: -$outline-size;
+        }
     }
     .statwarning {
         width: fit-content;
@@ -606,14 +610,13 @@ a.playername{
     }
 }
 
-.feeddetails {
-    .gold {
-        color: #ffcc44;
-    }
-    .lumber {
-        color: #00910A;
-    }
+.gold {
+    color: #ffcc44;
 }
+.lumber {
+    color: #00910A;
+}
+
 
 .chatlog {
     background-color: $card-background-color;
@@ -697,8 +700,11 @@ a.playername{
             margin-right: 125px;
         }
     }
-    .leave, .pause {
+    .leave, .pause, .share, .feed {
         color: #FFF;
+    }
+    .unshare {
+        color: #FF0000;
     }
 }
 

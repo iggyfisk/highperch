@@ -182,7 +182,7 @@
                     {% if chat is none %}
                     <div class="silence"></div>
                     {% else %}
-                    <div class="chatmessage">
+                    <div class="chatmessage {% if 'event' in chat or 'gold' in chat %}hp-toggle hp-display hidden" data-group="allyevents"{% else %}"{% endif %}">
                         <span class="timestamp">({{ chat['ms']|gametime }} / {{ chat['mode']|chatmode }})&nbsp;</span> 
                         {% if chat['leave'] %}
                         <span class="leave">
@@ -195,6 +195,42 @@
                         {% elif chat['pause'] == False %}
                         <span class="pause">
                             <span class="playername" style="color:{{ replay.player_colors[chat['playerId']]|lighten }}">{{ chat['player']|displayname }}</span> has resumed the game
+                        </span>
+                        {% elif chat['event'] == 'share' %}
+                        <span class="share">
+                            <span class="playername" style="color:{{ replay.player_colors[chat['playerId']]|lighten }}">{{ chat['player']|displayname }}</span>
+                            {% if chat['recipientPlayerId']|length == replay.get_team_size(chat['playerId']) - 1 %} shared control to their entire team
+                            {% else %} granted shared control to
+                            {% if chat['recipientPlayerId']|length == 1 %}
+                            <span class="playername" style="color:{{ replay.player_colors[chat['recipientPlayerId'][0]]|lighten }}">{{ replay.player_names[chat['recipientPlayerId'][0]]|displayname }}</span>
+                            {% else %}
+                                {% for playerid in chat['recipientPlayerId'] %}
+                                    {% if loop.last %}and {% endif %}
+                                    <span class="playername" style="color:{{ replay.player_colors[playerid]|lighten }}">{{ replay.player_names[playerid]|displayname }}</span>{% if not loop.last and chat['recipientPlayerId']|length > 2 %}, {% else %} {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                            {% endif %}
+                        </span>
+                        {% elif chat['event'] == 'unshare' %}
+                        <span class="unshare">
+                            <span class="playername" style="color:{{ replay.player_colors[chat['playerId']]|lighten }}">{{ chat['player']|displayname }}</span>
+                            {% if chat['recipientPlayerId']|length == replay.get_team_size(chat['playerId']) - 1 %} revoked shared control from their entire team
+                            {% else %} revoked shared control from
+                            {% if chat['recipientPlayerId']|length == 1 %}
+                                <span class="playername" style="color:{{ replay.player_colors[chat['recipientPlayerId'][0]]|lighten }}">{{ replay.player_names[chat['recipientPlayerId'][0]]|displayname }}</span>
+                            {% else %}
+                                {% for playerid in chat['recipientPlayerId'] %}
+                                    {% if loop.last %}and {% endif %}
+                                    <span class="playername" style="color:{{ replay.player_colors[playerid]|lighten }}">{{ replay.player_names[playerid]|displayname }}</span>{% if not loop.last %}, {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                            {% endif %}
+                        </span>
+                        {% elif 'gold' in chat or 'lumber' in chat %}
+                        <span class="feed">
+                            <span class="playername" style="color:{{ replay.player_colors[chat['playerId']]|lighten }}">{{ chat['player']|displayname }}</span> fed {% if chat['gold'] > 0 %}<span class="gold">{{ chat['gold'] }} gold</span>{% endif %}
+                            {% if chat['gold'] > 0 and chat['lumber'] > 0 %} and {% endif %}
+                            {% if chat['lumber'] > 0 %}<span class="lumber">{{ chat['lumber'] }} wood</span>{% endif %} to <span class="playername" style="color:{{ replay.player_colors[chat['recipientPlayerId']]|lighten }}">{{ replay.player_names[chat['recipientPlayerId']]|displayname }}</span>
                         </span>
                         {% else %}
                         <span class="message">

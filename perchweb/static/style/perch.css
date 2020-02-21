@@ -1199,6 +1199,9 @@ a.playername:hover {
   .large-replay .controls .apmhide {
     outline: 3px #2e2e2e solid;
     outline-offset: -3px; }
+  .large-replay .controls .allyhide {
+    outline: 3px #ffcc44 solid;
+    outline-offset: -3px; }
 
 .large-replay .statwarning {
   width: fit-content;
@@ -1377,10 +1380,10 @@ a.playername:hover {
 .replay .details .player, .replay .details .vs {
   padding-right: 8px; }
 
-.feeddetails .gold {
+.gold {
   color: #ffcc44; }
 
-.feeddetails .lumber {
+.lumber {
   color: #00910A; }
 
 .chatlog {
@@ -1448,8 +1451,10 @@ a.playername:hover {
       .chatlog .message, .chatlog .leave, .chatlog .pause {
         left: 125px;
         margin-right: 125px; } }
-  .chatlog .leave, .chatlog .pause {
+  .chatlog .leave, .chatlog .pause, .chatlog .share, .chatlog .feed {
     color: #FFF; }
+  .chatlog .unshare {
+    color: #FF0000; }
 
 .apmcontainer .apmseries {
   background-color: rgba(10, 5, 5, 0.75);

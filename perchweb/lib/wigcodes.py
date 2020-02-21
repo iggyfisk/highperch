@@ -1099,6 +1099,22 @@ build_versions = {
     '6091': '1.32.0.1'  # 2019-10-29, first beta build
 }
 
+""" The full set of flags are just here as error handling for custom games.
+    The ally event functions in the Replay model only properly handle share/unshare,
+    and the replay.html template only renders share/unshare events.
+    The flags marked with (?) haven't been directly tested.
+    For the bitwise diagram: W = allied victory, C = control, V = vision, A = ally """
+ally_event_codes = {        #                                           W...CVAAAAA
+    1151: 'share',          # ally, share vision, share control         10001111111
+    1087: 'unshare',        # ally, share vision, no control            10000111111
+    1056: 'enemyvision',    # unally, share vision, no control          10000100000
+    1055: 'unvision',       # ally, no vision, no control (?)           10000011111
+    1119: 'blindshare',     # ally, no vision, share control (?)        10001011111
+    1024: 'unally',         # unally, no vision, no control? (?)        10000000000
+    31:   'weakally',       # no alliedvictory, ally, no vis/ctrl (?)   00000011111
+    0:    'unweakally'      # no alliedvictory, unally, no vis/ctrl (?) 00000000000
+}
+
 is_tower = {'hwtw', 'owtw', 'etrp'}
 
 is_tower_upgrade = {'hgtw', 'hatw', 'hctw', 'uzg1', 'uzg2'}
