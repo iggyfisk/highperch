@@ -1090,6 +1090,7 @@ level_exp = {
 }
 
 build_versions = {
+    '6106': '1.32.2',   # 2020-02-24, minor bugfixes, removal of strath/banewood/fountain
     '6105': '1.32',     # 2020-01-28, launch version. same buildNo as 1.32.1 (2020-02-06, minor bugfixes)
     '6103': '1.32.0.6', # 2020-01-17, classic camera fix
     '6102': '1.32.0.5', # 2020-01-09, adds classic gfx
@@ -1250,11 +1251,11 @@ def get_map_critters(map_name, fp=None):
     return map_info['critters']
 
 
-def get_map_canonical_name(map_name):
+def get_map_canonical_name(map_name, fp=None):
     """The canonical map filename, e.g. '(6)Highperch'
        This is mostly to help with custom-hosted game replays
        lowercasing the map filenames for some reason"""
-    canonical_names = get_all_mapinfo().keys()
+    canonical_names = get_all_mapinfo(fp=fp).keys()
     if map_name in canonical_names:
         return map_name
     for canonical in canonical_names:

@@ -9,7 +9,7 @@
     "private": true,
     "dependencies": {
       "glob": "7.1.6",
-      "wc3maptranslator": "https://github.com/iggyfisk/WC3MapTranslator#3578ae1"
+      "wc3maptranslator": "https://github.com/iggyfisk/WC3MapTranslator#bc6b2f4"
     }
   }
   

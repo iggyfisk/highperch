@@ -292,7 +292,7 @@ class Replay(dict):
         """ Map size coordinates and a list of towers per color and coordinate,
             for drawing on the minimap """
 
-        canonical_name = get_map_canonical_name(self.map_name())
+        canonical_name = get_map_canonical_name(self.map_name(), fp=fp)
 
         map_size = get_map_size(canonical_name, fp=fp)
         start_locations = get_starting_locations(canonical_name, fp=fp)

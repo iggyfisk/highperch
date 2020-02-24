@@ -155,15 +155,50 @@ let replaySaverPlayerId;
 if (!leaveLength) {
   replaySaverPlayerId = null;
 } else if (leaveLength === 1) {
-  replaySaverPlayerId = leaveEvents[0].playerId;
+  replaySaverPlayerId = leaveEvents[0].playerId;  // Only one leave event
 } else if (leaveEvents[leaveLength - 1].ms !== leaveEvents[leaveLength - 2].ms) {
-  replaySaverPlayerId = leaveEvents[leaveLength - 1].playerId;
+  replaySaverPlayerId = leaveEvents[leaveLength - 1].playerId;  // Latest leave event
 } else {
   const selfQuit = leaveEvents.filter(l => l.reason == 'left');
   if (selfQuit.length === 0) {
     replaySaverPlayerId = -1;   // Edge case: nobody left the game. Server kicked everyone?
   } else {
-    replaySaverPlayerId = selfQuit[selfQuit.length - 1].playerId;
+    replaySaverPlayerId = selfQuit[selfQuit.length - 1].playerId; // Latest non-gameEnd event
+  }
+}
+
+// Check to see if we have significant amounts of doublechats occurring from a player not currently identified as saver.
+// This will stop doing anything if Blizzard fixes replay saver double chats
+const doubleChatCounts = {};
+replay.players.forEach(p => {
+  doubleChatCounts[p['id']] = 0;
+});
+let lastChatMs = 0;
+let lastChatMessage = null;
+let lastChatPlayerId = 0;
+
+replay.chat.forEach(c => {
+  const { playerId, timeMS, message } = c;
+    if ((timeMS - lastChatMs) < 500 && message == lastChatMessage && playerId == lastChatPlayerId && message.length >= 3) {
+      doubleChatCounts[playerId] += 1
+    }
+    lastChatPlayerId = playerId;
+    lastChatMs = timeMS;
+    lastChatMessage = message;
+});
+
+const doubleChatScore = Object.keys(doubleChatCounts).sort(function(x,y){return doubleChatCounts[y]-doubleChatCounts[x]});
+
+if (doubleChatCounts[doubleChatScore[0]] > 0 && doubleChatScore[0] != replaySaverPlayerId) {
+  console.log("Potential incorrect saver ID (" + replaySaverPlayerId + ") detected based on doublechats");
+  if (doubleChatCounts[doubleChatScore[1]] === 0) {   // There was only one doublechatter
+    replaySaverPlayerId = parseInt(doubleChatScore[0])
+    console.log("New saver ID is", replaySaverPlayerId, "via unambiguous doublechats")
+  } else if (doubleChatCounts[doubleChatScore[1]] <= doubleChatCounts[doubleChatScore[0]] / 4) {  // There was a primary doublechatter
+    replaySaverPlayerId = parseInt(doubleChatScore[0])
+    console.log("New saver ID is", replaySaverPlayerId, "from potentially ambiguous doublechats")
+  } else {
+    console.log("Double chats found, but were inconclusive")
   }
 }
 

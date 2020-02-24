@@ -392,6 +392,8 @@ def reparse_replay(replay_id, query_fnc, fp):
         ["node", fp.get_path("../parsereplay.js"), replay_path, temp_data_path], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     if parse_result.returncode > 0:
         raise ReplayParsingException(parse_result.stderr.decode("utf-8"))
+    if len(parse_result.stdout) > 0:
+        print(parse_result.stdout.decode("utf-8"))
 
     # From here on out we need to clean up if anything goes wrong
     try:
