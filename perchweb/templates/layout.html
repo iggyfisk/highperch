@@ -101,6 +101,9 @@
     {% if map %}
     <script src="/static/script/maplib.js?h={{ config['STATIC_HASH'] }}"></script>
     {% endif %}
+    {% if nav == 'speed' %}
+    <script src="/static/script/movespeed.js?h={{ config['STATIC_HASH'] }}"></script>
+    {% endif %}
     {% block scripts %}{% endblock %}
 </body>
 </html>

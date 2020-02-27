@@ -1,0 +1,101 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="speedapp">
+    <div class='row'>
+        <div class='column'>
+            <div class="iconrow">
+                <img src="/static/images/game/speedbuffs/bootsofspeed.png" class="buff flatbuff" data-buff="bootsofspeed"
+                title="Boots of Speed">
+                <img src="/static/images/game/speedbuffs/scrollofspeed.png" class="buff setbuff" data-buff="scrollofspeed"
+                title="Scroll of Speed">
+            </div>
+            <div class="iconrow">
+                <img src="/static/images/game/speedbuffs/enduranceaura.png" class="buff pctbuff" data-buff="enduranceaura1"
+                data-buffgroup="enduranceaura" title="Endurance Aura level 1">
+                <img src="/static/images/game/speedbuffs/enduranceaura.png" class="buff pctbuff" data-buff="enduranceaura2"
+                data-buffgroup="enduranceaura" title="Endurance Aura level 2">
+                <img src="/static/images/game/speedbuffs/enduranceaura.png" class="buff pctbuff" data-buff="enduranceaura3"
+                data-buffgroup="enduranceaura" title="Endurance Aura level 3">
+            </div>
+            <div class="iconrow">
+                <img src="/static/images/game/speedbuffs/unholyaura.png" class="buff pctbuff" data-buff="unholyaura1"
+                data-buffgroup="unholyaura" title="Unholy Aura level 1">
+                <img src="/static/images/game/speedbuffs/unholyaura.png" class="buff pctbuff" data-buff="unholyaura2"
+                data-buffgroup="unholyaura" title="Unholy Aura level 2">
+                <img src="/static/images/game/speedbuffs/unholyaura.png" class="buff pctbuff" data-buff="unholyaura3"
+                data-buffgroup="unholyaura" title="Unholy Aura level 3">
+            </div>
+            <div class="iconrow">
+                <img src="/static/images/game/speedbuffs/windwalk.png" class="buff pctbuff" data-buff="windwalk1"
+                data-buffgroup="windwalk" title="Wind Walk level 1">
+                <img src="/static/images/game/speedbuffs/windwalk.png" class="buff pctbuff" data-buff="windwalk2"
+                data-buffgroup="windwalk" title="Wind Walk level 2">
+                <img src="/static/images/game/speedbuffs/windwalk.png" class="buff pctbuff" data-buff="windwalk3"
+                data-buffgroup="windwalk" title="Wind Walk level 3">
+            </div>
+            <div class="iconrow">
+                <img src="/static/images/game/speedbuffs/engineering.png" class="buff pctbuff" data-buff="engineering1"
+                data-buffgroup="engineering" title="Engineering Upgrade level 1">
+                <img src="/static/images/game/speedbuffs/engineering.png" class="buff pctbuff" data-buff="engineering2"
+                data-buffgroup="engineering" title="Engineering Upgrade level 2">
+                <img src="/static/images/game/speedbuffs/engineering.png" class="buff pctbuff" data-buff="engineering3"
+                data-buffgroup="engineering" title="Engineering Upgrade level 3">
+            </div>
+            <div class="iconrow">
+                <img src="/static/images/game/speedbuffs/bloodlust.png" class="buff pctbuff" data-buff="bloodlust"
+                title="Bloodlust">
+                <img src="/static/images/game/speedbuffs/chemicalrage.png" class="buff setbuff" data-buff="chemicalrage"
+                title="Chemical Rage">
+            </div>
+        </div>
+        <div class='column' id="mid">
+            <div id="heroicon"></div>
+            <div id="heroname"></div>
+            <p class="caption">Movespeed:</p>
+            <input id="movespeed" value="-" disabled>
+            <div id="speedclass"></div>
+            <div id="theoretical"></div>
+            <div id="currentbuffs"></div>
+        </div>
+        <div class='column'>
+            <div class="iconrow">
+                <img src="/static/images/game/heroes/Hamg.gif" class="hero basefast" data-unit="Hamg">
+                <img src="/static/images/game/heroes/Hblm.gif" class="hero basemedium" data-unit="Hblm">
+                <img src="/static/images/game/heroes/Hmkg.gif" class="hero baseslow" data-unit="Hmkg">
+                <img src="/static/images/game/heroes/Hpal.gif" class="hero baseslow" data-unit="Hpal">
+            </div>
+            <div class="iconrow">
+                <img src="/static/images/game/heroes/Obla.gif" class="hero basefast" data-unit="Obla">
+                <img src="/static/images/game/heroes/Otch.gif" class="hero baseslow" data-unit="Otch">
+                <img src="/static/images/game/heroes/Ofar.gif" class="hero basefast" data-unit="Ofar">
+                <img src="/static/images/game/heroes/Oshd.gif" class="hero basefast" data-unit="Oshd">
+            </div>
+            <div class="iconrow">
+                <img src="/static/images/game/heroes/Edem.gif" class="hero basefast" data-unit="Edem">
+                <img src="/static/images/game/heroes/Ekee.gif" class="hero basefast" data-unit="Ekee">
+                <img src="/static/images/game/heroes/Emoo.gif" class="hero basefast" data-unit="Emoo">
+                <img src="/static/images/game/heroes/Ewar.gif" class="hero basefast" data-unit="Ewar">
+            </div>
+            <div class="iconrow">
+                <img src="/static/images/game/heroes/Udea.gif" class="hero basefast" data-unit="Udea">
+                <img src="/static/images/game/heroes/Udre.gif" class="hero baseslow" data-unit="Udre">
+                <img src="/static/images/game/heroes/Ulic.gif" class="hero baseslow" data-unit="Ulic">
+                <img src="/static/images/game/heroes/Ucrl.gif" class="hero baseslow" data-unit="Ucrl">
+            </div>
+            <div class="iconrow">
+                <img src="/static/images/game/heroes/Nngs.gif" class="hero baseslow" data-unit="Nngs">
+                <img src="/static/images/game/heroes/Nbrn.gif" class="hero basefast" data-unit="Nbrn">
+                <img src="/static/images/game/heroes/Npbm.gif" class="hero baseslow" data-unit="Npbm">
+                <img src="/static/images/game/heroes/Nfir.gif" class="hero basefast" data-unit="Nfir">
+            </div>
+            <div class="iconrow">
+                <img src="/static/images/game/heroes/Nplh.gif" class="hero basemedium" data-unit="Nplh">
+                <img src="/static/images/game/heroes/Nbst.gif" class="hero basefast" data-unit="Nbst">
+                <img src="/static/images/game/heroes/Ntin.gif" class="hero baseslow" data-unit="Ntin">
+                <img src="/static/images/game/heroes/Nalc.gif" class="hero baseslow" data-unit="Nalc">
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

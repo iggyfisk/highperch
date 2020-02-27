@@ -4809,3 +4809,104 @@ form.adminlogin {
   .maps th[role=columnheader]:not(.no-sort):hover:after {
     visibility: visible;
     opacity: 1; }
+
+.speedapp {
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 10px; }
+  .speedapp .row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%; }
+  .speedapp .column {
+    display: flex;
+    flex-direction: row;
+    flex-basis: 40%;
+    flex: 1;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.4);
+    text-align: center; }
+    @media (min-width: 750px) {
+      .speedapp .column {
+        flex-direction: column; } }
+    .speedapp .column .left-col {
+      background-color: rgba(0, 0, 0, 0.4);
+      height: 100px; }
+    .speedapp .column .mid-col {
+      background-color: rgba(0, 0, 0, 0.6);
+      height: 100px; }
+    .speedapp .column .right-col {
+      background-color: rgba(0, 0, 0, 0.4);
+      height: 100px;
+      padding: 10px; }
+  .speedapp .basefast {
+    border: 1px solid green; }
+  .speedapp .basemedium {
+    border: 1px solid orange; }
+  .speedapp .baseslow {
+    border: 1px solid red; }
+  .speedapp #heroicon {
+    margin: 0 auto 0 auto; }
+  .speedapp #heroname {
+    color: white;
+    padding-bottom: 10px; }
+  .speedapp .caption {
+    color: white;
+    font-size: 10px;
+    margin-bottom: -1px; }
+  .speedapp #movespeed {
+    text-align: center;
+    min-width: 70px;
+    width: 20%;
+    height: 30px;
+    margin: 0 auto 0 auto;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 3rem;
+    background-color: rgba(0, 0, 0, 0.5); }
+  .speedapp #speedclass {
+    padding-top: 10px; }
+  .speedapp #theoretical {
+    color: white;
+    font-size: 12px;
+    margin: 5px 0 10px 0; }
+  .speedapp .veryslow {
+    color: darkred; }
+  .speedapp .slow {
+    color: gray; }
+  .speedapp .normal {
+    color: white; }
+  .speedapp .fast {
+    color: green; }
+  .speedapp .veryfast {
+    color: #00FF00; }
+  .speedapp .buff {
+    width: 40px; }
+    @media (min-width: 750px) {
+      .speedapp .buff {
+        width: 48px; } }
+  .speedapp .hero {
+    width: 48px; }
+    @media (min-width: 750px) {
+      .speedapp .hero {
+        width: 64px; } }
+  .speedapp .iconrow {
+    display: inline; }
+  .speedapp #currentbuffs {
+    text-align: left;
+    margin: 0 15% 0 15%; }
+    .speedapp #currentbuffs .listbuff {
+      padding: 5px; }
+      .speedapp #currentbuffs .listbuff img {
+        width: 32px;
+        padding-right: 5px;
+        vertical-align: bottom; }
+      .speedapp #currentbuffs .listbuff .listbufftext {
+        color: white;
+        font-size: 14px;
+        vertical-align: text-bottom; }
+  .speedapp .grayedout {
+    opacity: 0.1; }
+  .speedapp .selected {
+    outline: 3px solid white;
+    outline-offset: -3px; }

@@ -168,6 +168,12 @@ def map_list():
     return standard_page('maps.html', 'Maps', maps=sorted(maps_with_info, key=lambda i: i['replay_count'], reverse=True))
 
 
+@routes.route('/speed')
+def speed():
+    """Movespeed calculator"""
+    return standard_page('speed.html', 'Movespeed mathneed', nav='speed')
+
+
 @routes.route('/upload', methods=['POST'])
 def upload_replay():
     """User replay uploads"""

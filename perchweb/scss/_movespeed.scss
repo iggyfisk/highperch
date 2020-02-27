@@ -1,0 +1,133 @@
+.speedapp {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+
+    .row {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        width: 100%;
+    }
+
+    .column {
+        display: flex;
+        flex-direction: row;
+        @media (#{$bp-larger-than-tablet}) {
+            flex-direction: column;
+        }
+        flex-basis: 40%;
+        flex: 1;
+        padding: 10px;
+        background-color: rgba(0, 0, 0, 0.4);
+        text-align: center;
+        .left-col {
+            background-color: rgba(0, 0, 0, 0.4);
+            height: 100px;
+        }
+        .mid-col {
+            background-color: rgba(0, 0, 0, 0.6);
+            height: 100px;
+        }
+        .right-col {
+            background-color: rgba(0, 0, 0, 0.4);
+            height: 100px;
+            padding: 10px;
+        }  
+    }
+    .basefast {
+        border: 1px solid green;
+    }
+    .basemedium {
+        border: 1px solid orange;
+    }
+    .baseslow {
+        border: 1px solid red;
+    }
+    #heroicon {
+        margin: 0 auto 0 auto;
+    }
+    #heroname {
+        color: white;
+        padding-bottom: 10px;
+    }
+    .caption {
+        color: white;
+        font-size: 10px;
+        margin-bottom: -1px;
+    }
+    #movespeed {
+        text-align: center;
+        min-width: 70px;
+        width: 20%;
+        height: 30px;
+        margin: 0 auto 0 auto;
+        color: white;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 3rem;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+    #speedclass {
+        padding-top: 10px;
+    }
+    #theoretical {
+        color: white;
+        font-size: 12px;
+        margin: 5px 0 10px 0;
+    }
+    .veryslow {
+        color: darkred;
+    }
+    .slow {
+        color: gray;
+    }
+    .normal {
+        color: white;
+    }
+    .fast {
+        color: green;
+    }
+    .veryfast {
+        color: #00FF00;
+    }
+    
+    .buff {
+        width: 40px;
+        @media (#{$bp-larger-than-tablet}) {
+            width: 48px;
+        }
+    }
+    .hero {
+        width: 48px;
+        @media (#{$bp-larger-than-tablet}) {
+            width: 64px;
+        }
+    }
+    .iconrow {
+        display: inline;
+    }
+    #currentbuffs {
+        text-align: left;
+        margin: 0 15% 0 15%;
+        .listbuff {
+            padding: 5px;
+            img { 
+                width: 32px;
+                padding-right: 5px;
+                vertical-align: bottom;
+            }
+            .listbufftext {
+                color: white;
+                font-size: 14px;
+                vertical-align: text-bottom;
+            }
+        }
+    }
+
+    .grayedout {
+        opacity: 0.1;
+    }
+    .selected {
+        outline: 3px solid white;
+        outline-offset: -3px;
+    }
+}
