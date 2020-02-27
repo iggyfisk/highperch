@@ -289,7 +289,7 @@ def save_replay(replay, replay_name, uploader_ip):
 
         parse_result = subprocess.run(
             ["node", filepaths.get_path("../parsereplay.js"), temp_replay_path, temp_data_path], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        if parse_result.returncode > 0:
+        if parse_result.returncode != 0:
             error_string = f'Parser failure from {format_ip_addr(request.remote_addr)} - "{replay_name}":\n{parse_result.stderr.decode("utf-8")}'
             log_to_slack('ERROR', error_string)
             current_app.logger.warning(error_string)
