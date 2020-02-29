@@ -4839,6 +4839,8 @@ form.adminlogin {
       background-color: rgba(0, 0, 0, 0.4);
       height: 100px;
       padding: 10px; }
+  .speedapp #mid {
+    display: inline; }
   .speedapp .basefast {
     border: 1px solid green; }
   .speedapp .basemedium {
