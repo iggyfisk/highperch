@@ -1027,6 +1027,7 @@ footer {
       margin-bottom: -1px; }
 
 .playername {
+  white-space: nowrap;
   display: inline-block;
   font-weight: bold; }
 
