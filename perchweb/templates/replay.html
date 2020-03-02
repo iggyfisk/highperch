@@ -62,6 +62,7 @@
                         <p><b>{{ replay['duration']|gametime }}</b> long {{ replay['type'] }} {{ replay.game_host_type() }} game on <a href="{{ url_for('views.view_map', map_name=replay.map_name()|canonicalname) }}">{{ replay.map_name() }}</a></p>
                         <div class="saver">{% if replay.replay_saver()['id'] != -1 %}Saved by <a href="{{ url_for('views.view_player', battletag=replay.replay_saver()['name']) }}">{{ replay.replay_saver()['name']|displayname }}</a>
                         {% else %}Replay saver unknown (Battle.net server failure?) {% endif %}
+                        <p>{{ replay.detect_arranged_teams() }}</p>
                         {% if is_admin %}
                         <div class="bancontainer adminonly"><span class="adminicon hp-expand"><i class="icon-user-times"></i></span>
                             <div class="ban hp-hidden v">

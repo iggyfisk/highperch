@@ -442,8 +442,13 @@ a.playername{
                     font-size: 12px;
                     margin-left: 4px;
                     padding-top: 3px;
+                    flex-basis: 100%;
                     .award {
                         cursor: default;
+                    }
+                    .arrangedteam {
+                        // font-weight: bold;
+                        float: right;
                     }
                 }
                 .details {

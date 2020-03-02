@@ -146,6 +146,9 @@
                     {% elif player['id'] == replay.grb_id() %}
                     | <span class="award" title="Garbage award">🗑️</span>
                     {% endif %}
+                    {% if replay.get_arranged_team(player['id']) != None and replay.game_host_type() == 'ladder' %}
+                    <div class="arrangedteam" title="Probably an arranged team, based on early game mutual shared control">[AT{% if replay.detect_arranged_teams()|length > replay.teams()|length %} #{{ replay.get_arranged_team(player['id']) }}{% endif %}]</div>
+                    {% endif %}
                 </div>
             </div>
             <div class="details">

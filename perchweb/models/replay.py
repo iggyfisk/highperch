@@ -56,6 +56,7 @@ class Replay(dict):
         self.formatted_chat = None
         self.chat_actions = None
         self.teams_dict = None
+        self.arranged_teams = None
 
         self.players = [Player(tradeEvents=args['tradeEvents'], **p)
                         for p in self['players']]
@@ -246,6 +247,49 @@ class Replay(dict):
         team_id = next(p['teamid'] for p in self.players if p['id'] == player_id)
         size = next((len(self.teams()[team]) for team in self.teams() if team == team_id), None)
         return size
+
+    earlygame_share_window = 600    # Cutoff for share-based AT detection (in seconds)
+
+    def detect_arranged_teams(self):
+        if self.arranged_teams is None:
+            early_events = [e for e in self.get_ally_events() if e['ms'] < Replay.earlygame_share_window * 1000]
+            mutual_shares = []
+            for p in self.players:
+                for e in early_events:
+                    if e['playerId'] == p['id']:
+                        for e2 in early_events:
+                            if p['id'] in e2['recipientPlayerId']:
+                                share_pair = sorted([e['playerId'], e2['playerId']])
+                                if not share_pair in mutual_shares:
+                                    mutual_shares.append(share_pair)
+            # I took the below from https://stackoverflow.com/questions/4842613/merge-lists-that-share-common-elements
+            if len(mutual_shares) > 0:
+                team_groups = [mutual_shares[0]]
+                for share in mutual_shares:
+                    share_set = set(share)
+                    merged = False
+                    for index in range(len(team_groups)):
+                        team_set = set(team_groups[index])
+                        if len(share_set & team_set) != 0:
+                            team_groups[index] = list(share_set | team_set)
+                            merged = True
+                            break
+                    if not merged:
+                        team_groups.append(share)
+                arranged_teams = {}
+                for team in team_groups:
+                    arranged_teams[len(arranged_teams)] = team
+                self.arranged_teams = arranged_teams
+
+        return self.arranged_teams
+
+    def get_arranged_team(self, playerId):
+        arranged_teams = self.detect_arranged_teams()
+        if arranged_teams:
+            for team in arranged_teams:
+                if playerId in arranged_teams[team]:
+                    return team
+        return None
 
     def get_formatted_chat(self):
         """ Chatlog, pause, resume, player left, and markers for periods of silence (indicated by None)"""

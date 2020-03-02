@@ -1262,9 +1262,12 @@ a.playername:hover {
     .large-replay .teams .team .player .summary {
       font-size: 12px;
       margin-left: 4px;
-      padding-top: 3px; }
+      padding-top: 3px;
+      flex-basis: 100%; }
       .large-replay .teams .team .player .summary .award {
         cursor: default; }
+      .large-replay .teams .team .player .summary .arrangedteam {
+        float: right; }
     .large-replay .teams .team .player .details {
       display: block;
       align-items: center;
