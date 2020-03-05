@@ -24,6 +24,7 @@ const parseInfo = () => {
   return {
     titleStringIndex: parseInt(infoResult.map.name.match(/_(\d+)$/)[1]),
     editorVersion: infoResult.editorVersion,
+    editorSaves: infoResult.saves,
     x: [infoResult.camera.bounds[0], infoResult.camera.bounds[2]],
     y: [infoResult.camera.bounds[1], infoResult.camera.bounds[3]]
   };
@@ -42,7 +43,7 @@ const parseUnits = editorVersion => {
   unitsResult.forEach(u => {
     const drops = [];
     if (u.droppable.length > 0) {
-      customDrop = [];
+      const customDrop = [];
       u.droppable.forEach(drop => {
         if (mapCodes.dropTableCodes[drop[0]]) {   // Melee drop table, e.g. "Level 4 Permanent"
           drops.push(mapCodes.dropTableCodes[drop[0]]['items']);
@@ -302,7 +303,6 @@ const parseMap = mapPath => {
     const strings = parseStrings();
     const mapTitle = strings.strings[info.titleStringIndex.toString()]
     const totalCreeps = units.creeps.length;
-    delete info.editorVersion;
     delete info.titleStringIndex;
     delete units.creeps;
     return [name, { 'mapTitle': mapTitle, 'totalCreeps': totalCreeps, ...info, ...units, 'creepCamps': creepCamps }];
