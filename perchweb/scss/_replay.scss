@@ -443,7 +443,7 @@ a.playername{
                     font-size: 12px;
                     margin-left: 4px;
                     padding-top: 3px;
-                    flex-basis: 100%;
+                    flex-grow: 1;
                     .award {
                         cursor: default;
                     }
