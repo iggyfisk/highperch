@@ -1039,7 +1039,7 @@ upgrade_codes = {
     'Rusm': {'name': 'Skeletal Mastery', 'race': 'U', 'levels': [{'level': 1, 'name': 'Skeletal Mastery', 'gold': 200, 'wood': 175}]},
     'Rubu': {'name': 'Burrow', 'race': 'U', 'levels': [{'level': 1, 'name': 'Burrow', 'gold': 75, 'wood': 75}]},
     'Ruex': {'name': 'Exhume Corpses', 'race': 'U', 'levels': [{'level': 1, 'name': 'Exhume Corpses', 'gold': 75, 'wood': 50}]},
-    'Rupm': {'name': 'Backpack', 'race': 'U', 'levels': [{'level': 1, 'name': '', 'gold': 50, 'wood': 25}]}
+    'Rupm': {'name': 'Backpack', 'race': 'U', 'levels': [{'level': 1, 'name': 'Backpack', 'gold': 50, 'wood': 25}]}
 }
 
 neutral_codes = {
