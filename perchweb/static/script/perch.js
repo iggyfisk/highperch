@@ -609,12 +609,15 @@
 				// Animated minimap
 				// ctx.fillStyle = '#000C';
 				// ctx.fillRect((mapImageSize / 2) - 30, (mapImageSize / 2) - 30, 60, 60);
-				ctx.drawImage(playImg, (mapImageSize / 2) - 25, (mapImageSize / 2) - 25, 50, 50);
 
 				// Combine all players' towers and put them in order
 				const orderedTowers = Object.entries(playerTowers)
 					.map(([c, towers]) => towers.map(t => [...t, c]))
 					.flat(1).sort((a, b) => (a[2] - b[2]));
+
+				if (orderedTowers.length > 0) {
+					ctx.drawImage(playImg, (mapImageSize / 2) - 25, (mapImageSize / 2) - 25, 50, 50);
+				}
 
 				cnv.addEventListener('click', () => animate(orderedTowers));
 			} else {
