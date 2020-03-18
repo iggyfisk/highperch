@@ -161,7 +161,7 @@ class Replay(dict):
         return self.get_arbitrary_scores()[0][0]
 
     # Minimum time between events to insert a space in the chatlog
-    silence_period = 180000
+    silence_period = 120000
 
     def get_chat_actions(self):
         if self.chat_actions is not None:
@@ -303,26 +303,25 @@ class Replay(dict):
 
         formatted_chat = []
         last_message_ms = 0
-        last_message_realchat = True
         for c in merged_chat:
             ms = c['ms']
-            if len(formatted_chat) > 0 and (ms - last_message_ms) > Replay.silence_period and last_message_realchat:
+            if 'reason' in c:
+                c['leave'] = True
+
+            if (last_message_ms > 0 and (ms - last_message_ms) > Replay.silence_period and
+                ('message' in c or 'leave' in c or 'pause' in c)):
                 formatted_chat.append(None)
+                last_message_ms = ms
 
             c['mode'] = 'ALL' if 'mode' not in c else c['mode']
             if 'event' in c:
                 c['mode'] = 'ALLY'
             c['player'] = self.player_names[c['playerId']
                                             ] if 'player' not in c else c['player']
-            if 'reason' in c:
-                c['leave'] = True
 
             formatted_chat.append(c)
-            last_message_ms = c['ms']
-            if 'event' in c or 'gold' in c:
-                last_message_realchat = False
-            else:
-                last_message_realchat = True
+            if 'message' in c:
+                last_message_ms = ms
 
         self.formatted_chat = formatted_chat
         return self.formatted_chat
