@@ -114,7 +114,7 @@
                 <span class="hp-toggle hp-highlight hidden" data-group="team{{ teamId }}spoilers">&nbsp;(<b>{{ player['currentTimePlayed']|gametime }}</b>)&nbsp;</span>:
                 <div class="summary">
                     {% set chat_actions = replay.get_chat_actions()[player['id']] %}
-                    {% if chat_actions > 0 %}
+                    {% if chat_actions > 0 and player['currentTimePlayed'] > 0 %}
                         {% set chats_per_minute = (chat_actions / (player['currentTimePlayed'] / 1000 / 60))|round|int %}
                         {% set inclusive_actions = player.action_count() + chat_actions %}
                         {% set chat_percentage = (chat_actions / inclusive_actions * 100)|round|int %}
