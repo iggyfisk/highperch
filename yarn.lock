@@ -6,8 +6,8 @@ binary-parser@^1.4.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/binary-parser/-/binary-parser-1.5.0.tgz#3e50de3a5076badbacd760e833e7d94892b9e9fa"
 
-"w3gjs@https://github.com/iggyfisk/w3gjs#f83bbbe":
+"w3gjs@https://github.com/iggyfisk/w3gjs#1a6af79":
   version "1.5.1"
-  resolved "https://github.com/iggyfisk/w3gjs#f83bbbe09827fec2e62796ad298628a9ed04b921"
+  resolved "https://github.com/iggyfisk/w3gjs#1a6af79fe1e2de669d12c34d0c265a1525e9d84e"
   dependencies:
     binary-parser "^1.4.0"

@@ -9,7 +9,7 @@ import perchweb.filepaths as fp
 
 # Ugh I hate it
 sys.path.append(path.realpath('perchweb'))
-from perchweb.replaydb import reparse_replay
+from perchweb.replaydb import reparse_replay, fix_battletags
 
 
 db = None
@@ -34,6 +34,7 @@ def commit():
     if db is not None:
         db.commit()
         db.close()
+        db = None
 
 if __name__ == '__main__':
     if input("This re-create all JSON and DB data directly derived from replay parsing. Type 'yes' to continue: ") != 'yes':
@@ -52,4 +53,7 @@ if __name__ == '__main__':
         print(f'Re-parsing replay with ID {replay_id} / {final_id}')
         reparse_replay(replay_id, query, fp)
 
+    commit()
+
+    fix_battletags([], query)
     commit()

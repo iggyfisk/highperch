@@ -215,7 +215,7 @@ def create_players(battletags, query_fnc=query):
         query_fnc('INSERT OR IGNORE INTO Players(BattleTag) VALUES(?)', (tag,))
 
 
-def save_game_played(replay_data, replay_id, update=False, query_fnc=query):
+def save_game_played(replay_data, replay_id, query_fnc=query):
     """ Record player participation in a replay """
     for player in replay_data.players:
         name = player['name']
@@ -230,32 +230,66 @@ def save_game_played(replay_data, replay_id, update=False, query_fnc=query):
         net_lumber = net_feed[1]
         first_share = player.first_share()
 
-        if update:
-            query_fnc('''
-                UPDATE GamesPlayed
-                SET
-                    Race = ?,
-                    APM = ?,
-                    Win = ?,
-                    TowerCount = ?,
-                    ChatMessageCount = ?,
-                    NetGoldFed = ?,
-                    NetLumberFed = ?,
-                    TimeToShare = ?
-                WHERE PlayerTag = ? AND ReplayID = ?''',
-                      (race, apm, win, tower_count, chat_count, net_gold, net_lumber, first_share, name, replay_id))
-            continue
-
         query_fnc('''
             INSERT INTO GamesPlayed (PlayerTag, ReplayID, Race, APM, Win, TowerCount, ChatMessageCount, NetGoldFed, NetLumberFed, TimeToShare)
             VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''', (name, replay_id, race, apm, win, tower_count, chat_count, net_gold, net_lumber, first_share))
 
-        # Only record when the players real race was detected, otherwise they weren't really playing
-        if race != 'R':
-            col = {'H': 'HUGames', 'O': 'ORGames',
-                   'N': 'NEGames', 'U': 'UDGames'}[race]
-            query_fnc(
-                f'UPDATE Players SET {col} = {col} + 1 WHERE BattleTag = ?', (name,))
+        increment_race_played(name, race, 1, query_fnc)
+
+
+def delete_game_played(replay_id, query_fnc):
+    """ Remove player data for a specific replay, to be reinserted by reparse """
+    player_races = query_fnc(
+        'SELECT PlayerTag, Race FROM GamesPlayed WHERE ReplayID = ?', (replay_id,))
+    for player in player_races:
+        increment_race_played(player['PlayerTag'],
+                              player['Race'], -1, query_fnc)
+    query_fnc('DELETE FROM GamesPlayed WHERE ReplayID = ?', (replay_id,))
+
+
+def increment_race_played(player_name, race, increment, query_fnc):
+    """ Add/Remove to total games played with race for a player """
+    # Only record when the players real race was detected, otherwise they weren't really playing
+    if race != 'R':
+        col = {'H': 'HUGames', 'O': 'ORGames',
+               'N': 'NEGames', 'U': 'UDGames'}[race]
+        query_fnc(
+            f'UPDATE Players SET {col} = {col} + ? WHERE BattleTag = ?', (increment, player_name))
+
+
+def fix_battletags(tags, query_fnc):
+    """ Find incomplete battletags and move them to the new correct version,
+        for the entire database or the list of correct tags given"""
+    query_text = '''
+            SELECT OldPlayer.*, NewPlayer.BattleTag AS NewBattleTag
+            FROM Players AS OldPlayer
+            INNER JOIN Players AS NewPlayer
+	            ON instr(NewPlayer.BattleTag, OldPlayer.BattleTag) = 1
+                    AND NewPlayer.BattleTag <> OldPlayer.BattleTag'''
+
+    for (ix, tag) in enumerate(tags):
+        query_text += f' {"WHERE" if not ix else "OR"} NewPlayer.BattleTag = "{tag}"'
+
+    for tag_match in query_fnc(query_text):
+        log_to_slack('INFO',
+                     f'Moving player {tag_match["BattleTag"]} to {tag_match["NewBattleTag"]}')
+
+        query_fnc('''UPDATE Players
+            SET
+                HUGames = HUGames + ?,
+                ORGames = ORGames + ?,
+                NEGames = NEGames + ?,
+                UDGames = UDGames + ?
+            WHERE BattleTag = ?''', (tag_match['HUGames'], tag_match['ORGames'],
+                                     tag_match['NEGames'], tag_match['UDGames'],
+                                     tag_match['NewBattleTag']))
+
+        query_fnc('''UPDATE GamesPlayed
+            SET PlayerTag = ?
+            WHERE PlayerTag = ?''', (tag_match['NewBattleTag'], tag_match['BattleTag']))
+
+        query_fnc('DELETE FROM Players WHERE BattleTag = ?',
+                  (tag_match['BattleTag'],))
 
 
 def save_replay(replay, replay_name, uploader_ip):
@@ -313,7 +347,10 @@ def save_replay(replay, replay_name, uploader_ip):
 
         players = [{'name': p['name'], 'teamid': p['teamid'], 'race': (p['raceDetected'] or p['race'])}
                    for p in replay_data.players]
-        create_players([p['name'] for p in players])
+        player_tags = [p['name'] for p in players]
+        create_players(player_tags)
+        # This new replay might include a corrected battletag from a beta-era replay
+        fix_battletags(player_tags, query)
 
         official = 1 if replay_data.official() else 0
         drawmap = replay_data.get_drawmap(force=True)
@@ -446,8 +483,8 @@ def reparse_replay(replay_id, query_fnc, fp):
                   json.dumps(towers), json.dumps(start_locations),
                   chat, uploader_battletag, replay_id))
 
-        save_game_played(replay_data, replay_id,
-                         update=True, query_fnc=query_fnc)
+        delete_game_played(replay_id, query_fnc)
+        save_game_played(replay_data, replay_id, query_fnc)
 
         data_path = fp.get_replay_data(f"{replay_id}.json")
         if os.path.isfile(data_path):

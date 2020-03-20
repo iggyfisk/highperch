@@ -31,8 +31,11 @@ def log_to_slack(level, log_message):
         post(hook_url, data=dumps(payload), headers={
             'Content-Type': 'application/json'})
     else:
-        current_app.logger.error(
-            'Attempted to log to Slack, but no hook environment variable is present')
+        try:
+            current_app.logger.error(
+                'Attempted to log to Slack, but no hook environment variable is present')
+        except RuntimeError:
+            pass
 
 
 def upload_to_slack(replay_name, file_bytes):

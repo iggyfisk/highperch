@@ -3,14 +3,6 @@ const { ActionBlockList } = require('./node_modules/w3gjs/dist/lib/parsers/actio
 const { buildings } = require('./node_modules/w3gjs/dist/lib/mappings');
 const { writeFileSync } = require('fs');
 
-const battleTagRemaps = {
-  // fix known player fragmentation due to early reforged beta using legacy playerList
-  // disabled until our fork of w3gjs is updated to use extraPlayerList in production
-  // "iggythefisk#236": "iggythefisk#2369",
-  // "IcebergSlim#145": "IcebergSlim#1452",
-  // "ChuckleMan#1198": "ChuckleMan#11980"
-}
-
 const inputPath = process.argv.length >= 3 ? process.argv[2] : null;
 const outputPath = process.argv.length >= 4 ? process.argv[3] : null;
 if (!inputPath || !outputPath) {
@@ -282,16 +274,6 @@ replay.chat = sanitizedChat;
 
 // Include pauses
 replay.pauseEvents = pauseEvents;
-
-const remappedPlayers = [];
-replay.players.forEach(p => {
-  if (p.name in battleTagRemaps) {
-    p.name = battleTagRemaps[p.name];
-  }
-  remappedPlayers.push(p);
-})
-
-replay.players = remappedPlayers;
 
 // Add X and Y coordinates to building order
 replay.players.forEach(p => {
