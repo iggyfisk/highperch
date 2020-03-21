@@ -276,7 +276,8 @@ def fix_battletags(tags, query_fnc, fp):
         log_to_slack('INFO',
                      f'Moving player {old_tag} to {new_tag}')
 
-        replay_ids = query_fnc('SELECT ReplayID FROM GamesPlayed WHERE PlayerTag = ?', (old_tag,))
+        replay_ids = query_fnc(
+            'SELECT ReplayID FROM GamesPlayed WHERE PlayerTag = ?', (old_tag,))
         for row in replay_ids:
             replay_id = row['ReplayID']
             data_path = fp.get_replay_data(f"{replay_id}.json")
@@ -285,6 +286,12 @@ def fix_battletags(tags, query_fnc, fp):
 
             with open(data_path, "w", encoding='utf8') as replay_json:
                 replay_json.write(data_content)
+
+            players = query_fnc(
+                'SELECT Players FROM Replays WHERE ID = ?', (replay_id,))
+            players_content = players[0]['Players'].replace(old_tag, new_tag)
+            query_fnc('UPDATE Replays set Players = ? WHERE ID = ?',
+                      (players_content, replay_id))
 
         query_fnc('''UPDATE Players
             SET
@@ -299,6 +306,10 @@ def fix_battletags(tags, query_fnc, fp):
         query_fnc('''UPDATE GamesPlayed
             SET PlayerTag = ?
             WHERE PlayerTag = ?''', (new_tag, old_tag))
+
+        query_fnc('''UPDATE Replays
+            SET UploaderBattleTag = ?
+            WHERE UploaderBattleTag = ?''', (new_tag, old_tag))
 
         query_fnc('DELETE FROM Players WHERE BattleTag = ?', (old_tag,))
 
