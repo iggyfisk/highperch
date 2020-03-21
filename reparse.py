@@ -55,5 +55,5 @@ if __name__ == '__main__':
 
     commit()
 
-    fix_battletags([], query)
+    fix_battletags([], query, fp)
     commit()

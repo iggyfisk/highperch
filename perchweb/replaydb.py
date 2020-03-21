@@ -257,7 +257,7 @@ def increment_race_played(player_name, race, increment, query_fnc):
             f'UPDATE Players SET {col} = {col} + ? WHERE BattleTag = ?', (increment, player_name))
 
 
-def fix_battletags(tags, query_fnc):
+def fix_battletags(tags, query_fnc, fp):
     """ Find incomplete battletags and move them to the new correct version,
         for the entire database or the list of correct tags given"""
     query_text = '''
@@ -271,8 +271,20 @@ def fix_battletags(tags, query_fnc):
         query_text += f' {"WHERE" if not ix else "OR"} NewPlayer.BattleTag = "{tag}"'
 
     for tag_match in query_fnc(query_text):
+        old_tag = tag_match['BattleTag']
+        new_tag = tag_match['NewBattleTag']
         log_to_slack('INFO',
-                     f'Moving player {tag_match["BattleTag"]} to {tag_match["NewBattleTag"]}')
+                     f'Moving player {old_tag} to {new_tag}')
+
+        replay_ids = query_fnc('SELECT ReplayID FROM GamesPlayed WHERE PlayerTag = ?', (old_tag,))
+        for row in replay_ids:
+            replay_id = row['ReplayID']
+            data_path = fp.get_replay_data(f"{replay_id}.json")
+            with open(data_path, encoding='utf8') as replay_json:
+                data_content = replay_json.read().replace(old_tag, new_tag)
+
+            with open(data_path, "w", encoding='utf8') as replay_json:
+                replay_json.write(data_content)
 
         query_fnc('''UPDATE Players
             SET
@@ -282,14 +294,13 @@ def fix_battletags(tags, query_fnc):
                 UDGames = UDGames + ?
             WHERE BattleTag = ?''', (tag_match['HUGames'], tag_match['ORGames'],
                                      tag_match['NEGames'], tag_match['UDGames'],
-                                     tag_match['NewBattleTag']))
+                                     new_tag))
 
         query_fnc('''UPDATE GamesPlayed
             SET PlayerTag = ?
-            WHERE PlayerTag = ?''', (tag_match['NewBattleTag'], tag_match['BattleTag']))
+            WHERE PlayerTag = ?''', (new_tag, old_tag))
 
-        query_fnc('DELETE FROM Players WHERE BattleTag = ?',
-                  (tag_match['BattleTag'],))
+        query_fnc('DELETE FROM Players WHERE BattleTag = ?', (old_tag,))
 
 
 def save_replay(replay, replay_name, uploader_ip):
@@ -350,7 +361,7 @@ def save_replay(replay, replay_name, uploader_ip):
         player_tags = [p['name'] for p in players]
         create_players(player_tags)
         # This new replay might include a corrected battletag from a beta-era replay
-        fix_battletags(player_tags, query)
+        fix_battletags(player_tags, query, filepaths)
 
         official = 1 if replay_data.official() else 0
         drawmap = replay_data.get_drawmap(force=True)
