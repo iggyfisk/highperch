@@ -21,6 +21,9 @@
             <div class="flowlist">
                 <div class="filterrow">
                     <div class="filter">
+                        <input type="text" name="player_name" placeholder="Player name" value="{{ replay_filter['player_name'] or '' }}" />
+                    </div>
+                    <div class="filter">
                         <input type="text" name="name" placeholder="Replay name" value="{{ replay_filter['name'] or '' }}" />
                     </div>
                     <div class="filter">

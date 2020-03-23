@@ -144,12 +144,17 @@ p{
     }
 }
 
-/* Background switching END */
-
-/* Peep START */
-
 img.peep {
     max-width: 100%;
 }
 
-/* Peep END */
+.pager {
+    background: #000A;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 3px;
+    a, b {
+        padding:0 2px;
+        margin:0 1px;
+    }    
+}

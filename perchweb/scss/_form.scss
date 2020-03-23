@@ -18,8 +18,7 @@ form.filters{
         flex: 1;
     }
     @media (#{$bp-larger-than-phablet}) {
-        display:flex;
-  
+        display:flex;  
         flex-direction:row;
         .flowlist{
             width:100%;
@@ -58,7 +57,7 @@ form.filters{
     display:flex;
 
     flex-direction:column;
-    @media (#{$bp-larger-than-tablet}) {
+    @media (#{$bp-larger-than-desktop}) {
         flex-direction:row;
         //border-bottom:1px solid black;
     }
@@ -97,7 +96,7 @@ form.filters{
     &:nth-child(even) {
         background:$card-background-color;
     }
-    @media (#{$bp-larger-than-tablet}) {
+    @media (#{$bp-larger-than-desktop}) {
         &:first-child {
             padding-right: 0;
         }
