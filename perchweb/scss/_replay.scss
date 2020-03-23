@@ -23,6 +23,15 @@
         width: 100%;
         height: 100%;
     }
+    #pingmap {
+        z-index: 1;
+        pointer-events: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
 }
 .minimap, .download {
     flex: none;
@@ -444,9 +453,6 @@ a.playername{
                     margin-left: 4px;
                     padding-top: 3px;
                     flex-grow: 1;
-                    .award {
-                        cursor: default;
-                    }
                     .arrangedteam {
                         // font-weight: bold;
                         float: right;
@@ -567,9 +573,6 @@ a.playername{
                         margin-top: 5px;
                         margin-left: 20px;
                         padding: 5px 20px 5px 20px;
-                        .birdmouth {
-                            cursor: default;
-                        }
                     }
                     .itemdetails {
                         border-left: 1px $item-color solid;
@@ -621,6 +624,9 @@ a.playername{
 }
 .lumber {
     color: #00910A;
+}
+.award {
+    cursor: default;
 }
 
 

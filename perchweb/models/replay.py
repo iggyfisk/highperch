@@ -178,7 +178,23 @@ class Replay(dict):
         return self.chat_actions
 
     def loudest_player_id(self):
-        return sorted(self.get_chat_actions(), key=self.get_chat_actions().get, reverse=True)[0]
+        top_id = sorted(self.get_chat_actions(),
+                        key=self.get_chat_actions().get, reverse=True)[0]
+        if self.get_chat_actions()[top_id] > 256:
+            return top_id
+        else:
+            return None
+
+    def most_ping_player_id(self):
+        # Todo: maybe make this dependent on gamelength/player ingame time instead of absolute ping count
+        ping_counts = {p['id']: p['actions']['ping'] for p in self.players}
+        played_minutes = {p['id']: (p['currentTimePlayed'] // 1000) // 60 for p in self.players}
+        top_id = sorted(ping_counts.items(),
+                        key=lambda i: i[1], reverse=True)[0][0]
+        if ping_counts[top_id] / played_minutes[top_id] > 2:    # arbitrary
+            return top_id
+        else:
+            return None
 
     def game_host_type(self):
         if self['gamename'] == "BNet" and self['creator'] == "Battle.net" and self['privateString'] == '':
@@ -341,6 +357,7 @@ class Replay(dict):
         start_locations = get_starting_locations(canonical_name, fp=fp)
         goldmines = get_goldmines(canonical_name, fp=fp)
         towers = None
+        # pings = None
         player_start_locations = {}
 
         if map_size is not None or force:
@@ -348,6 +365,11 @@ class Replay(dict):
                       [([b['x'], b['y'], b['ms']] if timestamp else [b['x'], b['y']])
                        for b in p['buildings'].get('order', []) if b['id'] in is_tower]
                       for p in self.players}
+            # pings = {color_transform(p['color']):
+            #          [([ping['x'], ping['y'], ping['ms']])
+            #           for ping in p['pings']]
+            #          for p in self.players}
+            # Todo: figure out how to depict pings in an unclumsy way
 
         if start_locations is not None:
             for p in self.players:
@@ -365,4 +387,3 @@ class Replay(dict):
             goldmines = [[m['x'], m['y']] for m in goldmines]
 
         return {'map_size': map_size, 'towers': towers, 'start_locations': player_start_locations, 'goldmines': goldmines}
-    

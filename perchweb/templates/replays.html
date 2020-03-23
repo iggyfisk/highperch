@@ -97,6 +97,10 @@
             {% endif %}
         </div>
         {% endif %}
+        {% if detailed %}
+            {% set loudest_player = replay.loudest_player_id() %}
+            {% set most_ping_player = replay.most_ping_player_id() %}
+        {% endif %}
         {% for player in players %}
         <div class="player">
             {% if detailed %}
@@ -145,6 +149,12 @@
                     | <span class="award" title="MVP">👑</span>
                     {% elif player['id'] == replay.grb_id() %}
                     | <span class="award" title="Garbage award">🗑️</span>
+                    {% endif %}
+                    {% if player['id'] == loudest_player %}
+                    | <span class="award" title="Boastful Knave">🗣️</span>
+                    {% endif %}
+                    {% if player['id'] == most_ping_player %}
+                    | <span class="award" title="Ping Monster">❗</span>
                     {% endif %}
                     {% if replay.get_arranged_team(player['id']) != None and replay.game_host_type() == 'ladder' %}
                     <div class="arrangedteam" title="Probably an arranged team, based on early game mutual shared control">[AT{% if replay.detect_arranged_teams()|length > replay.teams()|length %} #{{ replay.get_arranged_team(player['id']) }}{% endif %}]</div>
@@ -275,7 +285,7 @@
                     {% for pa in player_actions|sort(attribute='1', reverse=True) %}
                     <tr>
                         <td class="name">{{ pa[0] }}</td>
-                        <td class="count">{{ pa[1] }}{% if pa[0] == "Chat" %}{% if player['id'] == replay.loudest_player_id() %} <span class="birdmouth" title="Boastful Knave">🗣️</span>{% endif %}{% endif %}</td>
+                        <td class="count">{{ pa[1] }}</td>
                     </tr>
                     {% endfor %}
                     </table>

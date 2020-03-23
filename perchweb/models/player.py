@@ -369,6 +369,7 @@ class Player(dict):
         actions['Subgroup select'] = actions.pop('subgroup')
         actions['Select group'] = actions.pop('selecthotkey')
         actions['Esc'] = actions.pop('esc')
+        actions['Minimap ping'] = actions.pop('ping')
         nonzero_actions = {action: count for action,
                            count in actions.items() if count > 0}
         return list(nonzero_actions.items())

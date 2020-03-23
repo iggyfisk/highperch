@@ -225,6 +225,7 @@
 		document.body.querySelectorAll('.drawmap').forEach(async cnv => {
 			const mapSize = JSON.parse(cnv.dataset.mapsize);
 			const playerTowers = JSON.parse(cnv.dataset.towers || '{}');
+			// const playerPings = JSON.parse(cnv.dataset.pings || '{}');
 			const playerStartLocations = JSON.parse(cnv.dataset.playerstarts || '{}');	// player starting locations for tower drawings
 			const mapStartLocations = JSON.parse(cnv.dataset.mapstarts || '[]');		// generic starting locations for map details
 			const goldMines = JSON.parse(cnv.dataset.mines || '[]');
@@ -568,6 +569,12 @@
 				});
 			}
 
+			const hex2rgba = (hex, alpha = 1) => {
+				// https://stackoverflow.com/a/51564734
+				const [r, g, b] = hex.match(/\w\w/g).map(x => parseInt(x, 16));
+				return `rgba(${r},${g},${b},${alpha})`;
+			  };
+
 			const animate = towers => {
 				if (!cnv.classList.contains('anim')) return;
 				cnv.classList.remove('anim');
@@ -590,6 +597,32 @@
 				}
 				setTimeout(drawNext.bind(this, 0), 1);
 			}
+
+			// const animatePings = (pings, canvas, context, pingSize) => {
+			// 	if (!canvas.classList.contains('anim')) return;
+			// 	canvas.classList.remove('anim');
+
+			// 	context.clearRect(0, 0, canvas.width, canvas.height);
+			// 	const pingImg = new Image();
+			// 	pingImg.src = '/static/images/ping.png';
+			// 	const pingOffset = pingSize / 2
+
+			// 	// Fixed delay between each paint, but adjusted per replay, 15 - 250ms;
+			// 	const frameDelay = Math.round(Math.max(Math.min(10000 / pings.length, 250), 15));
+			// 	const drawNext = (i) => {
+			// 		context.fillStyle = pings[i][3];
+			// 		coords = getCoords(pings[i++]);
+			// 		// context.fillRect(coords[0] - po, coords[1] - po, ps, ps);
+			// 		context.drawImage(pingImg, coords[0] - pingOffset, coords[1] - pingOffset, pingSize, pingSize);
+
+			// 		if (i < pings.length) {
+			// 			setTimeout(drawNext.bind(this, i), frameDelay);
+			// 		} else {
+			// 			canvas.classList.add('anim');
+			// 		}
+			// 	}
+			// 	setTimeout(drawNext.bind(this, 0), 1);
+			// }
 
 			// If we don't redo the mouseover areas on window resize in bigmode they'll be bungled
 			const handleResize = () => {
@@ -619,7 +652,21 @@
 					ctx.drawImage(playImg, (mapImageSize / 2) - 25, (mapImageSize / 2) - 25, 50, 50);
 				}
 
-				cnv.addEventListener('click', () => animate(orderedTowers));
+				cnv.addEventListener('click', () => animate(orderedTowers));  // Todo: add this to the above check block
+
+				// const pingCnv = document.getElementById('pingmap');
+				// pingCnv.height = pingCnv.width = mapImageSize * upResFactor;
+				// const pingCtx = pingCnv.getContext('2d');
+				// pingCtx.scale(upResFactor, upResFactor);
+
+				// const pingStarter = document.getElementById('startpings');
+
+				// const orderedPings = Object.entries(playerPings)
+				// .map(([c, pings]) => pings.map(p => [...p, c]))
+				// .flat(1).sort((a, b) => (a[2] - b[2]));
+
+				// pingStarter.addEventListener('click', () => animatePings(orderedPings, pingCnv, pingCtx, 10));
+
 			} else {
 				// Simple minimap
 				for (let [color, towers] of Object.entries(playerTowers)) {
