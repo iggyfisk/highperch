@@ -13,10 +13,10 @@ from werkzeug.middleware.proxy_fix import ProxyFix
 from flask import Flask, request, redirect
 from views import routes as public_routes
 from admin import routes as admin_routes
+from api import routes as api_routes
 from templatefilters import register
 from replaydb import close_connection as close_replaydb
 from perchlogging import log_to_slack, format_traceback, sanitize_cookie
-from handler import standard_page
 
 
 app = Flask(__name__)
@@ -26,6 +26,7 @@ app.jinja_env.lstrip_blocks = True
 register(app.jinja_env)
 app.register_blueprint(public_routes)
 app.register_blueprint(admin_routes)
+app.register_blueprint(api_routes, url_prefix='/api')
 
 log_cfg = 'perchweb/logging.cfg'
 

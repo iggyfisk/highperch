@@ -69,25 +69,69 @@ def list_replays(search_filter):
         # Bad sort order parameter, possibly malicious
         return []
 
+    try:
+        limit = int(search_filter['max_size'])
+        limit = limit if limit > 0 and limit < 10000 else 100
+    except ValueError:
+        limit = 100
+    try:
+        offset = int(search_filter['from'])
+        offset = offset if offset > 0 else 0
+    except ValueError:
+        offset = 0
+
     name_param = f"%{search_filter['name']}%" if search_filter['name'] else None
     map_param = f"%{search_filter['map']}%" if search_filter['map'] else None
     chat_param = f"%{search_filter['chat']}%" if search_filter['chat'] else None
+    player_name_param = f"{search_filter['player_name']}%" if search_filter['player_name'] else None
+    nsearch = player_name_param is not None
 
+    # Only include the play name param if this is a name search
+    params = (search_filter['official'], name_param, name_param,
+        map_param, map_param, chat_param, chat_param, player_name_param)[:None if nsearch else -1]
     # Dynamic SQL hell yeah! It's perfectly safe but I'm not 100% about the performance
     # once we get to 100k replays, ideally only the active filters would be in the query text
     rows = query(f'''
-    SELECT ID, Name, TimeStamp, Official, HighQuality, GameType, Version, Length, Map, TowerCount, ChatMessageCount,
-        Towers, StartLocations, Players, Views, UploaderIP, UploaderBattleTag, VODURL
-    FROM Replays
-    WHERE 
-        (? = 0 OR Official = 1) AND
-        (? IS NULL OR Name LIKE ?) AND
-        (? IS NULL OR Map LIKE ?) AND
-        (? IS NULL OR Chat LIKE ?)
-    ORDER BY {order_column} DESC
-    ''', (search_filter['official'], name_param, name_param, map_param, map_param, chat_param, chat_param))
+        SELECT {"Distinct" if nsearch else ""} ID, Name, TimeStamp, Official, HighQuality, GameType, Version, Length, Map,
+            R.TowerCount, R.ChatMessageCount, Towers, StartLocations, Players, Views, UploaderIP, UploaderBattleTag, VODURL
+        FROM Replays AS R
+        {"INNER JOIN GamesPlayed AS GP ON GP.ReplayID = ID" if nsearch else ""}
+        WHERE 
+            (? = 0 OR Official = 1) AND
+            (? IS NULL OR Name LIKE ?) AND
+            (? IS NULL OR Map LIKE ?) AND
+            (? IS NULL OR Chat LIKE ?)
+            {"AND GP.PlayerTag LIKE ?" if nsearch else ""}
+        ORDER BY {order_column} DESC
+        LIMIT {offset}, {limit}
+        ''', params)
 
     return [ReplayListInfo(**r) for r in rows]
+
+def count_replays(search_filter):
+    """ Total number of matching replays currently in the database """
+    name_param = f"%{search_filter['name']}%" if search_filter['name'] else None
+    map_param = f"%{search_filter['map']}%" if search_filter['map'] else None
+    chat_param = f"%{search_filter['chat']}%" if search_filter['chat'] else None
+    player_name_param = f"{search_filter['player_name']}%" if search_filter['player_name'] else None
+    nsearch = player_name_param is not None
+
+    # Only include the play name param if this is a name search
+    params = (search_filter['official'], name_param, name_param,
+        map_param, map_param, chat_param, chat_param, player_name_param)[:None if nsearch else -1]
+    total_count = query(f'''
+        SELECT COUNT(DISTINCT ID) AS ReplayCount
+        FROM Replays AS R
+        {"INNER JOIN GamesPlayed AS GP ON GP.ReplayID = ID" if nsearch else ""}
+        WHERE 
+            (? = 0 OR Official = 1) AND
+            (? IS NULL OR Name LIKE ?) AND
+            (? IS NULL OR Map LIKE ?) AND
+            (? IS NULL OR Chat LIKE ?)
+            {"AND GP.PlayerTag LIKE ?" if nsearch else ""}
+        ''', params, one=True)['ReplayCount']
+
+    return total_count
 
 
 def list_player_replays(battletag, max_results=20):

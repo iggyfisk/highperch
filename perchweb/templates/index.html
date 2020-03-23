@@ -52,9 +52,18 @@
     </div>
 </div>
 <div class="replays bricks">
-    <h2>Showing {{ replays|length }} replays</h2>
+    <h2>Showing {{ replays|length }}/{{ replay_count }} replays</h2>
     {% for replay in replays %}
     {{ replaymacros.card(replay, is_admin, lighten_color) }}
+    {% endfor %}
+</div>
+<div class="pager">
+    {% for p in range(page_count) %}
+        {% if p == page %}
+        <b>{{ p }}</b>
+        {% else %}
+        <a href="{{page_url}}&page={{ p }}">{{ p }}</a>
+        {% endif %}
     {% endfor %}
 </div>
 {% endblock %}

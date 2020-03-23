@@ -3,6 +3,7 @@ Routes and views for the flask application.
 """
 
 import os
+from math import ceil
 from flask import Blueprint, url_for, request, redirect, flash, abort, current_app, send_file
 from werkzeug.utils import secure_filename
 from handler import standard_page
@@ -13,9 +14,9 @@ from auth import login as auth_login, check_if_admin
 from perchlogging import log_to_slack, format_ip_addr
 from templatefilters import lighten_color, url_slug
 from lib.wigcodes import get_goldmines, get_neutral_buildings, get_starting_locations,\
-                         get_map_size, get_mapinfo, get_map_creep_camps,\
-                         get_map_critters, get_map_canonical_name, player_colors,\
-                         get_map_creep_totals
+    get_map_size, get_mapinfo, get_map_creep_camps,\
+    get_map_critters, get_map_canonical_name, player_colors,\
+    get_map_creep_totals
 
 routes = Blueprint('views', __name__)
 
@@ -23,18 +24,38 @@ routes = Blueprint('views', __name__)
 @routes.route('/')
 def index():
     """Index, replay listing"""
+    try:
+        page = int(request.args.get('page', 0))
+        max_size = int(request.args.get('max_size', 100))
+    except ValueError:
+        page = 0
+        max_size = 100
 
     replay_filter = {
         'official': 'official' in request.args,
         'name': request.args.get('name', None),
         'map': request.args.get('map', None),
         'chat': request.args.get('chat', None),
-        'sort': request.args.get('sort', 'id')
+        'sort': request.args.get('sort', 'id'),
+        'player_name': request.args.get('player_name', None),
+        'max_size': max_size,
+        'from': page * max_size
     }
-    filter_active = any(v and v != 'id' for v in replay_filter.values())
-    replays = replaydb.list_replays(replay_filter)
+    filter_active = any(v and v != 'id' and not isinstance(v, int)
+                        for v in replay_filter.values())
 
-    return standard_page('index.html', 'Replays', nav='index', replays=replays, replay_filter=replay_filter, filter_active=filter_active)
+    replays = replaydb.list_replays(replay_filter)
+    replay_count = replaydb.count_replays(replay_filter)
+    page_count = ceil(replay_count / max_size)
+
+    page_url = url_for('views.index', official='on' if replay_filter['official'] else None,
+                       name=replay_filter['name'], map=replay_filter['map'], chat=replay_filter['chat'],
+                       sort=replay_filter['sort'], player_name=replay_filter['player_name'],
+                       max_size=max_size if max_size != 100 else None)
+
+    return standard_page('index.html', 'Replays', nav='index', replays=replays,
+                         replay_count=replay_count, page=page, page_count=page_count, page_url=page_url,
+                         replay_filter=replay_filter, filter_active=filter_active)
 
 
 @routes.route('/replay/<int:replay_id>')
