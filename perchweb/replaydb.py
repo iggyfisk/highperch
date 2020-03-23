@@ -83,7 +83,7 @@ def list_replays(search_filter):
     name_param = f"%{search_filter['name']}%" if search_filter['name'] else None
     map_param = f"%{search_filter['map']}%" if search_filter['map'] else None
     chat_param = f"%{search_filter['chat']}%" if search_filter['chat'] else None
-    player_name_param = f"{search_filter['player_name']}%" if search_filter['player_name'] else None
+    player_name_param = f"%{search_filter['player_name']}%" if search_filter['player_name'] else None
     nsearch = player_name_param is not None
 
     # Only include the play name param if this is a name search
@@ -113,7 +113,7 @@ def count_replays(search_filter):
     name_param = f"%{search_filter['name']}%" if search_filter['name'] else None
     map_param = f"%{search_filter['map']}%" if search_filter['map'] else None
     chat_param = f"%{search_filter['chat']}%" if search_filter['chat'] else None
-    player_name_param = f"{search_filter['player_name']}%" if search_filter['player_name'] else None
+    player_name_param = f"%{search_filter['player_name']}%" if search_filter['player_name'] else None
     nsearch = player_name_param is not None
 
     # Only include the play name param if this is a name search
