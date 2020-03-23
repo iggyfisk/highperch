@@ -191,6 +191,8 @@ class Replay(dict):
         played_minutes = {p['id']: (p['currentTimePlayed'] // 1000) // 60 for p in self.players}
         top_id = sorted(ping_counts.items(),
                         key=lambda i: i[1], reverse=True)[0][0]
+        if played_minutes[top_id] == 0:
+            played_minutes[top_id] = 1
         if ping_counts[top_id] / played_minutes[top_id] > 2:    # arbitrary
             return top_id
         else:
