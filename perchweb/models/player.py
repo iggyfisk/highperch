@@ -131,6 +131,10 @@ class Player(dict):
         """ Time until control shared with allies """
         return self['allyOptions'][0]['ms'] if len(self['allyOptions']) > 0 else None
 
+    def minutes_stayed(self):
+        minutes = round(self['currentTimePlayed'] / 1000 / 60)
+        return minutes if minutes else 1
+
     def towers_per_minute(self):
         stay_minutes = self['currentTimePlayed'] / 1000 / 60
         tpm = round((self.tower_count() / stay_minutes), 2)
@@ -143,8 +147,28 @@ class Player(dict):
         action_types.pop('timed')
         return action_types
 
+    def get_feed_actions(self):
+        actions = 0
+        for t in self.trades:
+            if t['outgoing']:
+                actions += 2    # open and close the ally window
+                for source in ['gold', 'lumber']:
+                    if t[source] >= 200:
+                        actions += (t[source] // 200) + 1 # conservatively assume use of control key
+                    elif t[source] > 100:
+                        actions += 2
+                    else:
+                        actions += 1
+        return actions
+
     def action_count(self):
-        return sum(self.get_action_types().values())
+        game_actions = sum(self.get_action_types().values())
+        return game_actions + self.get_feed_actions()
+
+    def feed_action_ratio(self):
+        if self.get_feed_actions() == 0 or self.action_count() == 0:
+            return 0
+        return self.get_feed_actions() / self.action_count()
 
     def get_real_apm(self):
         """ Use currentTimePlayed to calculate total APM instead of replay length.
@@ -237,6 +261,23 @@ class Player(dict):
         for item_code, item_count in self['items']['summary'].items():
             total += item_codes[item_code]['price'] * item_count
         return total
+
+    shopping_tables = ['perm_L3', 'perm_L4', 'perm_L5', 'perm_L6', 'artifact_L7',
+                       'artifact_L8', 'charged_L4', 'charged_L5', 'charged_L6']
+
+    def shopping_score(self):
+        score = 0
+        for item_code, item_count in self['items']['summary'].items():
+            if item_codes[item_code]['table'] in self.shopping_tables:
+                score += item_codes[item_code]['price'] * item_count
+        return score
+
+    def tp_count(self):
+        tps = 0
+        for item_code, item_count in self['items']['summary'].items():
+            if item_code == 'stwp':
+                tps += item_count
+        return tps
 
     def decode_units(self):
         races = ['H', 'O', 'N', 'U']
@@ -370,6 +411,7 @@ class Player(dict):
         actions['Select group'] = actions.pop('selecthotkey')
         actions['Esc'] = actions.pop('esc')
         actions['Minimap ping'] = actions.pop('ping')
+        actions['Resource trade'] = self.get_feed_actions()
         nonzero_actions = {action: count for action,
                            count in actions.items() if count > 0}
         return list(nonzero_actions.items())

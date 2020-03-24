@@ -225,7 +225,7 @@ a.playername{
                     width: 300px;
                     height: 300px;
                 }
-                .drawmap.anim {
+                .clickable {
                     cursor: pointer;
                 }
             }
@@ -627,8 +627,12 @@ a.playername{
 }
 .award {
     cursor: default;
+    img {
+        width: 16px;
+        height: 16px;
+        vertical-align: sub;
+    }
 }
-
 
 .chatlog {
     background-color: $card-background-color;

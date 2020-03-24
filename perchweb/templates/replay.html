@@ -45,7 +45,7 @@
                         <img src="{{ replay.map_name()|mapthumbnail }}" title="{{ replay.map_name() }}" />
                         {% if drawmap['map_size'] %}
                         <canvas
-                            class="drawmap anim"
+                            class="drawmap anim{% if replay.tower_count() > 0 %} clickable{% endif %}"
                             data-towers='{{ drawmap["towers"]|tojson|safe }}'
                             data-mapsize='{{ drawmap["map_size"]|tojson|safe }}'
                             data-playerstarts='{{ drawmap["start_locations"]|tojson|safe }}'

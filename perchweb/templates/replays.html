@@ -100,6 +100,8 @@
         {% if detailed %}
             {% set loudest_player = replay.loudest_player_id() %}
             {% set most_ping_player = replay.most_ping_player_id() %}
+            {% set best_shopper = replay.best_shopper_player_id() %}
+            {% set best_feeder = replay.best_feeder_player_id() %}
         {% endif %}
         {% for player in players %}
         <div class="player">
@@ -155,6 +157,15 @@
                     {% endif %}
                     {% if player['id'] == most_ping_player %}
                     | <span class="award" title="Ping Monster">❗</span>
+                    {% endif %}
+                    {% if player['id'] == best_shopper %}
+                    | <span class="award" title="Power Shopper">🛒</span>
+                    {% endif %}
+                    {% if player['id'] == best_feeder %}
+                    | <span class="award" title="Head of the household">🍽️</span>
+                    {% endif %}
+                    {% if player.tp_count() >= 5 %}
+                    | <span class="award" title="TP freak">🧻</span>
                     {% endif %}
                     {% if replay.get_arranged_team(player['id']) != None and replay.game_host_type() == 'ladder' %}
                     <div class="arrangedteam" title="Probably an arranged team, based on early game mutual shared control">[AT{% if replay.detect_arranged_teams()|length > replay.teams()|length %} #{{ replay.get_arranged_team(player['id']) }}{% endif %}]</div>

@@ -188,12 +188,29 @@ class Replay(dict):
     def most_ping_player_id(self):
         # Todo: maybe make this dependent on gamelength/player ingame time instead of absolute ping count
         ping_counts = {p['id']: p['actions']['ping'] for p in self.players}
-        played_minutes = {p['id']: (p['currentTimePlayed'] // 1000) // 60 for p in self.players}
+        played_minutes = {p['id']: p.minutes_stayed() for p in self.players}
         top_id = sorted(ping_counts.items(),
                         key=lambda i: i[1], reverse=True)[0][0]
-        if played_minutes[top_id] == 0:
-            played_minutes[top_id] = 1
         if ping_counts[top_id] / played_minutes[top_id] > 2:    # arbitrary
+            return top_id
+        else:
+            return None
+
+    def best_shopper_player_id(self):
+        shopping_scores = {p['id']: p.shopping_score() for p in self.players}
+        top_id = sorted(shopping_scores.items(),
+                        key=lambda i: i[1], reverse=True)[0][0]
+        if shopping_scores[top_id] > 3000:
+            return top_id
+        else:
+            return None
+
+    def best_feeder_player_id(self):
+        feed_percents = {p['id']: p.feed_action_ratio() for p in self.players}
+        feed_actions = {p['id']: p.get_feed_actions() for p in self.players}
+        top_id = sorted(feed_percents.items(),
+                        key=lambda i: i[1], reverse=True)[0][0]
+        if feed_percents[top_id] > 0.04 and feed_actions[top_id] > 100:
             return top_id
         else:
             return None
