@@ -650,7 +650,7 @@
 
 				if (orderedTowers.length > 0) {
 					ctx.drawImage(playImg, (mapImageSize / 2) - 25, (mapImageSize / 2) - 25, 50, 50);
-					cnv.addEventListener('click', () => animate(orderedTowers));  // Todo: add this to the above check block
+					cnv.addEventListener('click', () => animate(orderedTowers));
 				}
 
 				// const pingCnv = document.getElementById('pingmap');

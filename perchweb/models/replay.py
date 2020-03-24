@@ -215,6 +215,18 @@ class Replay(dict):
         else:
             return None
 
+    def get_nohero_players(self):
+        if self['duration'] < 480000 or self.game_host_type() != 'ladder':  # real games only
+            return {p['id']: False for p in self.players}
+        nohero = {p['id']: True for p in self.players}
+        for p in self.players:
+            if p['teamid'] != self['winningTeamId'] or \
+               p.real_heroes() != [] or \
+               p['currentTimePlayed'] / self['duration'] < 0.75 or \
+               p.get_real_apm() < 50:
+                nohero[p['id']] = False
+        return nohero
+
     def game_host_type(self):
         if self['gamename'] == "BNet" and self['creator'] == "Battle.net" and self['privateString'] == '':
             return "ladder"
