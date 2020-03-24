@@ -24,6 +24,7 @@ def search_replays():
         'name': r['Name'],
         'url': url_for('views.view_replay', replay_id=r['ID'], _external=True),
         'type': r['GameType'],
-        'timestamp': r['TimeStamp']
+        'timestamp': r['TimeStamp'],
+        'official': r['Official']
     } for r in replays]
     return jsonify(result)
