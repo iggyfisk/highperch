@@ -284,6 +284,13 @@ class Player(dict):
         if self['raceDetected'] in races:
             races.remove(self['raceDetected'])
         created_units = []
+        if 'hrtt' in self['units']['summary']:  # Siege Engine dedupe
+            if 'hmtt' in self['units']['summary']:
+                self['units']['summary']['hmtt'] += self['units']['summary']['hrtt']
+                del self['units']['summary']['hrtt']
+            else:
+                self['units']['summary']['hmtt'] = self['units']['summary']['hrtt']
+                del self['units']['summary']['hrtt']
         for unit_code, unit_count in self['units']['summary'].items():
             if unit_code in building_codes:
                 continue  # it's a building upgrade
