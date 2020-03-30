@@ -151,6 +151,9 @@
                             class="gold">{{ player.net_feed()[0] }}</b> / <b
                             class="lumber">{{ player.net_feed()[1] }}</b> fed</span>
                     {% endif %}
+                    {% if replay.is_dota() and player['id'] == replay['saverPlayerId'] %}
+                    <span class="award" title="Welcome to the bathroom" style="font-size: 30px">🚽</span>
+                    {% endif %}
                     {% if player['id'] == replay.mvp_id() %}
                     | <span class="award" title="MVP">👑</span>
                     {% elif player['id'] == replay.grb_id() %}
