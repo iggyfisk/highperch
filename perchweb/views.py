@@ -50,7 +50,7 @@ def index():
     page_count = ceil(replay_count / max_size)
 
     page_url = url_for('views.index', official='on' if replay_filter['official'] else None,
-                       hasvod='on' if replay_filter['official'] else None,
+                       hasvod='on' if replay_filter['hasvod'] else None,
                        name=replay_filter['name'], map=replay_filter['map'], chat=replay_filter['chat'],
                        sort=replay_filter['sort'], player_name=replay_filter['player_name'],
                        max_size=max_size if max_size != 100 else None)
