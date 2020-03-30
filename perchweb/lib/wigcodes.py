@@ -1113,6 +1113,7 @@ ally_event_codes = {        #                                           W...CVAA
     1055: 'unvision',       # ally, no vision, no control (?)           10000011111
     1119: 'blindshare',     # ally, no vision, share control (?)        10001011111
     1024: 'unally',         # unally, no vision, no control? (?)        10000000000
+    127:  'novictoryally',  # no alliedvictory, ally, vis/ctrl (?)      00001111111
     31:   'weakally',       # no alliedvictory, ally, no vis/ctrl (?)   00000011111
     0:    'unweakally'      # no alliedvictory, unally, no vis/ctrl (?) 00000000000
 }
