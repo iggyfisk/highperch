@@ -118,7 +118,7 @@ def count_replays(search_filter):
     nsearch = player_name_param is not None
 
     # Only include the play name param if this is a name search
-    params = (search_filter['official'], search_filter['official'], name_param, name_param,
+    params = (search_filter['official'], search_filter['hasvod'], name_param, name_param,
         map_param, map_param, chat_param, chat_param, player_name_param)[:None if nsearch else -1]
     total_count = query(f'''
         SELECT COUNT(DISTINCT ID) AS ReplayCount
