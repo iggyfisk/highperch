@@ -830,7 +830,7 @@ nav .name {
 nav a {
   text-decoration: none;
   display: inline-block;
-  padding: 16px 8px; }
+  padding: 16px 5px; }
   nav a:hover {
     text-decoration: underline; }
 
@@ -1750,6 +1750,7 @@ form.filters {
         display: flex;
         flex-direction: column; } }
   form.filters label {
+    margin-left: 10px;
     min-width: 70px; }
   form.filters input, form.filters select {
     background: #444;

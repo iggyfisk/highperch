@@ -38,6 +38,7 @@
                     <a href="{{ url_for('views.peep') }}" class="{% if nav == 'peep' %}active{% endif %}"><span class="name">Pictures</span><span class="shortname">Pics</span></a>
                     <a href="{{ url_for('views.guide') }}" class="{% if nav == 'guide' %}active{% endif %}"><span class="name">Documentation</span>{% if not is_admin %}<span class="shortname">Docs</span>{% endif %}</a>
                     <a href="https://classic.highper.ch" target="_blank"><span class="name">Archives</span>{% if not is_admin %}<span class="shortname">Old</span>{% endif %}</a>
+                    <a href="/discord" target="_blank"><i class="icon-discord" title="Highper.ch Discord"></i></a>
                 </div>
                 <ul>
                     {% if is_admin %}

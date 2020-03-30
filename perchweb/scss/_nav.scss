@@ -88,7 +88,7 @@ nav {
     a {
         text-decoration: none;
         display:inline-block;
-        padding:$padding*2 $padding;
+        padding:$padding*2 5px;
         &:hover{
             text-decoration: underline;
         }

@@ -87,7 +87,7 @@ def list_replays(search_filter):
     nsearch = player_name_param is not None
 
     # Only include the play name param if this is a name search
-    params = (search_filter['official'], name_param, name_param,
+    params = (search_filter['official'], search_filter['hasvod'], name_param, name_param,
         map_param, map_param, chat_param, chat_param, player_name_param)[:None if nsearch else -1]
     # Dynamic SQL hell yeah! It's perfectly safe but I'm not 100% about the performance
     # once we get to 100k replays, ideally only the active filters would be in the query text
@@ -98,6 +98,7 @@ def list_replays(search_filter):
         {"INNER JOIN GamesPlayed AS GP ON GP.ReplayID = ID" if nsearch else ""}
         WHERE 
             (? = 0 OR Official = 1) AND
+            (? = 0 OR VODURL IS NOT NULL) AND
             (? IS NULL OR Name LIKE ?) AND
             (? IS NULL OR Map LIKE ?) AND
             (? IS NULL OR Chat LIKE ?)
@@ -117,7 +118,7 @@ def count_replays(search_filter):
     nsearch = player_name_param is not None
 
     # Only include the play name param if this is a name search
-    params = (search_filter['official'], name_param, name_param,
+    params = (search_filter['official'], search_filter['official'], name_param, name_param,
         map_param, map_param, chat_param, chat_param, player_name_param)[:None if nsearch else -1]
     total_count = query(f'''
         SELECT COUNT(DISTINCT ID) AS ReplayCount
@@ -125,6 +126,7 @@ def count_replays(search_filter):
         {"INNER JOIN GamesPlayed AS GP ON GP.ReplayID = ID" if nsearch else ""}
         WHERE 
             (? = 0 OR Official = 1) AND
+            (? = 0 OR VODURL IS NOT NULL) AND
             (? IS NULL OR Name LIKE ?) AND
             (? IS NULL OR Map LIKE ?) AND
             (? IS NULL OR Chat LIKE ?)
