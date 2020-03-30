@@ -418,3 +418,8 @@ class Replay(dict):
             goldmines = [[m['x'], m['y']] for m in goldmines]
 
         return {'map_size': map_size, 'towers': towers, 'start_locations': player_start_locations, 'goldmines': goldmines}
+
+    def is_dota(self):
+        if 'dota' in self['map']['file'].lower():
+            return True
+        return False

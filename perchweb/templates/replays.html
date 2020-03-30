@@ -107,7 +107,11 @@
         <div class="player">
             {% if detailed %}
             <div class="icon-name">
-                {{ racemacros.icon(player['race'], player['raceDetected']) }}<a class="playername"
+                {% if replay.is_dota() %}
+                👶
+                {% else %}
+                {{ racemacros.icon(player['race'], player['raceDetected']) }}
+                {% endif %}<a class="playername"
                     style="color:{{ replay.player_colors[player['id']]|lighten }}"
                     href="{{ url_for('views.view_player', battletag=player['name']) }}" title="{{ replay.player_colors[player['id']]|color_name }}">{{ player['name']|displayname }}</a>
                 {% if replay.official() and game_count %}

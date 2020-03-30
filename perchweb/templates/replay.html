@@ -42,7 +42,12 @@
                     </div>
                     {% endif %}
                     <div class="minimap">
+                        {% if replay.is_dota() %}
+                        <img src="/static/images/dota-minimap.jpg" title="Easily entertained" />
+                        <link rel="stylesheet" type="text/css" href="/static/style/dota.css?h={{ config['STATIC_HASH'] }}">
+                        {% else %}
                         <img src="{{ replay.map_name()|mapthumbnail }}" title="{{ replay.map_name() }}" />
+                        {% endif %}
                         {% if drawmap['map_size'] %}
                         <canvas
                             class="drawmap anim{% if replay.tower_count() > 0 %} clickable{% endif %}"
