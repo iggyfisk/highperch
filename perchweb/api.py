@@ -10,6 +10,7 @@ def search_replays():
     """ Replay listing """
     replay_filter = {
         'official': 'official' in request.args,
+        'hasvod': 'hasvod' in request.args,
         'name': request.args.get('name', None),
         'map': request.args.get('map', None),
         'chat': request.args.get('chat', None),
