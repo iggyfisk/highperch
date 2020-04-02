@@ -1688,7 +1688,7 @@ const itemCodes = {
     "fgfh": { "name": "Spiked Collar", "type": "Charged", "level": 5 },
     "fgrg": { "name": "Stone Token", "type": "Charged", "level": 5 },
     "totw": { "name": "Talisman of the Wild", "type": "Charged", "level": 5 },
-    "wild": { "nam": "Amulet of the Wild", "type": "Charged", "level": 6 },
+    "wild": { "name": "Amulet of the Wild", "type": "Charged", "level": 6 },
     "fgdg": { "name": "Demonic Figurine", "type": "Charged", "level": 6 },
     "shar": { "name": "Ice Shard", "type": "Charged", "level": 6 },
     "infs": { "name": "Inferno Stone", "type": "Charged", "level": 6 },
