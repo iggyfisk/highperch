@@ -9,6 +9,8 @@ from datetime import datetime
 from hashlib import sha256
 from collections import defaultdict
 from ipaddress import ip_address, ip_network
+from statistics import mean
+from re import search as re_search
 from flask import flash, g, current_app, request
 from models.replay import Replay, ReplayListInfo
 from perchlogging import log_to_slack, upload_to_slack, format_ip_addr, format_traceback
@@ -88,7 +90,7 @@ def list_replays(search_filter):
 
     # Only include the play name param if this is a name search
     params = (search_filter['official'], search_filter['hasvod'], name_param, name_param,
-        map_param, map_param, chat_param, chat_param, player_name_param)[:None if nsearch else -1]
+              map_param, map_param, chat_param, chat_param, player_name_param)[:None if nsearch else -1]
     # Dynamic SQL hell yeah! It's perfectly safe but I'm not 100% about the performance
     # once we get to 100k replays, ideally only the active filters would be in the query text
     rows = query(f'''
@@ -109,6 +111,7 @@ def list_replays(search_filter):
 
     return [ReplayListInfo(**r) for r in rows]
 
+
 def count_replays(search_filter):
     """ Total number of matching replays currently in the database """
     name_param = f"%{search_filter['name']}%" if search_filter['name'] else None
@@ -119,7 +122,7 @@ def count_replays(search_filter):
 
     # Only include the play name param if this is a name search
     params = (search_filter['official'], search_filter['hasvod'], name_param, name_param,
-        map_param, map_param, chat_param, chat_param, player_name_param)[:None if nsearch else -1]
+              map_param, map_param, chat_param, chat_param, player_name_param)[:None if nsearch else -1]
     total_count = query(f'''
         SELECT COUNT(DISTINCT ID) AS ReplayCount
         FROM Replays AS R
@@ -377,6 +380,13 @@ def save_replay(replay, replay_name, uploader_ip):
             raise ReplayParsingException(
                 f"Upload declined: you have been banned! Email admin@highper.ch to discuss the terms")
 
+        if replay_name_check(replay_name) == False:
+            error_string = f'Bad replay name by {format_ip_addr(request.remote_addr)}: "{replay_name}"'
+            log_to_slack('WARNING', error_string)
+            current_app.logger.warning(error_string)
+            raise ReplayParsingException(
+                f"That replay name sucks. Pick a better one")
+
         with open(temp_replay_path, 'rb') as replay_bytes:
             file_hash = sha256(replay_bytes.read()).hexdigest()
 
@@ -398,7 +408,7 @@ def save_replay(replay, replay_name, uploader_ip):
             raise ReplayParsingException(
                 "Replay parsing failed. If it's really a valid Reforged replay, let us know.")
         if len(parse_result.stdout) > 0:
-            error_string = f'Parser warning from {format_ip_addr(request.remote_addr)} - "{replay_name}:"\n{parse_result.stdout.decode("utf-8")}'
+            error_string = f'Parser warning from {format_ip_addr(request.remote_addr)} - "{replay_name}":\n{parse_result.stdout.decode("utf-8")}'
             log_to_slack('WARNING', error_string)
             current_app.logger.warning(error_string)
         with open(temp_data_path, encoding='utf8') as replay_json:
@@ -428,13 +438,6 @@ def save_replay(replay, replay_name, uploader_ip):
         chat = '|'.join([c['message'] for c in replay_data['chat']])
         tower_count = replay_data.tower_count()
         chat_message_count = len(replay_data['chat'])
-        # check for header-only replays, such as from alt-f4 during loadscreen
-        if len(replay_data['leaveEvents']) == 0:
-            error_string = f'Blocked upload of an apparently empty replay from {format_ip_addr(request.remote_addr)}: "{replay_name}"'
-            log_to_slack('WARNING', error_string)
-            current_app.logger.warning(error_string)
-            raise ReplayParsingException(
-                f"This looks like an empty replay! If it's actually a real one, let us know: admin@highper.ch")
         if replay_data['saverPlayerId'] == -1:
             uploader_battletag = 'Unknown#0'
             error_string = f'Replay with unknown saver uploaded by {format_ip_addr(request.remote_addr)}: "{replay_name}"'
@@ -762,3 +765,43 @@ def is_battletag_banned(battletag):
     if battletag in [entry['BattleTag'] for entry in get_banned_accounts()]:
         return True
     return False
+
+
+key_grid = [
+    ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'],
+    ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'å'],
+    ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'ö', 'ä'],
+    ['z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.'],
+]
+vowels = ['a', 'e', 'i', 'o', 'u']
+punctuation = ['.', '-', ',', '!', '?', ' ']
+keys = {key: (x, y) for (y, row) in enumerate(key_grid)
+        for (x, key) in enumerate(row)}
+repeat_regex = r'([\w]{3,4})(\1){1,}'
+number_regex = r'^\d+$'
+
+
+def key_distance(a, b):
+    if a in keys and b in keys:
+        if a in vowels and a == b:
+            return 2    # repeated vowels is fine
+        return abs(keys[a][0] - keys[b][0]) + abs(keys[a][1] - keys[b][1])
+    return None
+
+
+def string_complexity(user_string):
+    lowered_string = user_string.lower()
+    distance = [key_distance(lowered_string[i], lowered_string[i + 1]) for i in range(len(lowered_string) - 1)]
+    bonus = 0
+    for char in user_string:
+        bonus += 1 if char in punctuation else 0
+    bonus += 1 if 'ffa' in user_string else 0
+    bonus -= 1.5 if re_search(repeat_regex, user_string) else 0
+    bonus -= 3 if re_search(number_regex, user_string) else 0
+    return mean(d for d in distance if d is not None) + bonus
+
+
+def replay_name_check(name):
+    if string_complexity(name) <= 2:
+        return False
+    return True
