@@ -373,32 +373,6 @@ def save_replay(replay, replay_name, uploader_ip):
 
     # From here on out we need to clean up if anything goes wrong
     try:
-        if is_ip_banned(request.remote_addr):
-            error_string = f'Attempted upload from banned IP {format_ip_addr(request.remote_addr)}: "{replay_name}"'
-            log_to_slack('WARNING', error_string)
-            current_app.logger.warning(error_string)
-            raise ReplayParsingException(
-                f"Upload declined: you have been banned! Email admin@highper.ch to discuss the terms")
-
-        if replay_name_check(replay_name) == False:
-            error_string = f'Bad replay name by {format_ip_addr(request.remote_addr)}: "{replay_name}"'
-            log_to_slack('WARNING', error_string)
-            current_app.logger.warning(error_string)
-            raise ReplayParsingException(
-                f"That replay name sucks. Pick a better one")
-
-        with open(temp_replay_path, 'rb') as replay_bytes:
-            file_hash = sha256(replay_bytes.read()).hexdigest()
-
-        dupe_check = query(
-            'SELECT Name FROM Replays WHERE FileHash=?;', (file_hash,), one=True)
-        if dupe_check:
-            error_string = f'Attempted duplicate upload from {format_ip_addr(request.remote_addr)}: "{replay_name}", aka "{dupe_check[0]}"'
-            log_to_slack('WARNING', error_string)
-            current_app.logger.warning(error_string)
-            raise ReplayParsingException(
-                f"Replay already exists: {dupe_check[0]}")
-
         parse_result = subprocess.run(
             ["node", filepaths.get_path("../parsereplay.js"), temp_replay_path, temp_data_path], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         if parse_result.returncode != 0:
@@ -446,12 +420,39 @@ def save_replay(replay, replay_name, uploader_ip):
         else:
             uploader_battletag = [
                 p['name'] for p in replay_data.players if p['id'] == replay_data['saverPlayerId']][0]
+
         if is_battletag_banned(uploader_battletag):
             error_string = f'Attempted upload with banned saver BattleTag {uploader_battletag} from {format_ip_addr(request.remote_addr)}: "{replay_name}"'
             log_to_slack('WARNING', error_string)
             current_app.logger.warning(error_string)
             raise ReplayParsingException(
                 f"We have declined to handle this replay. Email admin@highper.ch to discuss the terms")
+
+        if is_ip_banned(request.remote_addr):
+            error_string = f'Attempted upload from banned IP {format_ip_addr(request.remote_addr)}: "{replay_name}", saver {uploader_battletag}'
+            log_to_slack('WARNING', error_string)
+            current_app.logger.warning(error_string)
+            raise ReplayParsingException(
+                f"Upload declined: you have been banned! Email admin@highper.ch to discuss the terms")
+
+        if replay_name_check(replay_name) == False:
+            error_string = f'Bad replay name by {format_ip_addr(request.remote_addr)}: "{replay_name}", saver {uploader_battletag}'
+            log_to_slack('WARNING', error_string)
+            current_app.logger.warning(error_string)
+            raise ReplayParsingException(
+                f"That replay name sucks. Pick a better one")
+
+        with open(temp_replay_path, 'rb') as replay_bytes:
+            file_hash = sha256(replay_bytes.read()).hexdigest()
+        dupe_check = query(
+            'SELECT Name FROM Replays WHERE FileHash=?;', (file_hash,), one=True)
+        if dupe_check:
+            error_string = f'Attempted duplicate upload from {format_ip_addr(request.remote_addr)}: "{replay_name}", aka "{dupe_check[0]}", saver {uploader_battletag}'
+            log_to_slack('WARNING', error_string)
+            current_app.logger.warning(error_string)
+            raise ReplayParsingException(
+                f"Replay already exists: {dupe_check[0]}")
+
         query('''
             INSERT INTO Replays(BNetGameID, Name, TimeStamp, Official, GameType, Version, Length, Map,
             TowerCount, ChatMessageCount, Players, Towers, StartLocations, Chat, UploaderBattleTag, UploaderIP, FileHash)
