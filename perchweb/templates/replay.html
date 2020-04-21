@@ -65,6 +65,9 @@
                         {% set version = replay['buildNo']|exact_version %}
                         <p>Game version {% if version %}{{ replay['buildNo']|exact_version }}{% else %}{{ replay['version'] }} ({{ replay['buildNo'] }}){% endif %}</p>
                         <p><b>{{ replay['duration']|gametime }}</b> long {{ replay['type'] }} {{ replay.game_host_type() }} game on <a href="{{ url_for('views.view_map', map_name=replay.map_name()|canonicalname) }}">{{ replay.map_name() }}</a></p>
+                        {% if replay.game_host_type() == 'custom' %}
+                        <p>Game name "{{ replay['gamename'] }}"</p>
+                        {% endif %}
                         <div class="saver">{% if replay.replay_saver()['id'] != -1 %}Saved by <a href="{{ url_for('views.view_player', battletag=replay.replay_saver()['name']) }}">{{ replay.replay_saver()['name']|displayname }}</a>
                         {% else %}Replay saver unknown (Battle.net server failure?) {% endif %}
                         {% if is_admin %}
