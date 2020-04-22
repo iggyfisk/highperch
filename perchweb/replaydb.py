@@ -787,6 +787,10 @@ def key_distance(a, b):
         if a in vowels and a == b:
             return 2    # repeated vowels is fine
         return abs(keys[a][0] - keys[b][0]) + abs(keys[a][1] - keys[b][1])
+    if ord(a) > 127 or ord(b) > 127:    # non-latin chars
+        if a == b:
+            return 1
+        return 3        # this assumption seems reasonable
     return None
 
 
