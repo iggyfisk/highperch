@@ -29,12 +29,13 @@
 </div>
 {% endmacro %}
 
-{% macro teams(replay, detailed=False, game_count=None) %}
+{% macro teams(replay, detailed=False, game_count=None, is_admin=False, punished_replay=False) %}
 {% if detailed %}
 <script>
     var player_colors = {{ replay.get_color_codes()|safe }};
     var apm_data = {{ replay.get_apm_data()|safe }};
 </script>
+{% if punished_replay %}PUNISHED!!!!!!!!!!!{% else %}SAFE!{% endif %}
 <div class="controls">
     <span class="hp-toggle hp-highlight" data-group="items"><img class="controlshow" src="/static/images/townportal.gif" title="Show item details"></span>
     <span class="hp-toggle hp-highlight hidden" data-group="items"><img class="itemhide" src="/static/images/townportal.gif" title="Hide item details"></span>
@@ -44,10 +45,10 @@
     <span class="hp-toggle hp-highlight inaccurate hidden" data-group="buildings" data-inaccurate="-1"><img class="buildinghide" src="/static/images/castle.gif" title="Hide building details"></span>
     <span class="hp-toggle hp-highlight inaccurate" data-group="buildorder" data-inaccurate="1"><img class="controlshow" src="/static/images/humanbuild.png" title="Show build order"></span>
     <span class="hp-toggle hp-highlight inaccurate hidden" data-group="buildorder" data-inaccurate="-1"><img class="buildorderhide" src="/static/images/humanbuild.png" title="Hide build order"></span>
-    <span class="hp-toggle hp-highlight" data-group="actions"><img class="controlshow" src="/static/images/move.gif" title="Show action details"></span>
-    <span class="hp-toggle hp-highlight hidden" data-group="actions"><img class="actionhide" src="/static/images/move.gif" title="Hide action details"></span>
-    <span class="hp-toggle hp-highlight" data-group="apmseries"><img class="controlshow" src="/static/images/stasistrap.png" title="Show APM graph"></span>
-    <span class="hp-toggle hp-highlight hidden" data-group="apmseries"><img class="apmhide" src="/static/images/stasistrap.png" title="Hide APM graph"></span>
+    {% if is_admin or not punished_replay %}<span class="hp-toggle hp-highlight" data-group="actions"><img class="controlshow" src="/static/images/move.gif" title="Show action details"></span>
+    <span class="hp-toggle hp-highlight hidden" data-group="actions"><img class="actionhide" src="/static/images/move.gif" title="Hide action details"></span>{% endif %}
+    {% if is_admin or not punished_replay %}<span class="hp-toggle hp-highlight" data-group="apmseries"><img class="controlshow" src="/static/images/stasistrap.png" title="Show APM graph"></span>
+    <span class="hp-toggle hp-highlight hidden" data-group="apmseries"><img class="apmhide" src="/static/images/stasistrap.png" title="Hide APM graph"></span>{% endif %}
     {% if replay.get_ally_events()|length > 0 or replay['tradeEvents']|length > 0 %}<span class="hp-toggle hp-highlight" data-group="allyevents"><img class="controlshow" src="/static/images/resource-trade.png" title="Show shares and feeds in chatlog"></span>
     <span class="hp-toggle hp-highlight hidden" data-group="allyevents"><img class="allyhide" src="/static/images/resource-trade.png" title="Hide shares and feeds in chatlog"></span>
     {% else %}
@@ -57,11 +58,12 @@
 <div class="statwarning hidden">
     N.B. unit and building counts are inaccurate - canceled construction and products of multiple building select are not tracked.
 </div>
-<div class="apmcontainer">
+{% if is_admin or not punished_replay %}<div class="apmcontainer">
     <h2 class="hp-toggle hp-display hidden" data-group="apmseries">Actions per minute</h2>
     <div class="apmseries hp-toggle hp-display hidden" data-group="apmseries">
     </div>
 </div>
+{% endif %}
 {% endif %}
 
 <div class="teams">
@@ -123,6 +125,7 @@
                 {% endif %}
                 <span class="hp-toggle hp-highlight hidden" data-group="team{{ teamId }}spoilers">&nbsp;(<b>{{ player['currentTimePlayed']|gametime }}</b>)&nbsp;</span>:
                 <div class="summary">
+                    {% if is_admin or not punished_replay %}
                     {% set chat_actions = replay.get_chat_actions()[player['id']] %}
                     {% if chat_actions > 0 and player['currentTimePlayed'] > 0 %}
                         {% set chats_per_minute = (chat_actions / (player['currentTimePlayed'] / 1000 / 60))|round|int %}
@@ -180,6 +183,11 @@
                     {% if replay.get_arranged_team(player['id']) != None and replay.game_host_type() == 'ladder' %}
                     <div class="arrangedteam" title="Probably an arranged team, based on early game mutual shared control">[AT{% if replay.detect_arranged_teams()|length > replay.teams()|length %} #{{ replay.get_arranged_team(player['id']) }}{% endif %}]</div>
                     {% endif %}
+                    {% endif %}
+                    {% if punished_replay and player['id'] == replay['saverPlayerId'] %}
+                    | <span class="award" title="Garbage award">🗑️</span>
+                    {% endif %}
+
                 </div>
             </div>
             <div class="details">
@@ -294,6 +302,7 @@
                     </table>
                     {% endif %}
                 </div>
+                {% if is_admin or not punished_replay %}
                 <div class="extendeddetails actiondetails hp-toggle hp-display hidden" data-group="actions">
                     {% set player_actions = player.parse_actions() %}
                     {% if chat_actions > 0 %}
@@ -312,6 +321,7 @@
                     </table>
                     {% endif %}
                 </div>
+                {% endif %}
             </div>
             {% else %}
             <div class="icon-name">

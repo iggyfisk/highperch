@@ -14,7 +14,9 @@ from handler import admin_page
 from replaydb import query, get_all_replays, get_all_uploader_ips, save_chatlog,\
     save_vod_url, delete_replay as dbdelete_replay, edit_replay as dbedit_replay,\
     save_banned_subnet, save_banned_account, get_banned_subnets, get_banned_accounts,\
-    delete_subnet_ban, delete_account_ban, is_ip_banned, is_battletag_banned
+    delete_subnet_ban, delete_account_ban, is_ip_banned, is_battletag_banned,\
+    save_punished_account, delete_account_punishment, is_battletag_punished,\
+    get_punished_accounts
 from peep import save_pic
 from filepaths import get_db, get_temp, get_replay, get_replay_data
 
@@ -142,7 +144,8 @@ def console():
     uploader_ips = get_all_uploader_ips()
     savers = sorted(savers.items(), key=lambda i: i[1], reverse=True)
     return admin_page('admin.html', 'Admin console', nav='admin', replays=replays, uploader_ips=uploader_ips, savers=savers,
-                      banned_subnets=get_banned_subnets(), banned_accounts=get_banned_accounts())
+                      banned_subnets=get_banned_subnets(), banned_accounts=get_banned_accounts(),
+                      punished_accounts=get_punished_accounts())
 
 
 @routes.route('/admin/wig.db')
@@ -231,6 +234,27 @@ def ban_account(replay_id):
     return redirect(url_for('views.view_replay', replay_id=replay_id))
 
 
+@routes.route('/replay/<int:replay_id>/punishaccount', methods=['POST'])
+@admin_only
+def punish_account(replay_id):
+    """ Save a BattleTag to the BannedAccounts table """
+    battletag = request.form['battletag'].strip()
+    reason = request.form['reason']
+
+    if not validate_battletag(battletag):
+        flash('Invalid BattleTag')
+        return redirect(url_for('views.view_replay', replay_id=replay_id))
+
+    if is_battletag_punished(battletag):
+        flash(f'{battletag} is already punished!')
+        return redirect(url_for('views.view_replay', replay_id=replay_id))
+
+    save_punished_account(battletag, reason)
+    flash(f'Put {battletag} in the sewer')
+
+    return redirect(url_for('views.view_replay', replay_id=replay_id))
+
+
 @routes.route('/admin/unbansubnet', methods=['POST'])
 @admin_only
 def unban_subnet():
@@ -246,10 +270,21 @@ def unban_subnet():
 @routes.route('/admin/unbanaccount', methods=['POST'])
 @admin_only
 def unban_account():
-    """ Deletes the specified subnet from BannedIPs """
+    """ Deletes the specified subnet from BannedAccounts """
     battletag = request.form['battletag']
     delete_account_ban(battletag)
 
     flash(f'Unbanned {battletag}')
+
+    return redirect(url_for('admin.console'))
+
+@routes.route('/admin/unpunishaccount', methods=['POST'])
+@admin_only
+def unpunish_account():
+    """ Deletes the specified subnet from PunishedAccounts """
+    battletag = request.form['battletag']
+    delete_account_punishment(battletag)
+
+    flash(f'Unpunished {battletag}')
 
     return redirect(url_for('admin.console'))

@@ -722,6 +722,16 @@ def save_banned_account(battletag, reason):
     current_app.logger.warning(error_string)
 
 
+def save_punished_account(battletag, reason):
+    timestamp = int(datetime.now().timestamp())
+    query('''
+        INSERT INTO PunishedAccounts (BattleTag, Reason, Timestamp)
+        VALUES (?,?,?)''', (battletag, reason, timestamp))
+    error_string = f'New punishment by {format_ip_addr(request.remote_addr)}: {battletag}: "{reason}"'
+    log_to_slack('WARNING', error_string)
+    current_app.logger.warning(error_string)
+
+
 def delete_subnet_ban(subnet):
     row = query(
         'SELECT OriginalIP, Reason from BannedIPs WHERE Subnet = ?', (subnet,), one=True)
@@ -741,6 +751,15 @@ def delete_account_ban(battletag):
     current_app.logger.warning(error_string)
 
 
+def delete_account_punishment(battletag):
+    reason = query(
+        'SELECT Reason FROM PunishedAccounts WHERE BattleTag = ?', (battletag,), one=True)[0]
+    query('DELETE FROM PunishedACcounts WHERE BattleTag = ?', (battletag,))
+    error_string = f'Punishment on {battletag} ({reason}) removed by {format_ip_addr(request.remote_addr)}'
+    log_to_slack('WARNING', error_string)
+    current_app.logger.warning(error_string)
+
+
 def get_banned_subnets():
     rows = query(
         '''SELECT Subnet, OriginalIP, Reason, Timestamp FROM BannedIPs ORDER BY Timestamp DESC''')
@@ -750,6 +769,12 @@ def get_banned_subnets():
 def get_banned_accounts():
     rows = query(
         '''SELECT BattleTag, Reason, Timestamp FROM BannedAccounts ORDER BY Timestamp DESC''')
+    return [dict(row) for row in rows]
+
+
+def get_punished_accounts():
+    rows = query(
+        '''SELECT BattleTag, Reason, Timestamp FROM PunishedAccounts ORDER BY Timestamp DESC''')
     return [dict(row) for row in rows]
 
 
@@ -764,6 +789,12 @@ def is_ip_banned(ip_addr):
 
 def is_battletag_banned(battletag):
     if battletag in [entry['BattleTag'] for entry in get_banned_accounts()]:
+        return True
+    return False
+
+
+def is_battletag_punished(battletag):
+    if battletag in [entry['BattleTag'] for entry in get_punished_accounts()]:
         return True
     return False
 
@@ -796,7 +827,8 @@ def key_distance(a, b):
 
 def string_complexity(user_string):
     lowered_string = user_string.lower()
-    distance = [key_distance(lowered_string[i], lowered_string[i + 1]) for i in range(len(lowered_string) - 1)]
+    distance = [key_distance(lowered_string[i], lowered_string[i + 1])
+                for i in range(len(lowered_string) - 1)]
     bonus = 0
     for char in user_string:
         bonus += 1 if char in punctuation else 0

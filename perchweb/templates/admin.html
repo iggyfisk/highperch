@@ -3,7 +3,7 @@
 {% block content %}
 <div class="console">
     <div class="box">
-        <h2>Ban Control - {{ banned_subnets|length + banned_accounts|length }} bans</h2>
+        <h2>Ban Control - {{ banned_subnets|length + banned_accounts|length }} bans, {{ punished_accounts|length }} punishments</h2>
         <div class="inner">
             <div class="statblock">
                 <div class="bans">
@@ -59,6 +59,35 @@
                                 <td><form action="/admin/unbanaccount" method="POST" onsubmit="return confirm('Really unban {{ account['BattleTag'] }}?');">
                                     <input name="battletag" value="{{ account['BattleTag'] }}" hidden />
                                     <button type="submit" class="unban"><b>UNBAN</b></button></form></td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                <hr>
+                <div class="bans">
+                    <table>
+                        {% if punished_accounts|length == 0 %}
+                            <tr>
+                                <td>No punished BattleTags</td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <th>BattleTag</th>
+                                <th></th>
+                                <th>Reason</th>
+                                <th class="wide">Timestamp</th>
+                                <th></th>
+                            </tr>
+                        {% endif %}
+                        {% for account in punished_accounts %}
+                            <tr>
+                                <td>{{ account['BattleTag'] }}</td>
+                                <td></td>
+                                <td>{{ account['Reason'] }}</td>
+                                <td>{{ account['Timestamp']|epochtoiso }}</td>
+                                <td><form action="/admin/unpunishaccount" method="POST" onsubmit="return confirm('Really remove the punishment on {{ account['BattleTag'] }}?');">
+                                    <input name="battletag" value="{{ account['BattleTag'] }}" hidden />
+                                    <button type="submit" class="unban"><b>UNPUNISH</b></button></form></td>
                             </tr>
                         {% endfor %}
                     </table>

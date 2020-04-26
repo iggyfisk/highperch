@@ -81,4 +81,10 @@ CREATE TABLE IF NOT EXISTS "BannedAccounts" (
     "Reason"    TEXT NOT NULL,
     "Timestamp" INTEGER NOT NULL
 );
+CREATE TABLE IF NOT EXISTS "PunishedAccounts" (
+    "ID"    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "BattleTag" TEXT NOT NULL UNIQUE,
+    "Reason"    TEXT NOT NULL,
+    "Timestamp" INTEGER NOT NULL
+);
 COMMIT;

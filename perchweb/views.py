@@ -89,9 +89,13 @@ def view_replay_slug(replay_id, replay_slug):
 
     drawmap = replay.get_drawmap(timestamp=True, color_transform=lighten_color)
     game_count = replaydb.get_game_count(replay_id)
+
+    punished_replay = replaydb.is_battletag_punished(replay.replay_saver()['name'])
+
     return standard_page('replay.html', replay_listinfo['Name'], replay=replay, listinfo=replay_listinfo,
                          replay_id=replay_id, drawmap=drawmap, game_count=game_count,
-                         next_id=replaydb.get_next_replay(replay_id), prev_id=replaydb.get_previous_replay(replay_id))
+                         next_id=replaydb.get_next_replay(replay_id), prev_id=replaydb.get_previous_replay(replay_id),
+                         punished_replay=punished_replay)
 
 
 @routes.route('/replay/<int:replay_id>/download')

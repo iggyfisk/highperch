@@ -91,6 +91,26 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="bancontainer adminonly"><span class="adminicon hp-expand"><i class="icon-attention"></i></span>
+                            <div class="ban hp-hidden v">
+                                <div class="content">
+                                    <h2>Sewer Battletag</h2>
+                                    <form action="/replay/{{ replay_id }}/punishaccount" method="POST">
+                                        <input
+                                            name="battletag"
+                                            value="{{ replay.replay_saver()['name'] }}"
+                                            minlength="10"
+                                            required />
+                                        <textarea
+                                            name="reason"
+                                            placeholder="Punishment reason"
+                                            minlength="5"
+                                            required></textarea>
+                                        <input type="submit" value="Sewer" />
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                         {% endif %}
                         </div>
                         {% if is_admin %}
@@ -163,7 +183,7 @@
                 </div>
             </div>
 
-            {{ replaymacros.teams(replay, True, game_count) }}
+            {{ replaymacros.teams(replay, True, game_count, is_admin, punished_replay) }}
 
             <h2>Chatlog</h2>
             <div class="chatlog">
