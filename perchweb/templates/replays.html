@@ -122,7 +122,7 @@
                         {% endif %}
                     {% endif %}
                 {% endif %}
-                <span class="hp-toggle hp-highlight hidden" data-group="team{{ teamId }}spoilers">&nbsp;(<b>{{ player['currentTimePlayed']|gametime }}</b>)&nbsp;</span>:
+                <span class="hp-toggle hp-highlight hidden" data-group="team{{ teamId }}spoilers">&nbsp;(<b>{{ player['currentTimePlayed']|gametime }}</b>)&nbsp;</span>{% if is_admin or not punished_replay %}:{% endif %}
                 <div class="summary">
                     {% if is_admin or not punished_replay %}
                     {% set chat_actions = replay.get_chat_actions()[player['id']] %}
@@ -184,7 +184,7 @@
                     {% endif %}
                     {% endif %}
                     {% if punished_replay and player['id'] == replay['saverPlayerId'] %}
-                    | <span class="award" title="Garbage award">🗑️</span>
+                    <span class="award" title="Garbage award">🗑️</span>
                     {% endif %}
 
                 </div>
