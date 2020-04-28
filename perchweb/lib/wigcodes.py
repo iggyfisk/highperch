@@ -1090,6 +1090,7 @@ level_exp = {
 }
 
 build_versions = {
+    '6109': '1.32.4',   # 2020-04-28, reforged graphics tuning, desync fixes, banewood readded again
     '6108': '1.32.3',   # 2020-03-18, desync fixes, strath/banewood/foundtain readded
     '6106': '1.32.2',   # 2020-02-24, minor bugfixes, removal of strath/banewood/fountain
     '6105': '1.32',     # 2020-01-28, launch version. same buildNo as 1.32.1 (2020-02-06, minor bugfixes)
