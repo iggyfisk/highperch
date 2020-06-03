@@ -124,6 +124,7 @@ item_codes = {
     "ratf": {"name": "Claws of Attack +15", "table": "artifact_L7", "shop": "marketplace", "price": 800},
     "desc": {"name": "Kelen's Dagger of Escape", "table": "artifact_L7", "shop": "marketplace", "price": 800},
     "ofro": {"name": "Orb of Frost", "table": "artifact_L7", "shop": "marketplace", "price": 800},
+    "infs": {"name": "Inferno Stone", "table": "artifact_L7", "shop": "marketplace", "price": 800},
 
     "ckng": {"name": "Crown of Kings +5", "table": "artifact_L8", "shop": "marketplace", "price": 1000},
     "modt": {"name": "Mask of Death", "table": "artifact_L8", "shop": "marketplace", "price": 1000},
@@ -149,18 +150,18 @@ item_codes = {
 
     "pdiv": {"name": "Potion of Divinity", "table": "charged_L5", "shop": "marketplace", "price": 550},
     "pres": {"name": "Potion of Restoration", "table": "charged_L5", "shop": "marketplace", "price": 550},
-    "fgrd": {"name": "Red Drake Egg", "table": "charged_L5", "shop": "marketplace", "price": 550},
+    "fgbd": {"name": "Blue Drake Egg", "table": "charged_L5", "shop": "marketplace", "price": 550},
     "sres": {"name": "Scroll of Restoration", "table": "charged_L5", "shop": "marketplace", "price": 550},
     "fgfh": {"name": "Spiked Collar", "table": "charged_L5", "shop": "marketplace", "price": 550},
     "fgrg": {"name": "Stone Token", "table": "charged_L5", "shop": "marketplace", "price": 550},
-    "totw": {"name": "Talisman of the Wild", "table": "charged_L5", "shop": "marketplace", "price": 550},
+    "iotw": {"name": "Idol of the Wild", "table": "charged_L5", "shop": "marketplace", "price": 550},
 
     "wild": {"name": "Amulet of the Wild", "table": "charged_L6", "shop": "marketplace", "price": 700},
     "fgdg": {"name": "Demonic Figurine", "table": "charged_L6", "shop": "marketplace", "price": 700},
     "shar": {"name": "Ice Shard", "table": "charged_L6", "shop": "marketplace", "price": 700},
-    "infs": {"name": "Inferno Stone", "table": "charged_L6", "shop": "marketplace", "price": 700},
-    "sand": {"name": "Scroll of Animate Dead", "table": "charged_L6", "shop": "marketplace", "price": 700},
-    "srrc": {"name": "Scroll of Resurrection", "table": "charged_L6", "shop": "marketplace", "price": 700},
+    "ccmd": {"name": "Scepter of Mastery", "table": "charged_L6", "shop": "marketplace", "price": 700},
+    "scav": {"name": "Scepter of Avarice", "table": "charged_L6", "shop": "marketplace", "price": 700},
+    "engr": {"name": "Engraved Scale", "table": "charged_L6", "shop": "marketplace", "price": 700},
 
     "amrc": {"name": "Amulet of Recall", "table": "non-melee", "shop": "non-melee", "price": 0},
     "ccmd": {"name": "Scepter of Mastery", "table": "non-melee", "shop": "non-melee", "price": 0},
@@ -1090,7 +1091,8 @@ level_exp = {
 }
 
 build_versions = {
-    '6109': '1.32.4',   # 2020-04-28, reforged graphics tuning, desync fixes, banewood readded again
+    '6110': '1.32.6',   # 2020-06-02, balancing: beetle buff, item changes, merc changes
+    '6109': '1.32.4',   # 2020-04-28, reforged graphics tuning, desync fixes, banewood readded again, same buildNo as 1.32.5
     '6108': '1.32.3',   # 2020-03-18, desync fixes, strath/banewood/foundtain readded
     '6106': '1.32.2',   # 2020-02-24, minor bugfixes, removal of strath/banewood/fountain
     '6105': '1.32',     # 2020-01-28, launch version. same buildNo as 1.32.1 (2020-02-06, minor bugfixes)
