@@ -1746,7 +1746,7 @@ const dropTableCodes = {
     "YlI7": {
         "type": "Artifact",
         "level": 7,
-        "items": ["ratf", "desc", "ofro"]
+        "items": ["ratf", "desc", "ofro", "infs"]
     },
     "YlI8": {
         "type": "Artifact",
@@ -1776,12 +1776,12 @@ const dropTableCodes = {
     "YjI5": {
         "type": "Charged",
         "level": 5,
-        "items": ["pdiv", "pres", "fgrd", "sres", "fgfh", "fgrg", "totw"]
+        "items": ["pdiv", "pres", "fgbd", "sres", "fgfh", "fgrg", "iotw"]
     },
     "YjI6": {
         "type": "Charged",
         "level": 6,
-        "items": ["wild", "fgdg", "shar", "infs", "sand", "srrc"]
+        "items": ["wild", "fgdg", "shar", "ccmd", "scav", "engr"]
     },
     "YkI1": {
         "type": "Power Up",
