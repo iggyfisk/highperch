@@ -1709,7 +1709,12 @@ const itemCodes = {
     "tpow": { "name": "Tome of Knowledge", "type": "Power Up", "level": 2 },
     "tst2": { "name": "Tome of Strength +2", "type": "Power Up", "level": 2 },
     "tin2": { "name": "Tome of Intelligence +2", "type": "Power Up", "level": 2 },
-    "tdx2": { "name": "Tome of Dexterity +2", "type": "Power Up", "level": 2 }
+    "tdx2": { "name": "Tome of Dexterity +2", "type": "Power Up", "level": 2 },
+    "fgbd": { "name": "Blue Drake Egg", "type": "Charged", "level": 5 },
+    "iotw": { "name": "Idol of the Wild", "type": "Charged", "level": 5 },
+    "ccmd": { "name": "Scepter of Mastery", "type": "Charged", "level": 6 },
+    "scav": { "name": "Scepter of Avarice", "type": "Charged", "level": 6 },
+    "engr": { "name": "Engraved Scale", "type": "Charged", "level": 6 }
 };
 
 const dropTableCodes = {
