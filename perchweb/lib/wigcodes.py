@@ -150,10 +150,12 @@ item_codes = {
 
     "pdiv": {"name": "Potion of Divinity", "table": "charged_L5", "shop": "marketplace", "price": 550},
     "pres": {"name": "Potion of Restoration", "table": "charged_L5", "shop": "marketplace", "price": 550},
+    "fgrd": {"name": "Red Drake Egg", "table": "charged_L5", "shop": "marketplace", "price": 550},          # deprecated in 1.32.6
     "fgbd": {"name": "Blue Drake Egg", "table": "charged_L5", "shop": "marketplace", "price": 550},
     "sres": {"name": "Scroll of Restoration", "table": "charged_L5", "shop": "marketplace", "price": 550},
     "fgfh": {"name": "Spiked Collar", "table": "charged_L5", "shop": "marketplace", "price": 550},
     "fgrg": {"name": "Stone Token", "table": "charged_L5", "shop": "marketplace", "price": 550},
+    "totw": {"name": "Talisman of the Wild", "table": "charged_L5", "shop": "marketplace", "price": 550},   # deprecated in 1.32.6
     "iotw": {"name": "Idol of the Wild", "table": "charged_L5", "shop": "marketplace", "price": 550},
 
     "wild": {"name": "Amulet of the Wild", "table": "charged_L6", "shop": "marketplace", "price": 700},
@@ -162,6 +164,8 @@ item_codes = {
     "ccmd": {"name": "Scepter of Mastery", "table": "charged_L6", "shop": "marketplace", "price": 700},
     "scav": {"name": "Scepter of Avarice", "table": "charged_L6", "shop": "marketplace", "price": 700},
     "engr": {"name": "Engraved Scale", "table": "charged_L6", "shop": "marketplace", "price": 700},
+    "sand": {"name": "Scroll of Animate Dead", "table": "charged_L6", "shop": "marketplace", "price": 700}, # deprecated in 1.32.6
+    "srrc": {"name": "Scroll of Resurrection", "table": "charged_L6", "shop": "marketplace", "price": 700}, # deprecated in 1.32.6
 
     "amrc": {"name": "Amulet of Recall", "table": "non-melee", "shop": "non-melee", "price": 0},
     "ccmd": {"name": "Scepter of Mastery", "table": "non-melee", "shop": "non-melee", "price": 0},
