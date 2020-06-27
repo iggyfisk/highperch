@@ -35,7 +35,8 @@ def epoch_to_iso(timestamp):
 
 chat_modes = {
     'ALL': 'All',
-    'ALLY': 'Allies'
+    'ALLY': 'Allies',
+    'OBS': 'Observers'
 }
 
 
