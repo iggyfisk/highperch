@@ -1095,16 +1095,16 @@ level_exp = {
 }
 
 build_versions = {
-    '6110': '1.32.6',   # 2020-06-02, balancing: beetle buff, item changes, merc changes
-    '6109': '1.32.4',   # 2020-04-28, reforged graphics tuning, desync fixes, banewood readded again, same buildNo as 1.32.5
+    '6110': '1.32.6 / 1.32.7',   # 2020-06-02, balancing: beetle buff, item changes, merc changes. no buildNo change for 1.32.7
+    '6109': '1.32.4 / 1.32.5',   # 2020-04-28, reforged graphics tuning, desync fixes, banewood readded again. no buildNo change for 1.32.5
     '6108': '1.32.3',   # 2020-03-18, desync fixes, strath/banewood/foundtain readded
     '6106': '1.32.2',   # 2020-02-24, minor bugfixes, removal of strath/banewood/fountain
-    '6105': '1.32',     # 2020-01-28, launch version. same buildNo as 1.32.1 (2020-02-06, minor bugfixes)
+    '6105': '1.32 / 1.32.1',     # 2020-01-28, launch version. no buildNo change for 1.32.1 (2020-02-06, minor bugfixes)
     '6103': '1.32.0.6', # 2020-01-17, classic camera fix
     '6102': '1.32.0.5', # 2020-01-09, adds classic gfx
     '6098': '1.32.0.4', # 2019-12-09, adds customs and mappool
-    '6094': '1.32.0.3', # 2019-11-20, adds NE/random. same buildNo as 1.32.0.3.1 (2019-12-03, adds collections)
-    '6092': '1.32.0.2', # 2019-11-05, adds UD. same buildNo as 1.32.0.2.1 (2019-11-13, adds 3s/4s/ffa)
+    '6094': '1.32.0.3 / 1.32.0.3.1', # 2019-11-20, adds NE/random. no buildNo change for 1.32.0.3.1 (2019-12-03, adds collections)
+    '6092': '1.32.0.2 / 1.32.0.2.1', # 2019-11-05, adds UD. no buildNo change for 1.32.0.2.1 (2019-11-13, adds 3s/4s/ffa)
     '6091': '1.32.0.1'  # 2019-10-29, first beta build
 }
 
