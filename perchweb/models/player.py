@@ -21,6 +21,7 @@ arbitrary_item_scores = {
     'sdch': 4,
     'lhst': 4,
     'ward': 8,
+    'war2': 8
 }
 
 arbitrary_building_scores = {

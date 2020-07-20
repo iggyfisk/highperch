@@ -113,6 +113,7 @@ item_codes = {
     "lgdh": {"name": "Legion Doom-Horn", "table": "perm_L5", "shop": "marketplace", "price": 500},
     "mcou": {"name": "Medallion of Courage", "table": "perm_L5", "shop": "marketplace", "price": 500},
     "ward": {"name": "Warsong Battle Drums", "table": "perm_L5", "shop": "marketplace", "price": 500},
+    "war2": {"name": "Warsong Battle Drums", "table": "perm_L5", "shop": "marketplace", "price": 500}, # when did this change?
 
     "spsh": {"name": "Amulet of Spell Shield", "table": "perm_L6", "shop": "marketplace", "price": 600},
     "rhth": {"name": "Khadgar's Gem of Health", "table": "perm_L6", "shop": "marketplace", "price": 600},

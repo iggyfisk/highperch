@@ -1654,6 +1654,7 @@ const itemCodes = {
     "lgdh": { "name": "Legion Doom-Horn", "type": "Permanent", "level": 5 },
     "mcou": { "name": "Medallion of Courage", "type": "Permanent", "level": 5 },
     "ward": { "name": "Warsong Battle Drums", "type": "Permanent", "level": 5 },
+    "war2": { "name": "Warsong Battle Drums", "type": "Permanent", "level": 5 },
     "spsh": { "name": "Amulet of Spell Shield", "type": "Permanent", "level": 6 },
     "rhth": { "name": "Khadgar's Gem of Health", "type": "Permanent", "level": 6 },
     "odef": { "name": "Orb of Darkness", "type": "Permanent", "level": 6 },

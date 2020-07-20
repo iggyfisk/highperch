@@ -281,7 +281,7 @@ const creepsToCamps = creeps => {
   return creepCamps;
 }
 
-const mapName = new RegExp('^.*\\/(\\(\\d*\\).*)\\.w3x$');
+const mapName = new RegExp('^.*\\/(\\(\\d*\\).*|w3c_.*)\\.w3x$');
 const parseMap = mapPath => {
   const nameMatch = mapPath.match(mapName);
   if (!nameMatch) {
