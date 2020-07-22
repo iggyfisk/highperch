@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+{% import "charts.html" as chartmacros %}
+
+{% block content %}
+<script>
+(() => {
+	document.addEventListener("DOMContentLoaded", () => {
+        new Tablesort(document.getElementById('playertable'), { descending: true });
+	});
+})();
+</script>
+<div class="playercontrols">
+    <span class="hp-toggle hp-highlight" data-group="lowgamecount">show players with only one game</span>
+    <span class="hp-toggle hp-highlight hidden" data-group="lowgamecount">hide players with only one game</span></div>
+<h2>Showing <span class="hp-toggle" data-group="lowgamecount">{{ repeat_player_count }} repeat</span><span class="hp-toggle hidden" data-group="lowgamecount">{{ players|length }} known</span> players</h2>
+<table class="sortable" id="playertable">
+    <thead>
+        <tr>
+            <th>Player</th>
+            <th data-sort-default>Replays</th>
+            <th>Race split</th>
+            <th>APM</th>
+            <th class="optional">Chats per game</th>
+            <th class="optional">Feed per game</th>
+            <th>Towers <span class="optionaltext">per game</span></th>
+            <th>Avg. <span class="optionaltext">Time-to-</span>Share</th>
+        </tr>
+    </thead>
+{% for player in players %}
+    <tr {% if player['PlayerGames'] < 2 %}class="hp-toggle hidden" data-group="lowgamecount"{% endif %}>
+        <td><a href="{{ url_for('views.view_player', battletag=player['PlayerTag']) }}">{{ player['PlayerTag']|displayname }}</a></td>
+        <td data-sort-method="number" title="{{ player['Wins']}} wins, {{ player['Winrate'] }}%">{{ player['PlayerGames'] }}</td>
+        <td data-sort-method="number" class="racesplit" data-sort="{{ player['MaxRace'] }}" title="{% if player['RaceGames']['H'] %}Human: {{ player['RaceGames']['H'] }} {% endif %}{% if player['RaceGames']['O'] %}Orc: {{ player['RaceGames']['O'] }} {% endif %}{% if player['RaceGames']['N'] %}Night Elf: {{ player['RaceGames']['N'] }} {% endif %}{% if player['RaceGames']['U'] %}Undead: {{ player['RaceGames']['U'] }} {% endif %}{% if player['RaceGames']['R'] %}Random: {{ player['RaceGames']['R'] }}{% endif %}" style="width: 200px;">
+            {% if player['RaceGames']['H'] %}<span class="racebar H" style="width: {{ player['RacePercent']['H'] }}%;"></span>{% endif %}{% if player['RaceGames']['O'] %}<span class="racebar O" style="width: {{ player['RacePercent']['O'] }}%;"></span>{% endif %}{% if player['RaceGames']['N'] %}<span class="racebar N" style="width: {{ player['RacePercent']['N'] }}%;"></span>{% endif %}{% if player['RaceGames']['U'] %}<span class="racebar U" style="width: {{ player['RacePercent']['U'] }}%;"></span>{% endif %}{% if player['RaceGames']['R'] %}<span class="racebar R" style="width: {{ player['RacePercent']['R'] }}%;"></span>{% endif %}
+        </td>
+        <td data-sort-method="number">{{ player['AvgApm'] }}</td>
+        <td class="optional" data-sort-method="number" title="{{ player['ChatMessageCount'] }}">{{ player['AvgChatMessages'] }}</td>
+        <td class="optional" data-sort-method="number" data-sort="{{ player['AvgGoldSent'] + player['AvgLumberSent'] }}"><span class="gold">{{ player['AvgGoldSent'] }}</span> / <span class="lumber">{{ player['AvgLumberSent'] }}</span></td>
+        <td data-sort-method="number" title="{{ player['TowerCount'] }} towers total">{{ player['TowerAvg'] }}</td>
+        <td data-sort-method="number" data-sort="{% if player['TimetoShare'] %}{{ player['TimetoShare'] }}{% else %}999999999{% endif %}">{% if player['TimetoShare'] %}{{ player['TimetoShare']|gametime }}{% else %}-{% endif %}</td>
+    </tr>
+{% endfor %}
+</table>
+{% endblock %}

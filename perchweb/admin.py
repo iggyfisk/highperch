@@ -140,7 +140,10 @@ def console():
     savers = defaultdict(int)
     for replay in replays:
         saver_id = replay['saverPlayerId']
-        savers[replay.player_names[saver_id]] += 1
+        try:
+            savers[replay.player_names[saver_id]] += 1
+        except:
+            savers['Saver detection failure'] += 1
     uploader_ips = get_all_uploader_ips()
     savers = sorted(savers.items(), key=lambda i: i[1], reverse=True)
     return admin_page('admin.html', 'Admin console', nav='admin', replays=replays, uploader_ips=uploader_ips, savers=savers,

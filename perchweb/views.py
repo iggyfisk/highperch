@@ -129,7 +129,7 @@ def view_player(battletag):
     player['name'] = battletag
     # Data crunching goes somewhere else later
     player['total_games'] = player['HUGames'] + \
-        player['ORGames'] + player['NEGames'] + player['UDGames']
+        player['ORGames'] + player['NEGames'] + player['UDGames'] + player['RDGames']
 
     return standard_page('player.html', f'{battletag} details', player=player, recent_replays=recent_replays)
 
@@ -193,6 +193,14 @@ def map_list():
             m.update(info)
             maps_with_info.append(m)
     return standard_page('maps.html', 'Maps', maps=sorted(maps_with_info, key=lambda i: i['replay_count'], reverse=True))
+
+
+@routes.route('/players')
+def player_list():
+    all_players = replaydb.get_all_players()
+    repeat_player_count = replaydb.count_repeat_players()
+
+    return standard_page('players.html', 'Players', players=sorted(all_players, key=lambda i: i['PlayerGames'], reverse=True), repeat_player_count=repeat_player_count)
 
 
 @routes.route('/speed')

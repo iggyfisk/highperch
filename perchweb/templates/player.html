@@ -33,6 +33,9 @@
             {% if player['UDGames'] %}
             {{ racebar(player['UDGames'], player['total_games'], 'U') }}
             {% endif %}
+            {% if player['RDGames'] %}
+            {{ racebar(player['RDGames'], player['total_games'], 'R') }}
+            {% endif %}
         </div>
     </div>
 </div>

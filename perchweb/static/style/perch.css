@@ -1580,6 +1580,9 @@ a.playername:hover {
   .player .chart.race .bar.U,
   .map .chart.race .bar.U {
     background: #959697; }
+  .player .chart.race .bar.R,
+  .map .chart.race .bar.R {
+    background: #7d261b; }
   .player .chart.map .legend,
   .map .chart.map .legend {
     padding-right: 8px; }
@@ -4768,17 +4771,17 @@ form.adminlogin {
       margin: 0px;
       letter-spacing: normal; }
 
-.maps {
+.sortable {
   border-bottom: 1px solid black;
   align-items: center;
   width: 100%; }
-  .maps .neutral {
+  .sortable .neutral {
     width: 30px; }
-  .maps table {
+  .sortable table {
     border-collapse: collapse;
     margin-bottom: 0px;
     table-layout: fixed; }
-  .maps th {
+  .sortable th {
     font-weight: normal;
     font-size: 12px;
     padding: 5px;
@@ -4786,34 +4789,39 @@ form.adminlogin {
     text-align: center;
     cursor: pointer;
     background: rgba(1, 1, 1, 0.9); }
-  .maps th:hover {
+  .sortable th:hover {
     color: white; }
-  .maps tr {
+  .sortable tr {
     background: rgba(10, 5, 5, 0.75); }
-    .maps tr:nth-child(even) {
+    .sortable tr:nth-child(even) {
       background: rgba(1, 1, 1, 0.9); }
-  .maps td {
+  .sortable td {
     border-bottom: none;
     padding: 8px;
     text-align: center; }
-  .maps .optional {
+  .sortable .optionaltext {
     display: none; }
     @media (min-width: 750px) {
-      .maps .optional {
+      .sortable .optionaltext {
+        display: inline; } }
+  .sortable .optional {
+    display: none; }
+    @media (min-width: 750px) {
+      .sortable .optional {
         display: table-cell; } }
-  .maps .thumbcol {
+  .sortable .thumbcol {
     text-align: left; }
-  .maps .thumb {
+  .sortable .thumb {
     max-height: 50px;
     vertical-align: middle;
     padding-right: 5px; }
-  .maps a {
+  .sortable a {
     font-weight: bold;
     text-decoration: none;
     padding: 0px; }
-  .maps th[role=columnheader]:not(.no-sort) {
+  .sortable th[role=columnheader]:not(.no-sort) {
     cursor: pointer; }
-  .maps th[role=columnheader]:not(.no-sort):after {
+  .sortable th[role=columnheader]:not(.no-sort):after {
     content: '';
     float: right;
     margin-top: 7px;
@@ -4823,14 +4831,43 @@ form.adminlogin {
     visibility: hidden;
     opacity: 0;
     user-select: none; }
-  .maps th[aria-sort=ascending]:not(.no-sort):after {
+  .sortable th[aria-sort=ascending]:not(.no-sort):after {
     border-width: 0 4px 4px; }
-  .maps th[aria-sort]:not(.no-sort):after {
+  .sortable th[aria-sort]:not(.no-sort):after {
     visibility: visible;
     opacity: 0.4; }
-  .maps th[role=columnheader]:not(.no-sort):hover:after {
+  .sortable th[role=columnheader]:not(.no-sort):hover:after {
     visibility: visible;
     opacity: 1; }
+
+.racesplit {
+  padding: none;
+  white-space: nowrap; }
+  .racesplit .racebar {
+    border: 1px solid black;
+    border-radius: 4px;
+    display: inline-block;
+    height: 24px; }
+    .racesplit .racebar.H {
+      background: #0042ff; }
+    .racesplit .racebar.O {
+      background: #006400; }
+    .racesplit .racebar.N {
+      background: #540081; }
+    .racesplit .racebar.U {
+      background: #959697; }
+    .racesplit .racebar.R {
+      background: #7d261b; }
+
+.playercontrols {
+  width: fit-content;
+  width: -moz-fit-content;
+  font-size: 12px;
+  padding: 5px;
+  margin: auto;
+  margin-bottom: 20px;
+  text-align: center;
+  background-color: rgba(10, 5, 5, 0.75); }
 
 .speedapp {
   background-color: rgba(0, 0, 0, 0.5);

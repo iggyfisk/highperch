@@ -1,4 +1,4 @@
-.maps {
+.sortable {
     border-bottom:1px solid black;
     align-items: center;
     width: 100%;
@@ -33,6 +33,12 @@
         border-bottom: none;
         padding: $padding;
         text-align: center;
+    }
+    .optionaltext {
+        display: none;
+        @media (#{$bp-larger-than-tablet}) {
+            display: inline;
+        }
     }
     .optional {
         display: none;
@@ -83,4 +89,43 @@
         visibility: visible;
         opacity: 1;
     }
+}
+
+.racesplit {
+    padding: none;
+    white-space: nowrap;
+    .racebar
+    {   
+        border: 1px solid black;
+        border-radius: 4px;
+        display: inline-block;
+        height: 24px;
+        &.H {
+            background: #0042ff;
+        }
+        &.O {
+            background: #006400;
+        }
+        &.N {
+            background: #540081;
+        }
+        &.U {
+            background: #959697;
+        }
+        &.R {
+            background: #7d261b;
+        }
+    }
+}
+
+.playercontrols {
+    width: fit-content;
+    width: -moz-fit-content;
+    font-size: 12px;
+    padding: 5px;
+    margin: auto;
+    margin-bottom: 20px;
+    text-align: center;
+    background-color: $card-background-color;
+    $outline-size: 3px;
 }

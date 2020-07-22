@@ -213,7 +213,7 @@ def get_player(battletag):
     """ Load some aggregated info for a specific player """
 
     player_row = query('''
-        SELECT HUGames, ORGames, NEGames, UDGames
+        SELECT HUGames, ORGames, NEGames, UDGames, RDGames
         FROM Players
         WHERE BattleTag = ?
         ''', (battletag,), one=True)
@@ -268,7 +268,7 @@ def save_game_played(replay_data, replay_id, query_fnc=query):
     """ Record player participation in a replay """
     for player in replay_data.players:
         name = player['name']
-        race = (player['raceDetected'] or player['race'])
+        race = (player['race'])
         apm = player.get_real_apm()
         win = player['teamid'] == replay_data['winningTeamId'] if replay_data['winningTeamConfirmed'] else None
         tower_count = player.tower_count()
@@ -298,12 +298,11 @@ def delete_game_played(replay_id, query_fnc):
 
 def increment_race_played(player_name, race, increment, query_fnc):
     """ Add/Remove to total games played with race for a player """
-    # Only record when the players real race was detected, otherwise they weren't really playing
-    if race != 'R':
-        col = {'H': 'HUGames', 'O': 'ORGames',
-               'N': 'NEGames', 'U': 'UDGames'}[race]
-        query_fnc(
-            f'UPDATE Players SET {col} = {col} + ? WHERE BattleTag = ?', (increment, player_name))
+    col = {'H': 'HUGames', 'O': 'ORGames',
+            'N': 'NEGames', 'U': 'UDGames',
+            'R': 'RDGames'}[race]
+    query_fnc(
+        f'UPDATE Players SET {col} = {col} + ? WHERE BattleTag = ?', (increment, player_name))
 
 
 def fix_battletags(tags, query_fnc, fp):
@@ -347,9 +346,11 @@ def fix_battletags(tags, query_fnc, fp):
                 HUGames = HUGames + ?,
                 ORGames = ORGames + ?,
                 NEGames = NEGames + ?,
-                UDGames = UDGames + ?
+                UDGames = UDGames + ?,
+                RDGames = RDGames + ?
             WHERE BattleTag = ?''', (tag_match['HUGames'], tag_match['ORGames'],
                                      tag_match['NEGames'], tag_match['UDGames'],
+                                     tag_match['RDGames'],
                                      new_tag))
 
         query_fnc('''UPDATE GamesPlayed
@@ -598,7 +599,8 @@ def delete_replay(replay_id):
         # Remove player participation and reduce games played counts
         def update_race_count(race):
             col = {'H': 'HUGames', 'O': 'ORGames',
-                   'N': 'NEGames', 'U': 'UDGames'}[race]
+                   'N': 'NEGames', 'U': 'UDGames',
+                   'R': 'RDGames'}[race]
             query(f'''
                 UPDATE Players
                 SET {col} = {col} - 1
@@ -847,3 +849,60 @@ def replay_name_check(name):
     if string_complexity(name) <= 2:
         return False
     return True
+
+
+def get_all_players():
+    players = []
+    rows = query('''
+        SELECT PlayerTag, COUNT(PlayerTag) as PlayerGames, 
+            CAST(AVG(APM) AS INTEGER) AS AvgApm, 
+            CAST(AVG(TowerCount) AS INTEGER) AS TowerAvg, 
+            SUM(TowerCount) AS TowerCount,
+            SUM(Win) AS Wins,
+            SUM(CASE WHEN RACE = "H" THEN 1 ELSE 0 END) AS HumanGames,
+            SUM(CASE WHEN RACE = "O" THEN 1 ELSE 0 END) AS OrcGames,
+            SUM(CASE WHEN RACE = "N" THEN 1 ELSE 0 END) AS ElfGames,
+            SUM(CASE WHEN RACE = "U" THEN 1 ELSE 0 END) AS UndeadGames,
+            SUM(CASE WHEN RACE = "R" THEN 1 ELSE 0 END) AS RandomGames,
+            SUM(ChatMessageCount) AS ChatMessageCount,
+            SUM(CASE WHEN NetGoldFed > 0 THEN NetGoldFed ELSE 0 END) AS GoldSent,
+            SUM(CASE WHEN NetLumberFed > 0 THEN NetLumberFed ELSE 0 END) AS LumberSent,
+            CAST(AVG(TimeToShare) AS INTEGER) AS TimetoShare
+        FROM GamesPlayed
+        GROUP BY PlayerTag
+        ORDER BY PlayerGames;
+        ''')
+
+    for row in rows:
+        player = dict(row)
+        if player['Wins'] == None:
+            player['Winrate'] = 0
+        else:
+            player['Winrate'] = int(round((player['Wins'] / player['PlayerGames']), 2) * 100)
+        player['RaceGames'] = {'H': player['HumanGames'], 'O': player['OrcGames'], 
+                               'N': player['ElfGames'], 'U': player['UndeadGames'],
+                               'R': player['RandomGames']}
+        player['RacePercent'] = {'H': round(player['HumanGames'] / player['PlayerGames'] * 100, 2),
+                                 'O': round(player['OrcGames'] / player['PlayerGames'] * 100, 2),
+                                 'N': round(player['ElfGames'] / player['PlayerGames'] * 100, 2),
+                                 'U': round(player['UndeadGames'] / player['PlayerGames'] * 100, 2),
+                                 'R': round(player['RandomGames'] / player['PlayerGames'] * 100, 2)}
+        player['MaxRace'] = sorted(player['RacePercent'].values(), reverse=True)[0] * (1 + (player['PlayerGames'] / 500))
+        del player['HumanGames']
+        del player['OrcGames']
+        del player['ElfGames']
+        del player['UndeadGames']
+        del player['RandomGames']
+        player['AvgGoldSent'] = player['GoldSent'] // player['PlayerGames']
+        player['AvgLumberSent'] = player['LumberSent'] // player['PlayerGames']
+        player['AvgChatMessages'] = player['ChatMessageCount'] // player['PlayerGames']
+        players.append(player)
+
+    return players
+
+def count_repeat_players():
+    rows = query('''
+        SELECT PlayerTag from GamesPlayed GROUP BY PlayerTag HAVING COUNT(*) > 1;
+        ''')
+
+    return len(rows)
