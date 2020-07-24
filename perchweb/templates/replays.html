@@ -115,10 +115,14 @@
                 {% endif %}<a class="playername"
                     style="color:{{ replay.player_colors[player['id']]|lighten }}"
                     href="{{ url_for('views.view_player', battletag=player['name']) }}" title="{{ replay.player_colors[player['id']]|color_name }}">{{ player['name']|displayname }}</a>
-                {% if replay.official() and game_count %}
+                {% if game_count %}
                     {% if game_count[player['name']] > 1 %}
                         {% if not player.official() %}
-                            <span class="gamecount"><sup>({{ game_count[player['name']] }})</sup></span>
+                            {% if replay.official() %}
+                                <span class="gamecountofficial"><sup>({{ game_count[player['name']] }})</sup></span>
+                            {% else %}
+                                <a href="{{ url_for('views.view_player', battletag=player['name']) }}"><span class="gamecountnormal"><sup>({{ game_count[player['name']] }})</sup></span></a>
+                            {% endif %}
                         {% endif %}
                     {% endif %}
                 {% endif %}

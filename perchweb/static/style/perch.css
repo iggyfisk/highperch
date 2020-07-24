@@ -481,7 +481,7 @@ button.button-primary {
   background-color: #c4976f;
   border-color: #c4976f; }
 
-input[type="submit"].button-primary, input[type="reset"].button-primary, input[type="button"].button-primary {
+input.button-primary[type="submit"], input.button-primary[type="reset"], input.button-primary[type="button"] {
   color: #fff;
   background-color: #c4976f;
   border-color: #c4976f; }
@@ -492,7 +492,7 @@ button.button-primary:hover {
   background-color: #FF7F00;
   border-color: #FF7F00; }
 
-input[type="submit"].button-primary:hover, input[type="reset"].button-primary:hover, input[type="button"].button-primary:hover {
+input.button-primary[type="submit"]:hover, input.button-primary[type="reset"]:hover, input.button-primary[type="button"]:hover {
   color: #fff;
   background-color: #FF7F00;
   border-color: #FF7F00; }
@@ -503,7 +503,7 @@ button.button-primary:focus {
   background-color: #FF7F00;
   border-color: #FF7F00; }
 
-input[type="submit"].button-primary:focus, input[type="reset"].button-primary:focus, input[type="button"].button-primary:focus {
+input.button-primary[type="submit"]:focus, input.button-primary[type="reset"]:focus, input.button-primary[type="button"]:focus {
   color: #fff;
   background-color: #FF7F00;
   border-color: #FF7F00; }
@@ -1174,9 +1174,12 @@ a.playername:hover {
   font-size: 15px;
   text-shadow: 1px 1px 1px #000000; }
 
-.large-replay .gamecount {
+.large-replay .gamecountofficial {
   font-size: 15px;
   color: #F00; }
+
+.large-replay .gamecountnormal {
+  font-size: 15px; }
 
 .large-replay .controls {
   width: fit-content;
