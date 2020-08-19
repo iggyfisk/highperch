@@ -250,18 +250,6 @@ def neutral_name(unit_id):
     return neutral_codes[unit_id]
 
 
-map_translations = {
-    'w3c_1v1_autumnleaves_anon': '(2)AutumnLeaves'
-}
-
-
-def map_name_translate(map_name):
-    if map_name in map_translations:
-        return map_translations[map_name]
-    else:
-        return map_name
-
-
 def register(jinja_environment):
     """ Register all filters to the given jinja environment """
     jinja_environment.filters['gametime'] = gametime
@@ -292,4 +280,3 @@ def register(jinja_environment):
     jinja_environment.filters['neutralinfo'] = neutral_info
     jinja_environment.filters['neutralname'] = neutral_name
     jinja_environment.filters['boldnumbers'] = bold_numbers
-    jinja_environment.filters['maptranslate'] = map_name_translate

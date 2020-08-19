@@ -14,7 +14,7 @@ from re import search as re_search
 from flask import flash, g, current_app, request
 from models.replay import Replay, ReplayListInfo
 from perchlogging import log_to_slack, upload_to_slack, format_ip_addr, format_traceback
-from lib.wigcodes import get_map_canonical_name
+from lib.wigcodes import get_map_canonical_name, untranslate_map_name
 import filepaths
 
 
@@ -243,9 +243,9 @@ def get_map(map_name):
     return query('''
         SELECT GameType, Count(*) AS Games, CAST(AVG(Length) AS INT) AS AvgLength, CAST(AVG(TowerCount) AS INT) AS AvgTowers
         FROM Replays
-        WHERE Map = ? COLLATE NOCASE
+        WHERE (Map = ? OR Map = ?) COLLATE NOCASE
         GROUP BY GameType
-        ''', (map_name,))
+        ''', (untranslate_map_name(map_name), map_name))
 
 
 def get_game_count(replay_id):
@@ -519,7 +519,7 @@ def reparse_replay(replay_id, query_fnc, fp):
         gametype = replay_data['type']
         version = replay_data['version']
         length = replay_data['duration']
-        map_name = replay_data.map_name()
+        map_name = replay_data.map_name(fp=fp)
 
         players = [{'name': p['name'], 'teamid': p['teamid'], 'race': (p['raceDetected'] or p['race'])}
                    for p in replay_data.players]

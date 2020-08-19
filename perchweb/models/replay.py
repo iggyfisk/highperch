@@ -127,9 +127,9 @@ class Replay(dict):
                 wood += p.total_buildings_cost()[1]
         return (gold, wood)
 
-    def map_name(self):
+    def map_name(self, fp=None):
         """ More presentable map name """
-        return os.path.splitext(os.path.basename(self['map']['file']))[0]
+        return get_map_canonical_name(os.path.splitext(os.path.basename(self['map']['file']))[0], fp=fp)
 
     def replay_saver(self):
         """ Returns the player that saved this replay """
@@ -382,7 +382,7 @@ class Replay(dict):
         """ Map size coordinates and a list of towers per color and coordinate,
             for drawing on the minimap """
 
-        canonical_name = get_map_canonical_name(self.map_name(), fp=fp)
+        canonical_name = self.map_name(fp=fp)
 
         map_size = get_map_size(canonical_name, fp=fp)
         start_locations = get_starting_locations(canonical_name, fp=fp)

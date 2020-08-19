@@ -1095,7 +1095,8 @@ level_exp = {
     10: 340
 }
 
-build_versions = {
+build_versions = {\
+    '6111': '1.32.8',    # 2020-08-11, beetle unbuff, FFA name obfuscation
     '6110': '1.32.6 / 1.32.7',   # 2020-06-02, balancing: beetle buff, item changes, merc changes. no buildNo change for 1.32.7
     '6109': '1.32.4 / 1.32.5',   # 2020-04-28, reforged graphics tuning, desync fixes, banewood readded again. no buildNo change for 1.32.5
     '6108': '1.32.3',   # 2020-03-18, desync fixes, strath/banewood/foundtain readded
@@ -1260,18 +1261,78 @@ def get_map_critters(map_name, fp=None):
 
     return map_info['critters']
 
+map_translations = {
+    'w3c_ffa_anarchycastle_anon': '(4)AnarchyCastle',
+    'w3c_ffa_deadlock lv_anon': '(8)Deadlock',
+    'w3c_ffa_deathrose_anon': '(8)Deathrose',
+    'w3c_ffa_ferocity_anon': '(8)Ferocity',
+    'w3c_ffa_fountainofmanipulation_anon': '(4)FountainOfManipulation',
+    'w3c_ffa_frozenmarshlands_anon': '(4)FrozenMarshlands',
+    'w3c_ffa_harvestofsorrow_anon': '(6)HarvestOfSorrow',
+    'w3c_ffa_marketsquare_anon': '(8)MarketSquare',
+    'w3c_ffa_neoncity_anon': '(6)NeonCity',
+    'w3c_ffa_rockslide_anon': '(6)Rockslide',
+    'w3c_ffa_sanctuary lv_anon': '(8)Sanctuary_LV',
+    'w3c_ffa_silverpineforest_anon': '(6)SilverpineForest',
+    'w3c_ffa_tatsascastlegardens_anon': '(8)TatsasCastleGardens',
+    'w3c_ffa_twilightruins_anon': '(8)TwilightRuins_LV',
+
+    'w3c_1v1_amazonia_anon': '(2)Amazonia',
+    'w3c_1v1_autumnleaves_anon': '(2)AutumnLeaves',
+    'w3c_1v1_concealedhill_anon': '(2)ConcealedHill',
+    'w3c_1v1_echoisles_anon': '(2)EchoIsles',
+    'w3c_1v1_lastrefuge_anon': '(2)LastRefuge',
+    'w3c_1v1_northernisles_anon': '(2)NorthernIsles',
+    'w3c_1v1_terenasstand_lv_anon': '(2)TerenasStand_LV',
+    'w3c_1v1_twistedmeadows_anon': '(2)TwistedMeadows',
+    
+    'w3c_avalanche_lv_anon': '(4)Avalanche',
+    'w3c_battlegrounds_anon': '(8)Battleground_LV',
+    'w3c_cherryville_anon': '(8)Cherryville',
+    'w3c_circleoffallenheroes_anon': '(5)CircleOfFallenHeroes',
+    'w3c_deadlock_lv_anon': '(8)Deadlock_LV',
+    'w3c_dragonfalls_anon': '(8)DragonFalls',
+    'w3c_feralas_lv_anon': '(8)Feralas_LV',
+    'w3c_fullscaleassault_anon': '(8)FullScaleAssault',
+    'w3c_gnollwood_anon': '(6)GnollWood',
+    'w3c_goldrush_anon': '(8)GoldRush',
+    'w3c_goldshire_anon': '(4)Goldshire',
+    'w3c_goleminthemist_lv_anon': '(8)GolemsInTheMist_LV',
+    'w3c_hillsbradcreek_anon': '(4)HillsbradCreek',
+    'w3c_losttemple_lv_anon': '(4)LostTemple_LV',
+    'w3c_marketsquare_anon': '(8)MarketSquare',
+    "w3c_mur'galoasis_lv_anon": "(8)Mur'gulOasis_LV",
+    'w3c_nerubianpassage_anon': '(8)NerubianPassage',
+    'w3c_northernfelwood_anon': '(8)NorthernFelwood',
+    'w3c_northshire_lv_anon': '(8)Northshire_LV',
+    'w3c_sanctuary_lv_anon': '(8)Sanctuary_LV',
+    'w3c_tidewaterglades_lv_anon': '(4)TidewaterGlades_LV',
+    'w3c_turtlerock_anon': '(4)TurtleRock',
+    'w3c_twilightruins_lv_anon': '(8)TwilightRuins_LV'
+}
 
 def get_map_canonical_name(map_name, fp=None):
     """The canonical map filename, e.g. '(6)Highperch'
        This is mostly to help with custom-hosted game replays
-       lowercasing the map filenames for some reason"""
+       lowercasing the map filenames for some reason
+       Also w3champions support since they mangled all the map names"""
+    if map_name in map_translations:
+        return map_translations[map_name]
     canonical_names = get_all_mapinfo(fp=fp).keys()
     if map_name in canonical_names:
         return map_name
     for canonical in canonical_names:
         if map_name.lower() == canonical.lower():
             return canonical
-    return False
+    return map_name     # we didn't find one
+
+
+map_untranslations = {translated: untranslated for untranslated, translated in map_translations.items()}
+
+def untranslate_map_name(map_name):
+    if map_name in map_untranslations:
+        return map_untranslations[map_name]
+    return map_name
 
 
 def get_map_title(map_name):

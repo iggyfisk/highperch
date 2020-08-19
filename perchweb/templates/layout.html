@@ -35,6 +35,7 @@
                 <div class="views">
                     <a href="{{ url_for('views.index') }}" class="{% if nav == 'index' %}active{% endif %}"><span class="name">Replays</span><span class="shortname">Reps</span></a>
                     <a href="{{ url_for('views.map_list') }}" class="{% if nav == 'maps' %}active{% endif %}"><span class="name">Maps</span><span class="shortname">Maps</span></a>
+                    <a href="{{ url_for('views.player_list') }}" class="{% if nav == 'players' %}active{% endif %}"><span class="name">Players</span><span class="shortname">Ppl</span></a>
                     <a href="{{ url_for('views.peep') }}" class="{% if nav == 'peep' %}active{% endif %}"><span class="name">Pictures</span><span class="shortname">Pics</span></a>
                     <a href="{{ url_for('views.guide') }}" class="{% if nav == 'guide' %}active{% endif %}"><span class="name">Documentation</span>{% if not is_admin %}<span class="shortname">Docs</span>{% endif %}</a>
                     <a href="https://classic.highper.ch" target="_blank"><span class="name">Archives</span>{% if not is_admin %}<span class="shortname">Old</span>{% endif %}</a>

@@ -11,6 +11,8 @@ with app.app_context():
     geoip_city_db = geoip2.database.Reader(get_path('resource/GeoLite2-City.mmdb'))
 
 def lookup_country(ip_addr):
+    if ip_addr == '127.0.0.1':
+        return {'code': "xx", 'name': "localhost"}
     try:
         response = geoip_country_db.country(ip_addr)
         result = {'code': response.country.iso_code,
@@ -21,6 +23,8 @@ def lookup_country(ip_addr):
 
 
 def lookup_city(ip_addr):
+    if ip_addr == '127.0.0.1':
+        return "computer"
     try:
         response = geoip_city_db.city(ip_addr)
         return (response.city.name, response.subdivisions.most_specific.iso_code)
