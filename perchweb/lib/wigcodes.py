@@ -1095,7 +1095,8 @@ level_exp = {
     10: 340
 }
 
-build_versions = {\
+build_versions = {
+    '6112': '1.32.9',    # 2020-10-21, broad balance changes
     '6111': '1.32.8',    # 2020-08-11, beetle unbuff, FFA name obfuscation
     '6110': '1.32.6 / 1.32.7',   # 2020-06-02, balancing: beetle buff, item changes, merc changes. no buildNo change for 1.32.7
     '6109': '1.32.4 / 1.32.5',   # 2020-04-28, reforged graphics tuning, desync fixes, banewood readded again. no buildNo change for 1.32.5
