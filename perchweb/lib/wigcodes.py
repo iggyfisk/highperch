@@ -1280,9 +1280,11 @@ map_translations = {
 
     'w3c_1v1_amazonia_anon': '(2)Amazonia',
     'w3c_1v1_autumnleaves_anon': '(2)AutumnLeaves',
+    'w3c_1v1_autumn_leaves_201016': '(2)AutumnLeaves',
     'w3c_1v1_concealedhill_anon': '(2)ConcealedHill',
     'w3c_1v1_echoisles_anon': '(2)EchoIsles',
     'w3c_1v1_lastrefuge_anon': '(2)LastRefuge',
+    'w3c_1v1_lastrefuge.anon': '(2)LastRefuge',
     'w3c_1v1_northernisles_anon': '(2)NorthernIsles',
     'w3c_1v1_terenasstand_lv_anon': '(2)TerenasStand_LV',
     'w3c_1v1_twistedmeadows_anon': '(2)TwistedMeadows',
