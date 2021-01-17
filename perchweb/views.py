@@ -78,14 +78,15 @@ def view_replay_slug(replay_id, replay_slug):
 
     replay_listinfo = replaydb.get_replay_listinfo(replay_id, inc_views=True)
     replay = replaydb.get_replay(replay_id)
-    real_slug = url_slug(replay_listinfo['Name'])
-
-    if replay_slug != real_slug:    # so we don't have badmanners making functioning links like /replay/123-unflattering-fake-text
-        return redirect(url_for('views.view_replay_slug', replay_id=replay_id, replay_slug=real_slug))
 
     if replay_listinfo is None or replay is None:
         current_app.logger.warning(f'404 on replay view, ID: {replay_id}')
         abort(404)
+
+    real_slug = url_slug(replay_listinfo['Name'])
+
+    if replay_slug != real_slug:    # so we don't have badmanners making functioning links like /replay/123-unflattering-fake-text
+        return redirect(url_for('views.view_replay_slug', replay_id=replay_id, replay_slug=real_slug))
 
     drawmap = replay.get_drawmap(timestamp=True, color_transform=lighten_color)
     game_count = replaydb.get_game_count(replay_id)
