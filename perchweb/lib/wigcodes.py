@@ -1311,7 +1311,8 @@ map_translations = {
     'w3c_sanctuary_lv_anon': '(8)Sanctuary_LV',
     'w3c_tidewaterglades_lv_anon': '(4)TidewaterGlades_LV',
     'w3c_turtlerock_anon': '(4)TurtleRock',
-    'w3c_twilightruins_lv_anon': '(8)TwilightRuins_LV'
+    'w3c_twilightruins_lv_anon': '(8)TwilightRuins_LV',
+    'w3c_twilightruins_lv': '(8)TwilightRuins_LV'
 }
 
 def get_map_canonical_name(map_name, fp=None):
@@ -1319,8 +1320,8 @@ def get_map_canonical_name(map_name, fp=None):
        This is mostly to help with custom-hosted game replays
        lowercasing the map filenames for some reason
        Also w3champions support since they mangled all the map names"""
-    if map_name in map_translations:
-        return map_translations[map_name]
+    if map_name.lower() in map_translations:
+        return map_translations[map_name.lower()]
     canonical_names = get_all_mapinfo(fp=fp).keys()
     if map_name in canonical_names:
         return map_name
