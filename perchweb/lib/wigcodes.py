@@ -1096,6 +1096,7 @@ level_exp = {
 }
 
 build_versions = {
+    '6114': '1.32.10',   # 2020-04-14, lumber and itemsell buff
     '6112': '1.32.9',    # 2020-10-21, broad balance changes
     '6111': '1.32.8',    # 2020-08-11, beetle unbuff, FFA name obfuscation
     '6110': '1.32.6 / 1.32.7',   # 2020-06-02, balancing: beetle buff, item changes, merc changes. no buildNo change for 1.32.7
