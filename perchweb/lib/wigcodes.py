@@ -1095,6 +1095,8 @@ level_exp = {
     10: 340
 }
 
+preempt_versions = ['1.33']     # game versions that did not increment the buildNo
+
 build_versions = {
     '6114': '1.32.10',   # 2020-04-14, lumber and itemsell buff
     '6112': '1.32.9',    # 2020-10-21, broad balance changes
