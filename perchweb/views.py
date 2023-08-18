@@ -113,7 +113,7 @@ def download_replay(replay_id):
 
     filename = ''.join(
         c for c in replay_listinfo['Name'] if c.isalnum() or c == ' ').strip()
-    return send_file(get_replay(f'{replay_id}.w3g'), attachment_filename=f'{filename}.w3g', as_attachment=True)
+    return send_file(get_replay(f'{replay_id}.w3g'), download_name=f'{filename}.w3g', as_attachment=True)
 
 
 @routes.route('/player/<string:battletag>')
