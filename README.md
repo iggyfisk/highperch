@@ -51,9 +51,6 @@ This should get you Python debugging and template auto reload on change. Need ma
 #### Pycharm
 Symbols, highlighting, formatting, debugging. Just open the project and select your virtual environment as the interpreter when prompted
 
-#### Atom
-Highlighting. I'm sure the rest can be configured if you install enough plugins.
-
 ### Replay data
 Look at `test/Reforged1Pretty.json` and `test/Reforged2Pretty.json` for a human readable glance of the parsed format.
 
